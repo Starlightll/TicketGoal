@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@include file="../include/header.html" %>
+        <%@include file="../include/header.jsp" %>
         <main>
             <h1>teasdad
                 asdasd
