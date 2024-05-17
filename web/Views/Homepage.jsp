@@ -18,54 +18,14 @@
                 asdasd
                 asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
                 asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asddddddddddddddddddddddddddddddddddddddddddddddddddddd
                 asdddddddddddddddddddddddddddddddddddd
                 asddddddddddsdasd
                 asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+         adsaaaaaaaa
                 asdsadasdasdsadsaddddddddddddddddddddddddddd
                 asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
+           dsadasdasdsadsaddddddddddddddddddddddddddd
                 asdddddddddddddddddddddddddddddddddddd
                 asddddddddddsdasd
                 asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
