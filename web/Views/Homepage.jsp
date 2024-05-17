@@ -14,8 +14,65 @@
     <body>
         <%@include file="../include/header.html" %>
         <main>
-            //Hero section
-            
+            <h1>teasdad
+                asdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddsdasd
+                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
+                asdsadasdasdsadsaddddddddddddddddddddddddddd
+                asdddddddddddddddddddddddddddddddddddd
+                asddddddddddddddddddddddddxt</h1>
         </main>
+            
     </body>
 </html>

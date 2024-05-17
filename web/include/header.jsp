@@ -1,3 +1,10 @@
+<%-- 
+    Document   : header1
+    Created on : May 17, 2024, 11:43:03 AM
+    Author     : mosdd
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>

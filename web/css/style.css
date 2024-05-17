@@ -9,6 +9,12 @@
 
 /* BASE STYLES */
 
+/* Main section */
+    main{
+        color: #ffffff  ;
+        background-color: #0F0F0F;
+    }
+
 html {
     scroll-behavior: smooth;
 }
@@ -351,6 +357,8 @@ img {
         font-size: 1.2rem;
         font-weight: 400;
     }
+    
+    
     
 }
 
