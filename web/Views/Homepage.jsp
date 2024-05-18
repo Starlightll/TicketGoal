@@ -14,24 +14,8 @@
     <body>
         <%@include file="../include/header.jsp" %>
         <main>
-            <h1>teasdad
-                asdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-         adsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-           dsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddsdasd
-                asdasdasdsadddddddddddddddddddddddddddddddddddassadsaaaaaaaa
-                asdsadasdasdsadsaddddddddddddddddddddddddddd
-                asdddddddddddddddddddddddddddddddddddd
-                asddddddddddddddddddddddddxt</h1>
+            <h1>
+            </h1>
         </main>
             
     </body>
