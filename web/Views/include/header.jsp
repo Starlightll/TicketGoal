@@ -31,16 +31,16 @@
                     <div class="nav__menu" id="nav-menu">
                         <ul class="nav__list">
                             <li class="nav__item">
-                                <a href="#" class="nav__link">MATCHES</a>
+                                <a href="<c:url value='/matchServlet'/>" class="nav__link">MATCHES</a>
                             </li>
                             <li class="nav__item">
                                 <a href="<c:url value='/playerServlet'/>" class="nav__link">PLAYER</a>
                             </li>
                             <li class="nav__item">
-                                <a href="#" class="nav__link">SHOP</a>
+                                <a href="<c:url value='/shopServlet'/>" class="nav__link">SHOP</a>
                             </li>
                             <li class="nav__item">
-                                <a href="#" class="nav__link">CONTACT</a>
+                                <a href="<c:url value='/contactServlet'/>" class="nav__link">CONTACT</a>
                             </li>
                         </ul>
 

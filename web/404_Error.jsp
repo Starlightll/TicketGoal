@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Player
-    Created on : May 18, 2024, 6:17:23 PM
+    Document   : 404_Error
+    Created on : May 18, 2024, 3:46:13 PM
     Author     : mosdd
 --%>
 
@@ -15,7 +15,11 @@
     <body>
         <%@include file="/Views/include/header.jsp" %>
         <main>
-            <h1>Here is Player page</h1>
+            <div style="text-align: center">
+                <h1 style="font-size: 180px; align-content: center; text-align: center">404 Error</h1>
+                <p>Sorry, the page you are looking for does not exist.</p>
+                <a href="${pageContext.request.contextPath}/Homepage.jsp">Go to Home Page</a>
+            </div>
         </main>
         <%@include file="/Views/include/footer.jsp" %>
     </body>

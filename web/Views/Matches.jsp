@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Player
-    Created on : May 18, 2024, 6:17:23 PM
+    Document   : Matches
+    Created on : May 18, 2024, 7:17:28 PM
     Author     : mosdd
 --%>
 
@@ -15,7 +15,7 @@
     <body>
         <%@include file="/Views/include/header.jsp" %>
         <main>
-            <h1>Here is Player page</h1>
+            <h1>Here is Match page</h1>
         </main>
         <%@include file="/Views/include/footer.jsp" %>
     </body>
