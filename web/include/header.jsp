@@ -3,7 +3,7 @@
     Created on : May 17, 2024, 11:43:03 AM
     Author     : mosdd
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@
                                 <a href="#" class="nav__link">MATCHES</a>
                             </li>
                             <li class="nav__item">
-                                <a href="#" class="nav__link">PLAYER</a>
+                                <a href="<c:url value='/playerServlet'/>" class="nav__link">PLAYER</a>
                             </li>
                             <li class="nav__item">
                                 <a href="#" class="nav__link">SHOP</a>
