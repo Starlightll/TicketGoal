@@ -17,17 +17,22 @@ const navMenu = document.getElementById('nav-menu'),
 const login = document.getElementById('login'),
     loginBtn = document.getElementById('login-btn'),
     loginClose = document.getElementById('login-close'),
-    loginButton = document.getElementById('login-button')
+    loginButton = document.getElementById('login-button'),
+    register = document.getElementById('register'),
+    registerButton = document.getElementById('register-button'),
+    registerClose = document.getElementById('register-close')
     // Login show
     loginBtn.addEventListener('click', () => {
-        login.classList.add('show-login')
+        register.classList.add('show-register')
     })
 
     loginButton.addEventListener('click', () => {
-        login.classList.add('show-login')
+        register.classList.add('show-register')
     })
     
     // Login hide
     loginClose.addEventListener('click', () => {
         login.classList.remove('show-login')
     })
+    
+

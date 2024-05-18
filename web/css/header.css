@@ -152,7 +152,7 @@ img {
     transition: opacity .4s;
 }
 
-.login__close {
+.login__close{
     position: absolute;
     top: 2rem;
     right: 2rem;
@@ -162,7 +162,7 @@ img {
 }
 
 .login__form,
-.login__group {
+.login__group{
     display: grid;
 }
 
@@ -268,6 +268,135 @@ img {
     transform: translateY(0);
 }
 
+/* Register */
+
+.register{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #1619224b;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 8rem 1.5rem 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.register__close{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.register__form,
+.register__group{
+    display: grid;
+}
+
+.register__form {
+    background-color: #232323;
+    padding: 2rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    row-gap: 1.25rem;
+    text-align: center;
+    transform: translateY(-1rem);
+    transition: transform .9s;
+}
+
+.register__decor {
+    background-color: #00C767;
+    height: 16px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    transform: translateY(-1rem);
+    transition: transform .9s;
+}
+
+.register__title {
+    font-size: 2rem;
+    color: aliceblue;
+    font-weight: 500;
+}
+
+.register__group {
+    row-gap: 1rem;
+}
+
+.register__label {
+    display: block;
+    text-align: initial;
+    color: aliceblue;
+    font-weight: 500;
+    margin-bottom: .25rem;
+}
+
+.register__input {
+    width: 100%;
+    background-color: #343434;
+    border: 2px solid #ffffff2c;
+    padding: 1rem;
+    border-radius: .5rem;
+    color: #ffffff;
+}
+
+.login__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__input::placeholder {
+    color: #505050;
+}
+
+.register__signin {
+    margin-bottom: .5rem;
+}
+
+.register__signin a{
+    color: rgb(0, 255, 191);
+}
+
+
+.register__button {
+    display: inline-block;
+    background-color: #00C767;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: box-shadow .4s;
+}
+
+.register__button:hover {
+    box-shadow: 0 1px 24px #00ff842d;
+}
+
+/* show register */
+.show-register {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.show-register .register__form {
+    transform: translateY(0);
+}
+
+.show-register .register__decor {
+    transform: translateY(0);
+}
+
 
 /* Responsive Breakpoint */
 
@@ -295,6 +424,30 @@ img {
         max-width: 400px;
         margin-inline: auto;
     }
+    
+    /* Register */
+    .register {
+        padding-top: 10rem;
+    }
+
+    .register__close {
+        width: max-content;
+        top: 5rem;
+        left: 0;
+        right: 0;
+        margin-inline: auto;
+        font-size: 2rem;
+    }
+
+    .register__form {
+        max-width: 400px;
+        margin-inline: auto;
+    }
+
+    .register__decor {
+        max-width: 400px;
+        margin-inline: auto;
+    }
 }
 
 .join__button {
@@ -307,7 +460,7 @@ img {
         height: calc(3.5rem + 1rem);
     }
 
-    .nav__close, 
+    .nav__close,
     .nav__toggle{
         display: none;
     }
@@ -326,8 +479,11 @@ img {
     }
 
     .login__form{
+        padding: 3rem; 
+    }
+    
+    .register__form {
         padding: 3rem;
-        
     }
 
     .nav__login {
@@ -357,8 +513,6 @@ img {
         font-size: 1.2rem;
         font-weight: 400;
     }
-    
-    
-    
+      
 }
 
