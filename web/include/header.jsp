@@ -95,7 +95,7 @@
 
                 <div>
                     <p class="login__signup">
-                        Don't have an account? <a href="#">Sign up</a>
+                        Don't have an account? <a href="#" id="register-button">Sign up</a>
                     </p>
 
                     <a href="#" class="login__forgot">
@@ -137,7 +137,7 @@
 
                 <div>
                     <p class="register__signin">
-                        Already have an account? <a href="#">Sign in</a>
+                        Already have an account? <a href="#" id="signin-button">Sign in</a>
                     </p>
                     <button type="submit" class="register__button">Sign Up</button>
                 </div>
