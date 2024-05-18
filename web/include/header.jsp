@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
 
-    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
     
   </head>
   <body>
@@ -26,7 +26,7 @@
         <div class="header__content">
             <nav class="nav">
                 <a href="#" class="nav__logo">
-                    <img src="../img/TICKETGOAL.png" alt="logo">
+                    <img src="${pageContext.request.contextPath}/img/TICKETGOAL.png" alt="logo">
                 </a>
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
@@ -76,7 +76,7 @@
             </div>
             <form action="" class="login__form">
                 <div class="login__icon">
-                    <img src="../img/loginIcon.png" alt="loginIcon">
+                    <img src="${pageContext.request.contextPath}/img/loginIcon.png" alt="loginIcon">
                 </div>
                 <h2 class="login__title">SIGN IN</h2>
             
@@ -107,6 +107,6 @@
          <i class="ri-close-line login__close" id="login-close"></i>
       </div>
 
-    <script src="../js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"/>
-    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" />
   </head>
   <body>
     <footer>

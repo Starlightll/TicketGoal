@@ -1,6 +1,6 @@
 <%-- 
     Document   : Homepage
-    Created on : May 17, 2024, 4:02:43 AM
+    Created on : May 18, 2024, 3:55:33 PM
     Author     : mosdd
 --%>
 
@@ -10,12 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="../css/main.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     </head>
     <body>
-        <%@include file="../include/header.jsp" %>
+        <%@include file="include/header.jsp" %>
         <main>
+            
         </main>
-        <%@include file="../include/footer.jsp" %>    
+        <%@include file="/include/footer.jsp" %>
     </body>
 </html>
