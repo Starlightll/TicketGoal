@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Homepage
-    Created on : May 17, 2024, 4:02:43 AM
+    Document   : 404_Error
+    Created on : May 18, 2024, 3:46:13 PM
     Author     : mosdd
 --%>
 
@@ -14,8 +14,11 @@
     </head>
     <body>
         <%@include file="../include/header.jsp" %>
-        <main>
+        <<main>
+            <div>
+                <h1 style="font-size: 200px; align-content: center; text-align: center">404 Error</h1>
+            </div>
         </main>
-        <%@include file="../include/footer.jsp" %>    
+        <%@include file="../include/footer.jsp" %>
     </body>
 </html>
