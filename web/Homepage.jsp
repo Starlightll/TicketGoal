@@ -1,6 +1,6 @@
 <%-- 
     Document   : Homepage
-    Created on : May 10, 2024, 9:33:32 PM
+    Created on : May 18, 2024, 3:55:33 PM
     Author     : mosdd
 --%>
 
@@ -10,8 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@include file="Views/include/header.jsp" %>
+        <main>
+            
+        </main>
+        <%@include file="Views/include/footer.jsp"%>
     </body>
 </html>
