@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
+    <servlet>
+        <servlet-name>homepageServlet</servlet-name>
+        <servlet-class>Controllers.homepageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>contactServlet</servlet-name>
+        <servlet-class>Controllers.contactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>playerDetailServlet</servlet-name>
+        <servlet-class>Controllers.Player.playerDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -9,12 +20,24 @@
         <servlet-name>shopServlet</servlet-name>
         <url-pattern>/shopServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homepageServlet</servlet-name>
+        <url-pattern>/homepageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>contactServlet</servlet-name>
+        <url-pattern>/contactServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerDetailServlet</servlet-name>
+        <url-pattern>/playerDetailServlet</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>playerServlet</servlet-name>
-        <servlet-class>Controllers.playerServlet</servlet-class>
+        <servlet-class>Controllers.Player.playerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>matchServlet</servlet-name>
@@ -28,11 +51,8 @@
         <servlet-name>playerServlet</servlet-name>
         <url-pattern>/playerServlet</url-pattern>
     </servlet-mapping>
-    
-
     <error-page>
         <error-code>404</error-code>
         <location>/404_Error.jsp</location>
     </error-page>
-
 </web-app>

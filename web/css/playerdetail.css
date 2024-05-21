@@ -1,0 +1,156 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 21, 2024, 11:06:09 PM
+    Author     : mosdd
+*/
+
+/* RESET */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: aliceblue;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.player__box{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin: 30px 80px;
+}
+
+.line__decor {
+    width: 100%;
+    height: 4.5px;
+    background-color: #00ff80;
+    margin: 0px 0px 15px 0px;
+}
+
+.title {
+    text-transform: uppercase;
+}
+
+/* Detail box */
+.detail__box{
+    width: 100%;
+}
+
+/* Info */
+
+.info {
+    margin-bottom: 20px;
+}
+
+.info__detail {
+    display: inline-block;
+    min-width: 250px;
+    font-size: 18px;
+}
+
+.info__detail td{
+    padding-bottom: 5px;
+}
+
+.text {
+    padding-left: 15px;
+}
+
+.info__detail table{
+    margin-left: 20px;
+}
+
+
+/* Image */
+.player__img {
+    width: 479px;
+    height: 574px;
+    border-radius: 10px;
+    margin: 0px 20px;
+    overflow: hidden;
+}
+
+.player__img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Biograph */
+
+.biography {
+    margin-bottom: 20px;
+}
+
+.biograph__detail {
+    display: inline-block;
+    min-height: 100px;
+    height: fit-content;
+    font-size: 19px;
+}
+
+.biograph__detail .line__decor{
+    min-width: 400px;
+}
+
+.biograph__detail p {
+    padding-left: 30px;
+}
+
+/* Skill */
+
+.skill {
+    font-size: 19px;
+}
+
+.skill__box {
+    display: inline-block;
+    width: 100%;
+}
+
+.skill .line__decor {
+    display: inline-block;
+    max-width: 1100px;
+}
+
+.skill__attribute {
+    margin-left: 20px;
+    display: flex;
+    max-width: 1000px;
+}
+
+.skill__name {
+    text-align: center;
+    align-content: center;
+}
+
+.skill__bar {
+    height: 23px;
+    background-color: rgb(58, 58, 58);
+    border-radius: 20px;
+    margin: 14px 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.skill__bar__fill {
+    height: 23px;
+    background-color: #00ff80;
+    border-radius: 30px;
+    position: relative;
+    animation: fillBars 2.5s;
+}
+
+@keyframes fillBars {
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}

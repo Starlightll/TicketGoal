@@ -96,6 +96,11 @@ footer {
     margin-top: 4px;
 }
 
+.right form textarea {
+    height: 160px;
+    resize: none;
+}
+
 .right form input:focus,
 .right form textarea:focus{
     outline-color: #00ff9d;
