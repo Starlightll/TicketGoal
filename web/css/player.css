@@ -11,6 +11,7 @@ main {
 
 div.card {
     height: 270px;
+    cursor: pointer;
 }
 
 .card__box {
@@ -29,23 +30,30 @@ div.card {
     height: 100%;
     overflow: hidden;
     border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    border: #ff0044 solid 0px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border .4s;
 }
 
 .card__content img {
     width: 100%;
-    height: 230px;
-    object-fit: cover; /* Ensure the image covers the container without distortion */
+    height: 100%;
+    object-fit: cover; 
 }
 
 .card:hover .card__content {
-    transform: scale(1.05); /* Scale up the card */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow to create lift effect */
+    transform: scale(1.05);
 }
 
-.card:hover .player__number {
-    transform: scale(1.3); /* Scale up the card */
+.card:hover .player__name {
+background: rgb(205,255,41);
+background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%);
 }
+
+
+.card:hover .player__number {
+    transform: scale(1.3);
+}
+
 
 .player__number {
     position: relative;
@@ -72,7 +80,9 @@ div.card {
     width: 100%;
     box-sizing: border-box;
     position: relative;
-    background-color: #00ff9d;
+    top: -40px;
+    background: #00ff80;
+
 }
 
 
@@ -95,6 +105,7 @@ div.card {
 
 .player__box{
     margin-left: 15rem;
+    margin-bottom: 2rem;
 }
 
 .search__box input{

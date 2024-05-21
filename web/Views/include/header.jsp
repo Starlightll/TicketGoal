@@ -84,7 +84,7 @@
                 <div class="login__group">
                     <div>
                         <label for="email" class="login__label">Email</label>
-                        <input type="email" placeholder="Enter your email" id="email" class="login__input">
+                        <input type="email" placeholder="Enter your email" id="email" class="login__input" autocomplete="on">
                     </div>
 
                     <div>
@@ -121,17 +121,17 @@
                 <div class="register__group">
                     <div>
                         <label for="email" class="register__label">Email</label>
-                        <input type="email" placeholder="Enter your email" id="email" class="register__input">
+                        <input type="email" placeholder="Enter your email" id="registerEmail" class="register__input">
                     </div>
 
                     <div>
                         <label for="password" class="register__label">Password</label>
-                        <input type="password" placeholder="Enter your password" id="password" class="register__input">
+                        <input type="password" placeholder="Enter your password" id="registerPassword" class="register__input">
                     </div>
 
                     <div>
                         <label for="password" class="register__label">Confirm password</label>
-                        <input type="password" placeholder="Confirm your password" id="password" class="register__input">
+                        <input type="password" placeholder="Confirm your password" id="confirmPassword" class="register__input">
                     </div>
                 </div>
 
