@@ -30,7 +30,10 @@
             <div class="player__box">
                 <div class="search__box">
                     <input type="text" name="search"/>
+                    <a href="#AddPlayer" class="" > <span>Add New Player</span></a>
+                    
                 </div>
+                
                 <div class="role">
                     <h1>Role name</h1>
                 </div>
@@ -44,7 +47,7 @@
                         <div class="card__content">
                             <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
                             <div class="player__name">
-                                <p>Player name</p>
+                                <span><a href="DetailPlayer">Player name</a></span>
                             </div>
                         </div>
                     </div>
