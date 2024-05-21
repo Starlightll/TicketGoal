@@ -46,8 +46,12 @@ img {
 }
 
 .container {
+    display: flex;
+    justify-content: center; 
+    height: 500px;
     max-width: 1120px;
     margin-inline: 1.5rem;
+    border: #ffffff 2px solid;
 }
 
 
