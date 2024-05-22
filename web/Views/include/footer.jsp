@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" />
   </head>
   <body>
-    <footer>
+    <footer class="footer">
       <div class="main__content">
         <!-- Left box -->
         <div class="left box">

@@ -1,6 +1,6 @@
 
 /* RESET */
-* {
+.footer * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,7 +8,7 @@
 }
 
 /* BASE STYLES */
-footer {
+footer .footer {
     position: relative;
     bottom: 0px;
     width: 100%;
@@ -18,27 +18,27 @@ footer {
 
 /* NORMAL STYLES */
 
-.main__content {
+.footer .main__content {
     display: flex;
 }
 
-.main__content .box {
+.footer .main__content .box {
     flex-basis: 50%;
     padding: 30px 20px;
 }
 
-.box h2{
+.footer .box h2{
     font-size: 1.225rem;
-    font-weight: 670;
+    font-weight: 500;
     text-transform: uppercase;
 }
 
-.box .content {
+.footer .box .content {
     margin: 20px 0 0 0;
     position: relative;
 }
 
-.box .content:before {
+.footer .box .content:before {
     position: absolute;
     top: -10px;
     content: '';
@@ -47,7 +47,7 @@ footer {
     background-color: #353535;
 }
 
-.box .content::after {
+.footer .box .content::after {
     position: absolute;
     content: '';
     height: 2px;
@@ -57,7 +57,7 @@ footer {
 
 }
 
-.center .content .ri{
+.footer .center .content .ri{
     font-size: 1.345rem;
     background: #2b2b2b;
     padding: 6.5px 6.5px;
@@ -68,25 +68,25 @@ footer {
     cursor: pointer;
 }
 
-.center .content .ri:hover{
+.footer .center .content .ri:hover{
     background: #00ff9d;
     color: #fff;
 }
 
-.center .content .text {
+.footer .center .content .text {
     font-size: 1.05rem;
     font-weight: 500;
 }
 
-.right form .msg {
+.footer .right form .msg {
     margin-top: 10px
 }
 
-.right form .text {
+.footer .right form .text {
     color: #707070;
 }
 
-.right form input, .right form textarea {
+.footer .right form input,.footer  .right form textarea {
     width: 100%;
     background-color: #141414;
     border: 2px solid #5353533f;
@@ -96,17 +96,17 @@ footer {
     margin-top: 4px;
 }
 
-.right form textarea {
+.footer .right form textarea {
     height: 160px;
     resize: none;
 }
 
-.right form input:focus,
-.right form textarea:focus{
+.footer .right form input:focus,
+.footer .right form textarea:focus{
     outline-color: #00ff9d;
 }
 
-.right form .btn button{
+.footer .right form .btn button{
     display: inline-block;
     background-color: #00C767;
     width: 20%;
@@ -122,22 +122,22 @@ footer {
     text-align: center;
 }
 
-.right form .btn button:hover{
+.footer .right form .btn button:hover{
     box-shadow: 0 1px 24px #00ff842d;
 }
 
-.bottom center {
+.footer .bottom center {
     padding: 25px;
     background-color: #141414;
 }
 
-.bottom center {
+.footer .bottom center {
     font-size: 1.05rem;
     font-weight: 500;
     color: #707070;
 }
 
-.bottom center a{
+.footer .bottom center a{
     color: #00ff9d;
     text-decoration: none;
     font-weight: 400;
@@ -147,12 +147,12 @@ footer {
 /* Media screen */
 
 @media screen and (max-width: 900px) {
-    .main__content {
+    .footer .main__content {
         flex-wrap: wrap;
         flex-direction: column;
     }
 
-    .main__content .box {
+    .footer .main__content .box {
         margin-bottom: 5px;
     }
 }

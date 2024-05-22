@@ -21,183 +21,189 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches.css" />
     </head>
     <body>
-        <%@include file="/Views/include/header.jsp" %>
+        <div class="header-container">
+            <%@include file="/Views/include/header.jsp" %>
+        </div>
         <main>
-            <form>
-                <div class="search__box">
-                    <input type="search">
-                </div>
-            </form>
-            <div class="match__box">
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
+            <div class="matches">
+                <form>
+                    <div class="search__box">
+                        <input type="search">
                     </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
-                            </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
-                            </div>
+                </form>
+                <div class="match__box">
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
-                        </div>
-                    </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
-                    </div>
-                </div>
-                
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
-                    </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
                             </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
                             </div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
                         </div>
                     </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
-                    </div>
-                </div>
-                
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
-                    </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
-                            </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
-                            </div>
+
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
-                        </div>
-                    </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
-                    </div>
-                </div>
-                
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
-                    </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
                             </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
                             </div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
                         </div>
                     </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
-                    </div>
-                </div>
-                
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
-                    </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
-                            </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
-                            </div>
+
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
-                        </div>
-                    </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
-                    </div>
-                </div>
-                
-                <div class="match">
-                    <div class="match__date">
-                        <img src="./img/matches/DateBanner.png" alt="">
-                        <div class="match__date__day">28</div>
-                        <div class="match__date__month">Aug</div>
-                    </div>
-                    <div class="match__content">
-                        <div class="club__section">
-                            <div class="club">
-                                <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                <p>Club1</p>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
                             </div>
-                            <div class="vs"><p>VS</p></div>
-                            <div class="club">
-                                <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                <p>Club2</p>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
                             </div>
                         </div>
-                        <div class="match__location">
-                            <i class="ri-map-pin-2-fill"></i>
-                            <p>SGF Stadium, London / 19:20</p>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
                         </div>
                     </div>
-                    <div class="buy__ticket">
-                        <button class="buyTicket__btn">Buy Ticket</button>
+
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
+                        </div>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
+                            </div>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
+                            </div>
+                        </div>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
+                        </div>
+                    </div>
+
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
+                        </div>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
+                            </div>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
+                            </div>
+                        </div>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
+                        </div>
+                    </div>
+
+                    <div class="match">
+                        <div class="match__date">
+                            <img src="./img/matches/DateBanner.png" alt="">
+                            <div class="match__date__day">28</div>
+                            <div class="match__date__month">Aug</div>
+                        </div>
+                        <div class="match__content">
+                            <div class="club__section">
+                                <div class="club">
+                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                                    <p>Club1</p>
+                                </div>
+                                <div class="vs"><p>VS</p></div>
+                                <div class="club">
+                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
+                                    <p>Club2</p>
+                                </div>
+                            </div>
+                            <div class="match__location">
+                                <i class="ri-map-pin-2-fill"></i>
+                                <p>SGF Stadium, London / 19:20</p>
+                            </div>
+                        </div>
+                        <div class="buy__ticket">
+                            <button class="buyTicket__btn">Buy Ticket</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
+        <div class="footer-container">
         <%@include file="/Views/include/footer.jsp" %>
+        </div>
     </body>
 </html>

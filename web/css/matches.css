@@ -9,7 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* RESET */
 
-* {
+.matches * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Search box */
-.search__box input{
+.matches .search__box input{
     width: 300px;
     background-color: #141414;
     border: 2px solid #5353533f;
@@ -27,13 +27,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 20px auto;
 }
 
-.search__box {
+.matches .search__box {
     display: flex;
     justify-content: center;
 
 }
 
-.match__box {
+.matches .match__box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,7 +44,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 }
 
-.match {
+.matches .match {
     display:flex;
     background-color: #242424;
     justify-content: space-around;
@@ -56,20 +56,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Match date */
-.match__date {
+.matches .match__date {
     width: 76px;
     height: 112px;
     position: relative;
     top: -14px;
 }
 
-.match__date img {
+.matches .match__date img {
     width: 100%;
     position: absolute;
     height: 100%;
 }
 
-.match__date__day, .match__date__month {
+.matches .match__date__day, .matches .match__date__month {
     position: relative;
     top: 20px;
     z-index: 1px;
@@ -81,7 +81,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match content */
 
-.club__section, .club{
+.matches .club__section, .matches .club{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,25 +89,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 100%;
 }
 
-.club img {
+.matches .club img {
     position: relative;
     top: -8px;
     width: 70px;
     height: 100%;
 }
 
-.club p {
+.matches .club p {
     font-size: 25px;
     padding-left: 20px;
 }
 
-.vs p{
+.matches .vs p{
     font-size: 36px;
     margin: 0 50px;
 }
 
 
-.match__content {
+.matches .match__content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,14 +117,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match location */
 
-.match__location {
+.matches .match__location {
     position: relative;
     top: -20px;
     display:flex;
     align-items: center;
 }
 
-.ri-map-pin-2-fill {
+.matches .ri-map-pin-2-fill {
     font-size: 1.5rem;
     margin-right: 10px;
     color: #00FF9D;
@@ -134,12 +134,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Buy Ticket button */
 
-.buy__ticket {
+.matches .buy__ticket {
     display: flex;
     align-items: center;
     height: 100%;
 }
-.buyTicket__btn {
+.matches .buyTicket__btn {
     width: 120px;
     height: 52px;
     background-color: #ff0044;
@@ -152,6 +152,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transition: box-shadow .4s;
 }
 
-.buyTicket__btn:hover {
+.matches .buyTicket__btn:hover {
     box-shadow: 0 1px 21px #ff4d6e5d;
 }

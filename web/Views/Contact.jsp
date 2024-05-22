@@ -11,15 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css"/>
-        <script src="./js/cont.js"></script>
     </head>
-    <body>  
-        <%@include file="/Views/include/header.jsp" %>
+    <body>
+        <div class="header-container">
+            <%@include file="/Views/include/header.jsp" %>
+        </div>
         <main>
-            <!-- Responsive Contact Page with Dark Mode and Form Validation (vanilla JS).
-
-*Designed & built for desktop and tablets with viewport width >= 720px and in landscape orientation.  -->
-
             <div class="contact-container">
                 <div class="left-col">
                 </div>
@@ -47,7 +44,7 @@
                     <div id="success-msg"></div>
                 </div>
             </div>
-
         </main>
+        <script src="./js/cont.js"></script>
     </body>
 </html>

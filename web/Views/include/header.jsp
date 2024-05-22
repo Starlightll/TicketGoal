@@ -67,11 +67,8 @@
                     <a href="#" class="btn btn--secondary">SIGN UP</a>
                 </div> -->
             </div>
-        </header>
-        <!-- Search form -->
-
-        <!-- Login -->
-        <div class="login" id="login">
+                            
+                            <div class="login" id="login">
             <div class="login__decor"></div>
 
             <!-- Login  form -->
@@ -144,6 +141,11 @@
             </form>
                 <i class="ri-close-line register__close" id="register-close"></i>
         </div>
+        </header>
+        <!-- Search form -->
+        
+        <!-- Login -->
+        
 
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
     </body>
