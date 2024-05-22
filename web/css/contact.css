@@ -23,7 +23,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   --h1-color: #FCFDFD;
 }
 
-* {
+.contact-container * {
   margin: 0;
   box-sizing: border-box;
   transition: all 0.3s ease-in-out;
@@ -36,7 +36,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   background: var(--bg-color);
 }
 
-.left-col {
+.contact-container .left-col {
   width: 45vw;
   height: 100%;
   background-image: url("https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
@@ -44,25 +44,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   background-repeat: no-repeat;
 }
 
-.logo {
+.contact-container .logo {
   width: 10rem;
   padding: 1.5rem;
 }
 
-.right-col {
+.contact-container .right-col {
   background: var(--bg-color);
   width: 50vw;
   height: 100vh;
   padding: 5rem 3.5rem;
 }
 
-h1, label, button, .description {
+.contact-container h1, .contact-container label, .contact-container button, .contact-container .description {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   letter-spacing: 0.1rem;
 }
 
-h1 {
+.contact-container h1 {
   color:var(--h1-color);
   text-transform: uppercase;
   font-size: 2.5rem;
@@ -70,7 +70,7 @@ h1 {
   font-weight: 300;
 }
 
-p {
+.contact-container p {
   color: var(--secondary-color);
   font-size: 0.9rem;
   letter-spacing: 0.01rem;
@@ -78,33 +78,33 @@ p {
   margin: 0.25rem 0;
 }
 
-label, .description {
+.contact-container label, .contact-container .description {
   color: var(--secondary-color);
   text-transform: uppercase;
   font-size: 0.625rem;
 }
 
-form {
+.contact-container form {
   width: 31.25rem;
   position: relative;
   margin-top: 2rem;
   padding: 1rem 0;
 }
 
-input, textarea, label {
+.contact-container input, .contact-container textarea,.contact-container  label {
   width: 40vw;
   display: block;
 }
 
-p, placeholder, input, textarea {
+.contact-container p, .contact-container placeholder,.contact-container  input,.contact-container  textarea {
   font-family: 'Helvetica Neue', sans-serif;
 }
 
-input::placeholder, textarea::placeholder {
+.contact-container input::placeholder,.contact-container  textarea::placeholder {
   color: var(--primary-color);
 }
 
-input, textarea {
+.contact-container input,.contact-container  textarea {
   color: var(--primary-color);
   font-weight: 500;
   background: var(--bg-color);
@@ -115,11 +115,11 @@ input, textarea {
   outline: none;
 }
 
-textarea {
+.contact-container textarea {
   resize: none;
 }
 
-button {
+.contact-container button {
   text-transform: uppercase;
   font-weight: 300;
   background: var(--button-color);
@@ -132,17 +132,17 @@ button {
   cursor: pointer;
 }
 
-input:hover, textarea:hover, button:hover {
+.contact-container input:hover,.contact-container  textarea:hover,.contact-container  button:hover {
   opacity: 0.5;
 }
 
-button:active {
+.contact-container button:active {
   opacity: 0.8;
 }
 
 /* Toggle Switch */
 
-.theme-switch-wrapper {
+.contact-container .theme-switch-wrapper {
   display: flex;
   align-items: center;
   text-align: center;
@@ -152,22 +152,22 @@ button:active {
   right: 0;
 }
 
-.description {
+.contact-container .description {
     margin-left: 1.25rem;
   }
 
-.theme-switch {
+.contact-container .theme-switch {
   display: inline-block;
   height: 34px;
   position: relative;
   width: 60px;
 }
 
-.theme-switch input {
+.contact-container .theme-switch input {
   display:none;
 }
 
-.slider {
+.contact-container .slider {
   background-color: #ccc;
   bottom: 0;
   cursor: pointer;
@@ -178,7 +178,7 @@ button:active {
   transition: .4s;
 }
 
-.slider:before {
+.contact-container .slider:before {
   background-color: #fff;
   bottom: 0.25rem;
   content: "";
@@ -189,23 +189,23 @@ button:active {
   transition: .4s;
 }
 
-input:checked + .slider {
+.contact-container input:checked +.contact-container .slider {
   background-color: var(--button-color);
 }
 
-input:checked + .slider:before {
+.contact-container input:checked +.contact-container .slider:before {
   transform: translateX(26px);
 }
 
-.slider.round {
+.contact-container .slider.round {
   border-radius: 34px;
 }
 
-.slider.round:before {
+.contact-container .slider.round:before {
   border-radius: 50%;
 }
 
-#error, #success-msg {
+.contact-container #error, .contact-container #success-msg {
   width: 40vw;
   margin: 0.125rem 0;
   font-size: 0.75rem;
@@ -215,43 +215,43 @@ input:checked + .slider:before {
   }
 
 
-  #success-msg {
+  .contact-container #success-msg {
   transition-delay: 3s;
   }
 
 @media only screen and (max-width: 950px) {
-  .logo {
+  .contact-container .logo {
     width: 8rem;
   }
-  h1 {
+  .contact-container h1 {
     font-size: 1.75rem;
   }
-  p {
+  .contact-container p {
     font-size: 0.7rem;
   }
-  input, textarea, button {
+  .contact-container input, .contact-container textarea, .contact-container button {
     font-size: 0.65rem;
   }
-  .description {
+  .contact-container .description {
     font-size: 0.3rem;
     margin-left: 0.4rem;
   }
-  button {
+  .contact-container button {
     width: 7rem;
   }
-  .theme-switch-wrapper {
+  .contact-container .theme-switch-wrapper {
     width: 120px;
   }
-  .theme-switch {
+  .contact-container .theme-switch {
   height: 28px;
   width: 50px;
 }
 
-.theme-switch input {
+.contact-container .theme-switch input {
   display:none;
 }
 
-.slider:before {
+.contact-container .slider:before {
   background-color: #fff;
   bottom: 0.25rem;
   content: "";
@@ -261,15 +261,15 @@ input:checked + .slider:before {
   position: absolute;
   transition: .4s;
 }
-  input:checked + .slider:before {
+  .contact-container input:checked + .contact-container .slider:before {
   transform: translateX(16px);
 }
 
-.slider.round {
+.contact-container .slider.round {
   border-radius: 15px;
 }
 
-.slider.round:before {
+.contact-container .slider.round:before {
   border-radius: 50%;
 }
 

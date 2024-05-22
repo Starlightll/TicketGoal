@@ -1,51 +1,39 @@
 
 /*RESET*/
 
-* {
+.header * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: #ffffff;
 }
 
 /* BASE STYLES */
 
 /* Main section */
-    main{
-        color: #ffffff  ;
-        background-color: #0F0F0F;
-    }
 
-html {
-    scroll-behavior: smooth;
-}
-
-a {
+.header a {
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
 
-ul {
+.header ul {
     list-style: none;
 }
 
-body {
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-}
-
-input,
-button {
+.header input,
+.header button {
     border: none;
     outline: none;
 }
 
-img {
+.header img {
     display: block;
     max-width: 100%;
     height: auto;
 }
 
-.container {
+.header .container {
     max-width: 1120px;
     margin-inline: 1.5rem;
 }
@@ -63,11 +51,11 @@ img {
     z-index: 100;
 }
 
-.nav__link {
+.header .nav__link {
     color: rgb(240, 248, 255);
 }
 
-.nav {
+.header .nav {
     height: 3.5rem;
     display: flex;
     justify-content: space-between;
@@ -75,32 +63,32 @@ img {
     margin: 0 3%;
 }
 
-.nav__logo {
+.header .nav__logo {
     width: 200px;
     transition: color .4s;
 }
 
-.nav__actions {
+.header .nav__actions {
     display: flex;
     align-items: center;
     column-gap: 1rem;
 }
 
-.nav__cart,
-.nav__login,
-.nav__toggle,
-.nav__close {
+.header .nav__cart,
+.header .nav__login,
+.header .nav__toggle,
+.header .nav__close {
     font-size: 1.5rem;
     color: #ffffff;
     cursor: pointer;
 }
 
-:is(.nav__logo, .nav__cart, .nav__login, .nav__toggle, .nav__link):hover {
+:is(.header .nav__logo,.header .nav__cart,.header .nav__login,.header .nav__toggle,.header .nav__link):hover {
     color: rgb(0, 255, 157);
 }
 
 @media screen and (max-width: 1023px) {
-    .nav__menu {
+.header .nav__menu {
         position: fixed;
         top: -100%;
         left: 0;
@@ -111,32 +99,32 @@ img {
     }
 }
 
-.nav__list {
+.header .nav__list {
     display: flex;
     flex-direction: column;
     row-gap: 2.5rem;
     text-align: center;
 }
 
-.nav__link {
+.header .nav__link {
     color: rgb(255, 255, 255);
     font-weight: 500;
     transition: color .4s;
 }
 
-.nav__close {
+.header .nav__close {
     position: absolute;
     top: 1.15rem;
     right: 1.5rem;
 }
 
-.show-menu {
+.header .show-menu {
     top: 0;
 }
 
 /* Login */
 
-.login{
+.header .login{
     position: fixed;
     top: 0;
     left: 0;
@@ -152,7 +140,7 @@ img {
     transition: opacity .4s;
 }
 
-.login__close{
+.header .login__close{
     position: absolute;
     top: 2rem;
     right: 2rem;
@@ -161,12 +149,12 @@ img {
     cursor: pointer;
 }
 
-.login__form,
-.login__group{
+.header .login__form,
+.header .login__group{
     display: grid;
 }
 
-.login__form {
+.header .login__form {
     background-color: #232323;
     padding: 2rem;
     border-bottom-left-radius: 0.5rem;
@@ -177,7 +165,7 @@ img {
     transition: transform .9s;
 }
 
-.login__decor {
+.header .login__decor {
     background-color: #00C767;
     height: 16px;
     border-top-left-radius: 0.5rem;
@@ -186,17 +174,17 @@ img {
     transition: transform .9s;
 }
 
-.login__title {
+.header .login__title {
     font-size: 2rem;
     color: aliceblue;
     font-weight: 500;
 }
 
-.login__group {
+.header .login__group {
     row-gap: 1rem;
 }
 
-.login__label {
+.header .login__label {
     display: block;
     text-align: initial;
     color: aliceblue;
@@ -204,7 +192,7 @@ img {
     margin-bottom: .25rem;
 }
 
-.login__input {
+.header .login__input {
     width: 100%;
     background-color: #343434;
     border: 2px solid #ffffff2c;
@@ -213,31 +201,31 @@ img {
     color: #ffffff;
 }
 
-.login__icon {
+.header .login__icon {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login__input::placeholder {
+.header .login__input::placeholder {
     color: #505050;
 }
 
-.login__signup {
+.header .login__signup {
     margin-bottom: .5rem;
 }
 
-.login__signup a{
+.header .login__signup a{
     color: rgb(0, 255, 191);
 }
 
-.login__forgot {
+.header .login__forgot {
     display: inline-block;
     color: rgb(0, 255, 191);
     margin-bottom: 1.25rem;
 }
 
-.login__button {
+.header .login__button {
     display: inline-block;
     background-color: #00C767;
     width: 100%;
@@ -250,27 +238,27 @@ img {
     transition: box-shadow .4s;
 }
 
-.login__button:hover {
+.header .login__button:hover {
     box-shadow: 0 1px 24px #00ff842d;
 }
 
 /* show login */
-.show-login {
+.header .show-login {
     opacity: 1;
     pointer-events: auto;
 }
 
-.show-login .login__form {
+.header .show-login .login__form {
     transform: translateY(0);
 }
 
-.show-login .login__decor {
+.header .show-login .login__decor {
     transform: translateY(0);
 }
 
 /* Register */
 
-.register{
+.header .register{
     position: fixed;
     top: 0;
     left: 0;
@@ -286,7 +274,7 @@ img {
     transition: opacity .4s;
 }
 
-.register__close{
+.header .register__close{
     position: absolute;
     top: 2rem;
     right: 2rem;
@@ -295,12 +283,12 @@ img {
     cursor: pointer;
 }
 
-.register__form,
-.register__group{
+.header .register__form,
+.header .register__group{
     display: grid;
 }
 
-.register__form {
+.header .register__form {
     background-color: #232323;
     padding: 2rem;
     border-bottom-left-radius: 0.5rem;
@@ -311,7 +299,7 @@ img {
     transition: transform .9s;
 }
 
-.register__decor {
+.header .register__decor {
     background-color: #00C767;
     height: 16px;
     border-top-left-radius: 0.5rem;
@@ -320,17 +308,17 @@ img {
     transition: transform .9s;
 }
 
-.register__title {
+.header .register__title {
     font-size: 2rem;
     color: aliceblue;
     font-weight: 500;
 }
 
-.register__group {
+.header .register__group {
     row-gap: 1rem;
 }
 
-.register__label {
+.header .register__label {
     display: block;
     text-align: initial;
     color: aliceblue;
@@ -338,7 +326,7 @@ img {
     margin-bottom: .25rem;
 }
 
-.register__input {
+.header .register__input {
     width: 100%;
     background-color: #343434;
     border: 2px solid #ffffff2c;
@@ -347,26 +335,26 @@ img {
     color: #ffffff;
 }
 
-.login__icon {
+.header .login__icon {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.register__input::placeholder {
+.header .register__input::placeholder {
     color: #505050;
 }
 
-.register__signin {
+.header .register__signin {
     margin-bottom: .5rem;
 }
 
-.register__signin a{
+.header .register__signin a{
     color: rgb(0, 255, 191);
 }
 
 
-.register__button {
+.header .register__button {
     display: inline-block;
     background-color: #00C767;
     width: 100%;
@@ -379,21 +367,21 @@ img {
     transition: box-shadow .4s;
 }
 
-.register__button:hover {
+.header .register__button:hover {
     box-shadow: 0 1px 24px #00ff842d;
 }
 
 /* show register */
-.show-register {
+.header .show-register {
     opacity: 1;
     pointer-events: auto;
 }
 
-.show-register .register__form {
+.header .show-register .register__form {
     transform: translateY(0);
 }
 
-.show-register .register__decor {
+.header .show-register .register__decor {
     transform: translateY(0);
 }
 
@@ -402,11 +390,11 @@ img {
 
 /* Medium device */
 @media screen and (min-width: 576px) {
-    .login {
+    .header .login {
         padding-top: 10rem;
     }
 
-    .login__close {
+    .header .login__close {
         width: max-content;
         top: 5rem;
         left: 0;
@@ -415,22 +403,22 @@ img {
         font-size: 2rem;
     }
 
-    .login__form {
+    .header .login__form {
         max-width: 400px;
         margin-inline: auto;
     }
 
-    .login__decor {
+    .header .login__decor {
         max-width: 400px;
         margin-inline: auto;
     }
     
     /* Register */
-    .register {
+    .header .register {
         padding-top: 10rem;
     }
 
-    .register__close {
+    .header .register__close {
         width: max-content;
         top: 5rem;
         left: 0;
@@ -439,58 +427,58 @@ img {
         font-size: 2rem;
     }
 
-    .register__form {
+    .header .register__form {
         max-width: 400px;
         margin-inline: auto;
     }
 
-    .register__decor {
+    .header .register__decor {
         max-width: 400px;
         margin-inline: auto;
     }
 }
 
-.join__button {
+.header .join__button {
     display: none;
 }
 
 /* Large device */
 @media screen and (min-width: 1023px){
-    .nav{
+    .header .nav{
         height: calc(3.5rem + 1rem);
     }
 
-    .nav__close,
-    .nav__toggle{
+    .header .nav__close,
+    .header .nav__toggle{
         display: none;
     }
 
-    .nav__menu{
+    .header .nav__menu{
         margin-left: auto;
         width: 100%;
         display: flex;
         justify-content: center;
     }
 
-    .nav__list{
+    .header .nav__list{
         flex-direction: row;
         column-gap: 3rem;
 
     }
 
-    .login__form{
+    .header .login__form{
         padding: 3rem; 
     }
     
-    .register__form {
+    .header .register__form {
         padding: 3rem;
     }
 
-    .nav__login {
+    .header .nav__login {
         display: none;
     }
 
-    .join__button {
+    .header .join__button {
         display: inline-block;
         background-color: #00C767;
         width: 160px;
@@ -505,11 +493,11 @@ img {
     }
 
     
-    .join__button:hover {
+    .header .join__button:hover {
         box-shadow: 0 1px 24px #00ff842d;
     }
 
-    .nav__link {
+    .header .nav__link {
         font-size: 1.2rem;
         font-weight: 400;
     }

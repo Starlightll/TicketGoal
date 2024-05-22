@@ -14,60 +14,64 @@
         <link rel="stylesheet" href="./css/player.css"/>
     </head>
     <body>
-        <%@include file="/Views/include/header.jsp" %>
+        <div class="header-container">
+            <%@include file="/Views/include/header.jsp" %>
+        </div>
         <main>
-            <div class="sidebar__box">    
-                <form method="POST">
-                    <select name="role">
-                        <option>Goalkeeper</option>
-                        <option>Defender</option>
-                    </select>
-                </form>
-            </div>
-
-            <div class="player__box">
-                <div class="search__box">
-                    <input type="text" name="search"/>
+            <div class="player">
+                <div class="sidebar__box">    
+                    <form method="POST">
+                        <select name="role">
+                            <option>Goalkeeper</option>
+                            <option>Defender</option>
+                        </select>
+                    </form>
                 </div>
-                <div class="role">
-                    <h1>Role name</h1>
-                </div>
-                <div class="card__box">
-                    
-                    <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                    <div class="card">
-                        <div class="player__number">
-                            <p>99</p>
-                            <img src="./img/player/numberBanner.png"/>
-                        </div>
-                        <div class="card__content">
-                            <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
-                            <div class="player__name">
-                                <p>Player name</p>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                    
-                    <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                    <div class="card">
-                        <div class="player__number">
-                            <p>99</p>
-                            <img src="./img/player/numberBanner.png"/>
-                        </div>
-                        <div class="card__content">
-                            <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
-                            <div class="player__name">
-                                <p>Player name</p>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
 
+                <div class="player__box">
+                    <div class="search__box">
+                        <input type="text" name="search"/>
+                    </div>
+                    <div class="role">
+                        <h1>Role name</h1>
+                    </div>
+                    <div class="card__box">
 
+                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
+                            <div class="card">
+                                <div class="player__number">
+                                    <p>99</p>
+                                    <img src="./img/player/numberBanner.png"/>
+                                </div>
+                                <div class="card__content">
+                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
+                                    <div class="player__name">
+                                        <p>Player name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
+                            <div class="card">
+                                <div class="player__number">
+                                    <p>99</p>
+                                    <img src="./img/player/numberBanner.png"/>
+                                </div>
+                                <div class="card__content">
+                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
+                                    <div class="player__name">
+                                        <p>Player name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </main>
+        <div class="footer-container">
         <%@include file="/Views/include/footer.jsp" %>
+        </div>
     </body>
 </html>
