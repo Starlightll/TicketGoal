@@ -13,14 +13,18 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     </head>
     <body>
-        <%@include file="/Views/include/header.jsp" %>
+        <div class="header-container">
+            <%@include file="/Views/include/header.jsp" %>
+        </div>
         <main>
             <div style="text-align: center">
                 <h1 style="font-size: 180px; align-content: center; text-align: center">404 Error</h1>
                 <p>Sorry, the page you are looking for does not exist.</p>
-                <a href="${pageContext.request.contextPath}/Homepage.jsp">Go to Home Page</a>
+                <a href="/homepageServlet">Go to Home Page</a>
             </div>
         </main>
+        <div class="footer-container">
         <%@include file="/Views/include/footer.jsp" %>
+        </div>
     </body>
 </html>

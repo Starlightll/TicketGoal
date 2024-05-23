@@ -8,7 +8,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 
-* {
+main * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -19,6 +19,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 html, body {
     height: 100%;
     margin: 0;
+    background-color: #0F0F0F;
+    
 }
 
 html {
@@ -26,16 +28,10 @@ html {
 }
 
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
 main {
     flex: 1;
     padding-top: 72px;
-    background-color: #0F0F0F;
+    height: 100%;
 }
 
 .footer-container footer {
@@ -49,7 +45,6 @@ main {
     main {
     padding-top: 56px;
     }
-    
     
 }
 
