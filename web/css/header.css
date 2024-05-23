@@ -1,7 +1,7 @@
 
 /*RESET*/
 
-.header * {
+.header  {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -83,9 +83,10 @@
     cursor: pointer;
 }
 
-:is(.header .nav__logo,.header .nav__cart,.header .nav__login,.header .nav__toggle,.header .nav__link):hover {
+:is(.header .nav__logo,.header .nav__cart,.header .nav__login,.header .nav__toggle,.header .nav__link):hover{
     color: rgb(0, 255, 157);
 }
+
 
 @media screen and (max-width: 1023px) {
 .header .nav__menu {
@@ -117,6 +118,8 @@
     top: 1.15rem;
     right: 1.5rem;
 }
+
+
 
 .header .show-menu {
     top: 0;

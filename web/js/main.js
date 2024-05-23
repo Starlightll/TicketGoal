@@ -1,16 +1,15 @@
 const navMenu = document.getElementById('nav-menu'),
     navToggle = document.getElementById('nav-toggle'),
-    navClose = document.getElementById('nav-close')
+    navClose = document.getElementById('nav-close');
 
     //Show menu
     navToggle.addEventListener('click', () => {
-        navMenu.classList.add('show-menu')
-    })
-
+        navMenu.classList.add('show-menu');
+    });
     //Hide menu
     navClose.addEventListener('click', () => {
-        navMenu.classList.remove('show-menu')
-    })
+        navMenu.classList.remove('show-menu');
+    });
 
 
     //Login
@@ -21,7 +20,7 @@ const login = document.getElementById('login'),
     register = document.getElementById('register'),
     registerButton = document.getElementById('register-button'),
     registerClose = document.getElementById('register-close'),
-    signinButton = document.getElementById('signin-button')
+    signinButton = document.getElementById('signin-button');
     // Login show
     loginBtn.addEventListener('click', () => {
         login.classList.add('show-login');
@@ -48,7 +47,6 @@ const login = document.getElementById('login'),
     
     signinButton.addEventListener('click', () => {
         register.classList.remove('show-register');
-        login.classList.add('show-login')
-    })
+        login.classList.add('show-login');
+    });
     
-

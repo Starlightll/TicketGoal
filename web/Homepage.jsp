@@ -13,10 +13,14 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     </head>
     <body>
-        <%@include file="Views/include/header.jsp" %>
+        <div class="header-container">
+            <%@include file="/Views/include/header.jsp" %>
+        </div>
         <main>
             
         </main>
-        <%@include file="Views/include/footer.jsp"%>
+        <div class="footer-container">
+        <%@include file="/Views/include/footer.jsp" %>
+        </div>
     </body>
 </html>
