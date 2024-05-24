@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controllers.Player;
+package Controllers.Admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author mosdd
  */
-public class playerServlet extends HttpServlet {
+public class playerManagementServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +33,10 @@ public class playerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet playerServlet</title>");  
+            out.println("<title>Servlet playerManagementServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet playerServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet playerManagementServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +53,19 @@ public class playerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("/Views/Player/Player.jsp").forward(request, response);
+        try{
+            String option = request.getParameter("option");
+            if(option.equalsIgnoreCase("update")){
+                request.setAttribute("page", "/Views/Admin/Player/UpdatePlayer.jsp");
+            } else if (option.equalsIgnoreCase("add")){
+                request.setAttribute("page", "/Views/Admin/Player/AddPlayer.jsp");
+            } else if (option.equalsIgnoreCase("delete")) {
+                request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
+            }
+        }catch(Exception e){
+            request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
+        }
+        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     } 
 
     /** 

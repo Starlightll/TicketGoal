@@ -37,10 +37,13 @@
                                 <a href="<c:url value='/matchManagementServlet'/>" class="dropdown__link">
                                     Match management
                                 </a>
+                                <a href="<c:url value='/pitchManagementServlet'/>" class="dropdown__link">
+                                    Pitch management
+                                </a>
                                 <a href="<c:url value='/homepageServlet'/>" class="dropdown__link">
                                     Seat management
                                 </a>
-                                <a href="<c:url value='/homepageServlet'/>" class="dropdown__link">
+                                <a href="<c:url value='/playerManagementServlet'/>" class="dropdown__link">
                                     Player management
                                 </a>
                             </div>

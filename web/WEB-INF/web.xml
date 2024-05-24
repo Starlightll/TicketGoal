@@ -16,6 +16,10 @@
         <servlet-name>matchManagementServlet</servlet-name>
         <servlet-class>Controllers.Admin.matchManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>playerManagementServlet</servlet-name>
+        <servlet-class>Controllers.Admin.playerManagementServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>matchManagementServlet</servlet-name>
         <url-pattern>/matchManagementServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerManagementServlet</servlet-name>
+        <url-pattern>/playerManagementServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
