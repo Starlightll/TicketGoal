@@ -46,7 +46,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .matches .match {
     display:flex;
-    background-color: #242424;
+    background-color: #333333;
     justify-content: space-around;
     color: aliceblue;
     width: 980px;

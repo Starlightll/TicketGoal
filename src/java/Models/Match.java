@@ -4,10 +4,21 @@
  */
 package Models;
 
+import java.util.Date;
+
 /**
  *
  * @author mosdd
  */
 public class Match {
+    public int matchId;
+    public Date schedule;
+    public int pitchId;
+    public int matchStatusId;
+    public int club1;
+    public int club2;
+    public String location;
+    
+    
     
 }
