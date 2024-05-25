@@ -67,16 +67,12 @@
                         
                     </div>
                 </div>
-            </form>
-            <form>
                 <div class="area__add__box" id="area-add-box">
                     <div class="box">
                         Name: <input type="text" name="areaName">
                         <button type="button" class="add__button" id="area-add-submit-button">Add</button>
                     </div>
                 </div>
-            </form>
-            <form>
                 <div class="seat__management__box" id="seat-management-box">
                     <div class="seat__management__header">
                         <div class="seat__management__search">
@@ -89,10 +85,11 @@
                             </select>
                         </div>
                         <div class="seat__management__import">
-                            <button class="import__excel">Import</button>
-                            <button class="add__button">Add</button>
-                            <button class="update__all">Update All</button>
-                            <button class="delete__all">Delete All</button>
+                            <button class="import__excel">Import</button> <!-- Import từ excel theo form cột số của ghế, cột 2 giá, Area Id tự động lấy từ phần area trong phần pitch, 
+                                                                          trạng thái(status) mới thêm luôn là not available-->
+                            <button class="add__button">Add</button> <!--Tương tự trên nhập số ghế và nhập giá !-->
+                            <button class="update__all">Update All</button> <!-- Chưa cần làm-->
+                            <button class="delete__all">Delete All</button> <!-- Chưa cần làm -->
                         </div>
                     </div>
                     <div class="seat__table">
@@ -102,25 +99,37 @@
                                 <th>Seat Number</th>
                                 <th>Price</th>
                                 <th>Status</th>
+                                <th>Manager</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
                                 <td>220</td>
-                                <td>Available</td>
+                                <td>NotAvailable</td>
+                                <td>
+                                    <button class="update__button">Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
+                                    <button class="delete__button">Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>210</td>
-                                <td>Available</td>
+                                <td>NotAvailable</td>
+                                <td>
+                                    <button>Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
+                                    <button>Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+                </div><!-- Sử dụng Ajax để gọi servlet tránh mất data của form add pitch, lưu data vào biến tạm thời để hiển thị trong phần Area của add Pitch,
+                            khi submit form của add Pitch thì mới add vô database -->
+                    <button type="button" id="seat-management-submit-button">Submit</button> 
+                    <button type="button" id="seat-management-cancel-button">Cancel</button>
                 </div>
-                    <button type="button" id="seat-management-submit-button">Submit</button>
-                </div>
-            </form>
+                <button type="submit">Add Pitch</button>
+           </form>
         </div>
        <script src="${pageContext.request.contextPath}/js/admin/pitch/addpitch.js"></script>
     </body>

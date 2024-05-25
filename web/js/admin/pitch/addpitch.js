@@ -30,13 +30,18 @@ uploadStructure.onchange = () => {
 
 const seatManagementBox = document.getElementById("seat-management-box"),
 seatManagementBtn = document.getElementById("seat-management-button"),
-seatManagementSubmitBtn = document.getElementById("seat-management-submit-button");
+seatManagementSubmitBtn = document.getElementById("seat-management-submit-button"),
+seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
 
 seatManagementBtn.addEventListener('click',() => {
     seatManagementBox.classList.add('show-seat-management-box');
 });
 
 seatManagementSubmitBtn.addEventListener('click', () => {
+   seatManagementBox.classList.remove("show-seat-management-box") 
+});
+
+seatManagementCancelBtn.addEventListener('click', () => {
    seatManagementBox.classList.remove("show-seat-management-box") 
 });
 
