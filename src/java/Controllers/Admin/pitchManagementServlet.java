@@ -56,11 +56,11 @@ public class pitchManagementServlet extends HttpServlet {
         try{
             String option = request.getParameter("option");
             if(option.equalsIgnoreCase("update")){
-                request.setAttribute("page", "/Views/Admin/Player/UpdatePlayer.jsp");
+                request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
             } else if (option.equalsIgnoreCase("add")){
                 request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
             } else if (option.equalsIgnoreCase("delete")) {
-                request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
+                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
             }
         }catch(Exception e){
             request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
