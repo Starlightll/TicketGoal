@@ -51,7 +51,7 @@
                 </div>
                 <div class="area__container">
                     <div class="add__button">
-                        <button type="submit">Add</button>
+                        <button type="button" id="area-add-button">Add</button>
                     </div>
                     <div class="area__box">
                         <div class="area">
@@ -59,23 +59,66 @@
                                 Area Name
                             </p>
                             <div class="area__management">
-                                <button class="seat__management">Seat</button>
-                                <button class="update__button">Update</button>
-                                <button class="delete__button">Delete</button>
-                            </div>
-                        </div>
-                        <div class="area">
-                            <p class="area__name">
-                                Area Name
-                            </p>
-                            <div class="area__management">
-                                <button class="seat__management">Seat</button>
+                                <button type="button" class="seat__management" id="seat-management-button">Seat</button>
                                 <button class="update__button">Update</button>
                                 <button class="delete__button">Delete</button>
                             </div>
                         </div>
                         
                     </div>
+                </div>
+            </form>
+            <form>
+                <div class="area__add__box" id="area-add-box">
+                    <div class="box">
+                        Name: <input type="text" name="areaName">
+                        <button type="button" class="add__button" id="area-add-submit-button">Add</button>
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div class="seat__management__box" id="seat-management-box">
+                    <div class="seat__management__header">
+                        <div class="seat__management__search">
+                            <input type="search" name="searchInput">
+                            <select name="seatCategory">
+                                <option value="1">Price Increase</option>
+                                <option value="2">Price Decrease</option>
+                                <option value="3">Number Increase</option>
+                                <option value="4">Number Decrease</option>
+                            </select>
+                        </div>
+                        <div class="seat__management__import">
+                            <button class="import__excel">Import</button>
+                            <button class="add__button">Add</button>
+                            <button class="update__all">Update All</button>
+                            <button class="delete__all">Delete All</button>
+                        </div>
+                    </div>
+                    <div class="seat__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Seat Number</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>220</td>
+                                <td>Available</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>210</td>
+                                <td>Available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <button type="button" id="seat-management-submit-button">Submit</button>
                 </div>
             </form>
         </div>

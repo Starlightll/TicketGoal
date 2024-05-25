@@ -26,6 +26,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 20px;
 }
 
+.add__pitch .pitch__container .pitch__info table td{
+    border: none;
+}
 
 .add__pitch .pitch__container .pitch__info .pitch__name {
    margin: 20px 0;
@@ -175,4 +178,127 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .add__pitch .area__container .area__box .area__management .delete__button {
     background-color: red;
+}
+
+/* Seat table */
+
+.add__pitch .seat__management__box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(22, 25, 34, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    pointer-events: none;
+    padding: 8rem 1.5rem 0;
+    opacity: 0;
+    transition: opacity .4s;
+}
+
+.add__pitch form .show-seat-management-box{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add__pitch .seat__management__box .seat__management__header {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10px auto; 
+}
+
+.add__pitch .seat__table {
+    width: 80%;
+    max-height: 400px;
+    overflow-y: scroll; 
+    margin: 10px auto;
+}
+
+.add__pitch .seat__table table {
+    width: 100%;
+    border: #fff solid 1px;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+.add__pitch .seat__table table th {
+    position: sticky;
+    top: 0px;
+    background-color: #00C767;
+    color: #fff;
+}
+
+.add__pitch .seat__table table th, td{
+    color: #fff;
+    border: 1px #ffffff solid;
+}
+
+
+/* Area add box */
+.add__pitch  form .area__add__box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(22, 25, 34, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s;
+}
+
+.add__pitch form .show-area-add-box {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add__pitch .area__add__box .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0px 1px 10px #1A1919;
+    width: 500px;
+    height: 150px;
+    align-content: center;
+    color: black;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.add__pitch .area__add__box .box input {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: #636363 2px solid;
+    padding: 0 10px;
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.add__pitch .area__add__box .box button {
+    width: 100px;
+    height: 40px;
+    background-color: #00C767;
+    box-shadow: 0 0.5px 10px #8d8d8d;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 20px;
+    transition: 0.3s;
+    margin-left: 30px;
+}
+
+.add__pitch .area__add__box .box button:hover {
+    transform: scale(1.1)
 }

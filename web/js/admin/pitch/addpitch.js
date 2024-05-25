@@ -27,3 +27,27 @@ uploadStructure.onchange = () => {
         uploadedStructure.setAttribute("src", reader.result);
     }
 }
+
+const seatManagementBox = document.getElementById("seat-management-box"),
+seatManagementBtn = document.getElementById("seat-management-button"),
+seatManagementSubmitBtn = document.getElementById("seat-management-submit-button");
+
+seatManagementBtn.addEventListener('click',() => {
+    seatManagementBox.classList.add('show-seat-management-box');
+});
+
+seatManagementSubmitBtn.addEventListener('click', () => {
+   seatManagementBox.classList.remove("show-seat-management-box") 
+});
+
+const areaAddBtn = document.getElementById("area-add-button"),
+areaAddBox = document.getElementById("area-add-box"),
+areaAddSubmitBtn = document.getElementById("area-add-submit-button");
+
+areaAddBtn.addEventListener('click', () => {
+    areaAddBox.classList.add("show-area-add-box");
+})
+
+areaAddSubmitBtn.addEventListener('click', () => {
+    areaAddBox.classList.remove("show-area-add-box");
+})
