@@ -35,7 +35,7 @@
                             </tr>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
-                                <td><img id="uploaded-structure" src="" alt="">
+                                <td><img id="uploaded-structure" name="pitchStructure" src="" alt="">
                                     <input id="upload-structure" type="file" name="pitchStructure" accept="image/*">
                                     <label for="upload-structure"><i class="ri-upload-2-line"></i>Upload Structure</label>
                                 </td>
@@ -43,7 +43,7 @@
                         </table>
                     </div>
                     <div class="pitch__image">
-                        <img id="uploaded-image" src="" alt="">
+                        <img id="uploaded-image" name="pitchImage" src="" alt="">
                         <input type="file" id="upload-button" accept="image/*">
                         <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>

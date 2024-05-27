@@ -25,7 +25,10 @@
                     <h1>Role name</h1>
                 </div>
                 <div class="card__box">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
                     <div>
                         <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
                             <div class="card">

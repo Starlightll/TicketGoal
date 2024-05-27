@@ -38,7 +38,11 @@
         <property file="nbproject/private/private.properties"/>
     </target>
     <target name="-pre-init-libraries">
+<<<<<<< HEAD
         <property location=".\lib\nblibraries.properties" name="libraries.path"/>
+=======
+        <property location="lib\nblibraries.properties" name="libraries.path"/>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
         <dirname file="${libraries.path}" property="libraries.dir.nativedirsep"/>
         <pathconvert dirsep="/" property="libraries.dir">
             <path path="${libraries.dir.nativedirsep}"/>

@@ -311,6 +311,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .update__pitch .area__add__box .box button:hover {
     transform: scale(1.1)
 }
+<<<<<<< HEAD
 
 /* Styles for the overlay */
 .overlay {
@@ -375,3 +376,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .form__container button:hover {
     background: #0056b3;
 }
+=======
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13

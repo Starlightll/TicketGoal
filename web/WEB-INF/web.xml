@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
+<<<<<<< HEAD
         <servlet-name>SeatServlet</servlet-name>
         <servlet-class>Controllers.SeatServlet</servlet-class>
     </servlet>
     <servlet>
+=======
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
         <servlet-name>homepageServlet</servlet-name>
         <servlet-class>Controllers.homepageServlet</servlet-class>
     </servlet>
@@ -28,6 +31,17 @@
         <servlet-name>pitchManagementServlet</servlet-name>
         <servlet-class>Controllers.Admin.pitchManagementServlet</servlet-class>
     </servlet>
+<<<<<<< HEAD
+=======
+    <servlet>
+        <servlet-name>addPitchServlet</servlet-name>
+        <servlet-class>Controllers.Admin.addPitchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updatePitchServlet</servlet-name>
+        <servlet-class>Controllers.Admin.updatePitchServlet</servlet-class>
+    </servlet>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -37,10 +51,13 @@
         <url-pattern>/shopServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>SeatServlet</servlet-name>
         <url-pattern>/seat</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+=======
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
         <servlet-name>homepageServlet</servlet-name>
         <url-pattern>/homepageServlet</url-pattern>
     </servlet-mapping>
@@ -64,6 +81,17 @@
         <servlet-name>pitchManagementServlet</servlet-name>
         <url-pattern>/pitchManagementServlet</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
+=======
+    <servlet-mapping>
+        <servlet-name>addPitchServlet</servlet-name>
+        <url-pattern>/addPitchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatePitchServlet</servlet-name>
+        <url-pattern>/updatePitchServlet</url-pattern>
+    </servlet-mapping>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
     </welcome-file-list>

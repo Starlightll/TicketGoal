@@ -3,7 +3,11 @@
     Created on : May 25, 2024, 7:50:09 AM
     Author     : mosdd
 --%>
+<<<<<<< HEAD
 
+=======
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,6 +22,7 @@
                 <form>
                     <input type="search">
                 </form>
+<<<<<<< HEAD
                 <button onclick="location.href='${pageContext.request.contextPath}/pitchManagementServlet?option=add'" class="add__button">Add</button>
             </div>
             <div class="line__decor"></div>
@@ -48,6 +53,15 @@
                 </div>
                     <div class="pitch">
                         <img src="${pageContext.request.contextPath}/img/pitch/pitch1.jpeg"/>
+=======
+                <button onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=add'" class="add__button">Add</button>
+            </div>
+            <div class="line__decor"></div>
+            <div class="pitch__box">
+                <c:forEach items="${requestScope.pitchList}" var="pitch">
+                    <div class="pitch">
+                        <img name="pitchImage" src="data:image/jpeg;base64,${pitch.image}"/>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
                         <div class="pitch__area">
                             <div class="area">
                                 <div class="area__name">C1</div>
@@ -63,6 +77,7 @@
                             </div>
                         </div>
                         <div class="pitch__manager__option">
+<<<<<<< HEAD
                             <button class="update__button" onclick="location.href=''">Update</button>
                             <button class="delete__button" onclick="location.href=''">Delete</button>
                         </div>
@@ -70,6 +85,16 @@
                             <p>Pitch name</p>
                         </div>
                     </div>
+=======
+                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update&pitchId=${pitch.pitchId}'">Update</button>
+                            <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'">Delete</button>
+                        </div>
+                        <div class="pitch__name">
+                            <p><c:out value="${pitch.pitchName}"></c:out></p>
+                        </div>
+                    </div>
+                </c:forEach>
+>>>>>>> 5eafebbf9d183326c8afb8c2c1f827a73f78db13
             </div>
         </div>
     </body>
