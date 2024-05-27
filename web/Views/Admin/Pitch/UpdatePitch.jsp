@@ -15,7 +15,6 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
             rel="stylesheet"/>
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/pitch/updatepitch.css">
     </head>
@@ -36,7 +35,7 @@
                             </tr>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
-                                <td><img id="uploaded-structure" src="" alt="">
+                                <td><img id="uploaded-structure" name="pitchStructure" src="" alt="">
                                     <input id="upload-structure" type="file" name="pitchStructure" accept="image/*">
                                     <label for="upload-structure"><i class="ri-upload-2-line"></i>Upload Structure</label>
                                 </td>
@@ -44,7 +43,7 @@
                         </table>
                     </div>
                     <div class="pitch__image">
-                        <img id="uploaded-image" src="" alt="">
+                        <img id="uploaded-image" name="pitchImage" src="" alt="">
                         <input type="file" id="upload-button" accept="image/*">
                         <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>
@@ -64,7 +63,6 @@
                                 <button class="delete__button">Delete</button>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="area__add__box" id="area-add-box">
@@ -87,50 +85,72 @@
                         <div class="seat__management__import">
                             <button class="import__excel">Import</button> <!-- Import từ excel theo form cột số của ghế, cột 2 giá, Area Id tự động lấy từ phần area trong phần pitch, 
                                                                           trạng thái(status) mới thêm luôn là not available-->
-                            <button class="add__button">Add</button> <!--Tương tự trên nhập số ghế và nhập giá !-->
+                            <button type="button" class="add__button" id="seat-add-button">Add Seat</button>
                             <button class="update__all">Update All</button> <!-- Chưa cần làm-->
                             <button class="delete__all">Delete All</button> <!-- Chưa cần làm -->
                         </div>
                     </div>
                     <div class="seat__table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Seat Number</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Manager</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>220</td>
-                                <td>NotAvailable</td>
-                                <td>
-                                    <button class="update__button">Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
-                                    <button class="delete__button">Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>210</td>
-                                <td>NotAvailable</td>
-                                <td>
-                                    <button>Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
-                                    <button>Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- Sử dụng Ajax để gọi servlet tránh mất data của form add pitch, lưu data vào biến tạm thời để hiển thị trong phần Area của add Pitch,
-                            khi submit form của add Pitch thì mới add vô database -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Seat Number</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Manager</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>220</td>
+                                    <td>NotAvailable</td>
+                                    <td>
+                                        <button class="update__button">Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
+                                        <button class="delete__button">Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>210</td>
+                                    <td>NotAvailable</td>
+                                    <td>
+                                        <button>Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
+                                        <button>Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <button type="button" id="seat-management-submit-button">Submit</button> 
                     <button type="button" id="seat-management-cancel-button">Cancel</button>
                 </div>
                 <button type="submit">Add Pitch</button>
-           </form>
+            </form>
         </div>
-       <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
+        <div class="overlay" id="seat-add-overlay" style="display: none;"></div>
+        <div class="seat__add__box" id="seat-add-box" style="display: none;">
+            <div class="form__container">
+                <h2>Add Seat</h2>
+                <form id="seat-add-form" action="seat?action=add" method="POST">
+                    <label for="seatNumber">Seat Number:</label>
+                    <input type="number" id="seatNumber" name="seatNumber" required>
+
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" required>
+
+                    <label for="areaId">Area ID:</label>
+                    <input type="number" id="areaId" name="areaId" required>
+
+                    <label for="seatStatusId">Seat Status ID:</label>
+                    <input type="number" id="seatStatusId" name="seatStatusId" required>
+
+                    <button type="button" onclick="document.querySelector('#seat-add-form').submit();">Save</button>
+                    <button type="button" id="seat-add-cancel-button">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
     </body>
 </html>

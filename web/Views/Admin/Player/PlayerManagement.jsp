@@ -25,7 +25,6 @@
                     <h1>Role name</h1>
                 </div>
                 <div class="card__box">
-
                     <div>
                         <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
                             <div class="card">

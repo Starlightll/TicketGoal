@@ -5,21 +5,18 @@
 
 package Controllers.Admin;
 
-import DAO.PitchDAO;
-import Models.Pitch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author mosdd
  */
-public class pitchManagementServlet extends HttpServlet {
+public class updatePitchServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +33,10 @@ public class pitchManagementServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet pitchManagementServlet</title>");  
+            out.println("<title>Servlet updatePitchServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet pitchManagementServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet updatePitchServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,34 +53,7 @@ public class pitchManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PitchDAO pitchDAO = PitchDAO.INSTANCE;
-        try{
-            String option = request.getParameter("option");
-            if(option.equalsIgnoreCase("update")){
-                String pitchId = request.getParameter("pitchId");
-                Pitch pitch = pitchDAO.getPitch(pitchId);
-                request.setAttribute("pitchId", pitch.getPitchId());
-                request.setAttribute("pitchName", pitch.getPitchName());
-                request.setAttribute("pitchAddressName", pitch.getAddressName());
-                request.setAttribute("pitchAddressURL", pitch.getAddressURL());
-                request.setAttribute("pitchStructure", pitch.getPitchStructure());
-                request.setAttribute("pitchImage", pitch.getImage());
-                request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
-            } else if (option.equalsIgnoreCase("add")){
-                request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
-            } else if (option.equalsIgnoreCase("delete")) {
-                pitchDAO.deletePitch(request.getParameter("pitchId"));
-                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-            } else {
-                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-            }
-        }catch(Exception e){
-            request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-        }
-        String pitchName = "";
-        List<Pitch> pitchList = PitchDAO.INSTANCE.getPitchList();
-        request.setAttribute("pitchList", pitchList);
-        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
+        
     } 
 
     /** 
@@ -96,6 +66,7 @@ public class pitchManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
     }
 
     /** 

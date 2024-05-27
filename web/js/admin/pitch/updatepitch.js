@@ -1,8 +1,26 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
+document.addEventListener('DOMContentLoaded', (event) => {
+    const seatAddBox = document.getElementById("seat-add-box"),
+          seatAddBtn = document.getElementById("seat-add-button"),
+          seatAddForm = document.getElementById("seat-add-form"),
+          seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
+          mainForm = document.querySelector(".update__pitch form");
 
+    // Ngăn chặn việc submit form ngoài cùng
+    mainForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+    });
+
+    // Mở form pop-up để thêm ghế
+    seatAddBtn.addEventListener('click', () => {
+        seatAddBox.style.display = 'block';
+    });
+
+    // Đóng form pop-up khi nhấn cancel
+    seatAddCancelBtn.addEventListener('click', () => {
+        seatAddBox.style.display = 'none';
+    });
+
+});
 
 let uploadBtn = document.getElementById("upload-button");
 let uploadedImage = document.getElementById("uploaded-image");

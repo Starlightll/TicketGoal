@@ -24,6 +24,10 @@
         <servlet-name>pitchManagementServlet</servlet-name>
         <servlet-class>Controllers.Admin.pitchManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPitchServlet</servlet-name>
+        <servlet-class>Controllers.Admin.addPitchServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>pitchManagementServlet</servlet-name>
         <url-pattern>/pitchManagementServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPitchServlet</servlet-name>
+        <url-pattern>/addPitchServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
