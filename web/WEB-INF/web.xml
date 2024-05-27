@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>pitchManagementServlet</servlet-name>
-        <servlet-class>Controllers.Admin.pitchManagementServlaet</servlet-class>
+        <servlet-class>Controllers.Admin.pitchManagementServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>addPitchServlet</servlet-name>
