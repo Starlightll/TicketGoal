@@ -58,12 +58,34 @@ public class PitchDAO {
         }
         return pitchList;
     }
+    
+    public Pitch getPitch(String pitchId){
+        Pitch pitch = new Pitch();
+        String sql = "SELECT * FROM Pitch WHERE Pitch.pitchId = ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setString(1, pitchId);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                pitch.setPitchId(rs.getInt("pitchId"));
+                pitch.setPitchName(rs.getNString("pitchName"));
+                pitch.setAddressName(rs.getNString("addressName"));
+                pitch.setAddressURL(rs.getNString("addressURL"));
+                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
+                pitch.setPitchStructure(pitchStructure);
+                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
+                pitch.setImage(pitchImage);
+            }
+        }catch(SQLException e) {
+            return null;
+        }
+        return pitch;
+    }
 
     public int addPitch(String pitchName, String addressName, String addressURL, InputStream pitchStructure, InputStream pitchImage) {
         String sql = "INSERT INTO Pitch (pitchName, addressName, addressURL, pitchStructure, image) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.close();
             statement.setNString(1, pitchName);
             statement.setString(2, addressName);
             statement.setString(3, addressURL);

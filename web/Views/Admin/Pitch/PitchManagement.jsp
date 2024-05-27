@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="pitch__manager__option">
-                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update'">Update</button>
+                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update&pitchId=${pitch.pitchId}'">Update</button>
                             <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'">Delete</button>
                         </div>
                         <div class="pitch__name">
