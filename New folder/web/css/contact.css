@@ -1,0 +1,276 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 21, 2024, 8:21:07 PM
+    Author     : mosdd
+*/
+
+:root {
+  --primary-color: #010712;
+  --secondary-color: #818386;
+  --bg-color: #FCFDFD;
+  --button-color: #3B3636;
+  --h1-color: #3F444C;
+}
+
+[data-theme="dark"] {
+  --primary-color: #FCFDFD;
+  --secondary-color: #818386;
+  --bg-color: #010712;
+  --button-color: #818386;
+  --h1-color: #FCFDFD;
+}
+
+.contact-container * {
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+.contact-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color);
+}
+
+.contact-container .left-col {
+  width: 45vw;
+  height: 100%;
+  background-image: url("https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.contact-container .logo {
+  width: 10rem;
+  padding: 1.5rem;
+}
+
+.contact-container .right-col {
+  background: var(--bg-color);
+  width: 50vw;
+  height: 100vh;
+  padding: 5rem 3.5rem;
+}
+
+.contact-container h1, .contact-container label, .contact-container button, .contact-container .description {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+}
+
+.contact-container h1 {
+  color:var(--h1-color);
+  text-transform: uppercase;
+  font-size: 2.5rem;
+  letter-spacing: 0.5rem;
+  font-weight: 300;
+}
+
+.contact-container p {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  letter-spacing: 0.01rem;
+  width: 40vw;
+  margin: 0.25rem 0;
+}
+
+.contact-container label, .contact-container .description {
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  font-size: 0.625rem;
+}
+
+.contact-container form {
+  width: 31.25rem;
+  position: relative;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.contact-container input, .contact-container textarea,.contact-container  label {
+  width: 40vw;
+  display: block;
+}
+
+.contact-container p, .contact-container placeholder,.contact-container  input,.contact-container  textarea {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.contact-container input::placeholder,.contact-container  textarea::placeholder {
+  color: var(--primary-color);
+}
+
+.contact-container input,.contact-container  textarea {
+  color: var(--primary-color);
+  font-weight: 500;
+  background: var(--bg-color);
+  border: none;
+  border-bottom: 1px solid var(--secondary-color);
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.contact-container textarea {
+  resize: none;
+}
+
+.contact-container button {
+  text-transform: uppercase;
+  font-weight: 300;
+  background: var(--button-color);
+  color: var(--bg-color);
+  width: 10rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.contact-container input:hover,.contact-container  textarea:hover,.contact-container  button:hover {
+  opacity: 0.5;
+}
+
+.contact-container button:active {
+  opacity: 0.8;
+}
+
+/* Toggle Switch */
+
+.contact-container .theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 160px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
+
+.contact-container .description {
+    margin-left: 1.25rem;
+  }
+
+.contact-container .theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.contact-container .theme-switch input {
+  display:none;
+}
+
+.contact-container .slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.contact-container .slider:before {
+  background-color: #fff;
+  bottom: 0.25rem;
+  content: "";
+  width: 26px;
+  height: 26px;
+  left: 0.25rem;
+  position: absolute;
+  transition: .4s;
+}
+
+.contact-container input:checked +.contact-container .slider {
+  background-color: var(--button-color);
+}
+
+.contact-container input:checked +.contact-container .slider:before {
+  transform: translateX(26px);
+}
+
+.contact-container .slider.round {
+  border-radius: 34px;
+}
+
+.contact-container .slider.round:before {
+  border-radius: 50%;
+}
+
+.contact-container #error, .contact-container #success-msg {
+  width: 40vw;
+  margin: 0.125rem 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-family: 'Jost';
+  color: var(--secondary-color);
+  }
+
+
+  .contact-container #success-msg {
+  transition-delay: 3s;
+  }
+
+@media only screen and (max-width: 950px) {
+  .contact-container .logo {
+    width: 8rem;
+  }
+  .contact-container h1 {
+    font-size: 1.75rem;
+  }
+  .contact-container p {
+    font-size: 0.7rem;
+  }
+  .contact-container input, .contact-container textarea, .contact-container button {
+    font-size: 0.65rem;
+  }
+  .contact-container .description {
+    font-size: 0.3rem;
+    margin-left: 0.4rem;
+  }
+  .contact-container button {
+    width: 7rem;
+  }
+  .contact-container .theme-switch-wrapper {
+    width: 120px;
+  }
+  .contact-container .theme-switch {
+  height: 28px;
+  width: 50px;
+}
+
+.contact-container .theme-switch input {
+  display:none;
+}
+
+.contact-container .slider:before {
+  background-color: #fff;
+  bottom: 0.25rem;
+  content: "";
+  width: 20px;
+  height: 20px;
+  left: 0.25rem;
+  position: absolute;
+  transition: .4s;
+}
+  .contact-container input:checked + .contact-container .slider:before {
+  transform: translateX(16px);
+}
+
+.contact-container .slider.round {
+  border-radius: 15px;
+}
+
+.contact-container .slider.round:before {
+  border-radius: 50%;
+}
+
+}

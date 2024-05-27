@@ -1,0 +1,183 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 24, 2024, 1:49:52 AM
+    Author     : mosdd
+*/
+
+.match__management_container {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.match__management_container .match__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+
+/* Search box */
+.match__management_container .search__box {
+    display: flex;
+    justify-content: center;
+    margin-right: 250px;
+}
+
+.match__management_container .search__box input {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    padding: 0 10px;
+}
+
+.match__management_container .add__button {
+    background-color: #00C767;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 250px;
+}
+
+.match__management_container .line__decor {
+    width: 70%;
+    height: 6px;
+    background-color: white;
+    margin: 10px auto;
+    margin-bottom: 40px;
+}
+
+.match__management_container .match__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+
+}
+
+.match__management_container .match {
+    display:flex;
+    background-color: #494949;
+    justify-content: space-around;
+    color: aliceblue;
+    width: 980px;
+    height: 170px;
+    margin: 10px 40px;
+    border-radius: 20px;
+}
+
+/* Match date */
+.match__management_container .match__date {
+    width: 76px;
+    height: 112px;
+    position: relative;
+    top: -14px;
+}
+
+.match__management_container .match__date img {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+
+.match__management_container .match__date__day, .match__management_container .match__date__month {
+    position: relative;
+    top: 20px;
+    z-index: 1;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* Match content */
+
+.match__management_container .club__section, .match__management_container .club{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    width: 100%;
+}
+
+.match__management_container .club img {
+    position: relative;
+    top: -8px;
+    width: 70px;
+    height: 100%;
+}
+
+.match__management_container .club p {
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.match__management_container .vs p{
+    font-size: 36px;
+    margin: 0 50px;
+}
+
+
+.match__management_container .match__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+}
+
+/* Match location */
+
+.match__management_container .match__location {
+    position: relative;
+    top: -20px;
+    display:flex;
+    align-items: center;
+}
+
+.match__management_container .ri-map-pin-2-fill {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #00FF9D;
+}
+
+.match__management_container .update__button {
+    background-color: #3366ff;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: #fff
+}
+
+.match__management_container .delete__button {
+    background-color: red;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: #fff
+}
+
+.match__management_container .option {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly
+}
+
+
+
