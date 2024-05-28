@@ -17,9 +17,9 @@ import java.util.List;
 
 /**
  *
- * @author mosdd
+ * @author pc
  */
-public class playerServlet extends HttpServlet {
+public class playerSearchServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,12 +30,19 @@ public class playerServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PlayerDAO p = new PlayerDAO();
-        List<Player> list = p.getAllPlayer();
-        request.setAttribute("listP", list);     
-        request.getRequestDispatcher("Views/Player/Player.jsp").forward(request, response);
-
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet playerSearchServlet</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet playerSearchServlet at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,10 +55,9 @@ public class playerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException { 
-                processRequest(request, response);
-
-           } 
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -63,16 +69,24 @@ public class playerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String keyword = request.getParameter("search");
+        
+        PlayerDAO pDAO = new PlayerDAO();
+        
+        List<Player> list = pDAO.searchPlayerByName(keyword);   
+               
+        if(list.isEmpty()){
+           request.setAttribute("search", "Product does not exist !"); 
+        }
+        else{
+            
+            request.setAttribute("listP", list);
+        }       
+        request.getRequestDispatcher("Views/Player/Player.jsp").forward(request, response);
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

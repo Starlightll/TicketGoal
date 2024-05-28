@@ -2,74 +2,81 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controllers.Admin;
 
+import DAO.PlayerDAO;
+import Models.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author mosdd
  */
 public class playerManagementServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet playerManagementServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet playerManagementServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
+            throws ServletException, IOException {
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private void setListPlayer(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PlayerDAO p = new PlayerDAO();
+        List<Player> list = p.getAllPlayer();
+        request.setAttribute("listP", list);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        try{
+            throws ServletException, IOException {
+        PlayerDAO p = new PlayerDAO();
+        try {
             String option = request.getParameter("option");
-            if(option.equalsIgnoreCase("update")){
+            if (option.equalsIgnoreCase("update")) {
                 request.setAttribute("page", "/Views/Admin/Player/UpdatePlayer.jsp");
-            } else if (option.equalsIgnoreCase("add")){
+            } else if (option.equalsIgnoreCase("add")) {
                 request.setAttribute("page", "/Views/Admin/Player/AddPlayer.jsp");
             } else if (option.equalsIgnoreCase("delete")) {
+                String idPlayer = request.getParameter("idPlayer");
+                p.deletePlayer(idPlayer);
+
+                setListPlayer(request, response);
                 request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
             }
-        }catch(Exception e){
+        } catch (NullPointerException e) {
+            setListPlayer(request, response);
             request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
         }
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -77,12 +84,13 @@ public class playerManagementServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

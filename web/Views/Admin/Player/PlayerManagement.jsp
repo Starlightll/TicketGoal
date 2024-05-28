@@ -19,74 +19,44 @@
             </div>
             <div class="player__box">
                 <div class="search__box">
-                    <input type="text" name="search"/>
+                    <form action="playerSearchServlet" method="post">
+                        <div class="d-flex align-items-center position-relative mx-auto" style="max-width: 500px;">
+                            <input name="search" class="form-control border-primary flex-grow-1 py-3 ps-4 pe-5" type="text" value="${txtS}" placeholder="Search...">
+                            <button type="submit" class="btn btn-primary py-2 ms-2"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
                 </div>
                 <div class="role">
                     <h1>Role name</h1>
                 </div>
                 <div class="card__box">
+                    <c:forEach var="player" items="${listP}">
+
                     <div>
                         <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
                             <div class="card">
                                 <div class="player__number">
-                                    <p>99</p>
+                                    <p>${player.playerNumber}</p>
                                     <img src="./img/player/numberBanner.png"/>
                                 </div>
                                 <div class="card__content">
-                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
+                                    <img src="${player.image}" alt="alt"/>
                                     <div class="player__name">
-                                        <p>Player name</p>
+                                        <p>${player.playerName}</p>
                                     </div>
                                 </div>
                             </div>
                         </a>    
                         <div class="card__management">
-                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update'">Update</button>
-                            <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=delete'">Delete</button>
+                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update&idPlayer=${player.playerId}'">Update</button>
+                            <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=delete&idPlayer=${player.playerId}'">Delete</button>
                         </div>
                     </div>
+                        </c:forEach>
                         
-                        <div>
-                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                            <div class="card">
-                                <div class="player__number">
-                                    <p>99</p>
-                                    <img src="./img/player/numberBanner.png"/>
-                                </div>
-                                <div class="card__content">
-                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
-                                    <div class="player__name">
-                                        <p>Player name</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>    
-                        <div class="card__management">
-                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update'">Update</button>
-                            <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=delete'">Delete</button>
-                        </div>
-                    </div>
+                       
                         
-                        <div>
-                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                            <div class="card">
-                                <div class="player__number">
-                                    <p>99</p>
-                                    <img src="./img/player/numberBanner.png"/>
-                                </div>
-                                <div class="card__content">
-                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
-                                    <div class="player__name">
-                                        <p>Player name</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>    
-                        <div class="card__management">
-                            <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update'">Update</button>
-                            <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=delete'">Delete</button>
-                        </div>
-                    </div>
+                        
                 </div>
             </div>
         </div>

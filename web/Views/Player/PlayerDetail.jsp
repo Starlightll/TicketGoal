@@ -26,11 +26,11 @@
         <main>
             <div class="player__detail">
                 <button class="back__button" onclick="location.href = '<c:url value="/playerServlet"/>'">Back</button>
-                <div class="player__box">
+                            <div class="player__box">
                     <div class="player__img">
-                        <img src="${pageContext.request.contextPath}/img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
+                        <img src="<c:out value="${Players.image}"></c:out>" alt="alt"/>
                     </div>
-                    <div class="detail__box">
+                            <div class="detail__box">
                         <div class="info">
                             <h1 class="title">INFO</h1>
                             <div class="info__detail">
@@ -39,23 +39,23 @@
                                     <tbody>
                                         <tr>
                                             <td class="label">Name: </td>
-                                            <td class="text">Player name</td>
+                                            <td class="text">${Players.playerName}</td>
                                         </tr>
                                         <tr>
                                             <td class="label">Role:</td>
-                                            <td class="text">Player role</td>
+                                            <td class="text">${Players.playerRoleId}</td>
                                         </tr>
                                         <tr>
                                             <td class="label">Birth: </td>
-                                            <td class="text">15/15/2000</td>
+                                            <td class="text">${Players.dateOfBirth}</td>
                                         </tr>
                                         <tr>
                                             <td class="label">Height: </td>
-                                            <td class="text">180</td>
+                                            <td class="text">${Players.height} cm</td>
                                         </tr>
                                         <tr>
                                             <td class="label">Weight: </td>
-                                            <td class="text">110kg</td>
+                                            <td class="text">${Players.weight} kg</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -65,7 +65,7 @@
                             <h1 class="title">BIOGRAPHY</h1>
                             <div class="biograph__detail">
                                 <div class="line__decor"></div>
-                                <p>Lorem ipsum dolor sit </p>
+                                <p>${Players.biography} </p>
                             </div>
                         </div>
                         <div class="skill">
@@ -75,19 +75,19 @@
                                 <div class="skill__attribute">
                                     <div class="skill__name">ATK: </div>
                                     <div class="skill__bar">
-                                        <div class="skill__bar__fill" style="max-width: 70%;"></div>
+                                        <div class="skill__bar__fill" style="max-width: ${Players.ATK}%;"></div>
                                     </div>
                                 </div>
                                 <div class="skill__attribute">
                                     <div class="skill__name">DEF: </div>
                                     <div class="skill__bar">
-                                        <div class="skill__bar__fill" style="max-width: 30%;"></div>
+                                        <div class="skill__bar__fill" style="max-width: ${Players.DEF}%;"></div>
                                     </div>
                                 </div>
                                 <div class="skill__attribute">
                                     <div class="skill__name">SPD: </div>
                                     <div class="skill__bar">
-                                        <div class="skill__bar__fill" style="max-width: 50%;"></div>
+                                        <div class="skill__bar__fill" style="max-width: ${Players.SPD}%;"></div>
                                     </div>
                                 </div>
                             </div>

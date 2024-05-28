@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Player
-    Created on : May 18, 2024, 6:17:23 PM
-    Author     : mosdd
---%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,51 +23,40 @@
                         </select>
                     </form>
                 </div>
-
                 <div class="player__box">
                     <div class="search__box">
-                        <input type="text" name="search"/>
+                        <form method="post" action="playerSearchServlet">
+                            <input type="text" name="search" placeholder="Search..."/>
+                            <button type="submit" value="Search">Search</button>
+                        </form>
                     </div>
                     <div class="role">
                         <h1>Role name</h1>
                     </div>
                     <div class="card__box">
-
-                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                            <div class="card">
-                                <div class="player__number">
-                                    <p>99</p>
-                                    <img src="./img/player/numberBanner.png"/>
-                                </div>
-                                <div class="card__content">
-                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
-                                    <div class="player__name">
-                                        <p>Player name</p>
+                        <c:forEach items="${requestScope.listP}" var="player">
+                            <a href="<c:url value='/playerDetailServlet?playerId=${player.playerId}'/>" class="card-link">
+                                <div class="card">
+                                    <div class="player__number">
+                                        <p>${player.playerNumber}</p>
+                                        <img src="./img/player/numberBanner.png"/>
+                                    </div>
+                                    <div class="card__content">
+                                        <img src="${player.image}" alt="alt"/>
+                                        <div class="player__name">
+                                            <p>${player.playerName}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-
-                        <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
-                            <div class="card">
-                                <div class="player__number">
-                                    <p>99</p>
-                                    <img src="./img/player/numberBanner.png"/>
-                                </div>
-                                <div class="card__content">
-                                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>   
-                                    <div class="player__name">
-                                        <p>Player name</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                            </a>
+                        </c:forEach>
+                       
                     </div>
                 </div>
             </div>
         </main>
         <div class="footer-container">
-        <%@include file="/Views/include/footer.jsp" %>
+            <%@include file="/Views/include/footer.jsp"%>
         </div>
     </body>
 </html>
