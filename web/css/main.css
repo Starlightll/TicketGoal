@@ -1,0 +1,52 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 18, 2024, 3:21:21 PM
+    Author     : mosdd
+*/
+
+
+main * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* main.css */
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #222222;
+    
+}
+
+html {
+    overflow-y: scroll;
+}
+
+
+main {
+    flex: 1;
+    padding-top: 72px;
+    height: 100%;
+}
+
+.footer-container footer {
+    background-color: #212121;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+@media screen and (max-width: 1023px) {
+    main {
+    padding-top: 56px;
+    }
+    
+}
+
+
+

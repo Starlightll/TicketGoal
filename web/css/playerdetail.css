@@ -1,0 +1,156 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 21, 2024, 11:06:09 PM
+    Author     : mosdd
+*/
+
+/* RESET */
+
+.player__detail *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: aliceblue;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.player__detail .player__box{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin: 30px 80px;
+}
+
+.player__detail .line__decor {
+    width: 100%;
+    height: 4.5px;
+    background-color: #00ff80;
+    margin: 0px 0px 15px 0px;
+}
+
+.player__detail .title {
+    text-transform: uppercase;
+}
+
+/* Detail box */
+.player__detail .detail__box{
+    width: 100%;
+}
+
+/* Info */
+
+.player__detail .info {
+    margin-bottom: 20px;
+}
+
+.player__detail .info__detail {
+    display: inline-block;
+    min-width: 250px;
+    font-size: 18px;
+}
+
+.player__detail .info__detail td{
+    padding-bottom: 5px;
+}
+
+.player__detail .text {
+    padding-left: 15px;
+}
+
+.player__detail .info__detail table{
+    margin-left: 20px;
+}
+
+
+/* Image */
+.player__detail .player__img {
+    width: 479px;
+    height: 574px;
+    border-radius: 10px;
+    margin: 0px 20px;
+    overflow: hidden;
+}
+
+.player__detail .player__img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Biograph */
+
+.player__detail .biography {
+    margin-bottom: 20px;
+}
+
+.player__detail .biograph__detail {
+    display: inline-block;
+    min-height: 100px;
+    height: fit-content;
+    font-size: 19px;
+}
+
+.player__detail .biograph__detail .line__decor{
+    min-width: 400px;
+}
+
+.player__detail .biograph__detail p {
+    padding-left: 30px;
+}
+
+/* Skill */
+
+.player__detail .skill {
+    font-size: 19px;
+}
+
+.player__detail .skill__box {
+    display: inline-block;
+    width: 100%;
+}
+
+.player__detail .skill .line__decor {
+    display: inline-block;
+    max-width: 1100px;
+}
+
+.player__detail .skill__attribute {
+    margin-left: 20px;
+    display: flex;
+    max-width: 1000px;
+}
+
+.player__detail .skill__name {
+    text-align: center;
+    align-content: center;
+}
+
+.player__detail .skill__bar {
+    height: 23px;
+    background-color: rgb(58, 58, 58);
+    border-radius: 20px;
+    margin: 14px 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.player__detail .skill__bar__fill {
+    height: 23px;
+    background-color: #00ff80;
+    border-radius: 30px;
+    position: relative;
+    animation: fillBars 2.5s;
+}
+
+@keyframes fillBars {
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}
