@@ -154,11 +154,37 @@
         </div>
         <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
         <script>
+                        function attachEventListeners() {
+                            const seatManagementBox = document.getElementById("seat-management-box");
+                            const seatManagementSubmitBtn = document.getElementById("seat-management-submit-button");
+                            const seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
+
+                            const seatManagementBtns = document.querySelectorAll(".seat__management");
+
+                            seatManagementBtns.forEach(btn => {
+                                btn.addEventListener('click', () => {
+                                    seatManagementBox.classList.add('show-seat-management-box');
+                                });
+                            });
+
+                            if (seatManagementSubmitBtn) {
+                                seatManagementSubmitBtn.addEventListener('click', () => {
+                                    seatManagementBox.classList.remove("show-seat-management-box");
+                                });
+                            }
+
+                            if (seatManagementCancelBtn) {
+                                seatManagementCancelBtn.addEventListener('click', () => {
+                                    seatManagementBox.classList.remove("show-seat-management-box");
+                                });
+                            }
+                        }
+
                         function addArea() {
                             var areaName = $("#areaName").val();
                             var pitchId = $("#pitchId").val();
                             $.ajax({
-                                url: "${pageContext.request.contextPath}/AreaServlet",
+                                url: `${pageContext.request.contextPath}/AreaServlet`,
                                 method: "POST",
                                 data: {
                                     areaName: areaName,
@@ -168,6 +194,7 @@
                                 success: function (response) {
                                     var areaBox = document.getElementById("area-box");
                                     areaBox.innerHTML = response;
+                                    attachEventListeners();
                                 }
                             });
                         }
@@ -176,7 +203,7 @@
                             var areaId = $("#areaId").val();
                             var pitchId = $("#pitchId").val();
                             $.ajax({
-                                url: "${pageContext.request.contextPath}/AreaServlet",
+                                url: `${pageContext.request.contextPath}/AreaServlet`,
                                 method: "POST",
                                 data: {
                                     areaId: areaId,
@@ -186,9 +213,12 @@
                                 success: function (response) {
                                     var areaBox = document.getElementById("area-box");
                                     areaBox.innerHTML = response;
+                                    attachEventListeners();
                                 }
                             });
                         }
+
+                        document.addEventListener('DOMContentLoaded', attachEventListeners);
         </script>
     </body>
 </html>

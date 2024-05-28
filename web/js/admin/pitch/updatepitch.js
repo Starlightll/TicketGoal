@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const seatAddBox = document.getElementById("seat-add-box"),
-          seatAddBtn = document.getElementById("seat-add-button"),
-          seatAddForm = document.getElementById("seat-add-form"),
-          seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
-          mainForm = document.querySelector(".update__pitch form");
+            seatAddBtn = document.getElementById("seat-add-button"),
+            seatAddForm = document.getElementById("seat-add-form"),
+            seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
+            mainForm = document.querySelector(".update__pitch form");
 
 //    // Ngăn chặn việc submit form ngoài cùng
 //    mainForm.addEventListener('submit', (e) => {
@@ -61,19 +61,25 @@ areaCloseBtn.addEventListener('click', () => {
 });
 
 
-const seatManagementBox = document.getElementById("seat-management-box"),
-        seatManagementBtn = document.getElementById("seat-management-button"),
-        seatManagementSubmitBtn = document.getElementById("seat-management-submit-button"),
-        seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
+const seatManagementBox = document.getElementById("seat-management-box");
+const seatManagementSubmitBtn = document.getElementById("seat-management-submit-button");
+const seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
+const seatManagementBtns = document.querySelectorAll(".seat__management");
 
-if (seatManagementBtn) {
-    seatManagementBtn.addEventListener('click', () => {
+seatManagementBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
         seatManagementBox.classList.add('show-seat-management-box');
     });
+});
+
+if (seatManagementSubmitBtn) {
+    seatManagementSubmitBtn.addEventListener('click', () => {
+        seatManagementBox.classList.remove("show-seat-management-box");
+    });
 }
-seatManagementSubmitBtn.addEventListener('click', () => {
-    seatManagementBox.classList.remove("show-seat-management-box");
-});
-seatManagementCancelBtn.addEventListener('click', () => {
-    seatManagementBox.classList.remove("show-seat-management-box");
-});
+
+if (seatManagementCancelBtn) {
+    seatManagementCancelBtn.addEventListener('click', () => {
+        seatManagementBox.classList.remove("show-seat-management-box");
+    });
+}
