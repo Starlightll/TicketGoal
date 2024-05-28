@@ -58,25 +58,26 @@ public class PitchDAO {
         }
         return pitchList;
     }
-    
-    public Pitch getPitch(String pitchId){
+
+    public Pitch getPitch(String pitchId) {
         Pitch pitch = new Pitch();
         String sql = "SELECT * FROM Pitch WHERE Pitch.pitchId = ?";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, pitchId);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 pitch.setPitchId(rs.getInt("pitchId"));
                 pitch.setPitchName(rs.getNString("pitchName"));
                 pitch.setAddressName(rs.getNString("addressName"));
                 pitch.setAddressURL(rs.getNString("addressURL"));
+                //Encode to string
                 String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
                 pitch.setPitchStructure(pitchStructure);
                 String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
                 pitch.setImage(pitchImage);
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             return null;
         }
         return pitch;
@@ -103,7 +104,6 @@ public class PitchDAO {
             }
 
             int rowsInserted = statement.executeUpdate();
-            
 
             // Check if a row was inserted
             if (rowsInserted > 0) {
@@ -122,8 +122,8 @@ public class PitchDAO {
     }
 
     public boolean deletePitch(String pitchId) {
-        String sql = "DELETE FROM Pitch \n" +
-                     "Where Pitch.pitchId = ?";
+        String sql = "DELETE FROM Pitch \n"
+                + "Where Pitch.pitchId = ?";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(pitchId));
@@ -134,8 +134,42 @@ public class PitchDAO {
         }
     }
 
-    public void updatePitch(int pitchId, String pitchName, String address, String pitchStructure, String image) {
+    public boolean updatePitch(String pitchId, String pitchName, String addressName, String addressURL, InputStream newPitchStructure, String existingStructure, InputStream newPitchImage, String existingImage) {
+        String sql = "UPDATE Pitch SET pitchName = ?, addressName = ?, addressURL = ?, pitchStructure = ?, Pitch.image = ?"
+                + " WHERE pitchId = ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setNString(1, pitchName);
+            statement.setString(2, addressName);
+            statement.setString(3, addressURL);
 
+            if (newPitchStructure != null){
+                statement.setBlob(4, newPitchStructure);
+            }else{
+                byte[] decodedStructure = Base64.getDecoder().decode(existingStructure);
+                statement.setBytes(4, decodedStructure);
+            }
+
+            if (newPitchImage != null) {
+                statement.setBlob(5, newPitchImage);
+            } else {
+                //Decode back to byte
+                byte[] decodedImage = Base64.getDecoder().decode(existingImage);
+                statement.setBytes(5, decodedImage);
+            }
+
+            statement.setInt(6, Integer.parseInt(pitchId));
+
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    
+
+    public static void main(String args[]) {
+        PitchDAO dao = PitchDAO.INSTANCE;
+    }
+
 }
