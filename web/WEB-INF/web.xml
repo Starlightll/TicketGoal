@@ -36,6 +36,10 @@
         <servlet-name>playerAddServlet</servlet-name>
         <servlet-class>Controllers.Admin.playerAddServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>playerSearchAdminServlet</servlet-name>
+        <servlet-class>Controllers.Admin.playerSearchAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>playerAddServlet</servlet-name>
         <url-pattern>/playerAddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerSearchAdminServlet</servlet-name>
+        <url-pattern>/playerSearchAdminServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
