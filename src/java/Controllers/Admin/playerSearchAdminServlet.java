@@ -6,18 +6,20 @@
 package Controllers.Admin;
 
 import DAO.PlayerDAO;
+import Models.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author pc
  */
-public class playerAddServlet extends HttpServlet {
+public class playerSearchAdminServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +36,10 @@ public class playerAddServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet playerAddServlet</title>");  
+            out.println("<title>Servlet playerSearchServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet playerAddServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet playerSearchServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,30 +69,25 @@ public class playerAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String playerName = request.getParameter("playerName");
-                  String playerNumber = request.getParameter("playerNumber");
-                  String dateOfBirth = request.getParameter("playerBirth");
-                  String height = request.getParameter("playerHeight");
-                  String weight = request.getParameter("playerWeight");  
-                  String biography = request.getParameter("playerBio");
-                  String countryId = request.getParameter("playerCountry");
-                  String playerRoleId = request.getParameter("playerRoleId");
-                  String image = request.getParameter("playerImage");
-                  String atk = request.getParameter("ATK");
-                  String def = request.getParameter("DEF");
-                  String spd = request.getParameter("SPD");
-                  PlayerDAO pl = new PlayerDAO();
-                  pl.addPlayer(playerName, playerNumber, dateOfBirth, height, weight, biography, image, countryId, playerRoleId , atk, def, spd);
-                  response.sendRedirect("playerManagementServlet");
+        String keyword = request.getParameter("search");
+        
+        PlayerDAO pDAO = new PlayerDAO();
+        
+        List<Player> list = pDAO.searchPlayerByName(keyword);   
+               
+        if(list.isEmpty()){
+           request.setAttribute("search", "Product does not exist !"); 
+        }
+        else{
+            
+            request.setAttribute("listP", list);
+        }
+        request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
+        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controllers.Admin;
+package Controllers.Player;
 
-import DAO.PlayerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,9 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pc
+ * @author mosdd
  */
-public class playerAddServlet extends HttpServlet {
+public class playerDetailServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +33,10 @@ public class playerAddServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet playerAddServlet</title>");  
+            out.println("<title>Servlet playerDetailServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet playerAddServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet playerDetailServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,7 +53,7 @@ public class playerAddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("Views/Player/PlayerDetail.jsp").forward(request, response);
     } 
 
     /** 
@@ -67,21 +66,7 @@ public class playerAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String playerName = request.getParameter("playerName");
-                  String playerNumber = request.getParameter("playerNumber");
-                  String dateOfBirth = request.getParameter("playerBirth");
-                  String height = request.getParameter("playerHeight");
-                  String weight = request.getParameter("playerWeight");  
-                  String biography = request.getParameter("playerBio");
-                  String countryId = request.getParameter("playerCountry");
-                  String playerRoleId = request.getParameter("playerRoleId");
-                  String image = request.getParameter("playerImage");
-                  String atk = request.getParameter("ATK");
-                  String def = request.getParameter("DEF");
-                  String spd = request.getParameter("SPD");
-                  PlayerDAO pl = new PlayerDAO();
-                  pl.addPlayer(playerName, playerNumber, dateOfBirth, height, weight, biography, image, countryId, playerRoleId , atk, def, spd);
-                  response.sendRedirect("playerManagementServlet");
+        
     }
 
     /** 
