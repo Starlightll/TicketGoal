@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Admin;
+package Controllers.Admin.PitchManagement;
 
+import DAO.AreaDAO;
 import DAO.PitchDAO;
+import Models.Area;
 import Models.Pitch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
  * @author mosdd
  */
-@MultipartConfig(maxFileSize = 16177215)
-public class addPitchServlet extends HttpServlet {
+public class pitchManagementServlet extends HttpServlet {
+
+    private static final PitchDAO pitchDAO = PitchDAO.INSTANCE;
+    private static final AreaDAO areaDAO = AreaDAO.INSTANCE;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +42,10 @@ public class addPitchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addPitchServlet</title>");
+            out.println("<title>Servlet pitchManagementServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addPitchServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet pitchManagementServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,6 +63,33 @@ public class addPitchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        String option = request.getParameter("option") == null ? "dafault" : request.getParameter("option");
+        switch (option) {
+            case "add":
+                request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
+                break;
+            case "update":
+                String pitchId = request.getParameter("pitchId");
+                Pitch pitch = pitchDAO.getPitch(pitchId);
+                request.setAttribute("pitch", pitch);
+                List<Area> areaList = areaDAO.getAllArea(pitchId);
+                request.setAttribute("AreaList", areaList);
+                request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
+                break;
+            case "delete":
+                pitchDAO.deletePitch(request.getParameter("pitchId"));
+                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
+                break;
+            case "dafault":
+                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
+                break;
+            default:
+                throw new AssertionError();
+        }
+        List<Pitch> pitchList = pitchDAO.getPitchList();
+        request.setAttribute("pitchList", pitchList);
+        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }
 
     /**
@@ -76,34 +103,6 @@ public class addPitchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PitchDAO pitchDAO = PitchDAO.INSTANCE;
-        String pitchName = request.getParameter("pitchName");
-        String pitchAddress = request.getParameter("pitchAddressName");
-        String pitchAddressURL = request.getParameter("pitchAddressURL");
-
-        InputStream pitchImageStream = null;
-        InputStream pitchStructureStream = null;
-
-        //Store image data
-        Part pitchImage = request.getPart("pitchImage");
-        if (pitchImage != null) {
-            pitchImageStream = pitchImage.getInputStream();
-        }
-
-        //Store structure data
-        Part pitchStructure = request.getPart("pitchStructure");
-        if (pitchStructure != null) {
-            pitchStructureStream = pitchStructure.getInputStream();
-        }
-
-        int pitchId = pitchDAO.addPitch(pitchName, pitchAddress, pitchAddressURL, pitchStructureStream, pitchImageStream);
-        if (pitchId != -1) {
-            request.setAttribute("status", "Added successfully with ID: " + pitchId);
-        } else {
-            request.setAttribute("status", "Failed to add pitch");
-        }
-        response.sendRedirect(request.getContextPath()+"/pitchManagementServlet");
-        
     }
 
     /**

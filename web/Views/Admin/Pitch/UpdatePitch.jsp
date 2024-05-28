@@ -4,6 +4,7 @@
     Author     : mosdd
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,58 +18,68 @@
             rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/pitch/updatepitch.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="update__pitch">
-            <form method="POST" action="action">
+            <form method="POST" action="updatePitchServlet?pitchId=${pitch.pitchId}" enctype="multipart/form-data">
                 <div class="pitch__container">
                     <div class="pitch__info">
                         <table>
                             <tr class="pitch__name">
                                 <td>Name:</td>
-                                <td><input type="text" name="pitchName" placeholder="Pitch Name"></td>
+                                <td><input type="text" name="pitchName" placeholder="Pitch Name" value="${pitch.pitchName}"></td>
                             </tr>
                             <tr class="pitch__address">
                                 <td>Address:</td>
-                                <td><input type="text" name="pitchAddressName" placeholder="Address Name">
-                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL"></td>
+                                <td>
+                                    <input type="text" name="pitchAddressName" placeholder="Address Name" value="${pitch.addressName}">
+                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" value="${pitch.addressURL}">
+                                </td>
                             </tr>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
-                                <td><img id="uploaded-structure" name="pitchStructure" src="" alt="">
-                                    <input id="upload-structure" type="file" name="pitchStructure" accept="image/*">
+                                <td>
+                                    <img id="uploaded-structure" src="data:image/jpeg;base64,${pitch.pitchStructure}" alt="">
+                                    <input id="upload-structure" type="file" accept="image/*" name="newPitchStructure">
+                                    <input type="hidden" name="existingStructure" value="${pitch.pitchStructure}">
                                     <label for="upload-structure"><i class="ri-upload-2-line"></i>Upload Structure</label>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="pitch__image">
-                        <img id="uploaded-image" name="pitchImage" src="" alt="">
-                        <input type="file" id="upload-button" accept="image/*">
-                        <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
+                        <img id="uploaded-image" src="data:image/jpeg;base64,${pitch.image}" alt="">
+                        <input id="upload-image" type="file" accept="image/*" name="newPitchImage">
+                        <input type="hidden" id="existing-image" name="existingImage" value="${pitch.image}">
+                        <label for="upload-image"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>
                 </div>
                 <div class="area__container">
                     <div class="add__button">
                         <button type="button" id="area-add-button">Add</button>
                     </div>
-                    <div class="area__box">
-                        <div class="area">
-                            <p class="area__name">
-                                Area Name
-                            </p>
-                            <div class="area__management">
-                                <button type="button" class="seat__management" id="seat-management-button">Seat</button>
-                                <button class="update__button">Update</button>
-                                <button class="delete__button">Delete</button>
+                    <div class="area__box" id="area-box">
+                        <c:forEach items="${requestScope.AreaList}" var="area">
+                            <div class="area">
+                                <input style="display: none" id="areaId" value="${area.id}">
+                                <p class="area__name">
+                                    ${area.areaName}
+                                </p>
+                                <div class="area__management">
+                                    <button type="button" class="seat__management" id="seat-management-button">Seat</button>
+                                    <button onclick="deleteArea()" type="button" class="delete__button">Delete</button>
+                                </div>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="area__add__box" id="area-add-box">
+                    <input type="hidden" id="pitchId" value="${pitch.pitchId}">
                     <div class="box">
-                        Name: <input type="text" name="areaName">
-                        <button type="button" class="add__button" id="area-add-submit-button">Add</button>
+                        <i class="ri-close-line" id="area-add-close-button"></i>
+                        <p>Name:<p> <input type="text" name="areaName" id="areaName" placeholder="Enter area name">
+                            <button onclick="addArea()" type="button" class="add__button" id="area-add-submit-button">Add</button>
                     </div>
                 </div>
                 <div class="seat__management__box" id="seat-management-box">
@@ -83,11 +94,10 @@
                             </select>
                         </div>
                         <div class="seat__management__import">
-                            <button class="import__excel">Import</button> <!-- Import từ excel theo form cột số của ghế, cột 2 giá, Area Id tự động lấy từ phần area trong phần pitch, 
-                                                                          trạng thái(status) mới thêm luôn là not available-->
+                            <button class="import__excel">Import</button> 
                             <button type="button" class="add__button" id="seat-add-button">Add Seat</button>
-                            <button class="update__all">Update All</button> <!-- Chưa cần làm-->
-                            <button class="delete__all">Delete All</button> <!-- Chưa cần làm -->
+                            <button class="update__all">Update All</button>  
+                            <button class="delete__all">Delete All</button> 
                         </div>
                     </div>
                     <div class="seat__table">
@@ -106,17 +116,8 @@
                                     <td>220</td>
                                     <td>NotAvailable</td>
                                     <td>
-                                        <button class="update__button">Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
-                                        <button class="delete__button">Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>210</td>
-                                    <td>NotAvailable</td>
-                                    <td>
-                                        <button>Update</button> <!-- Chỉ update giá và trạng thái(status) của ghế -->
-                                        <button>Delete</button> <!-- Chuyển trạng thái của ghế về removed -->
+                                        <button class="update__button">Update</button>  
+                                        <button class="delete__button">Delete</button> 
                                     </td>
                                 </tr>
                             </tbody>
@@ -126,7 +127,7 @@
                     <button type="button" id="seat-management-submit-button">Submit</button> 
                     <button type="button" id="seat-management-cancel-button">Cancel</button>
                 </div>
-                <button type="submit">Add Pitch</button>
+                <button type="submit">Update Pitch</button>
             </form>
         </div>
         <div class="overlay" id="seat-add-overlay" style="display: none;"></div>
@@ -152,5 +153,42 @@
             </div>
         </div>
         <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
+        <script>
+                        function addArea() {
+                            var areaName = $("#areaName").val();
+                            var pitchId = $("#pitchId").val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/AreaServlet",
+                                method: "POST",
+                                data: {
+                                    areaName: areaName,
+                                    pitchId: pitchId,
+                                    action: "add"
+                                },
+                                success: function (response) {
+                                    var areaBox = document.getElementById("area-box");
+                                    areaBox.innerHTML = response;
+                                }
+                            });
+                        }
+
+                        function deleteArea() {
+                            var areaId = $("#areaId").val();
+                            var pitchId = $("#pitchId").val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/AreaServlet",
+                                method: "POST",
+                                data: {
+                                    areaId: areaId,
+                                    pitchId: pitchId,
+                                    action: "delete"
+                                },
+                                success: function (response) {
+                                    var areaBox = document.getElementById("area-box");
+                                    areaBox.innerHTML = response;
+                                }
+                            });
+                        }
+        </script>
     </body>
 </html>

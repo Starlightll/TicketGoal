@@ -22,11 +22,11 @@
     </servlet>
     <servlet>
         <servlet-name>pitchManagementServlet</servlet-name>
-        <servlet-class>Controllers.Admin.pitchManagementServlet</servlet-class>
+        <servlet-class>Controllers.Admin.PitchManagement.pitchManagementServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>addPitchServlet</servlet-name>
-        <servlet-class>Controllers.Admin.addPitchServlet</servlet-class>
+        <servlet-class>Controllers.Admin.PitchManagement.addPitchServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>playerSearchServlet</servlet-name>
@@ -39,6 +39,14 @@
     <servlet>
         <servlet-name>playerSearchAdminServlet</servlet-name>
         <servlet-class>Controllers.Admin.playerSearchAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updatePitchServlet</servlet-name>
+        <servlet-class>Controllers.Admin.PitchManagement.updatePitchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AreaServlet</servlet-name>
+        <servlet-class>Controllers.Admin.PitchManagement.AreaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>playerSearchAdminServlet</servlet-name>
         <url-pattern>/playerSearchAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatePitchServlet</servlet-name>
+        <url-pattern>/updatePitchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AreaServlet</servlet-name>
+        <url-pattern>/AreaServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>

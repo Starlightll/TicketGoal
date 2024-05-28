@@ -13,8 +13,8 @@ uploadBtn.onchange = () => {
     console.log(uploadBtn.files[0]);
     reader.onload = () => {
         uploadedImage.setAttribute("src", reader.result);
-    }
-}
+    };
+};
 
 let uploadStructure = document.getElementById("upload-structure");
 let uploadedStructure = document.getElementById("uploaded-structure");
@@ -25,8 +25,8 @@ uploadStructure.onchange = () => {
     console.log(uploadStructure.files[0]);
     reader.onload = () => {
         uploadedStructure.setAttribute("src", reader.result);
-    }
-}
+    };
+};
 
 const seatManagementBox = document.getElementById("seat-management-box"),
 seatManagementBtn = document.getElementById("seat-management-button"),

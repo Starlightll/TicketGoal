@@ -119,7 +119,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 /* Hide sroll bar */
-.side__bar::-webkit-scrollbar {
+.admin .side__bar::-webkit-scrollbar {
     width: 0px;
 }
 

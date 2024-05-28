@@ -271,9 +271,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 500px;
     height: 150px;
     align-content: center;
-    color: black;
-    font-size: 20px;
     border-radius: 10px;
+}
+
+.update__pitch .area__add__box .box p {
+    font-size: 20px;
+    color: black;
+}
+
+.update__pitch .area__add__box .box i {
+    position: relative;
+    top: -36%;
+    left: 85%;
+    color: #333333;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.update__pitch .area__add__box .box i:hover{
+    color: #ff5353;
 }
 
 .update__pitch .area__add__box .box input {

@@ -2,52 +2,56 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-package Controllers.Admin;
+package Controllers.Admin.PitchManagement;
 
 import DAO.PitchDAO;
-import Models.Pitch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
 
 /**
  *
  * @author mosdd
  */
-public class pitchManagementServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@MultipartConfig(maxFileSize = 16177215)
+public class updatePitchServlet extends HttpServlet {
+    private static final PitchDAO pitchDAO = PitchDAO.INSTANCE;
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet pitchManagementServlet</title>");  
+            out.println("<title>Servlet updatePitchServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet pitchManagementServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet updatePitchServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,39 +59,13 @@ public class pitchManagementServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        PitchDAO pitchDAO = PitchDAO.INSTANCE;
-        try{
-            String option = request.getParameter("option");
-            if(option.equalsIgnoreCase("update")){
-                String pitchId = request.getParameter("pitchId");
-                Pitch pitch = pitchDAO.getPitch(pitchId);
-                request.setAttribute("pitchId", pitch.getPitchId());
-                request.setAttribute("pitchName", pitch.getPitchName());
-                request.setAttribute("pitchAddressName", pitch.getAddressName());
-                request.setAttribute("pitchAddressURL", pitch.getAddressURL());
-                request.setAttribute("pitchStructure", pitch.getPitchStructure());
-                request.setAttribute("pitchImage", pitch.getImage());
-                request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
-            } else if (option.equalsIgnoreCase("add")){
-                request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
-            } else if (option.equalsIgnoreCase("delete")) {
-                pitchDAO.deletePitch(request.getParameter("pitchId"));
-                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-            } else {
-                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-            }
-        }catch(Exception e){
-            request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
-        }
-        String pitchName = "";
-        List<Pitch> pitchList = PitchDAO.INSTANCE.getPitchList();
-        request.setAttribute("pitchList", pitchList);
-        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
-    } 
+            throws ServletException, IOException {
 
-    /** 
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -95,11 +73,40 @@ public class pitchManagementServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        String pitchId = request.getParameter("pitchId");
+        String pitchName = request.getParameter("pitchName");
+        String pitchAddress = request.getParameter("pitchAddressName");
+        String pitchAddressURL = request.getParameter("pitchAddressURL");
+
+        InputStream pitchImageStream = null;
+        InputStream pitchStructureStream = null;
+
+        //Store image data
+//        Part pitchImage = request.getPart("pitchImage");
+//        if (pitchImage != null) {
+//            pitchImageStream = pitchImage.getInputStream();
+//        }
+
+        //Store image data
+        Part newPitchImagePart = request.getPart("newPitchImage");
+        InputStream newPitchImage = (newPitchImagePart != null && newPitchImagePart.getSize() > 0) ? newPitchImagePart.getInputStream() : null;
+
+        String existingImage = request.getParameter("existingImage");
+
+        //Store structure data
+        Part newPitchStructurePart = request.getPart("newPitchImage");
+        InputStream newPitchStructure = (newPitchStructurePart != null && newPitchStructurePart.getSize() > 0) ? newPitchStructurePart.getInputStream() : null;
+
+        String existingStructure = request.getParameter("existingStructure");
+
+        pitchDAO.updatePitch(pitchId, pitchName, pitchAddress, pitchAddressURL, newPitchStructure, existingStructure, newPitchImage, existingImage);
+        response.sendRedirect(request.getContextPath()+"/pitchManagementServlet");
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
