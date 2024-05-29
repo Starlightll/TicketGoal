@@ -48,6 +48,10 @@
         <servlet-name>AreaServlet</servlet-name>
         <servlet-class>Controllers.Admin.PitchManagement.AreaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>playerUpdateServlet</servlet-name>
+        <servlet-class>Controllers.Admin.playerUpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>AreaServlet</servlet-name>
         <url-pattern>/AreaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerUpdateServlet</servlet-name>
+        <url-pattern>/playerUpdateServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>

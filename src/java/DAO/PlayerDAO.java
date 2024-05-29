@@ -35,7 +35,7 @@ public class PlayerDAO {
     }
 
     public Player getPlayer(String PlayerId) {
-        String sql = "Select * from Player  inner join Performance ON Player.playerId = Performance.playerId Where Player.playerId = ?";
+        String sql = "Select * from Player  inner join Performance ON Player.playerId = Performance.playerId left join PlayerRole ON Player.playerRoleId = PlayerRole.playerRoleId Where Player.playerId = ?";
         Player p = new Player();        
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
@@ -51,7 +51,7 @@ public class PlayerDAO {
                 p.setBiography(rs.getNString("biography"));
                 p.setImage(rs.getNString("playerImage"));
                 p.setCountryId(rs.getInt("countryId"));
-                p.setPlayerRoleId(rs.getInt("playerRoleId"));
+                p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
                 p.setDEF(rs.getInt("def"));
                 p.setSPD(rs.getInt("spd"));
@@ -64,11 +64,11 @@ public class PlayerDAO {
 
     public List<Player> getAllPlayer() {
         List<Player> list = new ArrayList<>();
-        String query = "Select * from Player  inner join Performance ON Player.playerId = Performance.playerId";
+        String query = "Select * from Player  inner join Performance ON Player.playerId = Performance.playerId left join PlayerRole ON Player.playerRoleId = PlayerRole.playerRoleId";
         try {
             PreparedStatement ps = connect.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            while (rs.next()) {               
                 Player p = new Player();
                 p.setPlayerId(rs.getInt("playerId"));
                 p.setPlayerName(rs.getNString("playerName"));
@@ -79,7 +79,7 @@ public class PlayerDAO {
                 p.setBiography(rs.getNString("biography"));
                 p.setImage(rs.getNString("playerImage"));
                 p.setCountryId(rs.getInt("countryId"));
-                p.setPlayerRoleId(rs.getInt("playerRoleId"));
+                p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
                 p.setDEF(rs.getInt("def"));
                 p.setSPD(rs.getInt("spd"));
@@ -151,10 +151,10 @@ public class PlayerDAO {
       public List<Player> searchPlayerByName(String name) {
           List<Player> list = new ArrayList<>();
        
-          String query = "SELECT * FROM Player AS P JOIN Performance AS PE ON P.playerId=PE.playerId WHERE playerName LIKE ?";
+          String query = "SELECT * FROM Player AS P JOIN Performance AS PE ON P.playerId=PE.playerId left join PlayerRole ON P.playerRoleId = PlayerRole.playerRoleId WHERE playerName LIKE ?";
           try {
             PreparedStatement ps = connect.prepareStatement(query);
-            name="%"+ name+"%";
+            name="%"+name+"%";
             ps.setString(1,name);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -168,7 +168,7 @@ public class PlayerDAO {
                 p.setBiography(rs.getNString("biography"));
                 p.setImage(rs.getNString("playerImage"));
                 p.setCountryId(rs.getInt("countryId"));
-                p.setPlayerRoleId(rs.getInt("playerRoleId"));
+                p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
                 p.setDEF(rs.getInt("def"));
                 p.setSPD(rs.getInt("spd"));
@@ -179,5 +179,44 @@ public class PlayerDAO {
               System.out.println("fail");
         }
           return list;
+      }
+      public void UpdatePlayer(String playerId,String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, String image, String countryId, String playerRoleId, String atk, String def, String spd) {
+        String query = "UPDATE Player\n" +
+                    "SET playerName = ?,\n" +
+                    "    playerNumber = ?,\n" +
+                    "    dateOfBirth = ?,\n" +
+                    "    height = ?,\n" +
+                    "    weight = ?,\n" +
+                    "    biography = ?,\n" +
+                    "    playerImage = ?,\n" +
+                    "    countryId = ?,\n" +
+                    "    playerRoleId = ?\n" +
+                    "WHERE playerId = ?;";
+        try {
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setNString(1, playerName);
+            ps.setString(2, playerNumber);
+            ps.setString(3, dateOfBirth);
+            ps.setString(4, height);
+            ps.setString(5, weight);
+            ps.setString(6, biography);
+            ps.setString(7, image);
+            ps.setString(8, countryId);
+            ps.setString(9, playerRoleId);
+            ps.setString(10, playerId);          
+            int resultInserted = ps.executeUpdate();                              
+            String sql = "UPDATE Performance\n" +
+                                    "SET atk = ?,\n" +
+                                    "    def = ?,\n" +
+                                    "    spd = ?\n" +
+                                    "WHERE playerId = ?;";
+                    ps = connect.prepareStatement(sql);
+                    ps.setString(1, atk);
+                    ps.setString(2, def);
+                    ps.setString(3, spd);
+                    ps.setString(4, playerId);                          
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
       }
 }
