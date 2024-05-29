@@ -14,48 +14,51 @@
     </head>
     <body>
         <div class="update__player">
-            <form method="POST" action="playerManagementServlet">
-                <div class="player__detail">
+            <form method="POST" action="playerUpdateServlet?playerId=${Player.playerId}">
+                <div class="player__detail">                 
                     <table border="0">
                         <tr>
                             <td>Name: </td>
-                            <td><input type="text" name="playerName"></td>
+                            <td><input type="text" name="playerName" value="${Player.playerName}"></td>
                         </tr>
                         <tr>
                             <td>Number: </td>
-                            <td><input type="text" name="playerNumber"></td>
+                            <td><input type="text" name="playerNumber" value="${Player.playerNumber}"></td>
                         </tr>
                         <tr>
                             <td>Country: </td>
                             <td>
                                 <select name="playerCountry">
-                                    <option value="countryId">Viet Nam</option>
+                                    <option value="1">Viet Nam</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Role: </td>
                             <td>
-                                <select name="playerCountry">
-                                    <option value="roleId">Defender</option>
+                                <select name="playerRoleId">
+                                    <option value="1">Goal keeper</option>
+                                    <option value="2">Defender</option>
+                                    <option value="3">Midfielder</option>
+                                    <option value="4">Forward</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Birth: </td>
-                            <td><input type="date" id="playerBirth" name="playerBirth"></td>
+                            <td><input type="date" id="playerBirth" name="playerBirth" value="${Player.dateOfBirth}"></td>
                         </tr>
                         <tr>
                             <td>Height: </td>
-                            <td><input type="number" min="150" name="playerHeight"></td>
+                            <td><input type="number" min="150" name="playerHeight" value="${Player.height}"></td>
                         </tr>
                         <tr>
                             <td>Weight: </td>
-                            <td><input type="number" min="50" name="playerWeight"></td>
+                            <td><input type="number" min="50" name="playerWeight" value="${Player.weight}"></td>
                         </tr>
                         <tr>
                             <td>Biography: </td>
-                            <td><textarea name="playerBio"></textarea></td>
+                            <td><textarea name="playerBio" value="${Player.biography}" ></textarea></td>
                         </tr>
                     </table>
                 </div>
@@ -63,21 +66,21 @@
                         <table border="0">
                             <tr>
                                 <td>ATK: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerAtk"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="ATK" value="${Player.ATK}"></td>
                             </tr>
                             <tr>
                                 <td>DEF: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerDef"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="DEF" value="${Player.DEF}"></td>
                             </tr>
                             <tr>
                                 <td>SPD: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerSpd"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="SPD" value="${Player.SPD}"></td>
                             </tr>
                         </table>
                 </div>
                 <div class="player__image">
                     <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
-                    <input type="file" name="playerImage">
+                    <input type="text" name="playerImage">
                 </div>
                 <div class="update__button"><button type="submit">Update</button></div>
             </form>

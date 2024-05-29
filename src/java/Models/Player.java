@@ -19,7 +19,7 @@ public class Player {
     private float weight;
     private String biography;
     private int countryId;
-    private int playerRoleId;
+    private String roleName;
     private String image;
     private int ATK;
     private int DEF;
@@ -27,7 +27,7 @@ public class Player {
     public Player() {
     }
 
-    public Player(int playerId, String playerName, int playerNumber, Date dateOfBirth, float height, float weight, String biography, int countryId, int playerRoleId, String image, int ATK, int DEF, int SPD) {
+    public Player(int playerId, String playerName, int playerNumber, Date dateOfBirth, float height, float weight, String biography, int countryId, String roleName, String image, int ATK, int DEF, int SPD) {
         this.playerId = playerId;
         this.playerName = playerName;
         this.playerNumber = playerNumber;
@@ -36,7 +36,7 @@ public class Player {
         this.weight = weight;
         this.biography = biography;
         this.countryId = countryId;
-        this.playerRoleId = playerRoleId;
+        this.roleName = roleName;
         this.image = image;
         this.ATK = ATK;
         this.DEF = DEF;
@@ -107,12 +107,12 @@ public class Player {
         this.countryId = countryId;
     }
 
-    public int getPlayerRoleId() {
-        return playerRoleId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setPlayerRoleId(int playerRoleId) {
-        this.playerRoleId = playerRoleId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getImage() {
@@ -145,5 +145,7 @@ public class Player {
 
     public void setSPD(int SPD) {
         this.SPD = SPD;
-    }   
+    }
+
+    
 }

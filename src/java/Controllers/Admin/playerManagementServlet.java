@@ -57,11 +57,19 @@ public class playerManagementServlet extends HttpServlet {
         try {
             String option = request.getParameter("option");
             if (option.equalsIgnoreCase("update")) {
+                Player player = p.getPlayer(request.getParameter("playerId"));
+                
+                request.setAttribute("Player", player);
                 request.setAttribute("page", "/Views/Admin/Player/UpdatePlayer.jsp");
-            } else if (option.equalsIgnoreCase("add")) {
+            }else if(option.equalsIgnoreCase("playerdetail")){
+                Player player = p.getPlayer(request.getParameter("playerId"));
+                request.setAttribute("Player", player);
+                request.setAttribute("page", "/Views/Admin/Player/AdminDetailPlayer.jsp");
+            }           
+            else if (option.equalsIgnoreCase("add")) {
                 request.setAttribute("page", "/Views/Admin/Player/AddPlayer.jsp");
             } else if (option.equalsIgnoreCase("delete")) {
-                String idPlayer = request.getParameter("idPlayer");
+                String idPlayer = request.getParameter("playerId");
                 p.deletePlayer(idPlayer);
                 request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
             }
