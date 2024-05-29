@@ -87,6 +87,9 @@ public class pitchManagementServlet extends HttpServlet {
             default:
                 throw new AssertionError();
         }
+        //set css
+        request.setAttribute("dropdownMenu", "block");
+        request.setAttribute("pitchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
         List<Pitch> pitchList = pitchDAO.getPitchList();
         request.setAttribute("pitchList", pitchList);
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
