@@ -63,14 +63,15 @@ public class playerManagementServlet extends HttpServlet {
             } else if (option.equalsIgnoreCase("delete")) {
                 String idPlayer = request.getParameter("idPlayer");
                 p.deletePlayer(idPlayer);
-
-                setListPlayer(request, response);
                 request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
             }
         } catch (NullPointerException e) {
-            setListPlayer(request, response);
             request.setAttribute("page", "/Views/Admin/Player/PlayerManagement.jsp");
         }
+        //set css
+        request.setAttribute("dropdownMenu", "block");
+        request.setAttribute("playerManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
+        setListPlayer(request, response);
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }
 

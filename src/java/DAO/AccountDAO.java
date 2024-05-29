@@ -15,7 +15,6 @@ public class AccountDAO {
     
     public static AccountDAO INSTANCE = new AccountDAO();
     private Connection connect;
-    private String status = "OK";
 
     private AccountDAO() {
         if (INSTANCE == null) {

@@ -55,6 +55,11 @@ public class matchManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        //set css
+        request.setAttribute("dropdownMenu", "block");
+        request.setAttribute("matchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
         request.setAttribute("page", "/Views/Admin/Match/MatchManagement.jsp");
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }

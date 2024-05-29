@@ -19,16 +19,18 @@
             </div>
             <div class="player__box">
                 <div class="search__box">
-                    <form method="post" action="playerSearchAdminServlet">
-                            <input type="text" name="search" placeholder="Search..."/>
-                            <button type="submit" value="Search">Search</button>
-                        </form>
+                    <form action="playerSearchServlet" method="post">
+                        <div class="d-flex align-items-center position-relative mx-auto" style="max-width: 500px;">
+                            <input name="search" class="form-control border-primary flex-grow-1 py-3 ps-4 pe-5" type="text" value="${txtS}" placeholder="Search...">
+                            <button type="submit" class="btn btn-primary py-2 ms-2"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
                 </div>
                 <div class="role">
                     <h1>Role name</h1>
                 </div>
                 <div class="card__box">
-                    <c:forEach var="player" items="${requestScope.listP}">
+                    <c:forEach var="player" items="${listP}">
 
                     <div>
                         <a href="<c:url value="/playerDetailServlet?playerId=1"/>" class="card-link">
@@ -50,7 +52,8 @@
                             <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=delete&idPlayer=${player.playerId}'">Delete</button>
                         </div>
                     </div>
-                        </c:forEach>                       
+                        </c:forEach>
+   
                 </div>
             </div>
         </div>
