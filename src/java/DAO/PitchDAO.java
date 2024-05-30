@@ -143,9 +143,9 @@ public class PitchDAO {
             statement.setString(2, addressName);
             statement.setString(3, addressURL);
 
-            if (newPitchStructure != null){
+            if (newPitchStructure != null) {
                 statement.setBlob(4, newPitchStructure);
-            }else{
+            } else {
                 byte[] decodedStructure = Base64.getDecoder().decode(existingStructure);
                 statement.setBytes(4, decodedStructure);
             }
@@ -166,6 +166,32 @@ public class PitchDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<Pitch> searchPitch(String keySearch) {
+        List<Pitch> result = new ArrayList<>();
+        String sql = "SELECT * FROM Pitch WHERE pitchName LIKE ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            String searchPattern = "%" + keySearch + "%";
+            statement.setString(1, searchPattern);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Pitch pitch = new Pitch();
+                pitch.setPitchId(rs.getInt("pitchId"));
+                pitch.setPitchName(rs.getNString("pitchName"));
+                pitch.setAddressName(rs.getNString("addressName"));
+                pitch.setAddressURL(rs.getNString("addressURL"));
+                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
+                pitch.setPitchStructure(pitchStructure);
+                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
+                pitch.setImage(pitchImage);
+                result.add(pitch);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static void main(String args[]) {
