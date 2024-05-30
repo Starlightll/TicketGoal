@@ -116,6 +116,7 @@ public class PitchDAO {
             }
             return -1; // Return -1 if no ID was generated or row was not inserted
         } catch (SQLException e) {
+            System.out.println(e);
             e.printStackTrace();
             return -1; // Return -1 in case of an SQL exception
         }

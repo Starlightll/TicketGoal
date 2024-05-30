@@ -38,14 +38,15 @@ public class AreaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             List<Area> areaList = areaDao.getAllArea(request.getParameter("pitchId"));
+            String pitchId = request.getParameter("pitchId");
             for (Area area : areaList) {
                 out.println("<div class=\"area\"><input style=\"display: none\"id=\"areaId\" value=\""+area.id+"\">"+"\n"
                         + "                            <p class=\"area__name\">\n"
                         + "                                " + area.areaName + "\n"
                         + "                            </p>\n"
                         + "                            <div class=\"area__management\">\n"
-                        + "                                <button type=\"button\" class=\"seat__management\" id=\"seat-management-button\">Seat</button>\n"
-                        + "                                <button onclick=\"deleteArea()\" type=\"button\" class=\"delete__button\">Delete</button>\n"
+                        + "                                <a href=\"/TicketGoal/pitchManagementServlet?option=update&pitchId="+pitchId+"&areaId="+area.id+"\" class=\"seat__management\" id=\"seat-management-button\">Seat</a>\n"
+                        + "                                <button onclick=\"deleteArea("+area.id+")\" type=\"button\" class=\"delete__button\">Delete</button>\n"
                         + "                            </div>\n"
                         + "                        </div>");
             }
@@ -88,6 +89,7 @@ public class AreaServlet extends HttpServlet {
                 break;
             case "delete":
                 String areaId = request.getParameter("areaId");
+                System.out.println(areaId);
                 areaDao.deleteArea(areaId);
                 break;
             default:

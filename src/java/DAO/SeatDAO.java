@@ -95,5 +95,59 @@ public class SeatDAO extends  DBContext{
             e.printStackTrace();
         }
     }
+    
+    public List<Seat> findAllByAreaId(int pitchId) {
+        String sql = "SELECT * FROM Seat where areaId =?";
+        connection = new DBContext().getConnection();
+        List<Seat> listFound = new ArrayList<>();
+        try {
+            //- Tạo đối tượng PrepareStatement
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //- Set parameter ( optional )
+            statement.setInt(1, pitchId);
+            //- Thực thi câu lệnh
+            ResultSet resultSet = statement.executeQuery();
+            //- trả về kết quả
+            while (resultSet.next()) {
+                int seatId = resultSet.getInt("seatId");
+                int seatNumber = resultSet.getInt("seatNumber");
+                int price = resultSet.getInt("price");
+                int areaId = resultSet.getInt("areaId");
+                int seatStatusId = resultSet.getInt("seatStatusId");
+
+                Seat seat = new Seat(seatId, seatNumber, price, areaId, seatStatusId);
+                listFound.add(seat);
+            }
+        } catch (Exception e) {
+        }
+        return listFound;
+    }
+    
+    public Seat findAllById(int id) {
+        String sql = "SELECT * FROM Seat where seatId =?";
+        connection = new DBContext().getConnection();
+        List<Seat> listFound = new ArrayList<>();
+        try {
+            //- Tạo đối tượng PrepareStatement
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //- Set parameter ( optional )
+            statement.setInt(1, id);
+            //- Thực thi câu lệnh
+            ResultSet resultSet = statement.executeQuery();
+            //- trả về kết quả
+            if (resultSet.next()) {
+                int seatId = resultSet.getInt("seatId");
+                int seatNumber = resultSet.getInt("seatNumber");
+                int price = resultSet.getInt("price");
+                int areaId = resultSet.getInt("areaId");
+                int seatStatusId = resultSet.getInt("seatStatusId");
+
+                Seat seat = new Seat(seatId, seatNumber, price, areaId, seatStatusId);
+                return seat;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
 }

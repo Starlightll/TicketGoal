@@ -56,6 +56,10 @@
         <servlet-name>SearchPitchServlet</servlet-name>
         <servlet-class>Controllers.Admin.PitchManagement.SearchPitchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SeatServlet</servlet-name>
+        <servlet-class>Controllers.Admin.PitchManagement.SeatServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -138,6 +142,10 @@
     <servlet-mapping>
         <servlet-name>playerServlet</servlet-name>
         <url-pattern>/playerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeatServlet</servlet-name>
+        <url-pattern>/seat</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
