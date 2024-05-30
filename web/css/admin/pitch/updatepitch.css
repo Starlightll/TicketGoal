@@ -164,12 +164,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transition: 0.3s;
 }
 
+
 .update__pitch .area__container button:hover{
     transform: scale(1.1);
 }
 
+
 .update__pitch .area__container .area__box .area__management .seat__management {
+    
     background-color: rgb(123, 0, 255);
+}
+
+.update__pitch .area__container .area__box .area__management .seat__management a {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .update__pitch .area__container .area__box .area__management .update__button {

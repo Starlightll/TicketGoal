@@ -63,6 +63,7 @@ public class AreaDAO {
             int deletedRow = statement.executeUpdate();
             return deletedRow > 0;
         } catch (SQLException e) {
+            System.out.println(e+areaId);
             return false;
         }
     }
