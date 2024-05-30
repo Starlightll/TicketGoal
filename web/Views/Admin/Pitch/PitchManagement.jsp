@@ -11,18 +11,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/pitch/pitchmanagement.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="pitch__management__container">
             <div class="pitch__management__header">
                 <div class="search-box">
                     <button class="btn-search"><i class="ri-search-line"></i></button>
-                    <input type="text" class="input-search" placeholder="Type to Search...">
+                    <input oninput='searchByName(this)' type="text" class="input-search" placeholder="Type to Search...">
                 </div>
                 <button onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=add'" class="add__button">Add</button>
             </div>
             <div class="line__decor"></div>
-            <div class="pitch__box">
+            <div class="pitch__box" id="pitch-box">
                 <c:forEach items="${requestScope.pitchList}" var="pitch">
                     <div class="pitch">
                         <img name="pitchImage" src="data:image/jpeg;base64,${pitch.image}"/>
@@ -31,11 +32,27 @@
                             <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'">Delete</button>
                         </div>
                         <div class="pitch__name">
-                            <p><c:out value="${pitch.pitchName}"></c:out></p>
+                            <p>${pitch.pitchName}</p>
                             </div>
                         </div>
                 </c:forEach>
             </div>
         </div>
+            <script>
+                    function searchByName(param) {
+                        var searchValues = param.value;
+                        $.ajax({
+                                url: `${pageContext.request.contextPath}/SearchPitchServlet`,
+                                method: "GET",
+                                data: {
+                                    searchValue: searchValues
+                                },
+                                success: function (data) {
+                                    var pitchBox = document.getElementById("pitch-box");
+                                    pitchBox.innerHTML = data;
+                                }
+                            });
+                    }
+            </script>
     </body>
 </html>

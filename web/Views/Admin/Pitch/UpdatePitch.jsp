@@ -62,7 +62,6 @@
                     <div class="area__box" id="area-box">
                         <c:forEach items="${requestScope.AreaList}" var="area">
                             <div class="area">
-                                <input style="display: none" id="areaId" value="${area.id}">
                                 <p class="area__name">
                                     ${area.areaName}
                                 </p>
