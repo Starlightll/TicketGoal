@@ -7,22 +7,13 @@ package Controllers.Admin.PitchManagement;
 import Models.Seat;
 import DAO.SeatDAO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@MultipartConfig(maxFileSize = 16177215)
 public class SeatServlet extends HttpServlet {
 
     private static final SeatDAO seatDAO = new SeatDAO();
@@ -34,28 +25,6 @@ public class SeatServlet extends HttpServlet {
         List<Seat> listSeats = seatDAO.findAll();
         //set to request
         request.setAttribute("listSeats", listSeats);
-        String action = request.getParameter("action") == null
-                ? "default"
-                : request.getParameter("action");
-        switch (action) {
-            case "add":
-                addSeat(request);
-                response.sendRedirect("pitchManagement?option=update");
-                break;
-            case "edit":
-                int seatId = Integer.parseInt(request.getParameter("seatId"));
-                Seat seat = seatDAO.findAllById(seatId);
-                request.setAttribute("seatEdit", seat);
-                request.getRequestDispatcher("./Views/Admin/Pitch/UpdateSeat.jsp").forward(request, response);
-                break;
-            case "import":
-                request.setAttribute("areaId", request.getParameter("areaId"));
-                request.getRequestDispatcher("./Views/Admin/Pitch/importSeat.jsp").forward(request, response);
-                break;
-            default:
-                throw new AssertionError();
-        }
-
     }
 
     @Override
@@ -68,74 +37,13 @@ public class SeatServlet extends HttpServlet {
         switch (action) {
             case "add":
                 addSeat(request);
-                String pitchId = request.getParameter("pitchId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchId );
+                response.sendRedirect("pitchManagement?option=update");
                 break;
             case "edit":
                 editSeat(request);
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=1&areaId=" + request.getParameter("areaId"));
-                break;
-            case "import":
-                importFileEx(request, response);
-                response.sendRedirect("pitchManagementServlet");
                 break;
             default:
                 throw new AssertionError();
-        }
-    }
-
-    private void importFileEx(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Part filePart = request.getPart("file");
-            try ( InputStream fileContent = filePart.getInputStream()) {
-                Workbook workbook = null;
-                String fileName = filePart.getSubmittedFileName();
-                if (fileName.endsWith(".xlsx")) {
-                    workbook = new XSSFWorkbook(fileContent);
-                } else if (fileName.endsWith(".xls")) {
-                    workbook = new HSSFWorkbook(fileContent);
-                } else {
-                    throw new IllegalArgumentException("The file format is not supported.");
-                }
-                Sheet sheet = workbook.getSheetAt(0);
-                for (Row row : sheet) {
-                    Seat seat = new Seat();
-                    int index = 0;
-                    for (Cell cell : row) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                break;
-                            case NUMERIC:
-                                if (index == 1) {
-                                    int seatNumber = (int) cell.getNumericCellValue();
-                                    seat.setSeatNumber(seatNumber);
-                                } else if (index == 2) {
-                                    int price = (int) cell.getNumericCellValue();
-                                    seat.setPrice(price);
-                                } else if (index == 3) {
-                                    int areaId = (int) cell.getNumericCellValue();
-                                    seat.setAreaId(areaId);
-                                } else {
-                                     int seatStatusId = (int)cell.getNumericCellValue();
-                                     seat.setSeatStatusId(seatStatusId);
-                                }
-                                break;
-                            case BOOLEAN:
-                                break;
-                            default:
-                                break;
-                        }
-                        index++;
-                    }
-                    seatDAO.insert(seat);
-                }
-                System.out.println("Import done");
-                workbook.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            System.out.println("e");
         }
     }
 
@@ -146,13 +54,16 @@ public class SeatServlet extends HttpServlet {
             int price = Integer.parseInt(request.getParameter("price"));
             int areaId = Integer.parseInt(request.getParameter("areaId"));
             int seatStatusId = Integer.parseInt(request.getParameter("seatStatusId"));
+
             Seat seat = new Seat();
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
             seat.setAreaId(areaId);
             seat.setSeatStatusId(seatStatusId);
+
             //add to database
             seatDAO.insert(seat);
+
         } catch (Exception e) {
 
         }
@@ -165,12 +76,14 @@ public class SeatServlet extends HttpServlet {
             int price = Integer.parseInt(request.getParameter("price"));
             int areaId = Integer.parseInt(request.getParameter("areaId"));
             int seatStatusId = Integer.parseInt(request.getParameter("seatStatusId"));
+
             Seat seat = new Seat();
             seat.setSeatId(seatId);
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
             seat.setAreaId(areaId);
             seat.setSeatStatusId(seatStatusId);
+
             //edit database
             seatDAO.edit(seat);
         } catch (Exception e) {

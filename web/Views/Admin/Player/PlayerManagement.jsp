@@ -18,16 +18,6 @@
                 <button onclick="location.href='${pageContext.request.contextPath}/playerManagementServlet?option=add'">Add</button>
             </div>
             <div class="player__box">
-                <form action="playerSearchByRoleNameServlet" method="post">
-                        <select name="playerRoleId">
-                            <option value="0">All</option>
-                            <option value="1">Goal keeper</option>
-                            <option value="2">Defender</option>
-                            <option value="3">Midfielder</option>
-                            <option value="4">Forward</option>
-                        </select>
-                        <input type="submit"value="Show">
-                    </form>
                 <div class="search__box">
                     <form method="post" action="playerSearchAdminServlet">
                             <input type="text" name="search" placeholder="Search..."/>
