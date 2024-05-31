@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="add__player">
-            <form method="POST" action="playerManagementServlet">
+            <form method="POST" action="playerAddServlet">
                 <div class="player__detail">
                     <table border="0">
                         <tr>
@@ -29,16 +29,21 @@
                             <td>Country: </td>
                             <td>
                                 <select name="playerCountry">
-                                    <option value="countryId">Viet Nam</option>
+                                    <option value="1">Viet Nam</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Role: </td>
                             <td>
-                                <select name="playerCountry">
-                                    <option value="roleId">Defender</option>
+                                
+                                    <select name="playerRoleId">
+                                    <option value="1">Goalkeeper</option>
+                                    <option value="2">Defender</option>
+                                    <option value="3">Midfielder</option>
+                                    <option value="4">Forward</option>
                                 </select>
+                               
                             </td>
                         </tr>
                         <tr>
@@ -63,21 +68,20 @@
                         <table border="0">
                             <tr>
                                 <td>ATK: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerAtk"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="ATK"></td>
                             </tr>
                             <tr>
                                 <td>DEF: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerDef"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="DEF"></td>
                             </tr>
                             <tr>
                                 <td>SPD: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="playerSpd"></td>
+                                <td class="performance"><input type="range" min="0" max="100" name="SPD"></td>
                             </tr>
                         </table>
                 </div>
                 <div class="player__image">
-                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
-                    <input type="file" name="playerImage">
+                    <input type="text" name="playerImage">
                 </div>
                 <div class="add__button"><button type="submit">Add</button></div>
             </form>

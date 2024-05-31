@@ -21,7 +21,7 @@
     </head>
     <body>
         <div class="add__pitch">
-            <form method="POST" action="action">
+            <form method="POST" action="addPitchServlet" enctype="multipart/form-data">
                 <div class="pitch__container">
                     <div class="pitch__info">
                         <table>
@@ -31,8 +31,10 @@
                             </tr>
                             <tr class="pitch__address">
                                 <td>Address:</td>
-                                <td><input type="text" name="pitchAddressName" placeholder="Address Name">
-                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL"></td>
+                                <td>
+                                    <input type="text" name="pitchAddressName" placeholder="Address Name">
+                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL">
+                                </td>
                             </tr>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
@@ -45,39 +47,12 @@
                     </div>
                     <div class="pitch__image">
                         <img id="uploaded-image" src="" alt="">
-                        <input type="file" id="upload-button" accept="image/*">
+                        <input type="file" id="upload-button" name="pitchImage" accept="image/*">
                         <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>
                 </div>
-                <div class="area__container">
-                    <div class="add__button">
-                        <button type="submit">Add</button>
-                    </div>
-                    <div class="area__box">
-                        <div class="area">
-                            <p class="area__name">
-                                Area Name
-                            </p>
-                            <div class="area__management">
-                                <button class="seat__management">Seat</button>
-                                <button class="update__button">Update</button>
-                                <button class="delete__button">Delete</button>
-                            </div>
-                        </div>
-                        <div class="area">
-                            <p class="area__name">
-                                Area Name
-                            </p>
-                            <div class="area__management">
-                                <button class="seat__management">Seat</button>
-                                <button class="update__button">Update</button>
-                                <button class="delete__button">Delete</button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </form>
+                <button type="submit">Add Pitch</button>
+           </form>
         </div>
        <script src="${pageContext.request.contextPath}/js/admin/pitch/addpitch.js"></script>
     </body>

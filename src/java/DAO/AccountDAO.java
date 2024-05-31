@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO {
+    
+    public static AccountDAO INSTANCE = new AccountDAO();
+    private Connection connect;
 
     private static AccountDAO INSTANCE;
     private final Connection connect;

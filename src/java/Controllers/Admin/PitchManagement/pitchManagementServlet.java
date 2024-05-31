@@ -2,20 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Admin;
+package Controllers.Admin.PitchManagement;
 
+import DAO.AreaDAO;
+import DAO.PitchDAO;
+import DAO.SeatDAO;
+import Models.Area;
+import Models.Pitch;
+import Models.Seat;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author mosdd
  */
-public class matchManagementServlet extends HttpServlet {
+public class pitchManagementServlet extends HttpServlet {
+
+    private static final PitchDAO pitchDAO = PitchDAO.INSTANCE;
+    private static final AreaDAO areaDAO = AreaDAO.INSTANCE;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +45,10 @@ public class matchManagementServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet matchManagementServlet</title>");            
+            out.println("<title>Servlet pitchManagementServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet matchManagementServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet pitchManagementServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,12 +66,44 @@ public class matchManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+        PrintWriter out = response.getWriter();
+        String option = request.getParameter("option") == null ? "dafault" : request.getParameter("option");
+        switch (option) {
+            case "add":
+                request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
+                break;
+            case "update":
+                String pitchId = request.getParameter("pitchId");
+                Pitch pitch = pitchDAO.getPitch(pitchId);
+                SeatDAO seatDao = new SeatDAO();
+                request.setAttribute("pitch", pitch);
+                List<Area> areaList = areaDAO.getAllArea(pitchId);
+                request.setAttribute("AreaList", areaList);
+                int idSeat = 0;
+                try {
+                    idSeat = Integer.parseInt(request.getParameter("areaId"));
+                } catch(Exception e) {
+                    System.out.println("Can not areaId");
+                }
+                List<Seat> seatList = seatDao.findAllByAreaId(idSeat);
+                request.setAttribute("seatList", seatList);
+                request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
+                break;
+            case "delete":
+                pitchDAO.deletePitch(request.getParameter("pitchId"));
+                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
+                break;
+            case "dafault":
+                request.setAttribute("page", "/Views/Admin/Pitch/PitchManagement.jsp");
+                break;
+            default:
+                throw new AssertionError();
+        }
         //set css
         request.setAttribute("dropdownMenu", "block");
-        request.setAttribute("matchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
-        request.setAttribute("page", "/Views/Admin/Match/MatchManagement.jsp");
+        request.setAttribute("pitchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
+        List<Pitch> pitchList = pitchDAO.getPitchList();
+        request.setAttribute("pitchList", pitchList);
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }
 
@@ -75,7 +118,6 @@ public class matchManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

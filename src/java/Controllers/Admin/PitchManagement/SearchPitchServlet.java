@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controllers.Player;
+package Controllers.Admin.PitchManagement;
 
-import DAO.PlayerDAO;
-import Models.Player;
+import DAO.PitchDAO;
+import Models.Pitch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,8 @@ import java.util.List;
  *
  * @author mosdd
  */
-public class playerDetailServlet extends HttpServlet {
+public class SearchPitchServlet extends HttpServlet {
+    PitchDAO pitchDAO = PitchDAO.INSTANCE;
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,19 +31,22 @@ public class playerDetailServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet playerDetailServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet playerDetailServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            String searchValue = request.getParameter("searchValue");
+            List<Pitch> pitchList = pitchDAO.searchPitch(searchValue);
+            for(Pitch pitchs: pitchList) {
+                out.print("<div class=\"pitch\">\n" +
+"                        <img name=\"pitchImage\" src=\"data:image/jpeg;base64,"+pitchs.image+"\"/>\n" +
+"                        <div class=\"pitch__manager__option\">\n" +
+"                            <button class=\"update__button\" onclick=\"location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update&pitchId=${pitch.pitchId}'\">Update</button>\n" +
+"                            <button class=\"delete__button\" onclick=\"location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'\">Delete</button>\n" +
+"                        </div>\n" +
+"                        <div class=\"pitch__name\">\n" +
+"                            <p>"+pitchs.pitchName+"</p>\n" +
+"                            </div>\n" +
+"                        </div>");
+            }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,10 +60,7 @@ public class playerDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PlayerDAO p = new PlayerDAO();
-        Player players = p.getPlayer(request.getParameter("playerId"));
-        request.setAttribute("Players", players);
-        request.getRequestDispatcher("Views/Player/PlayerDetail.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -72,7 +73,7 @@ public class playerDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /** 

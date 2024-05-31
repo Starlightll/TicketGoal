@@ -17,9 +17,9 @@ import java.util.List;
 
 /**
  *
- * @author mosdd
+ * @author pc
  */
-public class playerDetailServlet extends HttpServlet {
+public class playerSearchServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +36,10 @@ public class playerDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet playerDetailServlet</title>");  
+            out.println("<title>Servlet playerSearchServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet playerDetailServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet playerSearchServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,10 +56,7 @@ public class playerDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PlayerDAO p = new PlayerDAO();
-        Player players = p.getPlayer(request.getParameter("playerId"));
-        request.setAttribute("Players", players);
-        request.getRequestDispatcher("Views/Player/PlayerDetail.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -72,16 +69,24 @@ public class playerDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String keyword = request.getParameter("search");
         
+        PlayerDAO pDAO = new PlayerDAO();
+        
+        List<Player> list = pDAO.searchPlayerByName(keyword);   
+               
+        if(list.isEmpty()){
+           request.setAttribute("search", "Product does not exist !"); 
+        }
+        else{
+            
+            request.setAttribute("listP", list);
+        }       
+        request.getRequestDispatcher("Views/Player/Player.jsp").forward(request, response);
     }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
-}
+}   

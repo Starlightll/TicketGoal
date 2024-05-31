@@ -11,17 +11,20 @@ package Models;
 public class Pitch {
     public int pitchId;
     public String pitchName;
-    public String address;
+    public String addressName;
+    public String addressURL;
     public String pitchStructure;
     public String image;
 
     public Pitch() {
     }
 
-    public Pitch(int pitchId, String pitchName, String address, String pitchStructure, String image) {
+
+    public Pitch(int pitchId, String pitchName, String addressName, String addressURL, String pitchStructure, String image) {
         this.pitchId = pitchId;
         this.pitchName = pitchName;
-        this.address = address;
+        this.addressName = addressName;
+        this.addressURL = addressURL;
         this.pitchStructure = pitchStructure;
         this.image = image;
     }
@@ -42,12 +45,20 @@ public class Pitch {
         this.pitchName = pitchName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddressName() {
+        return addressName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
+    }
+
+    public String getAddressURL() {
+        return addressURL;
+    }
+
+    public void setAddressURL(String addressURL) {
+        this.addressURL = addressURL;
     }
 
     public String getPitchStructure() {
@@ -65,6 +76,8 @@ public class Pitch {
     public void setImage(String image) {
         this.image = image;
     }
+
+   
     
     
 }

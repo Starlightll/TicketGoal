@@ -2,20 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Admin;
+package Controllers.Admin.PitchManagement;
 
+import DAO.AreaDAO;
+import Models.Area;
+import Models.Pitch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author mosdd
  */
-public class matchManagementServlet extends HttpServlet {
+public class AreaServlet extends HttpServlet {
+
+    private static final AreaDAO areaDao = AreaDAO.INSTANCE;
+    boolean status = false;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,16 +37,19 @@ public class matchManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet matchManagementServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet matchManagementServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            List<Area> areaList = areaDao.getAllArea(request.getParameter("pitchId"));
+            String pitchId = request.getParameter("pitchId");
+            for (Area area : areaList) {
+                out.println("<div class=\"area\"><input style=\"display: none\"id=\"areaId\" value=\""+area.id+"\">"+"\n"
+                        + "                            <p class=\"area__name\">\n"
+                        + "                                " + area.areaName + "\n"
+                        + "                            </p>\n"
+                        + "                            <div class=\"area__management\">\n"
+                        + "                                <a href=\"/TicketGoal/pitchManagementServlet?option=update&pitchId="+pitchId+"&areaId="+area.id+"\" class=\"seat__management\" id=\"seat-management-button\">Seat</a>\n"
+                        + "                                <button onclick=\"deleteArea("+area.id+")\" type=\"button\" class=\"delete__button\">Delete</button>\n"
+                        + "                            </div>\n"
+                        + "                        </div>");
+            }
         }
     }
 
@@ -55,13 +65,7 @@ public class matchManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        //set css
-        request.setAttribute("dropdownMenu", "block");
-        request.setAttribute("matchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
-        request.setAttribute("page", "/Views/Admin/Match/MatchManagement.jsp");
-        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,6 +79,22 @@ public class matchManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+        switch (action) {
+            case "add":
+                String areaName = request.getParameter("areaName");
+                String pitchId = request.getParameter("pitchId");
+                status = areaDao.addArea(areaName, pitchId);
+                break;
+            case "delete":
+                String areaId = request.getParameter("areaId");
+                System.out.println(areaId);
+                areaDao.deleteArea(areaId);
+                break;
+            default:
+                throw new AssertionError();
+        }
         processRequest(request, response);
     }
 
