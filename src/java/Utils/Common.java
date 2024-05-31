@@ -1,0 +1,51 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Utils;
+
+/**
+ *
+ * @author MSI VN
+ */
+public class Common {
+
+    public static class JsonResponse {
+
+        private final boolean isSuccess;
+        private final String message;
+        private Object data = null;
+
+        public JsonResponse(boolean isSuccess, String message) {
+            this.isSuccess = isSuccess;
+            this.message = message;
+        }
+
+        public JsonResponse(boolean isSuccess, String message,Object data) {
+            this.isSuccess = isSuccess;
+            this.message = message;
+            this.data = data;
+        }
+
+        public boolean isSuccess() {
+            return isSuccess;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public static void addToCommandIfNotNull(StringBuilder commandBuilder, String field, Object value) {
+        if (value != null) {
+            commandBuilder.append(field).append(" = '").append(value).append("', ");
+        }
+    }
+
+    public static void addToCommandIfNotDefault(StringBuilder commandBuilder, String field, int value, int defaultValue) {
+        if (value != defaultValue) {
+            commandBuilder.append(field).append(" = ").append(value).append(", ");
+        }
+    }
+
+}
