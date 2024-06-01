@@ -62,12 +62,13 @@
                     <div class="area__box" id="area-box">
                         <c:forEach items="${requestScope.AreaList}" var="area">
                             <div class="area">
+                                <input style="display: none" id="area-id" value="${area.id}">
                                 <p class="area__name">
                                     ${area.areaName}
                                 </p>
                                 <div class="area__management">
-                                    <button type="button" class="seat__management" id="seat-management-button">Seat</button>
-                                    <button onclick="deleteArea()" type="button" class="delete__button">Delete</button>
+                                    <a href="?option=update&pitchId=1&areaId=${area.id}"  type="button" class="seat__management" id="seat-management-button">Seat</a>
+                                    <button onclick="deleteArea(${area.id})" type="button" class="delete__button">Delete</button>
                                 </div>
                             </div>
                         </c:forEach>
@@ -81,7 +82,7 @@
                             <button onclick="addArea()" type="button" class="add__button" id="area-add-submit-button">Add</button>
                     </div>
                 </div>
-                <div class="seat__management__box" id="seat-management-box">
+                <div class="seat__management__box ${param.areaId > 0 ? "show-seat-management-box" : ""}" id="seat-management-box">
                     <div class="seat__management__header">
                         <div class="seat__management__search">
                             <input type="search" name="searchInput">
@@ -93,9 +94,8 @@
                             </select>
                         </div>
                         <div class="seat__management__import">
-                            <button class="import__excel">Import</button> 
+                            <a style="color: #fff" href="seat?action=import&areaId=${param.areaId}" class="import__excel" type="submit">Import</a> 
                             <button type="button" class="add__button" id="seat-add-button">Add Seat</button>
-                            <button class="update__all">Update All</button>  
                             <button class="delete__all">Delete All</button> 
                         </div>
                     </div>
@@ -110,19 +110,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>220</td>
-                                    <td>NotAvailable</td>
-                                    <td>
-                                        <button class="update__button">Update</button>  
-                                        <button class="delete__button">Delete</button> 
-                                    </td>
-                                </tr>
+                                <c:forEach items="${seatList}" var="seat">
+                                    <tr>
+                                        <td>${seat.seatNumber}</td>
+                                        <td>${seat.price}</td>
+                                        <td>NotAvailable</td>
+                                        <td>
+                                            <a style="color: #fff" href="seat?action=edit&pitchId=${pitch.pitchId}&seatId=${seat.seatId}" class="update__button">Update</a>  
+                                            <a style="color: #fff" href="seat?action=delete&pitchId=${pitch.pitchId}&seatId=${seat.seatId}&areaId=${seat.areaId}" class="delete__button">Delete</button> 
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
-
                     <button type="button" id="seat-management-submit-button">Submit</button> 
                     <button type="button" id="seat-management-cancel-button">Cancel</button>
                 </div>
@@ -134,6 +135,7 @@
             <div class="form__container">
                 <h2>Add Seat</h2>
                 <form id="seat-add-form" action="seat?action=add" method="POST">
+                    <input type="hidden" value="${pitch.pitchId}" name="pitchId" />
                     <label for="seatNumber">Seat Number:</label>
                     <input type="number" id="seatNumber" name="seatNumber" required>
 
@@ -141,7 +143,7 @@
                     <input type="number" id="price" name="price" required>
 
                     <label for="areaId">Area ID:</label>
-                    <input type="number" id="areaId" name="areaId" required>
+                    <input type="number" id="areaId" name="areaId" required value="${param.areaId != null ? param.areaId : 0}" readonly>
 
                     <label for="seatStatusId">Seat Status ID:</label>
                     <input type="number" id="seatStatusId" name="seatStatusId" required>
@@ -198,8 +200,8 @@
                             });
                         }
 
-                        function deleteArea() {
-                            var areaId = $("#areaId").val();
+                        function deleteArea(areaId) {
+                           
                             var pitchId = $("#pitchId").val();
                             $.ajax({
                                 url: `${pageContext.request.contextPath}/AreaServlet`,
