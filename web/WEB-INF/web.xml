@@ -60,6 +60,14 @@
         <servlet-name>SearchPitchServlet</servlet-name>
         <servlet-class>Controllers.Admin.PitchManagement.SearchPitchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>playerRoleIdServlet</servlet-name>
+        <servlet-class>Controllers.Player.playerRoleIdServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>playerSearchByRoleNameServlet</servlet-name>
+        <servlet-class>Controllers.Admin.playerSearchByRoleNameServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>SeatServlet</servlet-name>
         <url-pattern>/seat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerRoleIdServlet</servlet-name>
+        <url-pattern>/playerRoleIdServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>playerSearchByRoleNameServlet</servlet-name>
+        <url-pattern>/playerSearchByRoleNameServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>

@@ -9,12 +9,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Add Player</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/player/addplayer.css"/>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var today = new Date();
+
+                var minDate = new Date(today.getFullYear() - 50, today.getMonth(), today.getDate());
+                var maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+
+                var minDateString = minDate.toISOString().split('T')[0];
+                var maxDateString = maxDate.toISOString().split('T')[0];
+
+                var input = document.getElementById('playerBirth');
+                input.setAttribute('min', minDateString);
+                input.setAttribute('max', maxDateString);
+            });
+
+            function validateForm() {
+                var form = document.forms["addPlayerForm"];
+                var requiredFields = ["playerName", "playerNumber", "playerCountry", "playerRoleId", "playerBirth", "playerHeight", "playerWeight", "playerImage"];
+                var valid = true;
+                var errorMessages = [];
+
+                requiredFields.forEach(function(field) {
+                    if (form[field].value.trim() === "") {
+                        valid = false;
+                        errorMessages.push(field + " is required.");
+                    }
+                });
+
+                if (!valid) {
+                    alert(errorMessages.join("\n"));
+                }
+
+                return valid;
+            }
+        </script>
     </head>
     <body>
         <div class="add__player">
-            <form method="POST" action="playerAddServlet">
+            <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();">
                 <div class="player__detail">
                     <table border="0">
                         <tr>
@@ -36,14 +71,12 @@
                         <tr>
                             <td>Role: </td>
                             <td>
-                                
-                                    <select name="playerRoleId">
+                                <select name="playerRoleId">
                                     <option value="1">Goalkeeper</option>
                                     <option value="2">Defender</option>
                                     <option value="3">Midfielder</option>
                                     <option value="4">Forward</option>
                                 </select>
-                               
                             </td>
                         </tr>
                         <tr>
@@ -65,42 +98,28 @@
                     </table>
                 </div>
                 <div class="player__performance">
-                        <table border="0">
-                            <tr>
-                                <td>ATK: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="ATK"></td>
-                            </tr>
-                            <tr>
-                                <td>DEF: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="DEF"></td>
-                            </tr>
-                            <tr>
-                                <td>SPD: </td>
-                                <td class="performance"><input type="range" min="0" max="100" name="SPD"></td>
-                            </tr>
-                        </table>
+                    <table border="0">
+                        <tr>
+                            <td>ATK: </td>
+                            <td class="performance"><input type="range" min="0" max="100" name="ATK"></td>
+                        </tr>
+                        <tr>
+                            <td>DEF: </td>
+                            <td class="performance"><input type="range" min="0" max="100" name="DEF"></td>
+                        </tr>
+                        <tr>
+                            <td>SPD: </td>
+                            <td class="performance"><input type="range" min="0" max="100" name="SPD"></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="player__image">
                     <input type="text" name="playerImage">
                 </div>
-                <div class="add__button"><button type="submit">Add</button></div>
+                <div class="add__button">
+                    <button type="submit">Add</button>
+                </div>
             </form>
         </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var today = new Date();
-
-                var minDate = new Date(today.getFullYear() - 50, today.getMonth(), today.getDate());
-                var maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-
-                var minDateString = minDate.toISOString().split('T')[0];
-                var maxDateString = maxDate.toISOString().split('T')[0];
-
-                var input = document.getElementById('playerBirth');
-                input.setAttribute('min', minDateString);
-                input.setAttribute('max', maxDateString);
-            });
-        </script>
     </body>
 </html>
