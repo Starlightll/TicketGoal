@@ -3,7 +3,7 @@
     Created on : May 29, 2024, 5:11:04 PM
     Author     : mosdd
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -29,6 +29,10 @@
         <servlet-class>Controllers.Admin.PitchManagement.addPitchServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SeatServlet</servlet-name>
+        <servlet-class>Controllers.Admin.PitchManagement.SeatServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>playerSearchServlet</servlet-name>
         <servlet-class>Controllers.Player.playerSearchServlet</servlet-class>
     </servlet>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>SearchPitchServlet</servlet-name>
         <url-pattern>/SearchPitchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeatServlet</servlet-name>
+        <url-pattern>/seat</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
