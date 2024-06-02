@@ -49,7 +49,7 @@
     </head>
     <body>
         <div class="add__player">
-            <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();">
+            <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();" enctype="multipart/form-data">
                 <div class="player__detail">
                     <table border="0">
                         <tr>
@@ -114,7 +114,7 @@
                     </table>
                 </div>
                 <div class="player__image">
-                    <input type="text" name="playerImage">
+                    <input type="file" name="playerImage" accept="image/*">
                 </div>
                 <div class="add__button">
                     <button type="submit">Add</button>

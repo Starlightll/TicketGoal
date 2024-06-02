@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="update__player">
-            <form method="POST" action="playerUpdateServlet?playerId=${Player.playerId}">
+            <form method="POST" action="playerUpdateServlet?playerId=${Player.playerId}" enctype="multipart/form-data">
                 <div class="player__detail">                 
                     <table border="0">
                         <tr>
@@ -79,8 +79,9 @@
                         </table>
                 </div>
                 <div class="player__image">
-                    <img src="./img/player/Cristiano_Ronaldo.jpg" alt="alt"/>
-                    <input type="text" name="playerImage">
+                    <input type="hidden" id="existing-image" name="oldPlayerImage" value="${Player.image}">
+                    <img name="playerImage" src="data:image/jpeg;base64,${Player.image}"/>
+                    <input id="upload-image" type="file" accept="image/*" name="newPlayerImage">
                 </div>
                 <div class="update__button"><button type="submit">Update</button></div>
             </form>
