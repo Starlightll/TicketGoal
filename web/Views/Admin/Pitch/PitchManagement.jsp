@@ -33,26 +33,28 @@
                         </div>
                         <div class="pitch__name">
                             <p>${pitch.pitchName}</p>
-                            </div>
                         </div>
+                    </div>
                 </c:forEach>
             </div>
         </div>
-            <script>
-                    function searchByName(param) {
-                        var searchValues = param.value;
-                        $.ajax({
-                                url: `${pageContext.request.contextPath}/SearchPitchServlet`,
-                                method: "GET",
-                                data: {
-                                    searchValue: searchValues
-                                },
-                                success: function (data) {
-                                    var pitchBox = document.getElementById("pitch-box");
-                                    pitchBox.innerHTML = data;
-                                }
-                            });
+        <script>
+            function searchByName(param) {
+                var searchValues = param.value;
+                $.ajax({
+                    url: `${pageContext.request.contextPath}/SearchPitchServlet`,
+                    method: "GET",
+                    data: {
+                        searchValue: searchValues
+                    },
+                    success: function (data) {
+                        var pitchBox = document.getElementById("pitch-box");
+                        pitchBox.innerHTML = data;
                     }
-            </script>
+                });
+            }
+            
+            
+        </script>
     </body>
 </html>

@@ -15,6 +15,7 @@ import java.util.List;
  * @author mosdd
  */
 public class AreaDAO {
+
     public static AreaDAO INSTANCE = new AreaDAO();
     private Connection connect;
 
@@ -25,50 +26,60 @@ public class AreaDAO {
             INSTANCE = this;
         }
     }
-    
-    public List<Area> getAllArea(String pitchId){
+
+    public List<Area> getAllArea(String pitchId) {
         List<Area> areaList = new ArrayList<>();
         String sql = "SELECT * FROM Area WHERE pitchId = ?";
-        try(PreparedStatement statement = connect.prepareStatement(sql)){
+        try (PreparedStatement statement = connect.prepareStatement(sql)) {
             statement.setNString(1, pitchId);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Area area = new Area();
                 area.setId(rs.getInt("areaId"));
                 area.setAreaName(rs.getNString("areaName"));
                 areaList.add(area);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             return null;
         }
-        return areaList; 
+        return areaList;
     }
-    
+
     public boolean addArea(String areaName, String pitchId) {
-        String sql = "INSERT INTO Area VALUES (?, ?)";
-        try(PreparedStatement statement = connect.prepareStatement(sql)){
+        String sql = "Select * From Area where Area.areaName = ? AND pitchId = ?";
+        try (PreparedStatement statement = connect.prepareStatement(sql)) {
             statement.setNString(1, areaName);
             statement.setNString(2, pitchId);
-            int insertedRow = statement.executeUpdate();
-            return insertedRow > 0;
-        }catch(SQLException e){
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                if(rs.getNString("areaName").equalsIgnoreCase(areaName)){
+                    return false;
+                }
+            }
+            sql = "INSERT INTO Area VALUES (?, ?)";
+            try (PreparedStatement statement2 = connect.prepareStatement(sql)) {
+                statement2.setNString(1, areaName);
+                statement2.setNString(2, pitchId);
+                int insertedRow = statement2.executeUpdate();
+                return insertedRow > 0;
+            }
+        } catch (SQLException e) {
             return false;
         }
     }
-    
+
     public boolean deleteArea(String areaId) {
         String sql = "DELETE FROM Area WHERE areaId = ?";
         try (PreparedStatement statement = connect.prepareStatement(sql)) {
-            statement.setNString(1,areaId);
+            statement.setNString(1, areaId);
             int deletedRow = statement.executeUpdate();
             return deletedRow > 0;
         } catch (SQLException e) {
             return false;
         }
     }
-    
-    public static void main (String args[]) {
+
+    public static void main(String args[]) {
         AreaDAO area = AreaDAO.INSTANCE;
-        List<Area> areaList = area.getAllArea("7");
     }
 }

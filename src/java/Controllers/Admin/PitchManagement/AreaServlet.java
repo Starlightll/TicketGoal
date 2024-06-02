@@ -86,10 +86,18 @@ public class AreaServlet extends HttpServlet {
                 String areaName = request.getParameter("areaName");
                 String pitchId = request.getParameter("pitchId");
                 status = areaDao.addArea(areaName, pitchId);
+                if(status == false){
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
                 break;
             case "delete":
                 String areaId = request.getParameter("areaId");
-                areaDao.deleteArea(areaId);
+                status = areaDao.deleteArea(areaId);
+                if(status == false){
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
                 break;
             default:
                 throw new AssertionError();

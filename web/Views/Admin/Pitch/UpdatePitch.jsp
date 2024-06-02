@@ -63,7 +63,6 @@
                     <div class="area__box" id="area-box">
                         <c:forEach items="${requestScope.AreaList}" var="area">
                             <div class="area">
-                                <input style="display: none" id="area-id" value="${area.id}">
                                 <p class="area__name">
                                     ${area.areaName}
                                 </p>
@@ -138,16 +137,16 @@
                 <h2>Add Seat</h2>
                 <form id="seat-add-form" action="seat?action=add" method="POST">
                     <input type="hidden" value="${pitch.pitchId}" name="pitchId" />
-                    <label for="seatNumber">Seat Number:</label>
+                    <label>Seat Number:</label>
                     <input min="1" type="number" id="seatNumber" name="seatNumber" required>
 
-                    <label for="price">Price:</label>
+                    <label>Price:</label>
                     <input min="1" type="number" id="price" name="price" required>
 
-                    <label for="areaId">Area ID:</label>
-                    <input type="number" id="areaId" name="areaId" required value="${param.areaId != null ? param.areaId : 0}" readonly>
+                    <label>Area ID:</label>
+                    <input type="number" name="areaId" required value="${param.areaId != null ? param.areaId : 0}" readonly>
 
-                    <label for="seatStatusId">Seat Status ID:</label>
+                    <label>Seat Status ID:</label>
                     <select name="seatStatusId">
                         <c:forEach items="${seatStatus}" var="statusSeat">
                             <option value="${statusSeat.seatStatusId}">${statusSeat.statusName}</option>
@@ -157,7 +156,9 @@
                     <button type="button" id="seat-add-cancel-button">Cancel</button>
                 </form>
             </div>
+            
         </div>
+        <div id="toastBox"></div>
         <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
         <script>
                         function attachEventListeners() {
@@ -201,12 +202,16 @@
                                     var areaBox = document.getElementById("area-box");
                                     areaBox.innerHTML = response;
                                     attachEventListeners();
+                                    showToast("<i class=\"ri-checkbox-circle-fill\"></i>added area successfully");
+                                },
+                                error: function () {
+                                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Duplicated name!");
                                 }
                             });
                         }
 
                         function deleteArea(areaId) {
-                           
+
                             var pitchId = $("#pitchId").val();
                             $.ajax({
                                 url: `${pageContext.request.contextPath}/AreaServlet`,
@@ -220,11 +225,32 @@
                                     var areaBox = document.getElementById("area-box");
                                     areaBox.innerHTML = response;
                                     attachEventListeners();
+                                    showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                                },
+                                error: function () {
+                                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: The area has seats!");
                                 }
                             });
                         }
 
                         document.addEventListener('DOMContentLoaded', attachEventListeners);
+
+                        let toastBox = document.getElementById('toastBox');
+
+                        function showToast(msg) {
+                            let toast = document.createElement('div');
+                            toast.classList.add('toast');
+                            toast.innerHTML = msg;
+                            toastBox.appendChild(toast);
+                            
+                            if(msg.includes('Invalid:')){
+                                toast.classList.add('invalid');
+                            }
+                            
+                            setTimeout(()=>{
+                               toast.remove();
+                            }, 3000);
+                        }
         </script>
     </body>
 </html>

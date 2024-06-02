@@ -27,13 +27,13 @@
                         <table>
                             <tr class="pitch__name">
                                 <td>Name:</td>
-                                <td><input type="text" name="pitchName" placeholder="Pitch Name"></td>
+                                <td><input type="text" name="pitchName" placeholder="Pitch Name" required></td>
                             </tr>
                             <tr class="pitch__address">
                                 <td>Address:</td>
                                 <td>
-                                    <input type="text" name="pitchAddressName" placeholder="Address Name">
-                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL">
+                                    <input type="text" name="pitchAddressName" placeholder="Address Name" required>
+                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" required>
                                 </td>
                             </tr>
                             <tr class="pitch__structure">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="pitch__image">
                         <img id="uploaded-image" src="" alt="">
-                        <input type="file" id="upload-button" name="pitchImage" accept="image/*">
+                        <input type="file" id="upload-button" name="pitchImage" accept="image/*" required>
                         <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>
                 </div>
