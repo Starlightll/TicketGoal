@@ -36,6 +36,7 @@ public class AreaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String pitchId = request.getParameter("pitchId");
         try (PrintWriter out = response.getWriter()) {
             List<Area> areaList = areaDao.getAllArea(request.getParameter("pitchId"));
             for (Area area : areaList) {
@@ -44,8 +45,8 @@ public class AreaServlet extends HttpServlet {
                         + "                                " + area.areaName + "\n"
                         + "                            </p>\n"
                         + "                            <div class=\"area__management\">\n"
-                        + "                                <button type=\"button\" class=\"seat__management\" id=\"seat-management-button\">Seat</button>\n"
-                        + "                                <button onclick=\"deleteArea()\" type=\"button\" class=\"delete__button\">Delete</button>\n"
+                        + "                                <a href=\"?option=update&pitchId="+pitchId+"&areaId="+area.id+"\"  type=\"button\" class=\"seat__management\" id=\"seat-management-button\">Seat</a>"
+                        + "                                <button onclick=\"deleteArea("+area.id+")\" type=\"button\" class=\"delete__button\">Delete</button>\n"
                         + "                            </div>\n"
                         + "                        </div>");
             }

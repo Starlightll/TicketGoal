@@ -79,6 +79,7 @@ public class pitchManagementServlet extends HttpServlet {
                 Pitch pitch = pitchDAO.getPitch(pitchId);
                 SeatDAO seatDao = new SeatDAO();
                 request.setAttribute("pitch", pitch);
+                System.out.println(pitchId);
                 List<Area> areaList = areaDAO.getAllArea(pitchId);
                 request.setAttribute("AreaList", areaList);
                 int idSeat = 0;

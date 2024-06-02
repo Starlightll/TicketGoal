@@ -66,7 +66,7 @@ public class PitchDAO {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, pitchId);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 pitch.setPitchId(rs.getInt("pitchId"));
                 pitch.setPitchName(rs.getNString("pitchName"));
                 pitch.setAddressName(rs.getNString("addressName"));
@@ -76,8 +76,10 @@ public class PitchDAO {
                 pitch.setPitchStructure(pitchStructure);
                 String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
                 pitch.setImage(pitchImage);
+               
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
         return pitch;

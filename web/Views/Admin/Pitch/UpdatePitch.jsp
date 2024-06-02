@@ -68,7 +68,7 @@
                                     ${area.areaName}
                                 </p>
                                 <div class="area__management">
-                                    <a href="?option=update&pitchId=1&areaId=${area.id}"  type="button" class="seat__management" id="seat-management-button">Seat</a>
+                                    <a href="?option=update&pitchId=${pitch.pitchId}&areaId=${area.id}"  type="button" class="seat__management" id="seat-management-button">Seat</a>
                                     <button onclick="deleteArea(${area.id})" type="button" class="delete__button">Delete</button>
                                 </div>
                             </div>
@@ -95,9 +95,9 @@
                             </select>
                         </div>
                         <div class="seat__management__import">
-                            <a style="color: #fff" href="seat?action=import&areaId=${param.areaId}&pitchId=${pitch.pitchId}" class="import__excel" type="submit">Import</a> 
-                            <button type="button" class="add__button" id="seat-add-button">Add Seat</button>
-                            <a style="color: #fff" href="seat?action=deleteAll&areaId=${param.areaId}" class="delete__all">Delete all</a> 
+                            <a style="color: #fff; font-size: 16px;" href="seat?action=import&areaId=${param.areaId}&pitchId=${pitch.pitchId}" class="import__excel" type="submit">Import</a> 
+                            <button style="font-size: 16px;color: #fff; background: transparent; border: none; outline: none; text-decoration: underline" type="button" class="add__button" id="seat-add-button">Add Seat</button>
+                            <a style="font-size: 16px;color: #fff" href="seat?action=deleteAll&areaId=${param.areaId}&pitchId=${pitch.pitchId}" class="delete__all">Delete All</a> 
                         </div>
                     </div>
                     <div class="seat__table">

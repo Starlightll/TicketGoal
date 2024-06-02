@@ -21,7 +21,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
-        <div class="seat__add__box" id="seat-add-box" style="display: block;">
+        <div class="seat__add__box" id="seat-add-box" style="display: block; width: 70%">
             <div class="form__container">
                 <h2>Update Seat</h2>
                 <form id="seat-add-form" action="seat?action=edit" method="POST">
@@ -37,8 +37,11 @@
                     <input type="number" id="areaId" name="areaId" required value="${seatEdit.areaId}">
 
                     <label for="seatStatusId">Seat Status ID:</label>
-                    <input type="number" id="seatStatusId" name="seatStatusId" required value="${seatEdit.seatStatusId}">
-
+                    <select name="seatStatusId">
+                        <c:forEach items="${seatStatus}" var="statusSeat">
+                            <option value="${statusSeat.seatStatusId}" ${seatEdit.seatStatusId == statusSeat.seatStatusId ? "selected" : ""}>${statusSeat.statusName}</option>
+                        </c:forEach>
+                    </select>
                     <button type="submit">Save</button>
                     <button type="reset" onClick="changeUrl(${pitchId}, ${seatEdit.areaId})">Cancel</button>
                 </form>
