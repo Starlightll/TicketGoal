@@ -151,6 +151,33 @@ public class SeatDAO extends  DBContext{
         return null;
     }
     
+    public Seat finSeatByIdNumber(int areaId, int number) {
+        String sql = "SELECT * FROM Seat where areaId =? and seatNumber=?";
+        connection = new DBContext().getConnection();
+        List<Seat> listFound = new ArrayList<>();
+        try {
+            //- Tạo đối tượng PrepareStatement
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //- Set parameter ( optional )
+            statement.setInt(1, areaId);
+            statement.setInt(2, number);
+            //- Thực thi câu lệnh
+            ResultSet resultSet = statement.executeQuery();
+            //- trả về kết quả
+            if (resultSet.next()) {
+                int seatId = resultSet.getInt("seatId");
+                int seatNumber = resultSet.getInt("seatNumber");
+                int price = resultSet.getInt("price");
+                int seatStatusId = resultSet.getInt("seatStatusId");
+
+                Seat seat = new Seat(seatId, seatNumber, price, areaId, seatStatusId);
+                return seat;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public int deleteSeat(int id) {
         String sql = "delete from Seat where seatId=?";
         connection = new DBContext().getConnection();
