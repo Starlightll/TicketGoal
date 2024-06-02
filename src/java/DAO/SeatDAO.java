@@ -5,6 +5,7 @@
 package DAO;
 import DB.DBContext;
 import Models.Seat;
+import Models.SeatStatus;
 import java.sql.PreparedStatement;
 import java.sql.*;
 import java.util.ArrayList;
@@ -164,6 +165,42 @@ public class SeatDAO extends  DBContext{
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public int deleteSeatByArea(int areaId) {
+        String sql = "delete from Seat where areaId=?";
+        connection = new DBContext().getConnection();
+        try {
+            //tao doi tuong prepared statement ( them generated key vao tham so thu 2)
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, areaId);
+            //thuc thi cau lenh
+            return statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+     public SeatStatus getSeatStatusById(int statusId) {
+        String sql = "SELECT * FROM seatStatus where seatStatusId = ?";
+         connection = new DBContext().getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, statusId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int statusID = rs.getInt("seatStatusId");
+                String statusName = rs.getNString("statusName");
+                SeatStatus seat = new SeatStatus(statusID, statusName);
+                return seat;
+            }
+        } catch (SQLException e) {
+            System.out.println("get statu set: " + e);
+            return null;
+        }
+        return null;
     }
 
 }

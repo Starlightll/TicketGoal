@@ -26,6 +26,7 @@
                 <h2>Import Seat</h2>
                 <form id="seat-add-form" action="seat?action=import" method="POST" enctype="multipart/form-data">
                     <input value="${areaId}" name="areaId" type="hidden"/>
+                    <input value="${pitchId}" name="pitchId" type="hidden"/>
                     <input type="file" name="file" accept=".xlsx, .xls" required/>
                     <button class="import__excel" type="submit">Import</button> 
                 </form>
