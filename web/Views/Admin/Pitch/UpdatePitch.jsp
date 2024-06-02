@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="getStatus" class="DAO.SeatDAO" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -94,9 +95,9 @@
                             </select>
                         </div>
                         <div class="seat__management__import">
-                            <a style="color: #fff" href="seat?action=import&areaId=${param.areaId}" class="import__excel" type="submit">Import</a> 
+                            <a style="color: #fff" href="seat?action=import&areaId=${param.areaId}&pitchId=${pitch.pitchId}" class="import__excel" type="submit">Import</a> 
                             <button type="button" class="add__button" id="seat-add-button">Add Seat</button>
-                            <button class="delete__all">Delete All</button> 
+                            <a style="color: #fff" href="seat?action=deleteAll&areaId=${param.areaId}" class="delete__all">Delete all</a> 
                         </div>
                     </div>
                     <div class="seat__table">
@@ -111,10 +112,11 @@
                             </thead>
                             <tbody>
                                 <c:forEach items="${seatList}" var="seat">
+                                    <c:set value="${getStatus.getSeatStatusById(seat.seatStatusId)}" var="statusSeat" />
                                     <tr>
                                         <td>${seat.seatNumber}</td>
                                         <td>${seat.price}</td>
-                                        <td>NotAvailable</td>
+                                        <td>${statusSeat != null ? statusSeat.statusName :  "N/A"}</td>
                                         <td>
                                             <a style="color: #fff" href="seat?action=edit&pitchId=${pitch.pitchId}&seatId=${seat.seatId}" class="update__button">Update</a>  
                                             <a style="color: #fff" href="seat?action=delete&pitchId=${pitch.pitchId}&seatId=${seat.seatId}&areaId=${seat.areaId}" class="delete__button">Delete</button> 
@@ -146,8 +148,11 @@
                     <input type="number" id="areaId" name="areaId" required value="${param.areaId != null ? param.areaId : 0}" readonly>
 
                     <label for="seatStatusId">Seat Status ID:</label>
-                    <input type="number" id="seatStatusId" name="seatStatusId" required>
-
+                    <select name="seatStatusId">
+                        <c:forEach items="${seatStatus}" var="statusSeat">
+                            <option value="${statusSeat.seatStatusId}">${statusSeat.statusName}</option>
+                        </c:forEach>
+                    </select>
                     <button type="button" onclick="document.querySelector('#seat-add-form').submit();">Save</button>
                     <button type="button" id="seat-add-cancel-button">Cancel</button>
                 </form>

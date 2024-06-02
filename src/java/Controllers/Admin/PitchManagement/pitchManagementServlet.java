@@ -7,9 +7,11 @@ package Controllers.Admin.PitchManagement;
 import DAO.AreaDAO;
 import DAO.PitchDAO;
 import DAO.SeatDAO;
+import DAO.SeatStatusDAO;
 import Models.Area;
 import Models.Pitch;
 import Models.Seat;
+import Models.SeatStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -27,6 +29,7 @@ public class pitchManagementServlet extends HttpServlet {
 
     private static final PitchDAO pitchDAO = PitchDAO.INSTANCE;
     private static final AreaDAO areaDAO = AreaDAO.INSTANCE;
+     private static final SeatStatusDAO seatStatusDAO = SeatStatusDAO.INSTANCE;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -85,6 +88,8 @@ public class pitchManagementServlet extends HttpServlet {
                     System.out.println("Can not areaId");
                 }
                 List<Seat> seatList = seatDao.findAllByAreaId(idSeat);
+                List<SeatStatus> listStatus = seatStatusDAO.getSeatStatusList();
+                request.setAttribute("seatStatus", listStatus);
                 request.setAttribute("seatList", seatList);
                 request.setAttribute("page", "/Views/Admin/Pitch/UpdatePitch.jsp");
                 break;

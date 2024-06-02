@@ -54,7 +54,14 @@ public class SeatServlet extends HttpServlet {
                 break;
             case "import":
                 request.setAttribute("areaId", request.getParameter("areaId"));
+                request.setAttribute("pitchId", request.getParameter("pitchId"));
                 request.getRequestDispatcher("./Views/Admin/Pitch/importSeat.jsp").forward(request, response);
+                break;
+            case "deleteAll":
+                int areaIdDelete = Integer.parseInt(request.getParameter("areaId"));
+                 seatDAO.deleteSeatByArea(areaIdDelete);
+                String pitchIdToBack = request.getParameter("pitchId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchIdToBack + "&areaId=" +areaIdDelete);
                 break;
             case "delete":
                 int seatIdDelete = Integer.parseInt(request.getParameter("seatId"));
@@ -85,12 +92,14 @@ public class SeatServlet extends HttpServlet {
                 break;
             case "edit":
                 editSeat(request);
-                 String pitchIdEdit = request.getParameter("pitchId");
+                String pitchIdEdit = request.getParameter("pitchId");
                 response.sendRedirect("pitchManagementServlet?option=update&pitchId="+pitchIdEdit+"&areaId=" + request.getParameter("areaId"));
                 break;
             case "import":
                 importFileEx(request, response);
-                response.sendRedirect("pitchManagementServlet");
+                String pitchIdBack = request.getParameter("pitchId");
+                String areaIdBack = request.getParameter("areaId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchIdBack + "&areaId=" +areaIdBack);
                 break;
             default:
                 throw new AssertionError();
