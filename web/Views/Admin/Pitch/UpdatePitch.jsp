@@ -139,10 +139,10 @@
                 <form id="seat-add-form" action="seat?action=add" method="POST">
                     <input type="hidden" value="${pitch.pitchId}" name="pitchId" />
                     <label for="seatNumber">Seat Number:</label>
-                    <input type="number" id="seatNumber" name="seatNumber" required>
+                    <input min="1" type="number" id="seatNumber" name="seatNumber" required>
 
                     <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" required>
+                    <input min="1" type="number" id="price" name="price" required>
 
                     <label for="areaId">Area ID:</label>
                     <input type="number" id="areaId" name="areaId" required value="${param.areaId != null ? param.areaId : 0}" readonly>

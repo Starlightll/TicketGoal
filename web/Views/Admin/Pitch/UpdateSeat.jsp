@@ -28,10 +28,11 @@
                     <input type="hidden" name="seatId" value="${seatEdit.seatId}" />
                     <input type="hidden" name="pitchId" value="${pitchId}" />
                     <label for="seatNumber">Seat Number:</label>
-                    <input type="number" id="seatNumber" name="seatNumber" required value="${seatEdit.seatNumber}">
+                    <input type="hidden" name="oldSeat" value="${seatEdit.seatNumber}">
+                    <input min="1" type="number" id="seatNumber" name="seatNumber" required value="${seatEdit.seatNumber}">
 
                     <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" required value="${seatEdit.price}">
+                    <input min="1" type="number" id="price" name="price" required value="${seatEdit.price}">
 
                     <label for="areaId">Area ID:</label>
                     <input type="number" id="areaId" name="areaId" required value="${seatEdit.areaId}">

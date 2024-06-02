@@ -31,7 +31,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class SeatServlet extends HttpServlet {
 
     private static final SeatDAO seatDAO = new SeatDAO();
-     private static final SeatStatusDAO seatStatusDAO = SeatStatusDAO.INSTANCE;
+    private static final SeatStatusDAO seatStatusDAO = SeatStatusDAO.INSTANCE;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -66,14 +66,14 @@ public class SeatServlet extends HttpServlet {
                 int areaIdDelete = Integer.parseInt(request.getParameter("areaId"));
                 seatDAO.deleteSeatByArea(areaIdDelete);
                 String pitchIdToBack = request.getParameter("pitchId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchIdToBack + "&areaId=" +areaIdDelete);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdToBack + "&areaId=" + areaIdDelete);
                 break;
             case "delete":
                 int seatIdDelete = Integer.parseInt(request.getParameter("seatId"));
                 seatDAO.deleteSeat(seatIdDelete);
                 String pitchId = request.getParameter("pitchId");
                 String areaId = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchId + "&areaId=" +areaId);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId);
                 break;
             default:
                 throw new AssertionError();
@@ -93,18 +93,18 @@ public class SeatServlet extends HttpServlet {
                 addSeat(request);
                 String pitchId = request.getParameter("pitchId");
                 String areaId = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchId + "&areaId=" +areaId);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId);
                 break;
             case "edit":
                 editSeat(request);
                 String pitchIdEdit = request.getParameter("pitchId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId="+pitchIdEdit+"&areaId=" + request.getParameter("areaId"));
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdEdit + "&areaId=" + request.getParameter("areaId"));
                 break;
             case "import":
                 importFileEx(request, response);
                 String pitchIdBack = request.getParameter("pitchId");
                 String areaIdBack = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" +pitchIdBack + "&areaId=" +areaIdBack);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdBack + "&areaId=" + areaIdBack);
                 break;
             default:
                 throw new AssertionError();
@@ -114,7 +114,7 @@ public class SeatServlet extends HttpServlet {
     private void importFileEx(HttpServletRequest request, HttpServletResponse response) {
         try {
             Part filePart = request.getPart("file");
-            try ( InputStream fileContent = filePart.getInputStream()) {
+            try (InputStream fileContent = filePart.getInputStream()) {
                 Workbook workbook = null;
                 String fileName = filePart.getSubmittedFileName();
                 if (fileName.endsWith(".xlsx")) {
@@ -143,8 +143,8 @@ public class SeatServlet extends HttpServlet {
                                     int areaId = (int) cell.getNumericCellValue();
                                     seat.setAreaId(areaId);
                                 } else {
-                                     int seatStatusId = (int)cell.getNumericCellValue();
-                                     seat.setSeatStatusId(seatStatusId);
+                                    int seatStatusId = (int) cell.getNumericCellValue();
+                                    seat.setSeatStatusId(seatStatusId);
                                 }
                                 break;
                             case BOOLEAN:
@@ -154,7 +154,10 @@ public class SeatServlet extends HttpServlet {
                         }
                         index++;
                     }
-                    seatDAO.insert(seat);
+                    Seat isExist = seatDAO.finSeatByIdNumber(seat.getAreaId(), seat.getSeatNumber());
+                    if(isExist == null) {
+                        seatDAO.insert(seat);
+                    }
                 }
                 System.out.println("Import done");
                 workbook.close();
@@ -178,8 +181,11 @@ public class SeatServlet extends HttpServlet {
             seat.setPrice(price);
             seat.setAreaId(areaId);
             seat.setSeatStatusId(seatStatusId);
+            Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             //add to database
-            seatDAO.insert(seat);
+            if (isExist == null) {
+                seatDAO.insert(seat);
+            }
         } catch (Exception e) {
 
         }
@@ -189,6 +195,7 @@ public class SeatServlet extends HttpServlet {
         try {
             int seatId = Integer.parseInt(request.getParameter("seatId"));
             int seatNumber = Integer.parseInt(request.getParameter("seatNumber"));
+            int oldSeat = Integer.parseInt(request.getParameter("oldSeat"));
             int price = Integer.parseInt(request.getParameter("price"));
             int areaId = Integer.parseInt(request.getParameter("areaId"));
             int seatStatusId = Integer.parseInt(request.getParameter("seatStatusId"));
@@ -198,8 +205,11 @@ public class SeatServlet extends HttpServlet {
             seat.setPrice(price);
             seat.setAreaId(areaId);
             seat.setSeatStatusId(seatStatusId);
-            //edit database
-            seatDAO.edit(seat);
+            Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
+            if (isExist == null || (isExist != null && isExist.getSeatNumber() == oldSeat)) {
+                //edit database
+                seatDAO.edit(seat);
+            }
         } catch (Exception e) {
         }
     }
