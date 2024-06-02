@@ -7,6 +7,7 @@ package DAO;
 import DB.DBContext;
 import Models.Player;
 import Models.PlayerRole;
+import java.io.InputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.sql.*;
+import java.util.Base64;
 
 /**
  *
@@ -49,7 +51,8 @@ public class PlayerDAO {
                 p.setHeight(rs.getFloat("height"));
                 p.setWeight(rs.getFloat("weight"));
                 p.setBiography(rs.getNString("biography"));
-                p.setImage(rs.getNString("playerImage"));
+                String playerImage = Base64.getEncoder().encodeToString(rs.getBytes("playerImage"));
+                p.setImage(playerImage);
                 p.setCountryId(rs.getInt("countryId"));
                 p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
@@ -77,7 +80,8 @@ public class PlayerDAO {
                 p.setHeight(rs.getFloat("height"));
                 p.setWeight(rs.getFloat("weight"));
                 p.setBiography(rs.getNString("biography"));
-                p.setImage(rs.getNString("playerImage"));
+                String playerImage = Base64.getEncoder().encodeToString(rs.getBytes("playerImage"));
+                p.setImage(playerImage);
                 p.setCountryId(rs.getInt("countryId"));
                 p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
@@ -110,7 +114,7 @@ public class PlayerDAO {
 
 
 
-    public void addPlayer(String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, String image, String countryId, String playerRoleId, String atk, String def, String spd) {
+    public void addPlayer(String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream image, String countryId, String playerRoleId, String atk, String def, String spd) {
         String query = "INSERT INTO Player (playerName, playerNumber, dateOfBirth, height, weight, biography, playerImage, countryId, playerRoleId)\n" +
                         "VALUES (?, ? ,? ,? ,? ,? ,? ,? ,?)";
         try {
@@ -121,7 +125,11 @@ public class PlayerDAO {
             ps.setString(4, height);
             ps.setString(5, weight);
             ps.setString(6, biography);
-            ps.setString(7, image);
+            if (image != null) {
+                ps.setBlob(7, image);
+            } else {
+                ps.setNull(7, java.sql.Types.BLOB);
+            }
             ps.setString(8, countryId);
             ps.setString(9, playerRoleId);
             
@@ -160,7 +168,8 @@ public class PlayerDAO {
                 p.setHeight(rs.getFloat("height"));
                 p.setWeight(rs.getFloat("weight"));
                 p.setBiography(rs.getNString("biography"));
-                p.setImage(rs.getNString("playerImage"));
+                String playerImage = Base64.getEncoder().encodeToString(rs.getBytes("playerImage"));
+                p.setImage(playerImage);
                 p.setCountryId(rs.getInt("countryId"));
                 p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
@@ -174,7 +183,7 @@ public class PlayerDAO {
         }
           return list;
       }
-      public void UpdatePlayer(String playerId,String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, String image, String countryId, String playerRoleId, String atk, String def, String spd) {
+      public void UpdatePlayer(String playerId,String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream newImage, String oldImage, String countryId, String playerRoleId, String atk, String def, String spd) {
         String query = "UPDATE Player\n" +
                     "SET playerName = ?,\n" +
                     "    playerNumber = ?,\n" +
@@ -194,7 +203,12 @@ public class PlayerDAO {
             ps.setString(4, height);
             ps.setString(5, weight);
             ps.setString(6, biography);
-            ps.setString(7, image);
+            if (newImage != null) {
+                ps.setBlob(7, newImage);
+            } else {
+                byte[] decodedImage = Base64.getDecoder().decode(oldImage);
+                ps.setBytes(7, decodedImage);
+            }
             ps.setString(8, countryId);
             ps.setString(9, playerRoleId);
             ps.setString(10, playerId);          
@@ -227,6 +241,7 @@ public class PlayerDAO {
         }
         return list;
     }
+      
       public List<Player> getAllPlayerByID(String playerId) {
         List<Player> list = new ArrayList<>();
         String query = "select * from Player inner join Performance ON Player.playerId = Performance.playerId where player.playerId = ?";
@@ -243,7 +258,8 @@ public class PlayerDAO {
                 p.setHeight(rs.getFloat("height"));
                 p.setWeight(rs.getFloat("weight"));
                 p.setBiography(rs.getNString("biography"));
-                p.setImage(rs.getNString("playerImage"));
+                String playerImage = Base64.getEncoder().encodeToString(rs.getBytes("playerImage"));
+                p.setImage(playerImage);
                 p.setCountryId(rs.getInt("countryId"));
                 p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));
@@ -274,7 +290,8 @@ public class PlayerDAO {
                 p.setHeight(rs.getFloat("height"));
                 p.setWeight(rs.getFloat("weight"));
                 p.setBiography(rs.getNString("biography"));
-                p.setImage(rs.getNString("playerImage"));
+                String playerImage = Base64.getEncoder().encodeToString(rs.getBytes("playerImage"));
+                p.setImage(playerImage);
                 p.setCountryId(rs.getInt("countryId"));
                 p.setRoleName(rs.getNString("roleName"));
                 p.setATK(rs.getInt("atk"));

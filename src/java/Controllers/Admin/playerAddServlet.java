@@ -9,14 +9,18 @@ import DAO.PlayerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
 
 /**
  *
  * @author pc
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class playerAddServlet extends HttpServlet {
    
     /** 
@@ -75,12 +79,19 @@ public class playerAddServlet extends HttpServlet {
                   String biography = request.getParameter("playerBio");
                   String countryId = request.getParameter("playerCountry");
                   String playerRoleId = request.getParameter("playerRoleId");
-                  String image = request.getParameter("playerImage");
+                  
+                  //Get player image InputStream
+                  InputStream playerImageInputStream = null;
+                  Part playerImage = request.getPart("playerImage");
+                  if (playerImage != null) {
+                  playerImageInputStream = playerImage.getInputStream();
+                  }
+                  
                   String atk = request.getParameter("ATK");
                   String def = request.getParameter("DEF");
                   String spd = request.getParameter("SPD");
                   PlayerDAO pl = new PlayerDAO();
-                  pl.addPlayer(playerName, playerNumber, dateOfBirth, height, weight, biography, image, countryId, playerRoleId , atk, def, spd);
+                  pl.addPlayer(playerName, playerNumber, dateOfBirth, height, weight, biography, playerImageInputStream, countryId, playerRoleId , atk, def, spd);
                   response.sendRedirect("playerManagementServlet");
     }
 

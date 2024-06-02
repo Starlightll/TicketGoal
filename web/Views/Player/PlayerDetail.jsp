@@ -28,7 +28,7 @@
                 <button class="back__button" onclick="location.href = '<c:url value="/playerServlet"/>'">Back</button>
                             <div class="player__box">
                     <div class="player__img">
-                        <img src="<c:out value="${Players.image}"></c:out>" alt="alt"/>
+                        <img name="playerImage" src="data:image/jpeg;base64,${Players.image}"/>
                     </div>
                             <div class="detail__box">
                         <div class="info">

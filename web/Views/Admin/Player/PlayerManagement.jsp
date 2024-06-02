@@ -47,7 +47,7 @@
                                 <img src="./img/player/numberBanner.png"/>
                             </div>  
                             <div class="card__content">
-                                <img src="${player.image}" alt="alt"/>
+                                <img name="playerImage" src="data:image/jpeg;base64,${player.image}"/>
                                 <div class="player__name">
                                     <p>${player.playerName}</p>
                                 </div>

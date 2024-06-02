@@ -78,10 +78,7 @@ public class updatePitchServlet extends HttpServlet {
         String pitchName = request.getParameter("pitchName");
         String pitchAddress = request.getParameter("pitchAddressName");
         String pitchAddressURL = request.getParameter("pitchAddressURL");
-
-        InputStream pitchImageStream = null;
-        InputStream pitchStructureStream = null;
-
+        
         //Store image data
 //        Part pitchImage = request.getPart("pitchImage");
 //        if (pitchImage != null) {

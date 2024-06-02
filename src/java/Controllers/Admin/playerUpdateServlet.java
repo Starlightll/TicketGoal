@@ -8,14 +8,19 @@ import DAO.PlayerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
 
 /**
  *
  * @author pc
  */
+
+@MultipartConfig(maxFileSize = 16177215)
 public class playerUpdateServlet extends HttpServlet {
 
     /**
@@ -79,12 +84,20 @@ public class playerUpdateServlet extends HttpServlet {
         String biography = request.getParameter("playerBio");
         String countryId = request.getParameter("playerCountry");
         String playerRoleId = request.getParameter("playerRoleId");
+        
+        //Get playerImage inputStream
+       
+        Part newPlayerImage = request.getPart("newPlayerImage");
+        InputStream newImage = (newPlayerImage != null && newPlayerImage.getSize() > 0) ? newPlayerImage.getInputStream() : null;
+
+        String oldImage = request.getParameter("oldPlayerImage");
+        
         String image = request.getParameter("playerImage");
         String atk = request.getParameter("ATK");
         String def = request.getParameter("DEF");
         String spd = request.getParameter("SPD");
         PlayerDAO pl = new PlayerDAO();
-        pl.UpdatePlayer(playerId, playerName, playerNumber, dateOfBirth, height, weight, biography, image, countryId, playerRoleId, atk, def, spd);
+        pl.UpdatePlayer(playerId, playerName, playerNumber, dateOfBirth, height, weight, biography, newImage, oldImage, countryId, playerRoleId, atk, def, spd);
         response.sendRedirect("playerManagementServlet");
     }
 
