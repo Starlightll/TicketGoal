@@ -15,13 +15,17 @@
         </div>
         <main>
             <div class="player">
-                <div class="sidebar__box">    
-                    <form method="POST">
-                        <select name="role">
-                            <option>Goalkeeper</option>
-                            <option>Defender</option>
+                <div class="sidebar__box">                       
+                    <form action="playerRoleIdServlet" method="post">
+                        <select name="playerRoleId">
+                            <option value="0">All</option>
+                            <option value="1">Goal keeper</option>
+                            <option value="2">Defender</option>
+                            <option value="3">Midfielder</option>
+                            <option value="4">Forward</option>
                         </select>
-                    </form>
+                        <input type="submit"value="Show">
+                    </form>                   
                 </div>
                 <div class="player__box">
                     <div class="search__box">

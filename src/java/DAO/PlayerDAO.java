@@ -108,13 +108,7 @@ public class PlayerDAO {
         return n;
     }
 
-    public static void main(String[] args) {
-        PlayerDAO dao = new PlayerDAO();
-        List<Player> p = dao.searchPlayerByName("");
 
-        System.out.println(p);
-        
-    }
 
     public void addPlayer(String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, String image, String countryId, String playerRoleId, String atk, String def, String spd) {
         String query = "INSERT INTO Player (playerName, playerNumber, dateOfBirth, height, weight, biography, playerImage, countryId, playerRoleId)\n" +
@@ -219,4 +213,84 @@ public class PlayerDAO {
         } catch (SQLException e) {
         }
       }
+      public List<PlayerRole> getAllRole() {
+        List<PlayerRole> list = new ArrayList<>();
+        String query = "select * from PlayerRole";
+        try {
+            PreparedStatement ps = connect.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new PlayerRole(rs.getInt(1),
+                        rs.getString(2)));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+      public List<Player> getAllPlayerByID(String playerId) {
+        List<Player> list = new ArrayList<>();
+        String query = "select * from Player inner join Performance ON Player.playerId = Performance.playerId where player.playerId = ?";
+        try {
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setString(1, playerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Player p = new Player();
+                p.setPlayerId(rs.getInt("playerId"));
+                p.setPlayerName(rs.getNString("playerName"));
+                p.setPlayerNumber(rs.getInt("playerNumber"));
+                p.setDateOfBirth(rs.getDate("dateOfBirth"));
+                p.setHeight(rs.getFloat("height"));
+                p.setWeight(rs.getFloat("weight"));
+                p.setBiography(rs.getNString("biography"));
+                p.setImage(rs.getNString("playerImage"));
+                p.setCountryId(rs.getInt("countryId"));
+                p.setRoleName(rs.getNString("roleName"));
+                p.setATK(rs.getInt("atk"));
+                p.setDEF(rs.getInt("def"));
+                p.setSPD(rs.getInt("spd"));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+          public List<Player> getAllPlayerByRole(String playerRole) {
+        List<Player> list = new ArrayList<>();
+        String query = "select * from Player  "
+                + "join Performance ON Player.playerId = Performance.playerId "
+                + "join PlayerRole on PlayerRole.playerRoleId=Player.playerRoleId "
+                + "where player.playerRoleId = ?";
+        try {
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setString(1, playerRole);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Player p = new Player();
+                p.setPlayerId(rs.getInt("playerId"));
+                p.setPlayerName(rs.getNString("playerName"));
+                p.setPlayerNumber(rs.getInt("playerNumber"));
+                p.setDateOfBirth(rs.getDate("dateOfBirth"));
+                p.setHeight(rs.getFloat("height"));
+                p.setWeight(rs.getFloat("weight"));
+                p.setBiography(rs.getNString("biography"));
+                p.setImage(rs.getNString("playerImage"));
+                p.setCountryId(rs.getInt("countryId"));
+                p.setRoleName(rs.getNString("roleName"));
+                p.setATK(rs.getInt("atk"));
+                p.setDEF(rs.getInt("def"));
+                p.setSPD(rs.getInt("spd"));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+              public static void main(String[] args) {
+        PlayerDAO dao = new PlayerDAO();
+       
+
+        System.out.println(dao.getAllPlayerByRole("1"));
+        
+    }
 }
