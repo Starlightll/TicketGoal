@@ -98,9 +98,9 @@ public class addPitchServlet extends HttpServlet {
 
         int pitchId = pitchDAO.addPitch(pitchName, pitchAddress, pitchAddressURL, pitchStructureStream, pitchImageStream);
         if (pitchId != -1) {
-            request.setAttribute("status", "Added successfully with ID: " + pitchId);
+            request.setAttribute("msg", "Added successfully with pitch name: " + pitchName);
         } else {
-            request.setAttribute("status", "Failed to add pitch");
+            request.setAttribute("msg", "Failed to add pitch");
         }
         response.sendRedirect(request.getContextPath()+"/pitchManagementServlet");
         

@@ -86,6 +86,10 @@ public class AreaServlet extends HttpServlet {
                 String areaName = request.getParameter("areaName");
                 String pitchId = request.getParameter("pitchId");
                 status = areaDao.addArea(areaName, pitchId);
+                if(status == false){
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Duplicated area name!");
+                    return;
+                }
                 break;
             case "delete":
                 String areaId = request.getParameter("areaId");
