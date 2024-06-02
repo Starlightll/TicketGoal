@@ -205,7 +205,7 @@
                                     showToast("<i class=\"ri-checkbox-circle-fill\"></i>added area successfully");
                                 },
                                 error: function () {
-                                    showToast("<i class=\"ri-error-warning-fill\"></i>Can't add area: Duplicated name!");
+                                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Duplicated name!");
                                 }
                             });
                         }
@@ -225,7 +225,10 @@
                                     var areaBox = document.getElementById("area-box");
                                     areaBox.innerHTML = response;
                                     attachEventListeners();
-                                    showToast('<i class="ri-checkbox-circle-fill"></i>deleted area successfully');
+                                    showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                                },
+                                error: function () {
+                                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: The area has seats!");
                                 }
                             });
                         }
@@ -240,7 +243,7 @@
                             toast.innerHTML = msg;
                             toastBox.appendChild(toast);
                             
-                            if(msg.includes('Duplicated')){
+                            if(msg.includes('Invalid:')){
                                 toast.classList.add('invalid');
                             }
                             
