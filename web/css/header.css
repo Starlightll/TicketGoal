@@ -89,13 +89,13 @@ header *{
 
 
 @media screen and (max-width: 1023px) {
-.header .nav__menu {
+    .header .nav__menu {
         position: fixed;
         top: -100%;
         left: 0;
         background-color: #1A1919;
         width: 100%;
-        padding-block: 4.5rem 4rem; 
+        padding-block: 4.5rem 4rem;
         transition: top .4s;
     }
 }
@@ -150,6 +150,8 @@ header *{
     font-size: 1.5rem;
     color: #ffffff;
     cursor: pointer;
+    padding-left: 90%;
+    padding-top: 10px;
 }
 
 .header .login__form,
@@ -284,6 +286,8 @@ header *{
     font-size: 1.5rem;
     color: #ffffff;
     cursor: pointer;
+    padding-left: 90%;
+    padding-top: 10px;
 }
 
 .header .register__form,
@@ -310,13 +314,26 @@ header *{
     transform: translateY(-1rem);
     transition: transform .9s;
 }
+.header .profile__decor {
+    background-color: #00C767;
+    height: 16px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    transform: translateY(-1rem);
+    transition: transform .9s;
+}
 
 .header .register__title {
     font-size: 2rem;
     color: aliceblue;
     font-weight: 500;
+    cursor: pointer;
 }
-
+.header .register__title__group {
+    margin: 1rem;
+    justify-content: space-between;
+    display: flex;
+}
 .header .register__group {
     row-gap: 1rem;
 }
@@ -373,7 +390,23 @@ header *{
 .header .register__button:hover {
     box-shadow: 0 1px 24px #00ff842d;
 }
+.header .profile__button {
+    display: inline-block;
+    background-color: #00C767;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: box-shadow .4s;
+    margin-top: 3rem;
+}
 
+.header .profile__button:hover {
+    box-shadow: 0 1px 24px #00ff842d;
+}
 /* show register */
 .header .show-register {
     opacity: 1;
@@ -388,18 +421,20 @@ header *{
     transform: translateY(0);
 }
 
-
+.header  .profile__decor {
+    transform: translateY(0);
+}
 /* Responsive Breakpoint */
 
 /* Medium device */
 @media screen and (min-width: 576px) {
     .header .login {
-        padding-top: 10rem;
+        padding-top: 3rem;
     }
 
     .header .login__close {
         width: max-content;
-        top: 5rem;
+        top: auto;
         left: 0;
         right: 0;
         margin-inline: auto;
@@ -415,15 +450,15 @@ header *{
         max-width: 400px;
         margin-inline: auto;
     }
-    
+
     /* Register */
     .header .register {
-        padding-top: 10rem;
+        padding-top: 3rem;
     }
 
     .header .register__close {
         width: max-content;
-        top: 5rem;
+        top: auto;
         left: 0;
         right: 0;
         margin-inline: auto;
@@ -434,9 +469,16 @@ header *{
         max-width: 400px;
         margin-inline: auto;
     }
-
+    .header .profile__form {
+        max-width: 800px;
+        margin-inline: auto;
+    }
     .header .register__decor {
         max-width: 400px;
+        margin-inline: auto;
+    }
+    .header .profile__decor {
+        max-width: 800px;
         margin-inline: auto;
     }
 }
@@ -470,9 +512,9 @@ header *{
     }
 
     .header .login__form{
-        padding: 3rem; 
+        padding: 3rem;
     }
-    
+
     .header .register__form {
         padding: 3rem;
     }
@@ -495,7 +537,7 @@ header *{
         transition: box-shadow .4s;
     }
 
-    
+
     .header .join__button:hover {
         box-shadow: 0 1px 24px #00ff842d;
     }
@@ -504,6 +546,43 @@ header *{
         font-size: 1.2rem;
         font-weight: 400;
     }
-      
+
 }
 
+.login__social {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login__google {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login__google i {
+    margin-right: 10px;
+}
+.profile__group {
+    display: flex;
+}
+
+.profile__column {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.profile__item {
+    padding : 0.2rem;
+}
+
+.text-blue {
+    color: blue !important;
+}
+.d-none {
+    display: none !important;
+}
