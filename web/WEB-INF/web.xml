@@ -68,6 +68,10 @@
         <servlet-name>playerSearchByRoleNameServlet</servlet-name>
         <servlet-class>Controllers.Admin.playerSearchByRoleNameServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>operatorManagementServlet</servlet-name>
+        <servlet-class>Controllers.Admin.operatorManagementServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>playerSearchByRoleNameServlet</servlet-name>
         <url-pattern>/playerSearchByRoleNameServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>operatorManagementServlet</servlet-name>
+        <url-pattern>/operatorManagementServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>

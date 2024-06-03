@@ -1,0 +1,233 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 16px;
+}
+
+.add-btn:hover {
+    background-color: #0056b3;
+}
+
+.search-bar {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.white-bar {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid white;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: black;
+    cursor: pointer;
+}
+.action-buttons button {
+    margin-right: 5px;
+}
+
+/* Modal container */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    margin: 7% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    color:black;
+}
+@keyframes modalopen {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+.modal-body p {
+    margin: 10px 0;
+}
+
+.modal-body span {
+    font-weight: bold;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body label {
+    margin-top: 10px;
+}
+
+.modal-body input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 24px);
+    box-sizing: border-box;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 16px;
+}
+
+.modal-footer button:hover {
+    background-color: #0056b3;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.form-group label {
+    width: 30%;
+    margin-right: 10px;
+}
+
+.form-group input, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 65%;
+    box-sizing: border-box;
+}
+
+.bg-gray {
+    background-color: gray;
+}
+
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    margin: 0 10px;
+    font-size: 16px;
+}
