@@ -36,6 +36,9 @@
                         <a href="<c:url value='/playerManagementServlet'/>" ${playerManagementDropdown} class="dropdown__link">
                             Player management
                         </a>
+                        <a href="<c:url value='/operatorManagementServlet'/>" ${operatorManagementDropdown} class="dropdown__link">
+                            Operator management
+                        </a>    
                     </div>
                 </div>
                 <div class="nav__item">
