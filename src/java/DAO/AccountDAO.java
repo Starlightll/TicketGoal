@@ -18,7 +18,6 @@ public class AccountDAO {
     private final Connection connect;
     private final String getAccountByRoleQuery = "SELECT * FROM Account WHERE roleId = ?";
     private final String getAccountByIdQuery = "SELECT * FROM Account WHERE accountId = ?";
-    private final String createNewAccountQuery = "INSERT INTO Account (username, password, email, phoneNumber, gender, address, roleId, accountStatusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private final String getAccountByEmail = "SELECT * FROM Account WHERE email = ?";
 
     public AccountDAO() {
@@ -105,41 +104,93 @@ public class AccountDAO {
         return account;
     }
 
-    public Account createNewAccount(Account account) {
-        String createNewAccountQuery = "INSERT INTO account (username, password, email, phoneNumber, gender, address, roleId, accountStatusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connect.prepareStatement(createNewAccountQuery, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, account.getUsername());
-            ps.setString(2, account.getPassword());
-            ps.setString(3, account.getEmail());
-            ps.setString(4, account.getPhoneNumber());
-            ps.setInt(5, account.getGender());
-            ps.setString(6, account.getAddress());
-            ps.setInt(7, account.getRoleId());
-            ps.setInt(8, account.getAccountStatusId());
+    public Account createNewAccount(Account acc) {
+        String sqlCommand = "INSERT INTO account (";
+        StringBuilder columnsBuilder = new StringBuilder();
+        StringBuilder valuesBuilder = new StringBuilder(") VALUES (");
+        ArrayList<Object> parameters = new ArrayList<>();
 
+        // Danh sách các thuộc tính của Account
+        String[] fields = {"username", "email", "password", "phoneNumber", "gender", "address", "roleId", "accountStatusId"};
+
+        // Lặp qua từng thuộc tính và giá trị tương ứng
+        for (int i = 0; i < fields.length; i++) {
+            Object value = getFieldValue(acc, fields[i]);
+            if (value != null && !value.equals(-1)) {
+                columnsBuilder.append(fields[i]);
+                valuesBuilder.append("?");
+                parameters.add(value);
+                if (i < fields.length - 1) {
+                    columnsBuilder.append(", ");
+                    valuesBuilder.append(", ");
+                }
+            }
+        }
+        if (columnsBuilder.toString().endsWith(", ")) {
+            columnsBuilder.setLength(columnsBuilder.length() - 2);
+        }
+        if (valuesBuilder.toString().endsWith(", ")) {
+            valuesBuilder.setLength(valuesBuilder.length() - 2);
+        }
+
+        sqlCommand += columnsBuilder.toString() + valuesBuilder.toString() + ")";
+        System.out.println(sqlCommand);
+        try (PreparedStatement ps = connect.prepareStatement(sqlCommand, Statement.RETURN_GENERATED_KEYS)) {
+            // Thiết lập các tham số cho câu lệnh SQL
+            for (int i = 0; i < parameters.size(); i++) {
+                ps.setObject(i + 1, parameters.get(i));
+            }
+            // Thực thi câu lệnh SQL
             int rowsAffected = ps.executeUpdate();
-
             if (rowsAffected > 0) {
+                // Lấy dữ liệu sau khi thêm vào bằng khóa được tạo tự động
                 try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
-                        account.setAccountId(generatedId);
-                        return account;
-                    } else {
-                        throw new SQLException("Creating account failed, no ID obtained.");
+                        acc.setAccountId(generatedId);
+                        return acc;
                     }
                 }
-            } else {
-                throw new SQLException("Creating account failed, no rows affected.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+        }
+        return null;
+    }
+
+    private Object getFieldValue(Account acc, String fieldName) {
+        switch (fieldName) {
+            case "username":
+                return acc.getUsername();
+            case "email":
+                return acc.getEmail();
+            case "password":
+                return acc.getPassword();
+            case "phoneNumber":
+                return acc.getPhoneNumber();
+            case "gender":
+                return acc.getGender();
+            case "address":
+                return acc.getAddress();
+            case "roleId":
+                return acc.getRoleId();
+            case "accountStatusId":
+                return acc.getAccountStatusId();
+            default:
+                return null;
         }
     }
 
+    public Account signIn(String email, String password) {
+        Account account = getAccountByEmail(email);
+        System.out.println(account);
+        if (account != null && account.getPassword().equals(password)) {
+            return account;
+        }
+        return null;
+    }
+
     public Account updateUserById(Account account) {
-        System.out.println("1" + account);
         StringBuilder sqlCommandBuilder = new StringBuilder("UPDATE Account SET\n");
 
         addToCommandIfNotNull(sqlCommandBuilder, "username", account.getUsername());
@@ -174,6 +225,8 @@ public class AccountDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AccountDAO().getAccountByRole(2));
+        System.out.println(new AccountDAO().createNewAccount(new Account(
+                0, "user", "passworf", "emaik@dmaks.com",
+                null, -1, null, 1, 1)));
     }
 }
