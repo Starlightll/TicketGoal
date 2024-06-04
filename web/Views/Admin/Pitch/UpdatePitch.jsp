@@ -157,7 +157,7 @@
                     <button type="button" id="seat-add-cancel-button">Cancel</button>
                 </form>
             </div>
-            
+
         </div>
         <div id="toastBox"></div>
         <script src="${pageContext.request.contextPath}/js/admin/pitch/updatepitch.js"></script>
@@ -243,13 +243,13 @@
                             toast.classList.add('toast');
                             toast.innerHTML = msg;
                             toastBox.appendChild(toast);
-                            
-                            if(msg.includes('Invalid:')){
+
+                            if (msg.includes('Invalid:')) {
                                 toast.classList.add('invalid');
                             }
-                            
-                            setTimeout(()=>{
-                               toast.remove();
+
+                            setTimeout(() => {
+                                toast.remove();
                             }, 3000);
                         }
         </script>
