@@ -53,6 +53,9 @@ public class SeatDAO extends  DBContext{
                 + "     VALUES\n"
                 + "           (?, ? , ? , ?)";
         connection = new DBContext().getConnection();
+        if(seat.getSeatNumber() <= 0 || seat.getPrice() <= 0) {
+            return;
+        }
         try {
             //tao doi tuong prepared statement ( them generated key vao tham so thu 2)
             PreparedStatement statement = connection.prepareStatement(sql,
@@ -79,6 +82,9 @@ public class SeatDAO extends  DBContext{
                 + "      ,[seatStatusId] = ?\n"
                 + " WHERE seatId = ?";
         connection = new DBContext().getConnection();
+        if(seat.getSeatNumber() <= 0 || seat.getPrice() <= 0) {
+            return;
+        }
         try {
             //tao doi tuong prepared statement ( them generated key vao tham so thu 2)
             PreparedStatement statement = connection.prepareStatement(sql,

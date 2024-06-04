@@ -35,7 +35,7 @@
                     <input min="1" type="number" id="price" name="price" required value="${seatEdit.price}">
 
                     <label for="areaId">Area ID:</label>
-                    <input type="number" id="areaId" name="areaId" required value="${seatEdit.areaId}">
+                    <input type="number" id="areaId" name="areaId" required value="${seatEdit.areaId}" readonly>
 
                     <label for="seatStatusId">Seat Status ID:</label>
                     <select name="seatStatusId">
