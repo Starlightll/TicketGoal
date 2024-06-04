@@ -93,6 +93,7 @@
                                 <option value="4">Number Decrease</option>
                             </select>
                         </div>
+                        <span style="color: #fff">${param.message}</span>
                         <div class="seat__management__import">
                             <a style="color: #fff; font-size: 16px;" href="seat?action=import&areaId=${param.areaId}&pitchId=${pitch.pitchId}" class="import__excel" type="submit">Import</a> 
                             <button style="font-size: 16px;color: #fff; background: transparent; border: none; outline: none; text-decoration: underline" type="button" class="add__button" id="seat-add-button">Add Seat</button>

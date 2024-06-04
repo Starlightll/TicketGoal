@@ -45,8 +45,7 @@ public class SeatServlet extends HttpServlet {
                 : request.getParameter("action");
         switch (action) {
             case "add":
-                addSeat(request);
-                response.sendRedirect("pitchManagement?option=update");
+                addSeat(request, response);
                 break;
             case "edit":
                 List<SeatStatus> listStatus = seatStatusDAO.getSeatStatusList();
@@ -64,21 +63,25 @@ public class SeatServlet extends HttpServlet {
                 break;
             case "deleteAll":
                 int areaIdDelete = Integer.parseInt(request.getParameter("areaId"));
-                seatDAO.deleteSeatByArea(areaIdDelete);
+                int resultAll = seatDAO.deleteSeatByArea(areaIdDelete);
+                 String messageAll = "Delete all  successfully";
+                if(resultAll < 1) messageAll = "Delete all fail.";
                 String pitchIdToBack = request.getParameter("pitchId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdToBack + "&areaId=" + areaIdDelete);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdToBack + "&areaId=" + areaIdDelete + "&message=" + messageAll);
                 break;
             case "delete":
                 int seatIdDelete = Integer.parseInt(request.getParameter("seatId"));
-                seatDAO.deleteSeat(seatIdDelete);
+                int result  = seatDAO.deleteSeat(seatIdDelete);
+                String message = "Delete successfully";
+                if(result < 1) message = "Delete fail.";
                 String pitchId = request.getParameter("pitchId");
                 String areaId = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId);
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
                 break;
             default:
                 throw new AssertionError();
         }
-
+//check di bạn
     }
 
     @Override
@@ -90,21 +93,14 @@ public class SeatServlet extends HttpServlet {
                 : request.getParameter("action");
         switch (action) {
             case "add":
-                addSeat(request);
-                String pitchId = request.getParameter("pitchId");
-                String areaId = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId);
+                addSeat(request, response);
                 break;
             case "edit":
-                editSeat(request);
+                editSeat(request, response);
                 String pitchIdEdit = request.getParameter("pitchId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdEdit + "&areaId=" + request.getParameter("areaId"));
                 break;
             case "import":
                 importFileEx(request, response);
-                String pitchIdBack = request.getParameter("pitchId");
-                String areaIdBack = request.getParameter("areaId");
-                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdBack + "&areaId=" + areaIdBack);
                 break;
             default:
                 throw new AssertionError();
@@ -125,6 +121,8 @@ public class SeatServlet extends HttpServlet {
                     throw new IllegalArgumentException("The file format is not supported.");
                 }
                 Sheet sheet = workbook.getSheetAt(0);
+                boolean isOk = false;
+                boolean isFail = false;
                 for (Row row : sheet) {
                     Seat seat = new Seat();
                     int index = 0;
@@ -154,13 +152,30 @@ public class SeatServlet extends HttpServlet {
                         }
                         index++;
                     }
-                    Seat isExist = seatDAO.finSeatByIdNumber(seat.getAreaId(), seat.getSeatNumber());
-                    if(isExist == null) {
-                        seatDAO.insert(seat);
+                    if (index == 5) {
+                        Seat isExist = seatDAO.finSeatByIdNumber(seat.getAreaId(), seat.getSeatNumber());
+                        if (isExist == null) {
+                            int result = seatDAO.insert(seat);
+                            if (result > 0) {
+                                isOk = true;
+                            }
+                        } else {
+                            isFail = true;
+                        }
+                    } else {
+                        isFail = true;
                     }
                 }
-                System.out.println("Import done");
                 workbook.close();
+                String message = "";
+                if (isOk) {
+                    message = "Import success" + (isFail ? ".Some row in correct or seat is exist and dont save this row in db" : "");
+                } else {
+                    message = "Import fail. Please check seatnumber, price";
+                }
+                String pitchId = request.getParameter("pitchId");
+                String areaId = request.getParameter("areaId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -168,8 +183,9 @@ public class SeatServlet extends HttpServlet {
             System.out.println("e");
         }
     }
+//    test di ban
 
-    private void addSeat(HttpServletRequest request) {
+    private void addSeat(HttpServletRequest request, HttpServletResponse response) {
         //get information seatNumber, price, areaId, seatStatusId
         try {
             int seatNumber = Integer.parseInt(request.getParameter("seatNumber"));
@@ -184,14 +200,25 @@ public class SeatServlet extends HttpServlet {
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             //add to database
             if (isExist == null) {
-                seatDAO.insert(seat);
+                String message = "";
+                int result = seatDAO.insert(seat);
+                if (result > 0) {
+                    message = "Add new success";
+                } else {
+                    message = "Add new fail. Please check seatnumber, price";
+                }
+                String pitchId = request.getParameter("pitchId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
+            } else {
+                String pitchId = request.getParameter("pitchId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + "Seat is exist");
             }
         } catch (Exception e) {
 
         }
     }
 
-    private void editSeat(HttpServletRequest request) {
+    private void editSeat(HttpServletRequest request, HttpServletResponse response) {
         try {
             int seatId = Integer.parseInt(request.getParameter("seatId"));
             int seatNumber = Integer.parseInt(request.getParameter("seatNumber"));
@@ -208,7 +235,18 @@ public class SeatServlet extends HttpServlet {
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             if (isExist == null || (isExist != null && isExist.getSeatNumber() == oldSeat)) {
                 //edit database
-                seatDAO.edit(seat);
+                int result = seatDAO.edit(seat);
+                String message = "";
+                if (result > 0) {
+                    message = "Update success";
+                } else {
+                    message = "Update fail. Please check seatnumber, price";
+                }
+                String pitchId = request.getParameter("pitchId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
+            } else {
+                 String pitchId = request.getParameter("pitchId");
+                response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=Seat is exist");
             }
         } catch (Exception e) {
         }
