@@ -44,7 +44,7 @@ public class SeatDAO extends  DBContext{
         return listFound;
     }
 
-    public void insert(Seat seat) {
+    public int insert(Seat seat) {
         String sql = "INSERT INTO [Seat]\n"
                 + "           ([seatNumber]\n"
                 + "           ,[price]\n"
@@ -53,6 +53,9 @@ public class SeatDAO extends  DBContext{
                 + "     VALUES\n"
                 + "           (?, ? , ? , ?)";
         connection = new DBContext().getConnection();
+        if(seat.getSeatNumber() <= 0 || seat.getPrice() <= 0) {
+            return 0;
+        }
         try {
             //tao doi tuong prepared statement ( them generated key vao tham so thu 2)
             PreparedStatement statement = connection.prepareStatement(sql,
@@ -63,15 +66,15 @@ public class SeatDAO extends  DBContext{
             statement.setObject(3, seat.getAreaId());
             statement.setObject(4, seat.getSeatStatusId());
             //thuc thi cau lenh
-            statement.executeUpdate();
+            return statement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return 0;
     }
 
-    public void edit(Seat seat) {
+    public int edit(Seat seat) {
         String sql = "UPDATE [Seat]\n"
                 + "   SET [seatNumber] = ?\n"
                 + "      ,[price] = ?\n"
@@ -79,6 +82,9 @@ public class SeatDAO extends  DBContext{
                 + "      ,[seatStatusId] = ?\n"
                 + " WHERE seatId = ?";
         connection = new DBContext().getConnection();
+        if(seat.getSeatNumber() <= 0 || seat.getPrice() <= 0) {
+            return 0;
+        }
         try {
             //tao doi tuong prepared statement ( them generated key vao tham so thu 2)
             PreparedStatement statement = connection.prepareStatement(sql,
@@ -90,11 +96,12 @@ public class SeatDAO extends  DBContext{
             statement.setObject(4, seat.getSeatStatusId());
             statement.setObject(5, seat.getSeatId());
             //thuc thi cau lenh
-            statement.executeUpdate();
+            return statement.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
     
     public List<Seat> findAllByAreaId(int pitchId) {
