@@ -360,7 +360,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Styles for the seat add box */
+#seat-add-form {
+    
+    display: flex;
+    flex-direction: column;
+}
 .seat__add__box {
+    width: 70%;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -386,7 +392,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 10px;
 }
 
-.form__container input {
+.form__container input,
+.form__container select {
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ccc;
@@ -406,6 +413,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .form__container button:hover {
     background: #0056b3;
 }
+
+
 
 /*toastbox*/
 #toastBox {
