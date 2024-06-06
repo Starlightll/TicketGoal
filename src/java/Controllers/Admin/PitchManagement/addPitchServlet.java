@@ -81,6 +81,26 @@ public class addPitchServlet extends HttpServlet {
         String pitchAddress = request.getParameter("pitchAddressName");
         String pitchAddressURL = request.getParameter("pitchAddressURL");
 
+        boolean wrongFormat = false;
+        if (pitchName == null || pitchName.trim().isEmpty()) {
+            request.setAttribute("nameError", "Name cannot be empty or whitespace");
+            wrongFormat = true;
+        }else{
+            request.setAttribute("pitchName", pitchName);
+        }
+        if (pitchAddress == null || pitchAddress.trim().isEmpty()) {
+            request.setAttribute("addressError", "Address cannot be empty or whitespace");
+            wrongFormat = true;
+        }else{
+            request.setAttribute("addressName", pitchAddress);
+        }
+        if (pitchAddressURL == null || pitchAddressURL.trim().isEmpty()) {
+            request.setAttribute("addressURLError", "Address URL cannot be empty or whitespace");
+            wrongFormat = true;
+        }else{
+            request.setAttribute("addressURL", pitchAddressURL);
+        }
+
         InputStream pitchImageStream = null;
         InputStream pitchStructureStream = null;
 
@@ -88,6 +108,9 @@ public class addPitchServlet extends HttpServlet {
         Part pitchImage = request.getPart("pitchImage");
         if (pitchImage != null) {
             pitchImageStream = pitchImage.getInputStream();
+        } else {
+            request.setAttribute("pitchImageError", "Pitch Image cannot be empty");
+            wrongFormat = true;
         }
 
         //Store structure data
@@ -96,14 +119,22 @@ public class addPitchServlet extends HttpServlet {
             pitchStructureStream = pitchStructure.getInputStream();
         }
 
-        int pitchId = pitchDAO.addPitch(pitchName, pitchAddress, pitchAddressURL, pitchStructureStream, pitchImageStream);
-        if (pitchId != -1) {
-            request.setAttribute("msg", "Added successfully with pitch name: " + pitchName);
+        if (wrongFormat) {
+            request.setAttribute("page", "/Views/Admin/Pitch/AddPitch.jsp");
+            //set css
+            request.setAttribute("dropdownMenu", "block");
+            request.setAttribute("pitchManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
+            request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
         } else {
-            request.setAttribute("msg", "Failed to add pitch");
+            int pitchId = pitchDAO.addPitch(pitchName, pitchAddress, pitchAddressURL, pitchStructureStream, pitchImageStream);
+            if (pitchId != -1) {
+                request.setAttribute("msg", "Added successfully with pitch name: " + pitchName);
+            } else {
+                request.setAttribute("msg", "Failed to add pitch");
+            }
+            response.sendRedirect(request.getContextPath() + "/pitchManagementServlet");
         }
-        response.sendRedirect(request.getContextPath()+"/pitchManagementServlet");
-        
+
     }
 
     /**
