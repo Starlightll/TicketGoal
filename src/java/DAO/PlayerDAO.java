@@ -38,7 +38,7 @@ public class PlayerDAO {
 
     public Player getPlayer(String PlayerId) {
         String sql = "Select * from Player  inner join Performance ON Player.playerId = Performance.playerId left join PlayerRole ON Player.playerRoleId = PlayerRole.playerRoleId Where Player.playerId = ?";
-        Player p = new Player();        
+        Player p = new Player();
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(PlayerId));
@@ -71,7 +71,7 @@ public class PlayerDAO {
         try {
             PreparedStatement ps = connect.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {               
+            while (rs.next()) {
                 Player p = new Player();
                 p.setPlayerId(rs.getInt("playerId"));
                 p.setPlayerName(rs.getNString("playerName"));
@@ -112,12 +112,19 @@ public class PlayerDAO {
         return n;
     }
 
-
-
     public void addPlayer(String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream image, String countryId, String playerRoleId, String atk, String def, String spd) {
-        String query = "INSERT INTO Player (playerName, playerNumber, dateOfBirth, height, weight, biography, playerImage, countryId, playerRoleId)\n" +
-                        "VALUES (?, ? ,? ,? ,? ,? ,? ,? ,?)";
+        String query = "INSERT INTO Player (playerName, playerNumber, dateOfBirth, height, weight, biography, playerImage, countryId, playerRoleId)\n"
+                + "VALUES (?, ? ,? ,? ,? ,? ,? ,? ,?)";
+
         try {
+            // Check for duplicate player number
+            String checkDuplicateQuery = "SELECT COUNT(*) FROM Player WHERE playerNumber = ?";
+            PreparedStatement checkPs = connect.prepareStatement(checkDuplicateQuery);
+            checkPs.setString(1, playerNumber);
+            ResultSet rs = checkPs.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                throw new SQLException("Player number already exists.");
+            }
             PreparedStatement ps = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setNString(1, playerName);
             ps.setString(2, playerNumber);
@@ -132,11 +139,11 @@ public class PlayerDAO {
             }
             ps.setString(8, countryId);
             ps.setString(9, playerRoleId);
-            
+
             int resultInserted = ps.executeUpdate();
-            if(resultInserted > 0){
+            if (resultInserted > 0) {
                 ResultSet generatedKey = ps.getGeneratedKeys();
-                if(generatedKey.next()){
+                if (generatedKey.next()) {
                     int playerId = generatedKey.getInt(1);
                     String sql = "INSERT INTO Performance VALUES (? ,? , ?, ?)";
                     ps = connect.prepareStatement(sql);
@@ -150,14 +157,15 @@ public class PlayerDAO {
         } catch (SQLException e) {
         }
     }
-      public List<Player> searchPlayerByName(String name) {
-          List<Player> list = new ArrayList<>();
-       
-          String query = "SELECT * FROM Player AS P JOIN Performance AS PE ON P.playerId=PE.playerId left join PlayerRole ON P.playerRoleId = PlayerRole.playerRoleId WHERE playerName LIKE ?";
-          try {
+
+    public List<Player> searchPlayerByName(String name) {
+        List<Player> list = new ArrayList<>();
+
+        String query = "SELECT * FROM Player AS P JOIN Performance AS PE ON P.playerId=PE.playerId left join PlayerRole ON P.playerRoleId = PlayerRole.playerRoleId WHERE playerName LIKE ?";
+        try {
             PreparedStatement ps = connect.prepareStatement(query);
-            name="%"+name+"%";
-            ps.setString(1,name);
+            name = "%" + name + "%";
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Player p = new Player();
@@ -175,59 +183,89 @@ public class PlayerDAO {
                 p.setATK(rs.getInt("atk"));
                 p.setDEF(rs.getInt("def"));
                 p.setSPD(rs.getInt("spd"));
-                        
+
                 list.add(p);
             }
         } catch (SQLException e) {
-              System.out.println("fail");
+            System.out.println("fail");
         }
-          return list;
-      }
-      public void UpdatePlayer(String playerId,String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream newImage, String oldImage, String countryId, String playerRoleId, String atk, String def, String spd) {
-        String query = "UPDATE Player\n" +
-                    "SET playerName = ?,\n" +
-                    "    playerNumber = ?,\n" +
-                    "    dateOfBirth = ?,\n" +
-                    "    height = ?,\n" +
-                    "    weight = ?,\n" +
-                    "    biography = ?,\n" +
-                    "    playerImage = ?,\n" +
-                    "    countryId = ?,\n" +
-                    "    playerRoleId = ?\n" +
-                    "WHERE playerId = ?;";
+        return list;
+    }
+
+    public void UpdatePlayer(String playerId, String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream newImage, String oldImage, String countryId, String playerRoleId, String atk, String def, String spd) {
+        // Kiểm tra xem playerNumber có bị trùng không
+        if (isPlayerNumberUnique(playerNumber, playerId)) {
+            String query = "UPDATE Player\n"
+                    + "SET playerName = ?,\n"
+                    + "    playerNumber = ?,\n"
+                    + "    dateOfBirth = ?,\n"
+                    + "    height = ?,\n"
+                    + "    weight = ?,\n"
+                    + "    biography = ?,\n"
+                    + "    playerImage = ?,\n"
+                    + "    countryId = ?,\n"
+                    + "    playerRoleId = ?\n"
+                    + "WHERE playerId = ?;";
+            try {
+                PreparedStatement ps = connect.prepareStatement(query);
+                ps.setNString(1, playerName);
+                ps.setString(2, playerNumber);
+                ps.setString(3, dateOfBirth);
+                ps.setString(4, height);
+                ps.setString(5, weight);
+                ps.setString(6, biography);
+                if (newImage != null) {
+                    ps.setBlob(7, newImage);
+                } else {
+                    byte[] decodedImage = Base64.getDecoder().decode(oldImage);
+                    ps.setBytes(7, decodedImage);
+                }
+                ps.setString(8, countryId);
+                ps.setString(9, playerRoleId);
+                ps.setString(10, playerId);
+                int resultInserted = ps.executeUpdate();
+                String sql = "UPDATE Performance\n"
+                        + "SET atk = ?,\n"
+                        + "    def = ?,\n"
+                        + "    spd = ?\n"
+                        + "WHERE playerId = ?;";
+                ps = connect.prepareStatement(sql);
+                ps.setString(1, atk);
+                ps.setString(2, def);
+                ps.setString(3, spd);
+                ps.setString(4, playerId);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                // Xử lý ngoại lệ SQL
+                e.printStackTrace();
+            }
+        } else {
+            // Xử lý khi playerNumber bị trùng
+            // Ví dụ: Hiển thị thông báo cho người dùng
+            System.out.println("Player number is not unique.");
+        }
+    }
+    // Phương thức kiểm tra playerNumber có trùng lặp không
+
+    private boolean isPlayerNumberUnique(String playerNumber, String playerId) {
+        String query = "SELECT COUNT(*) FROM Player WHERE playerNumber = ? AND playerId != ?";
         try {
             PreparedStatement ps = connect.prepareStatement(query);
-            ps.setNString(1, playerName);
-            ps.setString(2, playerNumber);
-            ps.setString(3, dateOfBirth);
-            ps.setString(4, height);
-            ps.setString(5, weight);
-            ps.setString(6, biography);
-            if (newImage != null) {
-                ps.setBlob(7, newImage);
-            } else {
-                byte[] decodedImage = Base64.getDecoder().decode(oldImage);
-                ps.setBytes(7, decodedImage);
+            ps.setString(1, playerNumber);
+            ps.setString(2, playerId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count == 0; // Trả về true nếu không có playerNumber nào khác trùng
             }
-            ps.setString(8, countryId);
-            ps.setString(9, playerRoleId);
-            ps.setString(10, playerId);          
-            int resultInserted = ps.executeUpdate();                              
-            String sql = "UPDATE Performance\n" +
-                                    "SET atk = ?,\n" +
-                                    "    def = ?,\n" +
-                                    "    spd = ?\n" +
-                                    "WHERE playerId = ?;";
-                    ps = connect.prepareStatement(sql);
-                    ps.setString(1, atk);
-                    ps.setString(2, def);
-                    ps.setString(3, spd);
-                    ps.setString(4, playerId);                          
-            ps.executeUpdate();
         } catch (SQLException e) {
+            // Xử lý ngoại lệ SQL
+            e.printStackTrace();
         }
-      }
-      public List<PlayerRole> getAllRole() {
+        return false;
+    }
+
+    public List<PlayerRole> getAllRole() {
         List<PlayerRole> list = new ArrayList<>();
         String query = "select * from PlayerRole";
         try {
@@ -241,8 +279,8 @@ public class PlayerDAO {
         }
         return list;
     }
-      
-      public List<Player> getAllPlayerByID(String playerId) {
+
+    public List<Player> getAllPlayerByID(String playerId) {
         List<Player> list = new ArrayList<>();
         String query = "select * from Player inner join Performance ON Player.playerId = Performance.playerId where player.playerId = ?";
         try {
@@ -271,7 +309,8 @@ public class PlayerDAO {
         }
         return list;
     }
-          public List<Player> getAllPlayerByRole(String playerRole) {
+
+    public List<Player> getAllPlayerByRole(String playerRole) {
         List<Player> list = new ArrayList<>();
         String query = "select * from Player  "
                 + "join Performance ON Player.playerId = Performance.playerId "
@@ -303,11 +342,11 @@ public class PlayerDAO {
         }
         return list;
     }
-              public static void main(String[] args) {
-        PlayerDAO dao = new PlayerDAO();
-       
 
-        System.out.println(dao.getAllPlayerByRole("1"));
-        
+    public static void main(String[] args) {
+        PlayerDAO dao = new PlayerDAO();
+
+        List<Player> p = dao.getAllPlayer();
+
     }
 }
