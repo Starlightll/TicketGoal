@@ -27,15 +27,26 @@
                         <table>
                             <tr class="pitch__name">
                                 <td>Name:</td>
-                                <td><input type="text" name="pitchName" placeholder="Pitch Name" required></td>
+                                <td>
+                                    <input type="text" name="pitchName" placeholder="Pitch Name" value="${pitchName}" required>
+                                </td>
                             </tr>
+                            <c:if test="${not empty requestScope.nameError}">
+                                <span class="error">${requestScope.nameError}</span>
+                            </c:if>
                             <tr class="pitch__address">
                                 <td>Address:</td>
                                 <td>
-                                    <input type="text" name="pitchAddressName" placeholder="Address Name" required>
-                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" required>
+                                    <input type="text" name="pitchAddressName" placeholder="Address Name" value="${addressName}" required>
+                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" value="${addressURL}" required>
                                 </td>
                             </tr>
+                            <c:if test="${not empty requestScope.addressError}">
+                                <span class="error">${requestScope.addressError}</span>
+                            </c:if>
+                            <c:if test="${not empty requestScope.addressURLError}">
+                                <span class="error">${requestScope.addressURLError}</span>
+                            </c:if>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
                                 <td><img id="uploaded-structure" src="" alt="">
@@ -52,8 +63,8 @@
                     </div>
                 </div>
                 <button type="submit">Add Pitch</button>
-           </form>
+            </form>
         </div>
-       <script src="${pageContext.request.contextPath}/js/admin/pitch/addpitch.js"></script>
+        <script src="${pageContext.request.contextPath}/js/admin/pitch/addpitch.js"></script>
     </body>
 </html>
