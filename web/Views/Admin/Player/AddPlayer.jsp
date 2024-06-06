@@ -12,20 +12,6 @@
     <title>Add Player</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/player/addplayer.css"/>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var today = new Date();
-
-            var minDate = new Date(today.getFullYear() - 50, today.getMonth(), today.getDate());
-            var maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-
-            var minDateString = minDate.toISOString().split('T')[0];
-            var maxDateString = maxDate.toISOString().split('T')[0];
-
-            var input = document.getElementById('playerBirth');
-            input.setAttribute('min', minDateString);
-            input.setAttribute('max', maxDateString);
-        });
-
         function validateForm() {
             var form = document.forms["addPlayerForm"];
             var requiredFields = ["playerName", "playerNumber", "playerCountry", "playerRoleId", "playerBirth", "playerHeight", "playerWeight", "playerBio", "playerImage"];
@@ -34,17 +20,47 @@
 
             requiredFields.forEach(function(field) {
                 var fieldElement = form[field];
-                var trimmedValue = fieldElement.value.trim();
+                var trimmedValue = fieldElement.value.trim(); // Trim whitespace
                 if (trimmedValue === "") {
                     valid = false;
                     errorMessages.push(fieldElement.name + " is required.");
                     fieldElement.style.border = "2px solid red";
                 } else {
-                    fieldElement.style.border = "";
+                    fieldElement.style.border = ""; // Remove border styling if valid
                 }
             });
 
-            if (!valid) {
+            // Check if birth date is within the allowed range
+            var birthDate = new Date(form["playerBirth"].value);
+            var minDate = new Date();
+            minDate.setFullYear(minDate.getFullYear() - 50);
+            var maxDate = new Date();
+            maxDate.setFullYear(maxDate.getFullYear() - 16);
+            if (birthDate < minDate || birthDate > maxDate) {
+                valid = false;
+                errorMessages.push("Player must be between 16 and 50 years old.");
+                form["playerBirth"].style.border = "2px solid red";
+            } else {
+                form["playerBirth"].style.border = "";
+            }
+
+            // Check for white space input in player name
+            if (form["playerName"].value.trim() === "") {
+                valid = false;
+                errorMessages.push("Player Name cannot be whitespace only.");
+                form["playerName"].style.border = "2px solid red";
+            } else {
+                form["playerName"].style.border = "";
+            }
+
+            if (valid) {
+                // If all fields are valid, clear error messages and borders
+                errorMessages = [];
+                requiredFields.forEach(function(field) {
+                    form[field].style.border = "";
+                });
+            } else {
+                // If any field is invalid, display error messages
                 alert(errorMessages.join("\n"));
             }
 
