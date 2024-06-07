@@ -39,8 +39,8 @@ public class SearchPitchServlet extends HttpServlet {
                 out.print("<div class=\"pitch\">\n" +
 "                        <img name=\"pitchImage\" src=\"data:image/jpeg;base64,"+pitchs.image+"\"/>\n" +
 "                        <div class=\"pitch__manager__option\">\n" +
-"                            <button class=\"update__button\" onclick=\"location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update&pitchId=${pitch.pitchId}'\">Update</button>\n" +
-"                            <button class=\"delete__button\" onclick=\"location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'\">Delete</button>\n" +
+"                            <button class=\"update__button\" onclick=\"location.href = '"+request.getContextPath()+"/pitchManagementServlet?option=update&pitchId="+pitchs.pitchId+"'\">Update</button>\n" +
+"                            <button class=\"delete__button\" onclick=\"location.href = '"+request.getContextPath()+"/pitchManagementServlet?option=delete&pitchId="+pitchs.pitchId+"'\">Delete</button>\n" +
 "                        </div>\n" +
 "                        <div class=\"pitch__name\">\n" +
 "                            <p>"+pitchs.pitchName+"</p>\n" +
