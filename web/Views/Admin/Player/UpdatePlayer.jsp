@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Update Player</title>
+    <title>JSP Page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/player/updateplayer.css"/>
 </head>
 <body>
@@ -89,50 +89,27 @@
 
 <script>
     function validateForm() {
-        var form = document.forms[0];
-        var valid = true;
-        var errorMessages = [];
-
         var requiredFields = ['playerName', 'playerNumber', 'playerCountry', 'playerRoleId', 'playerBirth', 'playerHeight', 'playerWeight', 'playerBio', 'ATK', 'DEF', 'SPD'];
         for (var i = 0; i < requiredFields.length; i++) {
             var fieldName = requiredFields[i];
-            var field = form[fieldName];
+            var field = document.getElementsByName(fieldName)[0];
             if (!field) {
-                errorMessages.push('Field ' + fieldName + ' is missing.');
-                valid = false;
+                alert('Field ' + fieldName + ' is missing.');
+                return false;
             }
             if (fieldName === 'playerName' || fieldName === 'playerNumber') {
                 if (!field.value.trim()) {
-                    errorMessages.push('Please fill out the ' + fieldName + ' field.');
-                    valid = false;
+                    alert('Please fill out the ' + fieldName + ' field.');
+                    return false;
                 }
             } else {
                 if (!field.value) {
-                    errorMessages.push('Please fill out the ' + fieldName + ' field.');
-                    valid = false;
+                    alert('Please fill out the ' + fieldName + ' field.');
+                    return false;
                 }
             }
         }
-
-        // Check if birth date is within the allowed range
-        var birthDate = new Date(form["playerBirth"].value);
-        var minDate = new Date();
-        minDate.setFullYear(minDate.getFullYear() - 50);
-        var maxDate = new Date();
-        maxDate.setFullYear(maxDate.getFullYear() - 16);
-        if (birthDate < minDate || birthDate > maxDate) {
-            valid = false;
-            errorMessages.push("Player must be between 16 and 50 years old.");
-            form["playerBirth"].style.border = "2px solid red";
-        } else {
-            form["playerBirth"].style.border = "";
-        }
-
-        if (!valid) {
-            alert(errorMessages.join("\n"));
-        }
-
-        return valid;
+        return true;
     }
 
     document.addEventListener('DOMContentLoaded', function () {
