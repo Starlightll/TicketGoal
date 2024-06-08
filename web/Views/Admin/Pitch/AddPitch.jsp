@@ -21,32 +21,26 @@
     </head>
     <body>
         <div class="add__pitch">
-            <form method="POST" action="addPitchServlet" enctype="multipart/form-data">
+            <form name="addPitchForm" method="POST" action="addPitchServlet" onsubmit="return validateForm()" enctype="multipart/form-data">
                 <div class="pitch__container">
                     <div class="pitch__info">
                         <table>
                             <tr class="pitch__name">
                                 <td>Name:</td>
                                 <td>
-                                    <input type="text" name="pitchName" placeholder="Pitch Name" value="${pitchName}" required>
+                                    <input type="text" name="pitchName" placeholder="Pitch Name" value="${pitchName}" id="pitchNameInput" required><br>
+                                    <span id="nameError" class="error"></span>
                                 </td>
                             </tr>
-                            <c:if test="${not empty requestScope.nameError}">
-                                <span class="error">${requestScope.nameError}</span>
-                            </c:if>
                             <tr class="pitch__address">
                                 <td>Address:</td>
                                 <td>
-                                    <input type="text" name="pitchAddressName" placeholder="Address Name" value="${addressName}" required>
-                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" value="${addressURL}" required>
+                                    <input type="text" name="pitchAddressName" placeholder="Address Name" value="${addressName}" id="pitchAddressInput" required>
+                                    <input type="url" name="pitchAddressURL" placeholder="Pitch Address URL" value="${addressURL}" required><br>
+                                    <span id="addressNameError" class="error"></span>
+
                                 </td>
                             </tr>
-                            <c:if test="${not empty requestScope.addressError}">
-                                <span class="error">${requestScope.addressError}</span>
-                            </c:if>
-                            <c:if test="${not empty requestScope.addressURLError}">
-                                <span class="error">${requestScope.addressURLError}</span>
-                            </c:if>
                             <tr class="pitch__structure">
                                 <td>Structure:</td>
                                 <td><img id="uploaded-structure" src="" alt="">
@@ -58,13 +52,57 @@
                     </div>
                     <div class="pitch__image">
                         <img id="uploaded-image" src="" alt="">
-                        <input type="file" id="upload-button" name="pitchImage" accept="image/*" required>
+                        <input type="file" id="upload-button" name="pitchImage" accept="image/*">
                         <label for="upload-button"><i class="ri-upload-2-line"></i>Upload Image</label>
                     </div>
                 </div>
+                <span id="formError" class="error"></span><br>                    
                 <button type="submit">Add Pitch</button>
             </form>
         </div>
         <script src="${pageContext.request.contextPath}/js/admin/pitch/addpitch.js"></script>
+        <script type="text/javascript">
+            function validateName() {
+                var pitchName = document.forms["addPitchForm"]["pitchName"].value.trim();
+                var nameError = document.getElementById("nameError");
+
+                if (pitchName === "") {
+                    nameError.innerText = "Name must be filled out";
+                    return false;
+                } else {
+                    nameError.innerText = "";
+                    return true;
+                }
+            }
+
+            function validateAddressName() {
+                var addressName = document.forms["addPitchForm"]["pitchAddressName"].value.trim();
+                var nameError = document.getElementById("addressNameError");
+
+                if (addressName === "") {
+                    nameError.innerText = "Address name must be filled out";
+                    return false;
+                } else {
+                    nameError.innerText = "";
+                    return true;
+                }
+
+            }
+
+            function validateForm() {
+                var isNameValid = validateName();
+                var isAddressNameValid = validateAddressName();
+                var formError = document.getElementById("formError");
+                if(!isNameValid || !isAddressNameValid){
+                    formError.innerText = "Please fill all field";
+                }
+                return isNameValid && isAddressNameValid;
+            }
+
+            window.onload = function () {
+                document.getElementById("pitchNameInput").addEventListener("input", validateName);
+                document.getElementById("pitchAddressInput").addEventListener("input", validateAddressName);
+            }
+        </script>
     </body>
 </html>
