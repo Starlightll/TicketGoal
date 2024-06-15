@@ -72,6 +72,10 @@
         <servlet-name>operatorManagementServlet</servlet-name>
         <servlet-class>Controllers.Admin.operatorManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ContactAdminServlet</servlet-name>
+        <servlet-class>Controllers.Contact.ContactAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>operatorManagementServlet</servlet-name>
         <url-pattern>/operatorManagementServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactAdminServlet</servlet-name>
+        <url-pattern>/ContactAdminServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
