@@ -17,10 +17,10 @@
             <div class="match__header">
                 <form>
                     <div class="search__box">
-                        <input type="search">
+                        <input type="search" placeholder="Search">
                     </div>
                 </form>
-                <a class="add__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=add">Add</a>
+                <button class="add__button" id="btn-add">Add</button>
             </div>
             <div class="line__decor"></div>
             <div class="match__list">
@@ -145,6 +145,54 @@
                     </div>
                 </form>
             </div>
+
         </div>
+        <!-- Add Match Form -->
+        <form class="add__match" id="add-form">
+            <div class="add__match__header">
+                <h2>Add Match</h2>
+                <i class="ri-close-large-fill" id="btn-close"></i>
+            </div>
+            <div class="match">
+                <div class="match__content">
+                    <div class="club__section">
+                        <div class="club">
+                            <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                            <h2>Name 1</h2>
+                            <label>
+                                <select name="club1">
+                                    <option value="0">Select Club</option>
+                                    <c:forEach var="club" items="${clubList}">
+                                        <option value="${club.clubId}">${club.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="vs"><p>VS</p></div>
+                        <div class="club">
+                            <img src="./img/clubLogos/AustriaVienna.png" alt="">
+                            <h2>Name 1</h2>
+                            <label>
+                                <select name="club2">
+                                    <option value="0">Select Club</option>
+                                    <c:forEach var="club" items="${clubList}">
+                                        <option value="${club.clubId}">${club.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="match__date">
+                        <label>
+                            <input type="date" name="matchDate">
+                        </label>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="add__button" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
     </body>
+    <script src="${pageContext.request.contextPath}/js/admin/match/matchmanagement.js"></script>
 </html>

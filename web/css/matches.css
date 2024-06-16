@@ -72,7 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .matches .match__date__day, .matches .match__date__month {
     position: relative;
     top: 20px;
-    z-index: 1px;
+    z-index: 1;
     font-size: 24px;
     font-weight: 500;
     text-align: center;
@@ -155,3 +155,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .matches .buyTicket__btn:hover {
     box-shadow: 0 1px 21px #ff4d6e5d;
 }
+
+
+/* Responsive */
+
+
+@media screen and (max-width: 1024px) {
+    .matches .match {
+        width: 800px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .matches .match {
+        width: 600px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .matches .match {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .matches .match {
+        width: 300px;
+    }
+}
+

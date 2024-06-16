@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/adminpanel.css"/>
     </head>
-    <body>
+    <body id="admin-panel-body">
         <div class="header-container">
             <jsp:include page="../include/header.jsp"/>
         </div>

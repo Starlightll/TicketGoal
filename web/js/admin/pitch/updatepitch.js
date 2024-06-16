@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
             mainForm = document.querySelector(".update__pitch form");
 
-//    // Ngăn chặn việc submit form ngoài cùng
-//    mainForm.addEventListener('submit', (e) => {
-//        e.preventDefault();
-//    });
-
     // Mở form pop-up để thêm ghế
     seatAddBtn.addEventListener('click', () => {
         seatAddBox.style.display = 'block';
