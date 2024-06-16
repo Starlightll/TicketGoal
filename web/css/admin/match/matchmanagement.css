@@ -39,11 +39,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 100px;
     height: 40px;
     border-radius: 10px;
-    text-align: center;
-    align-content: center;
-    text-decoration: none;
     color: #fff;
     margin-left: 250px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.match__management_container .add__button:hover {
+    background-color: #0aff89;
+    transform: scale(1.05);
 }
 
 .match__management_container .line__decor {
@@ -178,6 +183,123 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     flex-direction: column;
     justify-content: space-evenly
 }
+
+/* Add Match Form */
+.add__match {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+    background-color: rgba(9, 24, 35, 0.4);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.add__match.show-add-match {
+    opacity: 1;
+    pointer-events: auto;
+    scroll-behavior: revert;
+}
+
+.add__match .match {
+    color: #1A1A1A;
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add__match .match__content {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    padding: 40px;
+    align-items: center;
+}
+
+.add__match .club__section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.add__match .club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add__match .club img {
+    width: 100px;
+    margin: 10px;
+}
+
+.add__match .club p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.add__match .vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.add__match .match__date {
+    display: flex;
+    align-items: center;
+}
+
+.add__match .match__date input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add__match .option {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.add__match .add__button {
+    padding: 10px 20px;
+    background-color: #0ed86f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add__match .add__button:hover {
+    background-color: #00bc61;
+}
+
+.add__match .ri-close-large-fill {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.add__match .ri-close-large-fill:hover {
+    color: #00c273;
+}
+
+.add__match .add__match__header {
+    text-align: center;
+}
+
+
+
 
 
 
