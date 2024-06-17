@@ -3,27 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controllers;
+package Controllers.Ticket;
 
-import DAO.ClubDAO;
-import Models.Address;
-import Models.Club;
-import Models.Match;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
-import java.util.Date;
-import java.util.List;
 
 /**
  *
  * @author mosdd
  */
-public class matchServlet extends HttpServlet {
+@WebServlet(name="BuyTicketServlet", urlPatterns={"/BuyTicket"})
+public class BuyTicketServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +35,10 @@ public class matchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet matchServlet</title>");  
+            out.println("<title>Servlet BuyTicketServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet matchServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BuyTicketServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,10 +55,7 @@ public class matchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //Get all matches
-        List<Match> matchList = getMatches();
-        request.setAttribute("matches", matchList);
-        request.getRequestDispatcher("/Views/Matches.jsp").forward(request, response);
+        request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
     } 
 
     /** 
@@ -88,32 +80,4 @@ public class matchServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
-    public List<Match> getMatches() {
-        ResultSet matches = DAO.MatchDAO.INSTANCE.getMatches();
-        List<Match> matchList = new java.util.ArrayList<>();
-        try {
-            while (matches.next()) {
-                Match match = new Match();
-                match.setMatchId(matches.getInt("matchId"));
-                match.setSchedule(new Date(matches.getTimestamp("schedule").getTime()));
-                match.setPitchId(matches.getInt("pitchId"));
-                match.setMatchStatusId(matches.getInt("matchStatusId"));
-                //Get club1 and club2
-                Club club1 = ClubDAO.INSTANCE.getClub(matches.getInt("club1"));
-                match.setClub1(club1);
-                Club club2 = ClubDAO.INSTANCE.getClub(matches.getInt("club2"));
-                match.setClub2(club2);
-                //Get address
-                Address address = new Address();
-                address.setAddressName(matches.getString("addressName"));
-                address.setAddressURL(matches.getString("addressURL"));
-                match.setAddress(address);
-                matchList.add(match);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return matchList;
-    }
 }

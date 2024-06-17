@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="match__location">
                                     <i class="ri-map-pin-2-fill"></i>
-                                    <p>${match.address.getAddressName()}, ${match.schedule}</p>
+                                    <p>${match.address.getAddressName()} / ${match.getTime()}</p>
                                 </div>
                             </div>
                             <div class="option">
