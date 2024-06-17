@@ -225,8 +225,6 @@ public class AccountDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AccountDAO().createNewAccount(new Account(
-                0, "user", "passworf", "emaik@dmaks.com",
-                null, -1, null, 1, 1)));
+        System.out.println(new AccountDAO().signIn("trinhtiendat2510@gmail.com","Abcdghik1"));
     }
 }

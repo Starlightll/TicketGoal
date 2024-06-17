@@ -4,6 +4,7 @@
  */
 package Controllers.Auth;
 
+import DAO.AccountDAO;
 import Utils.EmailSender;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,14 +21,18 @@ import java.io.IOException;
 public class forgotPasswordServlet extends HttpServlet {
 
     private final EmailSender emailSender = new EmailSender();
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        emailSender.sendEmail(request, response);
+
+        String email = request.getParameter("email");
+        if (email != null) {
+            emailSender.sendEmailForgotPassword(request, response);
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/Views/Auth/ForgotPassword.jsp").forward(request, response);
 //        doPost(request, response);
     }
 

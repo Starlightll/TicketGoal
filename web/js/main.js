@@ -1,3 +1,5 @@
+
+
 const navMenu = document.getElementById('nav-menu'),
         navToggle = document.getElementById('nav-toggle'),
         navClose = document.getElementById('nav-close');
@@ -73,7 +75,7 @@ loginSubmitBtn.onclick = async (e) => {
     const loginEmailValue = document.getElementById("email").value;
     const loginPasswordValue = document.getElementById("password").value;
     const errorMessage = document.getElementById("error-login-message");
-    
+
     try {
         const response = await fetch('./signIn', {
             method: 'POST',
@@ -83,7 +85,7 @@ loginSubmitBtn.onclick = async (e) => {
             body: `email=${encodeURIComponent(loginEmailValue)}&password=${encodeURIComponent(loginPasswordValue)}`
         });
         const jsonResponse = await response.json();
-        
+
         if (!jsonResponse.isSuccess) {
             errorMessage.innerText = jsonResponse.message;
             errorMessage.style.display = "block";
@@ -177,7 +179,7 @@ profileUpdateBtn ? profileUpdateBtn.onclick = async (e) => {
             console.error('There was a problem with the fetch operation:', error);
         }
     }
-    
+
 } : null;
 
 passwordChangeBtn ? passwordChangeBtn.onclick = async (e) => {
@@ -185,7 +187,7 @@ passwordChangeBtn ? passwordChangeBtn.onclick = async (e) => {
     const oldPass = document.getElementById("changePassword-oldPass").value;
     const newPass = document.getElementById("changePassword-newPass").value;
     const confirmPass = document.getElementById("changePassword-confirmPass").value;
-    
+
     if (newPass.trim() !== confirmPass.trim()) {
         alert("Confirm Password must be the same as the New Password");
         return;
@@ -214,63 +216,63 @@ passwordChangeBtn ? passwordChangeBtn.onclick = async (e) => {
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }
-    
+
 } : null;
 
 // Handle register new account
-const registerSubmitBtn = $('#sign-up-btn-submit');
-registerSubmitBtn && registerSubmitBtn.on('click', async () => {
-    const email = $('#registerEmailForm').val();
-    const password = $('#registerPassword').val();
-    const rePassword = $('#confirmPassword').val();
-    if (password !== rePassword || !password) {
-        alert("Confirm Password muse be the same with Password");
-        return;
-    }
-    if (!validateField(email, "email")) {
-        return;
-    }
-    
-    try {
-        const response = await fetch('./signUp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `email=${encodeURIComponent(email).trim()}&rePassword=${encodeURIComponent(rePassword).trim()}
-                        &password=${encodeURIComponent(password).trim()}`
-        });
-        const jsonResponse = await response.json();
-        console.log(jsonResponse);
-        if (!jsonResponse.isSuccess) {
-            alert(jsonResponse?.messasge || "Something's wrong");
+const registerSubmitBtn = document.getElementById('sign-up-btn-submit');
+if (registerSubmitBtn) {
+    registerSubmitBtn.addEventListener('click', async function () {
+        const email = document.getElementById('registerEmailForm').value;
+        const password = document.getElementById('registerPassword').value;
+        const rePassword = document.getElementById('confirmPassword').value;
+        if (password !== rePassword || !password) {
+            alert("Confirm Password must be the same with Password");
             return;
         }
-        alert(jsonResponse?.messasge || "Register success !!");
-        window.location.reload();
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-    }
-});
+        if (!validateField(email, "email")) {
+            return;
+        }
 
-
+        try {
+            const response = await fetch('./signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email).trim()}&rePassword=${encodeURIComponent(rePassword).trim()}&password=${encodeURIComponent(password).trim()}`
+            });
+            const jsonResponse = await response.json();
+            console.log(jsonResponse);
+            if (!jsonResponse.isSuccess) {
+                alert(jsonResponse?.message || "Something's wrong");
+                return;
+            }
+            alert(jsonResponse?.message || "Register success !!");
+            window.location.reload();
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    });
+}
 // Handle forgotpassword
-const forgotpasswordSubmitBtn = $("#forgotpassword-submit-button");
-forgotpasswordSubmitBtn && forgotpasswordSubmitBtn.on("click", async() => {
-    const email = $("#forgotPasswordEmail").val();
-    console.log(email);
-    try {
-        const response = await fetch('./forgotPassword', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `email=${encodeURIComponent(email).trim()}`
-        });
-        const jsonResponse = await response.json();
-        console.log(jsonResponse);
-    } catch (exception) {
-        
-    }
-    
-});
+const forgotpasswordSubmitBtn = document.getElementById('forgotpassword-submit-button');
+if (forgotpasswordSubmitBtn) {
+    forgotpasswordSubmitBtn.addEventListener('click', async function () {
+        const email = document.getElementById('forgotPasswordEmail').value;
+        console.log(email);
+        try {
+            const response = await fetch('./forgotPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email).trim()}`
+            });
+            const jsonResponse = await response.json();
+            alert(jsonResponse.message);
+        } catch (exception) {
+            console.error('There was a problem with the fetch operation:', exception);
+        }
+    });
+}
