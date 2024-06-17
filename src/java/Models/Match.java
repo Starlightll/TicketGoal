@@ -20,19 +20,19 @@ public class Match {
     public int matchStatusId;
     public int club1;
     public int club2;
-    public String location;
+    public Address address;
 
     public Match() {
     }
 
-    public Match(int matchId, Date schedule, int pitchId, int matchStatusId, int club1, int club2, String location) {
+    public Match(int matchId, Date schedule, int pitchId, int matchStatusId, int club1, int club2, Address address) {
         this.matchId = matchId;
         this.schedule = schedule;
         this.pitchId = pitchId;
         this.matchStatusId = matchStatusId;
         this.club1 = club1;
         this.club2 = club2;
-        this.location = location;
+        this.address = address;
     }
 
     public int getMatchId() {
@@ -83,14 +83,14 @@ public class Match {
         this.club2 = club2;
     }
 
-    public String getLocation() {
-        return location;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAddress(Address address) {
+        this.address = address;
     }
-    
+
      public int getDay() {
         LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         return localDateTime.getDayOfMonth();
