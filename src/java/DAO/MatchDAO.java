@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -31,7 +33,7 @@ public class MatchDAO {
 
     public ResultSet getMatches() {
         try {
-            String query = "SELECT * FROM Match";
+            String query = "SELECT * FROM Match INNER JOIN dbo.Pitch P on P.pitchId = Match.pitchId WHERE matchStatusId != 0";
             Statement stmt = connect.createStatement();
             return stmt.executeQuery(query);
         } catch (Exception e) {
@@ -57,11 +59,11 @@ public class MatchDAO {
         try {
             String query = "INSERT INTO Match(schedule, pitchId, matchStatusId, club1, club2) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps = connect.prepareStatement(query);
-            ps.setDate(1, new java.sql.Date(match.getSchedule().getTime()));
+            ps.setTimestamp(1, new java.sql.Timestamp(match.getSchedule().getTime()));
             ps.setInt(2, match.getPitchId());
             ps.setInt(3, match.getMatchStatusId());
-            ps.setInt(4, match.getClub1());
-            ps.setInt(5, match.getClub2());
+            ps.setInt(4, match.getClub1().getClubId());
+            ps.setInt(5, match.getClub2().getClubId());
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -74,11 +76,11 @@ public class MatchDAO {
         try {
             String query = "UPDATE Match SET schedule = ?, pitchId = ?, matchStatusId = ?, club1 = ?, club2 = ? WHERE matchId = ?";
             PreparedStatement ps = connect.prepareStatement(query);
-            ps.setDate(1, new java.sql.Date(match.getSchedule().getTime()));
+            ps.setTimestamp(1, new java.sql.Timestamp(match.getSchedule().getTime()));
             ps.setInt(2, match.getPitchId());
             ps.setInt(3, match.getMatchStatusId());
-            ps.setInt(4, match.getClub1());
-            ps.setInt(5, match.getClub2());
+            ps.setInt(4, match.getClub1().getClubId());
+            ps.setInt(5, match.getClub2().getClubId());
             ps.setInt(6, match.getMatchId());
             ps.executeUpdate();
             return true;
@@ -90,7 +92,7 @@ public class MatchDAO {
 
     public boolean deleteMatch(int matchId) {
         try {
-            String query = "DELETE FROM Match WHERE matchId = ?";
+            String query = "UPDATE Match SET matchStatusId = 0 WHERE matchId = ?";
             PreparedStatement ps = connect.prepareStatement(query);
             ps.setInt(1, matchId);
             ps.executeUpdate();
@@ -100,6 +102,5 @@ public class MatchDAO {
             return false;
         }
     }
-
     
 }
