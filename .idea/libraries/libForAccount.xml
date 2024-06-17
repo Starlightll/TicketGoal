@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="libForAccount">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/javax.mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/javax.activation-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/fluent-hc-4.5.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/httpclient-4.5.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/gson-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForAccount/httpcore-4.4.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
