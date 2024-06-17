@@ -22,5 +22,6 @@
     <orderEntry type="library" name="libForAccount" level="project" />
     <orderEntry type="library" name="libForSeat" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 10.1.24" level="application_server_libraries" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
