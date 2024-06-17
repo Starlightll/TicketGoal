@@ -32,40 +32,43 @@
                     </div>
                 </form>
                 <div class="match__box">
+                    <c:forEach var="match" items="${matches}">
                     <form>
                         <div class="match">
                             <div class="match__date">
                                 <img src="./img/matches/DateBanner.png" alt="">
-                                <div class="match__date__day">28</div>
-                                <div class="match__date__month">Aug</div>
+                                <div class="match__date__day">${match.getDay()}</div>
+                                <div class="match__date__month">${match.getMonth()}</div>
                             </div>
                             <div class="match__content">
                                 <div class="club__section">
                                     <div class="club">
-                                        <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                        <p>Club1</p>
+                                        <img src="data:image/jpeg;base64,${match.club1.clubLogo}" alt="">
+                                        <p>${match.club1.clubName}</p>
                                     </div>
                                     <div class="vs"><p>VS</p></div>
                                     <div class="club">
-                                        <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                        <p>Club2</p>
+                                        <img src="data:image/jpeg;base64,${match.club2.clubLogo}" alt="">
+                                        <p>${match.club2.clubName}</p>
                                     </div>
                                 </div>
                                 <div class="match__location">
                                     <i class="ri-map-pin-2-fill"></i>
-                                    <p>SGF Stadium, London / 19:20</p>
+                                    <p>${match.address.getAddressName()} / ${match.getTime()}</p>
                                 </div>
                             </div>
                             <div class="buy__ticket">
-                                <button type="submit" class="buyTicket__btn">Buy Ticket</button>
+                                <button class="buyTicket__btn" type="button" onclick="location.href='BuyTicket'">Buy Ticket</button>
                             </div>
                         </div>
                     </form>
+                    </c:forEach>
                 </div>
             </div>
         </main>
         <div class="footer-container">
             <%@include file="/Views/include/footer.jsp" %>
         </div>
+
     </body>
 </html>
