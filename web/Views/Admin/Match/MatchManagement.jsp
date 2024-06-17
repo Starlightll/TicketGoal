@@ -182,9 +182,9 @@
                             </label>
                         </div>
                     </div>
-                    <div class="match__date">
+                    <div class="match__time">
                         <label>
-                            <input type="date" name="matchDate">
+                            <input type="datetime-local" name="matchTime">
                         </label>
                     </div>
                 </div>
