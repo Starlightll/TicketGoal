@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>matchManagementServlet</servlet-name>
-        <servlet-class>Controllers.Admin.matchManagementServlet</servlet-class>
+        <servlet-class>Controllers.Admin.Match.matchManagementServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>playerManagementServlet</servlet-name>
