@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controllers.Auth;
 
 import Utils.EmailSender;
+import Utils.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,11 +20,27 @@ public class forgotPasswordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        emailSender.sendEmail(request, response);
+
+        String email = request.getParameter("email");
+        if (email != null) {
+            emailSender.sendEmailForgotPassword(request, response);
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String token = request.getParameter("token");
+        if (token != null) {
+            try {
+                String userEmail = JwtUtil.getUserIdFromToken(token);
+                request.setAttribute("email", userEmail);
+            } catch (Exception e) {
+                response.sendRedirect("./");
+                return;
+            }
+        }
+
+        request.getRequestDispatcher("/Views/Auth/ForgotPassword.jsp").forward(request, response);
 //        doPost(request, response);
     }
 
