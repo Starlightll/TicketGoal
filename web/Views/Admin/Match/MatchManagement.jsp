@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/match/matchmanagement.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="match__management_container">
@@ -23,132 +24,44 @@
                 <button class="add__button" id="btn-add">Add</button>
             </div>
             <div class="line__decor"></div>
-            <div class="match__list">
-                <form>
-                    <div class="match">
-                        <div class="match__date">
-                            <img src="./img/matches/DateBanner.png" alt="">
-                            <div class="match__date__day">28</div>
-                            <div class="match__date__month">Aug</div>
-                        </div>
-                        <div class="match__content">
-                            <div class="club__section">
-                                <div class="club">
-                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                    <p>Club1</p>
-                                </div>
-                                <div class="vs"><p>VS</p></div>
-                                <div class="club">
-                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                    <p>Club2</p>
-                                </div>
+            <div class="match__list" id="match-list">
+                <c:forEach var="match" items="${matches}">
+                    <form>
+                        <div class="match">
+                            <div class="match__date">
+                                <img src="./img/matches/DateBanner.png" alt="">
+                                <div class="match__date__day">${match.getDay()}</div>
+                                <div class="match__date__month">${match.getMonth()}</div>
                             </div>
-                            <div class="match__location">
-                                <i class="ri-map-pin-2-fill"></i>
-                                <p>SGF Stadium, London / 19:20</p>
-                            </div>
-                        </div>
-                        <div class="option">
-                            <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=update">Update</a>
-                            <a class="delete__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=delete">Delete</a>
-                        </div>
-                    </div>
-                </form>
-                <form>
-                    <div class="match">
-                        <div class="match__date">
-                            <img src="./img/matches/DateBanner.png" alt="">
-                            <div class="match__date__day">28</div>
-                            <div class="match__date__month">Aug</div>
-                        </div>
-                        <div class="match__content">
-                            <div class="club__section">
-                                <div class="club">
-                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                    <p>Club1</p>
+                            <div class="match__content">
+                                <div class="club__section">
+                                    <div class="club">
+                                        <img src="data:image/jpeg;base64,${match.club1.clubLogo}" alt="">
+                                        <p>${match.club1.clubName}</p>
+                                    </div>
+                                    <div class="vs"><p>VS</p></div>
+                                    <div class="club">
+                                        <img src="data:image/jpeg;base64,${match.club2.clubLogo}" alt="">
+                                        <p>${match.club2.clubName}</p>
+                                    </div>
                                 </div>
-                                <div class="vs"><p>VS</p></div>
-                                <div class="club">
-                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                    <p>Club2</p>
+                                <div class="match__location">
+                                    <i class="ri-map-pin-2-fill"></i>
+                                    <p>${match.address.getAddressName()} / ${match.getTime()}</p>
                                 </div>
                             </div>
-                            <div class="match__location">
-                                <i class="ri-map-pin-2-fill"></i>
-                                <p>SGF Stadium, London / 19:20</p>
+                            <div class="option">
+                                <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=updateMatch&matchId=${match.matchId}">Update</a>
+                                <button class="delete__button" type="button" onclick="deleteMatch(${match.matchId})">Delete</button>
                             </div>
                         </div>
-                        <div class="option">
-                            <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=update">Update</a>
-                            <a class="delete__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=delete">Delete</a>
-                        </div>
-                    </div>
-                </form>
-                <form>
-                    <div class="match">
-                        <div class="match__date">
-                            <img src="./img/matches/DateBanner.png" alt="">
-                            <div class="match__date__day">28</div>
-                            <div class="match__date__month">Aug</div>
-                        </div>
-                        <div class="match__content">
-                            <div class="club__section">
-                                <div class="club">
-                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                    <p>Club1</p>
-                                </div>
-                                <div class="vs"><p>VS</p></div>
-                                <div class="club">
-                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                    <p>Club2</p>
-                                </div>
-                            </div>
-                            <div class="match__location">
-                                <i class="ri-map-pin-2-fill"></i>
-                                <p>SGF Stadium, London / 19:20</p>
-                            </div>
-                        </div>
-                        <div class="option">
-                            <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=update">Update</a>
-                            <a class="delete__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=delete">Delete</a>
-                        </div>
-                    </div>
-                </form>
-                <form>
-                    <div class="match">
-                        <div class="match__date">
-                            <img src="./img/matches/DateBanner.png" alt="">
-                            <div class="match__date__day">28</div>
-                            <div class="match__date__month">Aug</div>
-                        </div>
-                        <div class="match__content">
-                            <div class="club__section">
-                                <div class="club">
-                                    <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                                    <p>Club1</p>
-                                </div>
-                                <div class="vs"><p>VS</p></div>
-                                <div class="club">
-                                    <img src="./img/clubLogos/RedBullSalzburg.png" alt="">
-                                    <p>Club2</p>
-                                </div>
-                            </div>
-                            <div class="match__location">
-                                <i class="ri-map-pin-2-fill"></i>
-                                <p>SGF Stadium, London / 19:20</p>
-                            </div>
-                        </div>
-                        <div class="option">
-                            <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=update">Update</a>
-                            <a class="delete__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=delete">Delete</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </c:forEach>
             </div>
 
         </div>
         <!-- Add Match Form -->
-        <form class="add__match" id="add-form">
+        <form name="addMatchForm" class="add__match" id="add-form" method="post" action="${pageContext.request.contextPath}/matchManagementServlet?option=addMatch">
             <div class="add__match__header">
                 <h2>Add Match</h2>
                 <i class="ri-close-large-fill" id="btn-close"></i>
@@ -158,11 +71,11 @@
                     <div class="club__section">
                         <div class="club">
                             <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                            <h2>Name 1</h2>
+                            <h2 id="club-name">Name 1</h2>
                             <label>
                                 <select name="club1">
                                     <option value="0">Select Club</option>
-                                    <c:forEach var="club" items="${clubList}">
+                                    <c:forEach var="club" items="${clubs}">
                                         <option value="${club.clubId}">${club.clubName}</option>
                                     </c:forEach>
                                 </select>
@@ -175,24 +88,124 @@
                             <label>
                                 <select name="club2">
                                     <option value="0">Select Club</option>
-                                    <c:forEach var="club" items="${clubList}">
+                                    <c:forEach var="club" items="${clubs}">
                                         <option value="${club.clubId}">${club.clubName}</option>
                                     </c:forEach>
                                 </select>
                             </label>
                         </div>
                     </div>
-                    <div class="match__date">
+                    <div class="stadium">
                         <label>
-                            <input type="date" name="matchDate">
+                            <select name="pitchId">
+                                <option value="0">Select Stadium</option>
+                                <c:forEach var="stadium" items="${stadiums}">
+                                    <option value="${stadium.pitchId}">${stadium.pitchName}</option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="match__time">
+                        <label>
+                            <input type="datetime-local" name="schedule">
+                        </label>
+                    </div>
+                    <div class="match__status">
+                        <label>
+                            <select name="status">
+                                <option value="0" selected>Select Status</option>
+                                <option value="1">Upcoming</option>
+                                <option value="2">Ongoing</option>
+                                <option value="3">Finished</option>
+                                <option value="4">Cancelled</option>
+                            </select>
                         </label>
                     </div>
                 </div>
                 <div class="option">
-                    <button class="add__button" type="submit">Add</button>
+                    <button class="add__button" onclick="addMatch()" type="button" id="add-submit">Add</button>
                 </div>
             </div>
         </form>
+        <div id="toastBox"></div>
     </body>
     <script src="${pageContext.request.contextPath}/js/admin/match/matchmanagement.js"></script>
+    <script>
+
+        function addMatch() {
+            var club1Id = document.forms["addMatchForm"]["club1"].value;
+            var club2Id = document.forms["addMatchForm"]["club2"].value;
+            var pitchId = document.forms["addMatchForm"]["pitchId"].value;
+            var schedule = document.forms["addMatchForm"]["schedule"].value;
+            var status = document.forms["addMatchForm"]["status"].value;
+            if(club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "" || status === "0"){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
+                return false;
+            }else if(club1Id === club2Id){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Club 1 and Club 2 must be different!");
+                return false;
+            }else{
+                $.ajax({
+                    url: `${pageContext.request.contextPath}/matchManagementServlet`,
+                    method: "post",
+                    data: {
+                        club1Id: club1Id,
+                        club2Id: club2Id,
+                        pitchId: pitchId,
+                        schedule: schedule,
+                        status: status,
+                        option: "addMatch"
+                    },
+                    success: function (response) {
+                        var matchList = document.getElementById("match-list");
+                        document.getElementById("add-form").classList.remove("show-add-match");
+                        document.getElementById("admin-panel-body").style.removeProperty("overflow");
+                        matchList.innerHTML = response;
+                        showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                    },
+                    error: function () {
+                        showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Something wrong happened");
+                    }
+                });
+            }
+        }
+
+        function deleteMatch(matchId) {
+            var matchIds = matchId;
+            $.ajax({
+                url: `${pageContext.request.contextPath}/matchManagementServlet`,
+                method: "POST",
+                data: {
+                    matchId: matchIds,
+                    option: "deleteMatch"
+                },
+                success: function (response) {
+                    var matchList = document.getElementById("match-list");
+                    matchList.innerHTML = response;
+                    showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                },
+                error: function () {
+                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: The area has seats!");
+                }
+            });
+        }
+
+        let toastBox = document.getElementById('toastBox');
+
+        function showToast(msg) {
+            let toast = document.createElement('div');
+            toast.classList.add('toast');
+            toast.innerHTML = msg;
+            toastBox.appendChild(toast);
+
+            if (msg.includes('Invalid:')) {
+                toast.classList.add('invalid');
+            }
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+    </script>
 </html>

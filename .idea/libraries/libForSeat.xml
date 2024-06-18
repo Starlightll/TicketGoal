@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="libForSeat">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-ooxml-full-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/commons-compress-1.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/commons-collections4-4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-examples-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-javadoc-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-ooxml-lite-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/commons-io-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-ooxml-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/xmlbeans-5.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/poi-excelant-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libForSeat/log4j-api-2.18.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
