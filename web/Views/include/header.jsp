@@ -60,7 +60,7 @@
                             <button class="join__button" id="login-button">JOIN NOW</button>
                         </c:if>
                         <!-- Search button -->
-                        <i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i>
+                      <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
                         <!-- Toggle button -->
                         <div class="nav__toggle" id="nav-toggle">
                             <i class="ri-menu-line"></i>
