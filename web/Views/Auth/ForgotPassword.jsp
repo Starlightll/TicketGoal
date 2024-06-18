@@ -37,8 +37,11 @@
             <div>
                 <div>
                     <h2>Hello ${email}</h2>
+                    <h2 style="color:red">${message}</h2>
                 </div>
-                <form action="/changePasswordServlet" method="post">
+                <form action="./changePassword" method="POST">
+                    <input  type="hidden" name="email" value="${email}"/>
+                    <input  type="hidden" name="type" value="forgotToChange"/>
                     <h1>Change your new password</h1>
                     <input type="password" name="newPassword" placeholder="Enter new password" required/>
                     <br>

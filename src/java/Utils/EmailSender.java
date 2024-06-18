@@ -60,7 +60,7 @@ public class EmailSender {
             message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject("Dear MyFriend, ");
-            String htmlContent = "<h1>Change your password in <a href=\"" + resetUrl + "\">Ticket Goal Reset Password</a></h1> <h2>Note: The email can only exist in 1 minute from the time it started sending!!!!!</h2>";
+            String htmlContent = "<h1>Change your password in <a href=\"" + resetUrl + "\">Ticket Goal Reset Password</a></h1> <h2>Note: The email can only exist in 10 minute from the time it started sending!!!!!</h2>";
             message.setContent(htmlContent, "text/html");
             Transport.send(message);
             jsonResponse = new Common.JsonResponse(true, "Message sent successful");

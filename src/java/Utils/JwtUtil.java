@@ -16,7 +16,8 @@ import javax.crypto.SecretKey;
  * @author MSI VN
  */
 public class JwtUtil {
-    private static final String SECRET = "8zbX8FN1yh_tR3TH3_EkbPTEF7SbCECueHaXj6fCx9I"; 
+
+    private static final String SECRET = "8zbX8FN1yh_tR3TH3_EkbPTEF7SbCECueHaXj6fCx9I";
 
     private static SecretKey getSecretKey() {
         byte[] decodedKey = Base64.getUrlDecoder().decode(SECRET);
@@ -27,7 +28,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(userId)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60000))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -39,5 +40,10 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public static void main(String[] args) {
+        String a = null;
+        System.out.println("a".equals(a));
     }
 }

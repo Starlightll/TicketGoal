@@ -223,8 +223,39 @@ public class AccountDAO {
             return null;
         }
     }
+   public Account updateUserByEmail(Account account) {
+        StringBuilder sqlCommandBuilder = new StringBuilder("UPDATE Account SET\n");
 
+        addToCommandIfNotNull(sqlCommandBuilder, "username", account.getUsername());
+        addToCommandIfNotNull(sqlCommandBuilder, "password", account.getPassword());
+        addToCommandIfNotNull(sqlCommandBuilder, "phoneNumber", account.getPhoneNumber());
+        addToCommandIfNotNull(sqlCommandBuilder, "gender", account.getGender());
+        addToCommandIfNotNull(sqlCommandBuilder, "address", account.getAddress());
+        addToCommandIfNotDefault(sqlCommandBuilder, "roleId", account.getRoleId(), -1);
+        addToCommandIfNotDefault(sqlCommandBuilder, "accountStatusId", account.getAccountStatusId(), -1);
+
+        if (sqlCommandBuilder.toString().endsWith(", ")) {
+            sqlCommandBuilder.setLength(sqlCommandBuilder.length() - 2);
+        }
+
+        sqlCommandBuilder.append("\n WHERE email = '").append(account.getEmail() + "'");
+        String sqlCommand = sqlCommandBuilder.toString();
+        System.out.println(sqlCommand);
+
+        try (PreparedStatement ps = connect.prepareStatement(sqlCommand)) {
+            int rowsUpdated = ps.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                return getAccountByEmail(account.getEmail());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static void main(String[] args) {
-        System.out.println(new AccountDAO().signIn("trinhtiendat2510@gmail.com","Abcdghik1"));
+        System.out.println(new AccountDAO().updateUserByEmail(new Account("trinhtiendat25102@gmail.com", "123",-1,-1)));
     }
 }

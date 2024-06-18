@@ -31,6 +31,13 @@ public class Account {
         this.accountStatusId = accountStatusId;
     }
 
+    public Account(String email, String password,int roleId,int accountStatusId) {
+        this.password = password;
+        this.email = email;
+        this.roleId = roleId;
+        this.accountStatusId = accountStatusId;
+    }
+
     public int getAccountId() {
         return accountId;
     }
