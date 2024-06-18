@@ -107,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match content */
 
-.match__management_container .club__section, .match__management_container .club{
+.match__management_container .club__section{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,16 +115,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 100%;
 }
 
+.match__management_container .club__section .club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .match__management_container .club img {
     position: relative;
     top: -8px;
-    width: 70px;
-    height: 100%;
+    width: 80px;
 }
 
 .match__management_container .club p {
-    font-size: 25px;
-    padding-left: 20px;
+    font-size: 20px;
 }
 
 .match__management_container .vs p{
@@ -139,13 +143,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     align-items: center;
     justify-content: center;
     margin-left: 40px;
+    width: 600px;
 }
 
 /* Match location */
 
 .match__management_container .match__location {
     position: relative;
-    top: -20px;
+    top: -8px;
     display:flex;
     align-items: center;
 }
@@ -298,7 +303,63 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
 }
 
+/*toastbox*/
+#toastBox {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px;
+}
 
+.toast{
+    width: 300px;
+    height: 80px;
+    background: #ffffff;
+    font-weight: 500;
+    margin: 15px 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    color: black;
+    position: relative;
+}
+
+
+.toast i {
+    margin: 0 20px;
+    font-size: 35px;
+    color: green
+}
+
+.toast.invalid i {
+    color: orange;
+}
+
+.toast::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: green;
+    animation: anim 3s linear;
+}
+
+
+@keyframes anim {
+    100%{
+        width: 0;
+    }
+}
+
+.toast.invalid::after {
+    background: orange;
+}
 
 
 

@@ -261,73 +261,12 @@
 
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label style="margin-right: 8px;" class>
-                                                <div class="icheckbox_square-blue" style="position: relative;"><input
-                                                        type="checkbox" id="check-all" class="icheck"
-                                                        style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins
-                                                        class="iCheck-helper"
-                                                        style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-                                                </div>
-                                            </label>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle"
-                                                        data-toggle="dropdown">
-                                                    Action <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="updateContact?cate=1">Mark as read</a></li>
-                                                    <li><a href="updateContact?cate=2">Mark as unread</a></li>
-                                                    <li><a href="updateContact?cate=3">Mark as important</a></li>
-                                                    <li><a href="updateContact?cate=4">Mark as Starred</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 search-form">
-                                            <form action="#" class="text-right">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Search">
-                                                    <span class="input-group-btn">
-                                                        <button type="submit" name="search"
-                                                                class="btn_ btn-primary btn-sm search"><i
-                                                                class="fa fa-search"></i></button></span>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <h2>Email: ${contact.name}</h2>
+                                        <h2>Date:<fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
+                                                                        type="date" pattern="MM-dd-yyyy"/>
+                                                            ${formattedDate}</h2>
+                                        <p>Message: ${contact.message}</p>
                                     </div>
-                                    <div class="padding"></div>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <c:forEach items="${requestScope.list}" var="item">
-                                                    <tr ${item.checkRead() eq true ? 'class="read"' : ''}>
-                                                        <td class="action"><input type="checkbox" /></td>
-                                                        <td class="action"><i ${item.checkStarred() eq true ? 'class="fa fa-star"' : 'class="fa fa-star-o"'}></i></td>
-                                                        <td class="action"><i ${item.checkImportant() eq true ? 'class="fa fa-bookmark"' : 'class="fa fa-bookmark-o"'}></i></td>
-                                                        <td class="name"><a href="message-detail?id=${item.id}">${item.name}</a></td>
-                                                        <td class="subject">${item.title}</td>
-                                                        <td class="time">
-                                                            <fmt:formatDate value="${item.createdDate}" var="formattedDate" 
-                                                                            type="date" pattern="MM-dd-yyyy"/>
-                                                            ${formattedDate}
-                                                        </td>
-                                                        <td class="delete"><a href="deleteMessage?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <ul class="pagination">
-                                        <c:if test="${requestScope.pagenum > 1}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum - 1}">«</a></li>
-                                            </c:if>
-                                            <c:forEach begin="1" end="${requestScope.totalPage > requestScope.pagenum + 2 ? (requestScope.pagenum + 2) : requestScope.totalPage}" var="item">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${item}">${item}</a></li>
-                                            </c:forEach>
-                                            <c:if test="${requestScope.pagenum < requestScope.totalPage}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum + 1}">»</a></li>
-                                            </c:if>
-                                    </ul>
                                 </div>
 
 

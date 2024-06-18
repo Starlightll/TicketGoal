@@ -81,12 +81,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match content */
 
-.matches .club__section, .matches .club{
+.matches .club__section{
     display: flex;
+    position: relative;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     margin: 1rem;
     width: 100%;
+    top: 20px;
+}
+
+.matches .club__section .club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .matches .club img {
@@ -97,8 +105,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .matches .club p {
-    font-size: 25px;
-    padding-left: 20px;
+    font-size: 22px;
 }
 
 .matches .vs p{
@@ -119,7 +126,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .matches .match__location {
     position: relative;
-    top: -20px;
+    top: -128px;
     display:flex;
     align-items: center;
 }

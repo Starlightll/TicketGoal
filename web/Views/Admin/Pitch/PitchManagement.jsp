@@ -26,7 +26,7 @@
             <div class="pitch__box" id="pitch-box">
                 <c:forEach items="${requestScope.pitchList}" var="pitch">
                     <div class="pitch">
-                        <img name="pitchImage" src="data:image/jpeg;base64,${pitch.image}"/>
+                        <img name="pitchImage" src="data:image/jpeg;base64,${pitch.image}" alt=""/>
                         <div class="pitch__manager__option">
                             <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=update&pitchId=${pitch.pitchId}'">Update</button>
                             <button class="delete__button" onclick="location.href = '${pageContext.request.contextPath}/pitchManagementServlet?option=delete&pitchId=${pitch.pitchId}'">Delete</button>

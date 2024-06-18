@@ -5,7 +5,7 @@
 package Models;
 
 import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -18,21 +18,21 @@ public class Match {
     public Date schedule;
     public int pitchId;
     public int matchStatusId;
-    public int club1;
-    public int club2;
-    public String location;
+    public Club club1;
+    public Club club2;
+    public Address address;
 
     public Match() {
     }
 
-    public Match(int matchId, Date schedule, int pitchId, int matchStatusId, int club1, int club2, String location) {
+    public Match(int matchId, Date schedule, int pitchId, int matchStatusId, Club club1, Club club2, Address address) {
         this.matchId = matchId;
         this.schedule = schedule;
         this.pitchId = pitchId;
         this.matchStatusId = matchStatusId;
         this.club1 = club1;
         this.club2 = club2;
-        this.location = location;
+        this.address = address;
     }
 
     public int getMatchId() {
@@ -67,61 +67,55 @@ public class Match {
         this.matchStatusId = matchStatusId;
     }
 
-    public int getClub1() {
+    public Club getClub1() {
         return club1;
     }
 
-    public void setClub1(int club1) {
+    public void setClub1(Club club1) {
         this.club1 = club1;
     }
 
-    public int getClub2() {
+    public Club getClub2() {
         return club2;
     }
 
-    public void setClub2(int club2) {
+    public void setClub2(Club club2) {
         this.club2 = club2;
     }
 
-    public String getLocation() {
-        return location;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-    
-     public int getDay() {
-        LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return localDateTime.getDayOfMonth();
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public int getMonth() {
-        LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return localDateTime.getMonthValue();
+    public String getDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(schedule);
     }
 
-    public int getYear() {
-        LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return localDateTime.getYear();
+    public String getMonth() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM");
+        return new DateFormatSymbols().getMonths()[Integer.parseInt(sdf.format(schedule)) - 1].substring(0, 3);
+    }
+
+    public String getDay() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        return sdf.format(schedule);
+    }
+
+    public String getYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        return sdf.format(schedule);
     }
 
     public String getTime() {
-        LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        int hour = localDateTime.getHour();
-        int minute = localDateTime.getMinute();
-        int second = localDateTime.getSecond();
-        return String.format("%02d:%02d:%02d", hour, minute, second);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(schedule);
     }
-    
-    public String getMonthName() {
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        LocalDateTime localDateTime = schedule.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        int month = localDateTime.getMonthValue();
-        return months[month];
-    }
-    
+
     
     
 }
