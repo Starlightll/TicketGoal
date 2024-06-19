@@ -314,14 +314,7 @@ header *{
     transform: translateY(-1rem);
     transition: transform .9s;
 }
-.header .profile__decor {
-    background-color: #00C767;
-    height: 16px;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    transform: translateY(-1rem);
-    transition: transform .9s;
-}
+
 
 .header .register__title {
     font-size: 2rem;
@@ -390,23 +383,7 @@ header *{
 .header .register__button:hover {
     box-shadow: 0 1px 24px #00ff842d;
 }
-.header .profile__button {
-    display: inline-block;
-    background-color: #00C767;
-    width: 100%;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 1.6rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: box-shadow .4s;
-    margin-top: 3rem;
-}
 
-.header .profile__button:hover {
-    box-shadow: 0 1px 24px #00ff842d;
-}
 /* show register */
 .header .show-register {
     opacity: 1;
@@ -421,9 +398,6 @@ header *{
     transform: translateY(0);
 }
 
-.header  .profile__decor {
-    transform: translateY(0);
-}
 /* Responsive Breakpoint */
 
 /* Medium device */
@@ -567,22 +541,151 @@ header *{
 .login__google i {
     margin-right: 10px;
 }
-.profile__group {
+
+/*Profile section*/
+.header .profile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #1619224b;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 8rem 1.5rem 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.header .profile__close{
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    width: 20px;
+}
+
+.header .profile__form,
+.header .profile__group{
+    display: grid;
+}
+
+.header .profile__form {
+    background-color: white;
+    padding: 2rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    row-gap: 1.25rem;
+    text-align: center;
+    transform: translateY(-1rem);
+    transition: transform .9s;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.header .profile__main .profile__title{
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.header .profile__form .profile__header {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #1A1A1A;
+    width: 60%;
+    margin: 0 auto;
 }
 
-.profile__column {
-    flex: 1;
-    padding: 0 10px;
+.header .profile__form .profile__main {
+    display: flex;
+    justify-content: space-around;
 }
 
-.profile__item {
-    padding : 0.2rem;
+.header .profile__main .profile__information, header .profile__main .change__password {
+    text-align: start;
 }
 
-.text-blue {
-    color: blue !important;
+.header .profile__decor {
+    background-color: #00C767;
+    height: 16px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    transform: translateY(-1rem);
+    transition: transform .9s;
 }
-.d-none {
-    display: none !important;
+
+
+.header .profile__group {
+    row-gap: 1rem;
+}
+
+.header .profile__label {
+    display: block;
+    text-align: initial;
+    color: aliceblue;
+    font-weight: 500;
+    margin-bottom: .25rem;
+}
+
+
+.header .profile .profile__form * {
+    color: #1A1A1A;
+}
+
+.header .show-profile {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.header .show-profile .profile__form {
+    transform: translateY(0);
+}
+
+.header .show-profile .profile__decor {
+    transform: translateY(0);
+}
+
+.header .profile__button {
+    display: flex;
+    background-color: #00C767;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: box-shadow .4s;
+    margin: 10px auto;
+    justify-content: center;
+    color: white !important;
+}
+
+
+.header .profile__button:hover {
+    box-shadow: 0 1px 24px #00ff842d;
+}
+
+.header .profile__decor {
+    background-color: #00C767;
+    height: 16px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    transform: translateY(-1rem);
+    transition: transform .9s;
+}
+
+.header .profile .profile__form input {
+    color: var(--primary-color);
+    font-weight: 500;
+    background: var(--bg-color);
+    border: none;
+    border-bottom: 1px solid #1A1A1A;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    outline: none;
 }

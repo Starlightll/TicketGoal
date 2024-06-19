@@ -44,29 +44,29 @@
                     </li>
                 </ul>
 
-                        <!-- Close button -->
-                        <div class="nav__close" id="nav-close">
-                            <i class="ri-close-line"></i>
-                        </div>
-                    </div>
-                    <div class="nav__actions">
-                        <!-- Login button -->
-                        <c:if test="${sessionScope.user != null}">
-                            <i class="ri-user-line nav__cart" id="profile-btn"></i> 
-                            <button onclick="window.location.href = './signOutServlet'" class="join__button">LOG OUT</button>
-                        </c:if>
-                        <c:if test="${sessionScope.user == null}">
-                            <i class="ri-user-fill nav__login" id="login-btn"></i>
-                            <button class="join__button" id="login-button">JOIN NOW</button>
-                        </c:if>
-                        <!-- Search button -->
-                      <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
-                        <!-- Toggle button -->
-                        <div class="nav__toggle" id="nav-toggle">
-                            <i class="ri-menu-line"></i>
-                        </div>
-                    </div>
-                </nav>
+                <!-- Close button -->
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+            <div class="nav__actions">
+                <!-- Login button -->
+                <c:if test="${sessionScope.user != null}">
+                    <i class="ri-user-line nav__cart" id="profile-btn"></i>
+                    <button onclick="window.location.href = './signOutServlet'" class="join__button">LOG OUT</button>
+                </c:if>
+                <c:if test="${sessionScope.user == null}">
+                    <i class="ri-user-fill nav__login" id="login-btn"></i>
+                    <button class="join__button" id="login-button">JOIN NOW</button>
+                </c:if>
+                <!-- Search button -->
+                <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
+                <!-- Toggle button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+        </nav>
 
         <!-- <div class="header__cta">
             <a href="#" class="btn btn--primary">SIGN IN</a>
@@ -134,17 +134,18 @@
             <div class="register__group">
                 <div>
                     <label for="email" class="register__label">Email</label>
-                    <input type="email" placeholder="Enter your email" id="registerEmailForm" class="register__input">
+                    <label for="registerEmailForm"></label><input type="email" placeholder="Enter your email"
+                                                                  id="registerEmailForm" class="register__input">
                 </div>
 
                 <div>
-                    <label for="password" class="register__label">Password</label>
+                    <label for="registerPassword" class="register__label">Password</label>
                     <input type="password" placeholder="Enter your password" id="registerPassword"
                            class="register__input" autocomplete="current-password">
                 </div>
 
                 <div>
-                    <label for="password" class="register__label">Confirm password</label>
+                    <label for="confirmPassword" class="register__label">Confirm password</label>
                     <input type="password" placeholder="Confirm your password" id="confirmPassword"
                            class="register__input" autocomplete="current-password">
                 </div>
@@ -173,7 +174,7 @@
 
             <div class="register__group">
                 <div>
-                    <label for="email" class="register__label">Email</label>
+                    <label for="forgotPasswordEmail" class="register__label">Email</label>
                     <input type="email" placeholder="Enter your email" id="forgotPasswordEmail" class="register__input">
                 </div>
 
@@ -189,80 +190,79 @@
     </div>
     <!--(User was logged) Profile-->
     <c:if test="${sessionScope.user != null}">
-        <div class="register" id="profile-field">
+        <div class="profile" id="profile-field">
             <div class="profile__decor"></div>
-
             <form action="" class="profile__form">
-                <i class="ri-close-line register__close" id="profile-close"></i>
-
-                <div class="login__icon">
-                    <img src="${pageContext.request.contextPath}/img/loginIcon.png" alt="loginIcon">
+                <i class="ri-close-line profile__close" id="profile-close"></i>
+                <div class="profile__header">
+                    <div class="login__icon">
+                        <i class="ri-user-fill" style="font-size: 30px; margin-bottom: 10px"></i>
+                    </div>
                 </div>
-                <div class="register__title__group">
-                    <h2 class="register__title" id="profile-title">Profile</h2>
-                    <h2 class="register__title" id="change-password-title">Change Password</h2>
-                </div>
-                <div id="profile-display-field">
-                    <div class="profile__group">
-                        <div class="profile__column">
-                            <div class="profile__item">
-                                    <%--@declare id="username"--%><label for="username"
-                                                                         class="register__label">Username</label>
-                                <input type="text" placeholder="Enter your username" id="profileUsername"
-                                       class="register__input" value="${user.getUsername()}">
+                <div class="profile__main">
+                    <div class="profile__information">
+                        <h2 class="profile__title" id="profile-title">Profile</h2>
+                        <div id="profile-display-field">
+                            <div class="profile__group">
+                                <div class="profile__column">
+                                    <div class="profile__item">
+                                        <label for="profileUsername" class="profile__label">Username</label>
+                                        <input type="text" placeholder="Enter your username" id="profileUsername"
+                                               class="profile__input" value="${user.getUsername()}">
+                                    </div>
+                                    <div class="profile__item">
+                                        <label for="profileEmail" class="profile__label">Email</label>
+                                        <input type="email" placeholder="Enter your email" id="profileEmail"
+                                               class="profile__input" value="${user.getEmail()}">
+                                    </div>
+                                    <div class="profile__item">
+                                        <label for="profilePhone" class="profile__label">Phone</label>
+                                        <input type="text" placeholder="Enter your phone number" id="profilePhone"
+                                               class="profile__input" value="${user.getPhoneNumber()}">
+                                    </div>
+                                </div>
+                                <div class="profile__column">
+                                    <div class="profile__item">
+                                        <label for="profileAddress" class="profile__label">Address</label>
+                                        <input type="text" value="${user.getAddress()}" id="profileAddress" placeholder="Enter your address">
+                                    </div>
+                                    <div class="profile__item">
+                                        <label for="profileGender" class="profile__label">Gender</label>
+                                        <select id="profileGender" class="profile__input">
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="profile__item">
-                                <label for="email" class="register__label">Email</label>
-                                <input type="email" placeholder="Enter your email" id="profileEmail"
-                                       class="register__input" value="${user.getEmail()}">
-                            </div>
-                            <div class="profile__item">
-                                    <%--@declare id="phone"--%><label for="phone" class="register__label">Phone</label>
-                                <input type="text" placeholder="Enter your phone number" id="profilePhone"
-                                       class="register__input" value="${user.getPhoneNumber()}">
+                            <div class="submit">
+                                <button type="submit" class="profile__button" id="profile-update-submit-btn">Update</button>
                             </div>
                         </div>
-                        <div class="profile__column">
-                            <div class="profile__item">
-                                    <%--@declare id="address"--%><label for="address"
-                                                                        class="register__label">Address</label>
-                                <textarea placeholder="Enter your address" id="profileAddress" class="register__input"
-                                          style="width: 363px; height: 129px;">${user.getAddress()}</textarea>
+                    </div>
+                    <div class="change__password">
+                        <h2 class="profile__title" id="change-password-title">Change Password</h2>
+                        <div class="profile__group" id="change-password-display-field">
+                            <div>
+                                <label for="changePassword-oldPass" class="profile__label">Old Password</label>
+                                <input type="password" placeholder="Enter your password" id="changePassword-oldPass"
+                                       class="profile__input" autocomplete="current-password">
                             </div>
-                            <div class="profile__item">
-                                    <%--@declare id="gender"--%><label for="gender"
-                                                                       class="register__label">Gender</label>
-                                <select id="profileGender" class="register__input">
-                                    <option value="1">Male</option>
-                                    <option value="2">Female</option>
-                                    <option value="3">Other</option>
-                                </select>
+                            <div>
+                                <label for="changePassword-newPass" class="profile__label">New Password</label>
+                                <input type="password" placeholder="Enter your password" id="changePassword-newPass"
+                                       class="profile__input" autocomplete="new-password">
+                            </div>
+                            <div>
+                                <label for="changePassword-confirmPass" class="profile__label">Confirm password</label>
+                                <input type="password" placeholder="Confirm your password" id="changePassword-confirmPass"
+                                       class="profile__input" autocomplete="new-password">
+                            </div>
+                            <div>
+                                <button type="submit" class="profile__button" id="password-change-btn">Change</button>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <button type="submit" class="profile__button" id="profile-update-submit-btn">Update</button>
-                    </div>
-                </div>
-
-                <div class="register__group" id="change-password-display-field">
-                    <div>
-                        <label for="password" class="register__label">Old Password</label>
-                        <input type="password" placeholder="Enter your password" id="changePassword-oldPass"
-                               class="register__input" autocomplete="current-password">
-                    </div>
-                    <div>
-                        <label for="password" class="register__label">New Password</label>
-                        <input type="password" placeholder="Enter your password" id="changePassword-newPass"
-                               class="register__input" autocomplete="new-password">
-                    </div>
-                    <div>
-                        <label for="password" class="register__label">Confirm password</label>
-                        <input type="password" placeholder="Confirm your password" id="changePassword-confirmPass"
-                               class="register__input" autocomplete="new-password">
-                    </div>
-                    <div>
-                        <button type="submit" class="profile__button" id="password-change-btn">Change</button>
                     </div>
                 </div>
             </form>

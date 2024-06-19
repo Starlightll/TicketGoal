@@ -47,8 +47,23 @@
                                 </div>
                                 <div class="match__location">
                                     <i class="ri-map-pin-2-fill"></i>
-                                    <p>${match.address.getAddressName()} / ${match.getTime()}</p>
+                                    <p>${match.address.getAddressName()} / ${match.getTime()}-</p>
+                                    <div class="match__status">
+                                        <c:if test="${match.matchStatusId == 1}">
+                                            <p style="color: #ffbc3e">Upcoming</p>
+                                        </c:if>
+                                        <c:if test="${match.matchStatusId == 2}">
+                                            <p style="color: #69e635">Ongoing</p>
+                                        </c:if>
+                                        <c:if test="${match.matchStatusId == 3}">
+                                            <p style="color: #3269ff">Finished</p>
+                                        </c:if>
+                                        <c:if test="${match.matchStatusId == 4}">
+                                            <p style="color: #e65155">Cancelled</p>
+                                        </c:if>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="option">
                                 <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=updateMatch&matchId=${match.matchId}">Update</a>
@@ -138,7 +153,7 @@
             var pitchId = document.forms["addMatchForm"]["pitchId"].value;
             var schedule = document.forms["addMatchForm"]["schedule"].value;
             var status = document.forms["addMatchForm"]["status"].value;
-            if(club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "" || status === "0"){
+            if(club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === ""){
                 showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
                 return false;
             }else if(club1Id === club2Id){
@@ -161,7 +176,9 @@
                         document.getElementById("add-form").classList.remove("show-add-match");
                         document.getElementById("admin-panel-body").style.removeProperty("overflow");
                         matchList.innerHTML = response;
-                        showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                        var addMatchForm = document.forms["addMatchForm"];
+                        addMatchForm.reset();
+                        showToast('<i class="ri-checkbox-circle-fill"></i>Added match successfully');
                     },
                     error: function () {
                         showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Something wrong happened");
@@ -182,10 +199,10 @@
                 success: function (response) {
                     var matchList = document.getElementById("match-list");
                     matchList.innerHTML = response;
-                    showToast('<i class="ri-checkbox-circle-fill"></i>Deleted area successfully');
+                    showToast('<i class="ri-checkbox-circle-fill"></i>Deleted match successfully');
                 },
                 error: function () {
-                    showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: The area has seats!");
+                    showToast("<i class=\"ri-error-warning-fill\"></i>Error!");
                 }
             });
         }

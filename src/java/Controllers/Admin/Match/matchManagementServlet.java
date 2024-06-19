@@ -100,6 +100,7 @@ public class matchManagementServlet extends HttpServlet {
                 int pitchId = Integer.parseInt(request.getParameter("pitchId"));
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                 java.util.Date schedule = null;
+                //Parse schedule
                 try {
                     schedule = sdf.parse(request.getParameter("schedule"));
                 } catch (java.text.ParseException e) {
@@ -108,13 +109,19 @@ public class matchManagementServlet extends HttpServlet {
                 Models.Match match = new Models.Match();
                 match.setSchedule(schedule);
                 match.setPitchId(pitchId);
-                match.setMatchStatusId(1);
+                //Set club1 and club2
                 Club club1 = new Club();
                 club1.setClubId(club1Id);
                 match.setClub1(club1);
                 Club club2 = new Club();
                 club2.setClubId(club2Id);
                 match.setClub2(club2);
+                //If match is after current time, set status to 1 (upcoming)
+                if (match.getSchedule().after(new java.util.Date())) {
+                    match.setMatchStatusId(1);
+                } else {
+                    match.setMatchStatusId(2);
+                }
                 DAO.MatchDAO.INSTANCE.addMatch(match);
                 break;
             case "updateMatch":
