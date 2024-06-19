@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="nav__item">
-                    <a href="<c:url value='/playerServlet'/>" class="nav__link">
+                    <a href="<c:url value='/ContactAdminServlet'/>" class="nav__link">
                         <i class="ri-contacts-fill"></i>Contact</a>
                 </div>
                 <div class="nav__item">
