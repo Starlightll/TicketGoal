@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "operatorManagementServlet", urlPatterns = {"/operatorManagementServlet"})
 public class operatorManagementServlet extends HttpServlet {
 
-    private final AccountDAO accDAO = new AccountDAO();
+    private final AccountDAO accDAO = AccountDAO.INSTANCE;
     private final RoleDAO roleDAO = new RoleDAO();
     private final AccountStatusDAO accountstatusDAO = new AccountStatusDAO();
     private final int operatorRole = 3;

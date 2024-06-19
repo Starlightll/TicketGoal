@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="TicketGoal">
+    <output-path>$PROJECT_DIR$/out/artifacts/TicketGoal</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="TicketGoal" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="libForAccount" />
+          <element id="library" level="project" name="libForSeat" />
+          <element id="library" level="project" name="lib" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="TicketGoal/web/Web" />
+    </root>
+  </artifact>
+</component>

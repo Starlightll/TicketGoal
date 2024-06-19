@@ -17,8 +17,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
 
-    private final String BASE_URL = "http://localhost:9999/TicketGoal/";
-    private final AccountDAO accDAO = new AccountDAO();
+    private final AccountDAO accDAO = AccountDAO.INSTANCE;
 
     public void sendEmailForgotPassword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
@@ -40,6 +39,7 @@ public class EmailSender {
         }
 
         String token = JwtUtil.generateToken(email);
+        String BASE_URL = "http://localhost:8080/TicketGoal/";
         String resetUrl = BASE_URL + "forgotPassword?token=" + token;
 
         Properties props = new Properties();

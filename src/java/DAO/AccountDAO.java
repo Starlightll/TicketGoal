@@ -13,22 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO {
-
-    private static AccountDAO INSTANCE;
-    private final Connection connect;
+    public static AccountDAO INSTANCE = new AccountDAO();
+    private Connection connect;
     private final String getAccountByRoleQuery = "SELECT * FROM Account WHERE roleId = ?";
     private final String getAccountByIdQuery = "SELECT * FROM Account WHERE accountId = ?";
     private final String getAccountByEmail = "SELECT * FROM Account WHERE email = ?";
 
-    public AccountDAO() {
-        connect = new DBContext().getConnection();
-    }
-
-    private AccountDAO getInstance() {
+    private AccountDAO() {
         if (INSTANCE == null) {
-            INSTANCE = new AccountDAO();
+            connect = new DBContext().getConnection();
+        } else {
+            INSTANCE = this;
         }
-        return INSTANCE;
     }
 
     public List<Account> getAccountByRole(int roleId) {
@@ -223,7 +219,7 @@ public class AccountDAO {
             return null;
         }
     }
-   public Account updateUserByEmail(Account account) {
+    public Account updateUserByEmail(Account account) {
         StringBuilder sqlCommandBuilder = new StringBuilder("UPDATE Account SET\n");
 
         addToCommandIfNotNull(sqlCommandBuilder, "username", account.getUsername());

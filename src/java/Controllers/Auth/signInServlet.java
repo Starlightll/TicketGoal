@@ -28,7 +28,7 @@ public class signInServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        AccountDAO accountDAO = new AccountDAO();
+        AccountDAO accountDAO = AccountDAO.INSTANCE;
         Account account = accountDAO.signIn(email.toLowerCase(), password);
 
         response.setContentType("application/json");
