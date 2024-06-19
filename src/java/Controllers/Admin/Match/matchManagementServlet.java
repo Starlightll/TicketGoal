@@ -35,32 +35,44 @@ public class matchManagementServlet extends HttpServlet {
                         "                        <div class=\"match\">\n" +
                         "                            <div class=\"match__date\">\n" +
                         "                                <img src=\"./img/matches/DateBanner.png\" alt=\"\">\n" +
-                        "                                <div class=\"match__date__day\">"+match.getDay()+"</div>\n" +
-                        "                                <div class=\"match__date__month\">"+match.getMonth()+"</div>\n" +
+                        "                                <div class=\"match__date__day\">" + match.getDay() + "</div>\n" +
+                        "                                <div class=\"match__date__month\">" + match.getMonth() + "</div>\n" +
                         "                            </div>\n" +
                         "                            <div class=\"match__content\">\n" +
                         "                                <div class=\"club__section\">\n" +
                         "                                    <div class=\"club\">\n" +
-                        "                                        <img src=\"data:image/jpeg;base64,"+match.club1.getClubLogo()+"\" alt=\"\">\n" +
-                        "                                        <p>"+match.club1.getClubName()+"</p>\n" +
+                        "                                        <img src=\"data:image/jpeg;base64," + match.club1.getClubLogo() + "\" alt=\"\">\n" +
+                        "                                        <p>" + match.club1.getClubName() + "</p>\n" +
                         "                                    </div>\n" +
                         "                                    <div class=\"vs\"><p>VS</p></div>\n" +
                         "                                    <div class=\"club\">\n" +
-                        "                                        <img src=\"data:image/jpeg;base64,"+match.club2.getClubLogo()+"\" alt=\"\">\n" +
-                        "                                        <p>"+match.club2.getClubName()+"</p>\n" +
+                        "                                        <img src=\"data:image/jpeg;base64," + match.club2.getClubLogo() + "\" alt=\"\">\n" +
+                        "                                        <p>" + match.club2.getClubName() + "</p>\n" +
                         "                                    </div>\n" +
                         "                                </div>\n" +
                         "                                <div class=\"match__location\">\n" +
                         "                                    <i class=\"ri-map-pin-2-fill\"></i>\n" +
-                        "                                    <p>"+match.address.getAddressName()+", "+match.schedule+"</p>\n" +
-                        "                                </div>\n" +
-                        "                            </div>\n" +
-                        "                            <div class=\"option\">\n" +
-                        "                                <a class=\"update__button\" href=\"\">Update</a>\n" +
-                        "                                <button class=\"delete__button\" type=\"button\" onclick=\"deleteMatch("+match.matchId+")\">Delete</button>\n" +
-                        "                            </div>\n" +
-                        "                        </div>\n" +
-                        "                    </form>");
+                        "                                    <p>" + match.address.getAddressName() + " / " + match.getTime() + "-</p>\n" +
+                        "                                   <div class=\"match__status\">\n");
+                if (match.getMatchStatusId() == 1) {
+                    out.println("<p style=\"color: #ffbc3e\">Upcoming</p>");
+                } else if (match.getMatchStatusId() == 2) {
+                    out.println("<p style=\"color: #69e635\">Ongoing</p>");
+                } else if (match.getMatchStatusId() == 3) {
+                    out.println("<p style=\"color: #ff3e3e\">Finished</p>");
+                } else if (match.getMatchStatusId() == 4) {
+                    out.println("<p style=\"color: #ff3e3e\">Cancelled</p>");
+                }
+                out.println(
+                        "                                    </div>" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                            <div class=\"option\">\n" +
+                                "                                <a class=\"update__button\" href=\"\">Update</a>\n" +
+                                "                                <button class=\"delete__button\" type=\"button\" onclick=\"deleteMatch(" + match.matchId + ")\">Delete</button>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                    </form>");
             }
 
         }
@@ -186,7 +198,6 @@ public class matchManagementServlet extends HttpServlet {
         }
         return clubList;
     }
-
 
 
 }
