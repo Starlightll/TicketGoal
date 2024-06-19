@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "changePasswordServlet", urlPatterns = {"/changePassword"})
 public class changePasswordServlet extends HttpServlet {
 
-    private final AccountDAO accDAO = new AccountDAO();
+    private final AccountDAO accDAO = AccountDAO.INSTANCE;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

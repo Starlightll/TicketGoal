@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 public class googleLogin extends HttpServlet {
 
     private final String HOMEPAGE = "Homepage.jsp";
-    private AccountDAO accDAO = new AccountDAO();
+    private AccountDAO accDAO = AccountDAO.INSTANCE;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
