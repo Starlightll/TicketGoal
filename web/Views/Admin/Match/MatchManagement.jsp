@@ -66,7 +66,7 @@
 
                             </div>
                             <div class="option">
-                                <a class="update__button" href="${pageContext.request.contextPath}/matchManagementServlet?option=updateMatch&matchId=${match.matchId}">Update</a>
+                                <button class="update__button" type="button" onclick="showUpdate(${match.matchId})">Update</button>
                                 <button class="delete__button" type="button" onclick="deleteMatch(${match.matchId})">Delete</button>
                             </div>
                         </div>
@@ -79,16 +79,18 @@
         <form name="addMatchForm" class="add__match" id="add-form" method="post" action="${pageContext.request.contextPath}/matchManagementServlet?option=addMatch">
             <div class="add__match__header">
                 <h2>Add Match</h2>
-                <i class="ri-close-large-fill" id="btn-close"></i>
             </div>
             <div class="match">
+                <div>
+                    <i class="ri-close-large-fill close__btn" id="btn-close"></i>
+                </div>
                 <div class="match__content">
                     <div class="club__section">
                         <div class="club">
-                            <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                            <h2 id="club-name">Name 1</h2>
+                            <img src="" alt="" id="club1Logo">
+                            <h2 id="club1-name">Home team</h2>
                             <label>
-                                <select name="club1">
+                                <select name="club1" id="selectClub1">
                                     <option value="0">Select Club</option>
                                     <c:forEach var="club" items="${clubs}">
                                         <option value="${club.clubId}">${club.clubName}</option>
@@ -98,10 +100,10 @@
                         </div>
                         <div class="vs"><p>VS</p></div>
                         <div class="club">
-                            <img src="./img/clubLogos/AustriaVienna.png" alt="">
-                            <h2>Name 1</h2>
+                            <img src="" alt="" id="club2Logo">
+                            <h2 id="club2-name">Against team</h2>
                             <label>
-                                <select name="club2">
+                                <select name="club2" id="selectClub2">
                                     <option value="0">Select Club</option>
                                     <c:forEach var="club" items="${clubs}">
                                         <option value="${club.clubId}">${club.clubName}</option>
@@ -125,17 +127,17 @@
                             <input type="datetime-local" name="schedule">
                         </label>
                     </div>
-                    <div class="match__status">
-                        <label>
-                            <select name="status">
-                                <option value="0" selected>Select Status</option>
-                                <option value="1">Upcoming</option>
-                                <option value="2">Ongoing</option>
-                                <option value="3">Finished</option>
-                                <option value="4">Cancelled</option>
-                            </select>
-                        </label>
-                    </div>
+<%--                    <div class="match__status">--%>
+<%--                        <label>--%>
+<%--                            <select name="status">--%>
+<%--                                <option value="0" selected>Select Status</option>--%>
+<%--                                <option value="1">Upcoming</option>--%>
+<%--                                <option value="2">Ongoing</option>--%>
+<%--                                <option value="3">Finished</option>--%>
+<%--                                <option value="4">Cancelled</option>--%>
+<%--                            </select>--%>
+<%--                        </label>--%>
+<%--                    </div>--%>
                 </div>
                 <div class="option">
                     <button class="add__button" onclick="addMatch()" type="button" id="add-submit">Add</button>
@@ -146,13 +148,22 @@
     </body>
     <script src="${pageContext.request.contextPath}/js/admin/match/matchmanagement.js"></script>
     <script>
+        const clubInfoMap = {
+            <c:forEach var="club" items="${clubs}">
+            "${club.clubId}": {
+                clubName: "${club.clubName}",
+                clubLogo: "${club.clubLogo}"
+            },
+            </c:forEach>
+        };
+
+
 
         function addMatch() {
             var club1Id = document.forms["addMatchForm"]["club1"].value;
             var club2Id = document.forms["addMatchForm"]["club2"].value;
             var pitchId = document.forms["addMatchForm"]["pitchId"].value;
             var schedule = document.forms["addMatchForm"]["schedule"].value;
-            var status = document.forms["addMatchForm"]["status"].value;
             if(club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === ""){
                 showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
                 return false;
@@ -185,6 +196,11 @@
                     }
                 });
             }
+        }
+
+        function showUpdate() {
+            document.getElementById("update-form").classList.add("show-update-match");
+            document.getElementById("admin-panel-body").style.overflow = "hidden";
         }
 
         function deleteMatch(matchId) {
