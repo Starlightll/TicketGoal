@@ -209,7 +209,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .add__match.show-add-match {
     opacity: 1;
     pointer-events: auto;
-    scroll-behavior: revert;
 }
 
 .add__match .match {
