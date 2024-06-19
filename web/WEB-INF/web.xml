@@ -76,6 +76,14 @@
         <servlet-name>ContactAdminServlet</servlet-name>
         <servlet-class>Controllers.Contact.ContactAdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>Controllers.Cart.CartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteTicketController</servlet-name>
+        <servlet-class>Controllers.Cart.DeleteTicketController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
         <url-pattern>/matchServlet</url-pattern>
@@ -178,6 +186,14 @@
     <servlet-mapping>
         <servlet-name>playerServlet</servlet-name>
         <url-pattern>/playerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteTicketController</servlet-name>
+        <url-pattern>/deleteTicket</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>

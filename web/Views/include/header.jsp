@@ -44,29 +44,29 @@
                     </li>
                 </ul>
 
-                <!-- Close button -->
-                <div class="nav__close" id="nav-close">
-                    <i class="ri-close-line"></i>
-                </div>
-            </div>
-            <div class="nav__actions">
-                <!-- Login button -->
-                <c:if test="${sessionScope.user != null}">
-                    <i class="ri-user-line nav__cart" id="profile-btn"></i>
-                    <button onclick="window.location.href = './signOutServlet'" class="join__button">LOG OUT</button>
-                </c:if>
-                <c:if test="${sessionScope.user == null}">
-                    <i class="ri-user-fill nav__login" id="login-btn"></i>
-                    <button class="join__button" id="login-button">JOIN NOW</button>
-                </c:if>
-                <!-- Search button -->
-                <i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i>
-                <!-- Toggle button -->
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-line"></i>
-                </div>
-            </div>
-        </nav>
+                        <!-- Close button -->
+                        <div class="nav__close" id="nav-close">
+                            <i class="ri-close-line"></i>
+                        </div>
+                    </div>
+                    <div class="nav__actions">
+                        <!-- Login button -->
+                        <c:if test="${sessionScope.user != null}">
+                            <i class="ri-user-line nav__cart" id="profile-btn"></i> 
+                            <button onclick="window.location.href = './signOutServlet'" class="join__button">LOG OUT</button>
+                        </c:if>
+                        <c:if test="${sessionScope.user == null}">
+                            <i class="ri-user-fill nav__login" id="login-btn"></i>
+                            <button class="join__button" id="login-button">JOIN NOW</button>
+                        </c:if>
+                        <!-- Search button -->
+                      <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
+                        <!-- Toggle button -->
+                        <div class="nav__toggle" id="nav-toggle">
+                            <i class="ri-menu-line"></i>
+                        </div>
+                    </div>
+                </nav>
 
         <!-- <div class="header__cta">
             <a href="#" class="btn btn--primary">SIGN IN</a>
