@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "signUpServlet", urlPatterns = {"/signUp"})
 public class signUpServlet extends HttpServlet {
 
-    private final AccountDAO accDAO = new AccountDAO();
+    private final AccountDAO accDAO = AccountDAO.INSTANCE;
     private final int customerRole = 2;
     private final int enableStatus = 1;
 

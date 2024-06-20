@@ -106,9 +106,11 @@ const changePasswordTitle = document.getElementById("change-password-title");
 const profielDisplayField = document.getElementById("profile-display-field");
 const changePasswordDisplayField = document.getElementById("change-password-display-field");
 const profileCloseBtn = document.getElementById("profile-close");
+const body = document.querySelector("body");
 if (profileCloseBtn) {
     profileCloseBtn.onclick = () => {
-        profileField.classList.toggle('show-register');
+        profileField.classList.toggle('show-profile');
+        body.style.removeProperty("overflow");
     };
 }
 
@@ -131,10 +133,8 @@ if (profileTitle) {
 }
 if (profileBtn) {
     profileBtn.onclick = () => {
-        changePasswordDisplayField.classList.add("d-none");
-        profielDisplayField.classList?.remove("d-none");
-        profileTitle.classList.add("text-blue");
-        profileField.classList.toggle('show-register');
+        profileField.classList.toggle('show-profile');
+        body.style.overflow = "hidden";
     };
 }
 

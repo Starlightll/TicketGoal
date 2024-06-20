@@ -1,0 +1,121 @@
+
+
+.buyticket__main {
+    display: flex;
+}
+
+.buyticket__main .stadium {
+    position: absolute;
+    color: #1A1A1A;
+    display: flex;
+    width: 80%;
+    height: 800px;
+    overflow: auto;
+}
+
+.buyticket__main .stadium img{
+    position: absolute;
+    width: 1400px;
+    z-index: -100;
+}
+
+.buyticket__main .stadium i{
+    display: flex;
+    font-size: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.buyticket__main .stadium .seat {
+    width: 10px;
+    height: 10px;
+}
+
+.buyticket__main .stadium i:hover{
+    color: #f3ffaa;
+    background-color: #00C767;
+    transform: scale(1.2);
+}
+
+/* Area */
+.buyticket__main .stadium .top__side__outler {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 25.5rem;
+    margin-top: 4px;
+}
+
+.buyticket__main .stadium .area__ARO {
+        display: grid;
+        grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+        column-gap: 2px;
+        row-gap: 1px;
+        margin-right: 5px;
+        height: fit-content;
+}
+
+.buyticket__main .stadium .area__ALO {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+    margin-left: 5px;
+}
+
+.buyticket__main .stadium .down__side__outler {
+    display: flex;
+    position: absolute;
+    top: 55.3rem;
+    left: 25.5rem;
+    rotate: 180deg;
+    margin-top: 4px;
+}
+
+.buyticket__main .stadium .area__CRO {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+    margin-right: 5px;
+}
+
+.buyticket__main .stadium .area__CLO {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+    margin-left: 5px;
+}
+
+.buyticket__main .stadium .left__side__outler {
+    display: flex;
+    position: absolute;
+    top: 28rem;
+    left: -4rem;
+    rotate: -90deg;
+}
+
+.buyticket__main .stadium .area__DLO {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+}
+
+.buyticket__main .stadium .right__side__outler {
+    display: flex;
+    position: absolute;
+    top: 28rem;
+    left: 73.6rem;
+    rotate: 90deg;
+}
+
+.buyticket__main .stadium .area__BRO {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+}
+
+
