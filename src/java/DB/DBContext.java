@@ -41,7 +41,7 @@ public class DBContext {
     }
 
     private final String serverName = "localhost";
-    private final String dbName = "TicketGoal1";
+    private final String dbName = "TicketGoal";
     private final String portNumber = "1433";
     private final String userID = "sa";
     private final String password = "MosdDM15092003!";
