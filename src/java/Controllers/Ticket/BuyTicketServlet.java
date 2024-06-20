@@ -63,6 +63,8 @@ public class BuyTicketServlet extends HttpServlet {
         if(account == null){
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("loginRequired");
+            request.setAttribute("showLogin", "show-login");
+            request.getRequestDispatcher("matchServlet").forward(request, response);
         }else{
             int matchId = 0;
             try{
@@ -90,29 +92,16 @@ public class BuyTicketServlet extends HttpServlet {
         if(account == null){
             processRequest(request, response);
         }else{
-            String[] seatIds = new ObjectMapper().readValue(request.getParameter("seatIds"), String[].class);
-            int matchId = Integer.parseInt(request.getParameter("matchId"));
-            Match match = MatchDAO.INSTANCE.getMatch(matchId);
-            TicketDAO ticketDAO = new TicketDAO();
-            int accountId = account.getAccountId();
-            int cartId = 0;
-            if(AccountDAO.INSTANCE.getCartIdByAccountId(accountId) > 0){
-                cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
-            }else{
-                AccountDAO.INSTANCE.createCart(accountId);
-                cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
-            }
-            if(seatIds != null){
-                for(String seatId : seatIds){
-                    Ticket ticket = new Ticket();
-                    ticket.setCode(null);
-                    ticket.setDate(match.schedule);
-                    ticket.setSeatId(Integer.parseInt(seatId));
-                    ticket.setTicketStatusId(1);
-                    ticket.setCartId(cartId);
-                    ticket.setMatchId(matchId);
-                    ticketDAO.buyTicket(ticket);
-                }
+            String action = request.getParameter("action");
+            switch (action) {
+                case "buyTicket":
+                    addTicket(account, 1,request, response);
+                    break;
+                case "addToCart":
+                    addTicket(account, 2,request, response);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -122,6 +111,41 @@ public class BuyTicketServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private boolean addTicket(Account account, int ticketStatus,HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String[] seatIds = new ObjectMapper().readValue(request.getParameter("seatIds"), String[].class);
+        int matchId = Integer.parseInt(request.getParameter("matchId"));
+        Match match = MatchDAO.INSTANCE.getMatch(matchId);
+        TicketDAO ticketDAO = new TicketDAO();
+        int accountId = account.getAccountId();
+        int cartId = 0;
+        if(AccountDAO.INSTANCE.getCartIdByAccountId(accountId) > 0){
+            cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
+        }else{
+            AccountDAO.INSTANCE.createCart(accountId);
+            cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
+        }
+        if(seatIds != null){
+            for(String seatId : seatIds){
+                Ticket ticket = new Ticket();
+                ticket.setCode(null);
+                ticket.setDate(match.schedule);
+                ticket.setSeatId(Integer.parseInt(seatId));
+                ticket.setCartId(cartId);
+                ticket.setMatchId(matchId);
+                if(ticketStatus == 1) {
+                    ticketDAO.buyTicket(ticket);
+                }else if(ticketStatus == 2){
+                    ticket.setTicketStatusId(2);
+                    List<Ticket> ticketInCart = new TicketDAO().selectTicketsByAccountId(accountId);
+                    if(!ticketInCart.contains(ticket)){
+                        ticketDAO.addToCart(ticket);
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     private List<Seat> getSeatsDLO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();

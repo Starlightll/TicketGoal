@@ -63,6 +63,7 @@ public class SeatDAO{
 
 
 
+
     public List<Seat> findAll() {
         List<Seat> listFound = new ArrayList<>();
 //        String sql = "SELECT * FROM Seat";
