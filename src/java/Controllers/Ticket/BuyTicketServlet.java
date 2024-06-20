@@ -7,6 +7,11 @@ package Controllers.Ticket;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import DAO.SeatDAO;
+import Models.Seat;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,29 +60,93 @@ public class BuyTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        int matchId = 0;
+        try{
+            matchId = Integer.parseInt(request.getParameter("matchId"));
+        }catch(Exception e){
+            System.out.println("Error: " + e);
+        }
+        List<Seat> seatList = SeatDAO.INSTANCE.getAllSeatOfMatch(matchId);
+        request.setAttribute("seatsARO", getSeatsARO(seatList));
+        request.setAttribute("seatsALO", getSeatsALO(seatList));
+        request.setAttribute("seatsBRO", getSeatsBRO(seatList));
+        request.setAttribute("seatsCRO", getSeatsCRO(seatList));
+        request.setAttribute("seatsCLO", getSeatsCLO(seatList));
+        request.setAttribute("seatsDLO", getSeatsDLO(seatList));
+        request.setAttribute("matchId", matchId);
         request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private List<Seat> getSeatsDLO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 141){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
+    private List<Seat> getSeatsCLO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 132){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
+    private List<Seat> getSeatsCRO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 131){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
+    private List<Seat> getSeatsBRO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 121){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
+    private List<Seat> getSeatsALO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 112){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
+    private List<Seat> getSeatsARO(List<Seat> seatList) {
+        List<Seat> seats = new ArrayList<Seat>();
+        for(Seat seat : seatList){
+            if(seat.getAreaId() == 111){
+                seats.add(seat);
+            }
+        }
+        return seats;
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

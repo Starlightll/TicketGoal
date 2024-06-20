@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="buy__ticket">
-                                <button class="buyTicket__btn" type="button" onclick="location.href='BuyTicket'">Buy Ticket</button>
+                                <button class="buyTicket__btn" type="button" onclick="location.href='BuyTicket?matchId=${match.matchId}'">Buy Ticket</button>
                             </div>
                         </div>
                     </form>

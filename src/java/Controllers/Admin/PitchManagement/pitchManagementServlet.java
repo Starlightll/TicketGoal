@@ -77,7 +77,7 @@ public class pitchManagementServlet extends HttpServlet {
             case "update":
                 String pitchId = request.getParameter("pitchId");
                 Pitch pitch = pitchDAO.getPitch(pitchId);
-                SeatDAO seatDao = new SeatDAO();
+                SeatDAO seatDao = SeatDAO.INSTANCE;
                 request.setAttribute("pitch", pitch);
                 System.out.println(pitchId);
                 List<Area> areaList = areaDAO.getAllArea(pitchId);
