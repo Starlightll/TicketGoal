@@ -74,7 +74,7 @@
         </div> -->
     </div>
     <!--Login Field-->
-    <div class="login" id="login">
+    <div class="login ${showLogin}" id="login">
         <div class="login__decor"></div>
 
         <!-- Login  form -->
