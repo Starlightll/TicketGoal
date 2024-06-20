@@ -42,16 +42,27 @@ public class MatchDAO {
         }
     }
 
-    public ResultSet getMatch(int matchId) {
+    public Match getMatch(int matchId) {
         try {
             String query = "SELECT * FROM Match WHERE matchId = ?";
             PreparedStatement ps = connect.prepareStatement(query);
             ps.setInt(1, matchId);
-            return ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setPitchId(rs.getInt("pitchId"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                match.setClub1(ClubDAO.INSTANCE.getClub(rs.getInt("club1")));
+                match.setClub2(ClubDAO.INSTANCE.getClub(rs.getInt("club2")));
+                return match;
+            }
         } catch (Exception e) {
             status = e.getMessage();
             return null;
         }
+        return null;
     }
 
     

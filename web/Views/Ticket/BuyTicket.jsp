@@ -209,18 +209,21 @@
         document.getElementById("confirm-box-background").style.display = "none";
     }
 
+
     function checkout(matchId) {
-        //use ajax to send the data to the server
+        var matchIds = matchId;
         $.ajax({
-            url: "buyTicketServlet",
-            type: "POST",
+            url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
             data: {
-                matchId: matchId,
-                seatIds: tickets
+                matchId: matchIds,
+                seatIds: JSON.stringify(tickets)
             },
-            success: function (data) {
-                alert(data);
+            success: function (response) {
                 location.reload();
+            },
+            error: function () {
+                alert("Error");
             }
         });
     }
