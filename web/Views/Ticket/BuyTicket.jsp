@@ -195,7 +195,7 @@
             alert("This seat is already in the list");
         }else{
             newOrder.className = "order";
-            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px'>"+"<div>"+seatNumber+"</div>"+"<div>"+row+"</div>"+"</div>";
+            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px; color: white'>"+"<div>"+seatNumber+"</div>"+"<div>"+row+"</div>"+"</div>";
             orderList.appendChild(newOrder);
             let totalValueNumber = parseInt(totalValue.innerHTML.split(" ")[0]);
             let priceNumber = parseInt(price.split(" ")[0]);

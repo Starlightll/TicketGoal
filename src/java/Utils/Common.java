@@ -8,6 +8,7 @@ public class Common {
         private final boolean isSuccess;
         private final String message;
         private Object data = null;
+        private String redirectUrl = "TicketGoal";
 
         public JsonResponse(boolean isSuccess, String message) {
             this.isSuccess = isSuccess;
@@ -20,12 +21,23 @@ public class Common {
             this.data = data;
         }
 
+        public JsonResponse(boolean isSuccess, String message, String redirectUrl) {
+            this.isSuccess = isSuccess;
+            this.message = message;
+            this.redirectUrl = redirectUrl;
+        }
+
+
         public boolean isSuccess() {
             return isSuccess;
         }
 
         public String getMessage() {
             return message;
+        }
+
+        public String getRedirectUrl() {
+            return redirectUrl;
         }
     }
 
