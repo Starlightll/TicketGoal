@@ -39,6 +39,9 @@
                         <a href="<c:url value='/operatorManagementServlet'/>" ${operatorManagementDropdown} class="dropdown__link">
                             Operator management
                         </a>    
+                        <a href="<c:url value='/ticketManagement'/>" ${ticketManagementDropdown} class="dropdown__link">
+                            Ticket management
+                        </a>
                     </div>
                 </div>
                 <div class="nav__item">
