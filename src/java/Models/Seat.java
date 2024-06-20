@@ -4,6 +4,7 @@ package Models;
 public class Seat {
     private int seatId;
     private int seatNumber;
+    private int row;
     private int price;
     private int areaId;
     private int seatStatusId;
@@ -11,9 +12,10 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(int seatId, int seatNumber, int price, int areaId, int seatStatusId) {
+    public Seat(int seatId, int seatNumber, int row, int price, int areaId, int seatStatusId) {
         this.seatId = seatId;
         this.seatNumber = seatNumber;
+        this.row = row;
         this.price = price;
         this.areaId = areaId;
         this.seatStatusId = seatStatusId;
@@ -33,6 +35,14 @@ public class Seat {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 
     public int getPrice() {
@@ -58,6 +68,4 @@ public class Seat {
     public void setSeatStatusId(int seatStatusId) {
         this.seatStatusId = seatStatusId;
     }
-    
-    
 }
