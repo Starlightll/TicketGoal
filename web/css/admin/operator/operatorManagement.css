@@ -188,7 +188,7 @@ h2 {
     margin-right: 10px;
 }
 
-.form-group input, select {
+.form-group input, select,textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
