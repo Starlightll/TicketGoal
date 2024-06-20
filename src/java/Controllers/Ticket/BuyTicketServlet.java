@@ -8,15 +8,23 @@ package Controllers.Ticket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import DAO.AccountDAO;
+import DAO.MatchDAO;
 import DAO.SeatDAO;
+import DAO.TicketDAO;
+import Models.Match;
 import Models.Seat;
+import Models.Ticket;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import Models.Account;
 
 /**
  *
@@ -36,16 +44,7 @@ public class BuyTicketServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BuyTicketServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BuyTicketServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+           out.println("loginRequired");
         }
     } 
 
@@ -60,22 +59,69 @@ public class BuyTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int matchId = 0;
-        try{
-            matchId = Integer.parseInt(request.getParameter("matchId"));
-        }catch(Exception e){
-            System.out.println("Error: " + e);
+        Account account = (Account) request.getSession().getAttribute("user");
+        if(account == null){
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("loginRequired");
+        }else{
+            int matchId = 0;
+            try{
+                matchId = Integer.parseInt(request.getParameter("matchId"));
+            }catch(Exception e){
+                System.out.println("Error: " + e);
+            }
+            List<Seat> seatList = SeatDAO.INSTANCE.getAllSeatOfMatch(matchId);
+            request.setAttribute("seatsARO", getSeatsARO(seatList));
+            request.setAttribute("seatsALO", getSeatsALO(seatList));
+            request.setAttribute("seatsBRO", getSeatsBRO(seatList));
+            request.setAttribute("seatsCRO", getSeatsCRO(seatList));
+            request.setAttribute("seatsCLO", getSeatsCLO(seatList));
+            request.setAttribute("seatsDLO", getSeatsDLO(seatList));
+            request.setAttribute("matchId", matchId);
+            request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
         }
-        List<Seat> seatList = SeatDAO.INSTANCE.getAllSeatOfMatch(matchId);
-        request.setAttribute("seatsARO", getSeatsARO(seatList));
-        request.setAttribute("seatsALO", getSeatsALO(seatList));
-        request.setAttribute("seatsBRO", getSeatsBRO(seatList));
-        request.setAttribute("seatsCRO", getSeatsCRO(seatList));
-        request.setAttribute("seatsCLO", getSeatsCLO(seatList));
-        request.setAttribute("seatsDLO", getSeatsDLO(seatList));
-        request.setAttribute("matchId", matchId);
-        request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
     }
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        Account account = (Account) request.getSession().getAttribute("user");
+        if(account == null){
+            processRequest(request, response);
+        }else{
+            String[] seatIds = new ObjectMapper().readValue(request.getParameter("seatIds"), String[].class);
+            int matchId = Integer.parseInt(request.getParameter("matchId"));
+            Match match = MatchDAO.INSTANCE.getMatch(matchId);
+            TicketDAO ticketDAO = new TicketDAO();
+            int accountId = account.getAccountId();
+            int cartId = 0;
+            if(AccountDAO.INSTANCE.getCartIdByAccountId(accountId) > 0){
+                cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
+            }else{
+                AccountDAO.INSTANCE.createCart(accountId);
+                cartId = AccountDAO.INSTANCE.getCartIdByAccountId(accountId);
+            }
+            if(seatIds != null){
+                for(String seatId : seatIds){
+                    Ticket ticket = new Ticket();
+                    ticket.setCode(null);
+                    ticket.setDate(match.schedule);
+                    ticket.setSeatId(Integer.parseInt(seatId));
+                    ticket.setTicketStatusId(1);
+                    ticket.setCartId(cartId);
+                    ticket.setMatchId(matchId);
+                    ticketDAO.buyTicket(ticket);
+                }
+            }
+        }
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 
     private List<Seat> getSeatsDLO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
@@ -136,17 +182,5 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 
 }

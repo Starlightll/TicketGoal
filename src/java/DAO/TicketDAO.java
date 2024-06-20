@@ -46,6 +46,24 @@ public class TicketDAO {
         return ticket;
     }
 
+    public boolean buyTicket(Ticket ticket) {
+        String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
+        boolean rowInserted = false;
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setString(1, ticket.getCode());
+            statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
+            statement.setInt(3, ticket.getSeatId());
+            statement.setInt(4, ticket.getTicketStatusId());
+            statement.setInt(5, ticket.getCartId());
+            statement.setInt(6, ticket.getMatchId());
+            rowInserted = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Insert ticket: " + e);
+        }
+        return rowInserted;
+    }
+
     public List<Ticket> selectTicketsByAccountId(int accountId) {
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT t.ticketId, t.code, t.date, t.seatId, t.ticketStatusId, t.cartId, t.matchId, "
