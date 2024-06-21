@@ -38,7 +38,7 @@ public class ContactDAO {
                      SELECT c.[contactId]
                                                   ,c.[message]
                                                   ,c.[name]
-                                                  ,c.[createdDate]
+                                                  ,c.[createDate]
                                                   ,c.[title]
                                                   ,c.[Email]
                                               FROM [TicketGoal].[dbo].[Contact] c""";
@@ -71,7 +71,7 @@ public class ContactDAO {
                      SELECT [contactId]
                            ,[message]
                            ,[name]
-                           ,[createdDate]
+                           ,[createDate]
                            ,[title]
                            ,[Email]
                        FROM [TicketGoal].[dbo].[Contact] where [contactId] = ?""";
@@ -101,7 +101,7 @@ public class ContactDAO {
                      SELECT top 1 [contactId]
                            ,[message]
                            ,[name]
-                           ,[createdDate]
+                           ,[createDate]
                            ,[title]
                            ,[Email]               
                        FROM [TicketGoal].[dbo].[Contact] order by [contactId] desc""";
@@ -130,7 +130,7 @@ public class ContactDAO {
                      INSERT INTO [dbo].[Contact]
                                 ([message]
                                 ,[name]
-                                ,[createdDate]
+                                ,[createDate]
                                 ,[title]
                                 ,[email])
                           VALUES
