@@ -73,16 +73,36 @@
         <servlet-class>Controllers.Admin.operatorManagementServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ContactAdminServlet</servlet-name>
-        <servlet-class>Controllers.Contact.ContactAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CartController</servlet-name>
         <servlet-class>Controllers.Cart.CartController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteTicketController</servlet-name>
         <servlet-class>Controllers.Cart.DeleteTicketController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactAdminServlet</servlet-name>
+        <servlet-class>Controllers.Admin.ContactAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateContact</servlet-name>
+        <servlet-class>Controllers.UpdateContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendMessageServlet</servlet-name>
+        <servlet-class>Controllers.SendMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MessageDetailServlet</servlet-name>
+        <servlet-class>Controllers.MessageDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMessageServlet</servlet-name>
+        <servlet-class>Controllers.DeleteMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMessageSentServlet</servlet-name>
+        <servlet-class>Controllers.DeleteMessageSentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
@@ -167,6 +187,26 @@
     <servlet-mapping>
         <servlet-name>ContactAdminServlet</servlet-name>
         <url-pattern>/ContactAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateContact</servlet-name>
+        <url-pattern>/UpdateContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMessageServlet</servlet-name>
+        <url-pattern>/SendMessageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessageDetailServlet</servlet-name>
+        <url-pattern>/MessageDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMessageServlet</servlet-name>
+        <url-pattern>/DeleteMessageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMessageSentServlet</servlet-name>
+        <url-pattern>/DeleteMessageSentServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>Homepage.jsp</welcome-file>
