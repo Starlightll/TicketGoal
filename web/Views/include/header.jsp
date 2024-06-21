@@ -101,10 +101,10 @@
 
             <div>
                 <p class="login__signup">
-                    Don't have an account? <a href="#" id="register-button">Sign up</a>
+                    Don't have an account? <a id="register-button">Sign up</a>
                 </p>
 
-                <a href="#" class="login__forgot" id="forgotpassword-button">
+                <a class="login__forgot" id="forgotpassword-button">
                     Forgot password?
                 </a>
 
@@ -153,7 +153,7 @@
 
             <div>
                 <p class="register__signin">
-                    Already have an account? <a href="#" id="signin-button">Sign in</a>
+                    Already have an account? <a id="signin-button">Sign in</a>
                 </p>
                 <button type="submit" class="register__button" id="sign-up-btn-submit">Sign Up</button>
             </div>
@@ -182,7 +182,7 @@
 
             <div>
                 <p class="register__signin">
-                    Already have an account? <a href="#">Sign in</a>
+                    Already have an account? <a>Sign in</a>
                 </p>
                 <button type="button" class="register__button" id="forgotpassword-submit-button">Reset</button>
             </div>
