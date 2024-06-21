@@ -73,16 +73,16 @@
         <servlet-class>Controllers.Admin.operatorManagementServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ContactAdminServlet</servlet-name>
-        <servlet-class>Controllers.Contact.ContactAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CartController</servlet-name>
         <servlet-class>Controllers.Cart.CartController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteTicketController</servlet-name>
         <servlet-class>Controllers.Cart.DeleteTicketController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactAdminServlet</servlet-name>
+        <servlet-class>Controllers.Admin.ContactAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>matchServlet</servlet-name>
