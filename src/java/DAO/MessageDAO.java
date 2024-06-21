@@ -36,7 +36,7 @@ public class MessageDAO {
                            ,[email]
                            ,[subject]
                            ,[message]
-                           ,[createdDate]
+                           ,[createDate]
                        FROM [TicketGoal].[dbo].[Message]
                      """;
         try {
@@ -63,7 +63,7 @@ public class MessageDAO {
                            ,[email]
                            ,[subject]
                            ,[message]
-                           ,[createdDate]
+                           ,[createDate]
                        FROM [TicketGoal].[dbo].[Message] where id = ?
                      """;
         try {
@@ -91,7 +91,7 @@ public class MessageDAO {
                                 ([email]
                                 ,[subject]
                                 ,[message]
-                                ,[createdDate])
+                                ,[createDate])
                           VALUES
                                 (?,?,?,getdate())
                      """;
