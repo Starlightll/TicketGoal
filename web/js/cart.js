@@ -14,11 +14,13 @@ function handleChoose(ele) {
     const price = parseFloat(ele.getAttribute('data-price'));
     const area = ele.getAttribute('data-area');
     const seat = ele.getAttribute('data-seat');
+    const date = ele.getAttribute('data-date');
     if (ele.checked) {
         selectedTickets[ticketId] = {
             price: price,
             area: area,
-            seat: seat
+            seat: seat,
+            date: date
         };
         const ticketDetailsDiv = document.createElement('div');
         ticketDetailsDiv.setAttribute('id', `ticket-details-${ticketId}`);
@@ -27,6 +29,7 @@ function handleChoose(ele) {
                     <p>Area: ${area}</p>
                     <p>Seat number: ${seat}</p>
                     <p>Price: ${price}</p>
+                    <p>Date: ${date}</p>
           <input type="hidden" name="tickets" value="${ticketId}" />
                 `;
         selectedTicketInfo.appendChild(ticketDetailsDiv);
@@ -98,8 +101,27 @@ function deleteTicket(id, cart) {
             });
 }
 
+function formatDate(dateString) {
+
+    const date = new Date(dateString);
+    
+    const year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString(); 
+    let day = date.getDate().toString();
+
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+
+    return `${year}-${month}-${day}`;
+}
+
 function searchShow(data) {
     dataHandle = data.map((item) => {
+        let dateAll = formatDate(item.date);
         let checked = selectedTickets[item.ticketId] != null ? "checked" : "";
         return `<div class="cart-item">
                         <div class="ticket-info">
@@ -114,6 +136,7 @@ function searchShow(data) {
                                 <p>Area: ${item.areaName}</p>
                                 <p>Seat number: ${item.seatNumber}</p>
                                 <p>Price: ${item.price}</p>
+                             <p>Date: ${dateAll}</p>
                             </div>
                         </div>
                         <div class="delete-icon">
@@ -121,6 +144,7 @@ function searchShow(data) {
                                    data-price="${item.price}"
                                    data-area="${item.areaName}"
                                    data-seat="${item.seatNumber}"
+                                    data-date="${dateAll}"
                                    value="${item.ticketId}"
                                    onClick="handleChoose(this)"
                                    ${checked}
