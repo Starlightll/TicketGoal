@@ -12,7 +12,7 @@ header *{
 
 /* Main section */
 
-.header a {
+.header a{
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
@@ -222,6 +222,7 @@ header *{
 
 .header .login__signup a{
     color: rgb(0, 255, 191);
+    cursor: pointer
 }
 
 .header .login__forgot {
@@ -364,6 +365,7 @@ header *{
 
 .header .register__signin a{
     color: rgb(0, 255, 191);
+    cursor: pointer;
 }
 
 
