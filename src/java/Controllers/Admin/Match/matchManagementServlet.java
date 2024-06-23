@@ -147,7 +147,6 @@ public class matchManagementServlet extends HttpServlet {
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
                 try{
-
                     matchUpdate.setSchedule(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("schedule")));
                 }catch(Exception e){
                     System.out.println("Update match error: " + e.getMessage());
