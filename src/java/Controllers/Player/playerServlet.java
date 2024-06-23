@@ -32,6 +32,8 @@ public class playerServlet extends HttpServlet {
     throws ServletException, IOException {
         PlayerDAO p = new PlayerDAO();
         List<Player> list = p.getAllPlayer();
+        //set active
+        request.setAttribute("playerActive", "active");
         request.setAttribute("listP", list);     
         request.getRequestDispatcher("Views/Player/Player.jsp").forward(request, response);
         

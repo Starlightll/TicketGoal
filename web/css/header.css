@@ -479,12 +479,20 @@ header *{
         width: 100%;
         display: flex;
         justify-content: center;
+        height: 100%;
     }
 
     .header .nav__list{
         flex-direction: row;
         column-gap: 3rem;
+        height: 100%;
+    }
 
+    .header .nav__list .nav__item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
     .header .login__form{
@@ -521,6 +529,20 @@ header *{
     .header .nav__link {
         font-size: 1.2rem;
         font-weight: 400;
+        display: flex;
+        align-items: center;
+        height: calc(100% - 4px);
+    }
+    .header .nav__item .decor__line {
+        height: 4px;
+        background-color: transparent;
+        width: 0;
+        transition: background-color, width .4s;
+    }
+
+    .header .nav__item .active {
+        background-color: #00C767;
+        width: 100%;
     }
 
 }
