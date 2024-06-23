@@ -72,9 +72,10 @@ public class PitchDAO {
                 pitch.setAddressName(rs.getNString("addressName"));
                 pitch.setAddressURL(rs.getNString("addressURL"));
                 //Encode to string
-                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure")) == null ? "" : Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
+                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure") == null ? new byte[0] : rs.getBytes("pitchStructure"));
                 pitch.setPitchStructure(pitchStructure);
-                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image")) == null ? "" : Base64.getEncoder().encodeToString(rs.getBytes("image"));
+                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image") == null ? new byte[0] : rs.getBytes("image"));
+                pitch.setImage(pitchImage);
                 pitch.setImage(pitchImage);
                
             }
