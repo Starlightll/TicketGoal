@@ -32,17 +32,18 @@
                     </div>
 
                     <h1>Contact us</h1>
-                    <p>Planning to visit Indonesia soon? Get insider tips on where to go, things to do and find best deals for your next adventure.</p>
+                    <p>Planning to buy ticket soon?, things to do and find best deals for your next match.</p>
                     <form id="contact-form" method="post" action="contactServlet">
                         <label for="name">Full name</label>
                         <input type="text" id="name" name="name" placeholder="Your Full Name" required>
                         <label for="email">Email</label>
-                        <input type="email" id="name" name="email" placeholder="Your Email" required>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
                         <label for="title">Title</label>
                         <input type="text" id="title" name="title" placeholder="Your Title" required>
                         <label for="message">Message</label>
                         <textarea rows="6" placeholder="Your Message" id="message" name="message" required></textarea>
                         <button type="submit" id="submit" name="submit">Send</button>
+
                     </form>
                     <div id="error"></div>
                     <div id="success-msg"></div>

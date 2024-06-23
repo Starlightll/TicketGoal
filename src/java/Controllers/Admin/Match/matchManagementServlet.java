@@ -7,6 +7,7 @@ package Controllers.Admin.Match;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class matchManagementServlet extends HttpServlet {
                                 "                                </div>\n" +
                                 "                            </div>\n" +
                                 "                            <div class=\"option\">\n" +
-                                "                                <a class=\"update__button\" href=\"\">Update</a>\n" +
+                                "                                <button class=\"update__button\" type=\"button\" onclick=\"showUpdate("+match.matchId+", '"+match.getDateTime()+"', "+match.pitchId+", "+match.matchStatusId+", "+match.club1.getClubId()+", "+match.club2.getClubId()+")\">Update</button>" +
                                 "                                <button class=\"delete__button\" type=\"button\" onclick=\"deleteMatch(" + match.matchId + ")\">Delete</button>\n" +
                                 "                            </div>\n" +
                                 "                        </div>\n" +
@@ -110,8 +111,8 @@ public class matchManagementServlet extends HttpServlet {
                 int club1Id = Integer.parseInt(request.getParameter("club1Id"));
                 int club2Id = Integer.parseInt(request.getParameter("club2Id"));
                 int pitchId = Integer.parseInt(request.getParameter("pitchId"));
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                java.util.Date schedule = null;
+                SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                Date schedule = null;
                 //Parse schedule
                 try {
                     schedule = sdf.parse(request.getParameter("schedule"));
@@ -137,6 +138,70 @@ public class matchManagementServlet extends HttpServlet {
                 DAO.MatchDAO.INSTANCE.addMatch(match);
                 break;
             case "updateMatch":
+                Match matchUpdate = new Match();
+                try{
+                    matchUpdate.setMatchId(Integer.parseInt(request.getParameter("matchId")));
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+
+                    matchUpdate.setSchedule(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("schedule")));
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+                    matchUpdate.setPitchId(Integer.parseInt(request.getParameter("pitchId")));
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+                    matchUpdate.setMatchStatusId(Integer.parseInt(request.getParameter("status")));
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+                    Club club1Update = new Club();
+                    club1Update.setClubId(Integer.parseInt(request.getParameter("club1Id")));
+                    matchUpdate.setClub1(club1Update);
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+                    Club club2Update = new Club();
+                    club2Update.setClubId(Integer.parseInt(request.getParameter("club2Id")));
+                    matchUpdate.setClub2(club2Update);
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                try{
+                    Address addressUpdate = new Address();
+                    addressUpdate.setAddressName(request.getParameter("addressName"));
+                    addressUpdate.setAddressURL(request.getParameter("addressURL"));
+                    matchUpdate.setAddress(addressUpdate);
+                }catch(Exception e){
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
+                if(updateMatch(matchUpdate)){
+                    response.setStatus(HttpServletResponse.SC_OK);
+                }else{
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    response.getWriter().write("Update match error: Internal server error");
+                }
                 break;
             case "deleteMatch":
                 int matchId = Integer.parseInt(request.getParameter("matchId"));
@@ -197,6 +262,10 @@ public class matchManagementServlet extends HttpServlet {
             System.out.println(e.getMessage());
         }
         return clubList;
+    }
+
+    public boolean updateMatch(Match match) {
+        return DAO.MatchDAO.INSTANCE.updateMatch(match);
     }
 
 

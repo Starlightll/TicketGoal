@@ -54,6 +54,8 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //set active
+        request.setAttribute("contactActive", "active");
         request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
     } 
 
