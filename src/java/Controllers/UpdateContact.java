@@ -15,9 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author mosdd
+ * @author admin
  */
-public class contactServlet extends HttpServlet {
+public class UpdateContact extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,17 +30,21 @@ public class contactServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet contactServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet contactServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String status = request.getParameter("cate");
+            String[] checked = request.getParameterValues("option");
+            ContactDAO contactDAO = new ContactDAO();
+            if(status == null){
+                contactDAO.updateImportantContact(status,null);
+            }
+            else switch (status) {
+                case "1" -> contactDAO.updateReadContact(status,checked);
+                case "2" -> contactDAO.updateUnReadContact(status,checked);
+                case "4" -> contactDAO.updateStarredContact(status,checked);
+                default -> contactDAO.updateImportantContact(status,checked);
+            }
+            response.sendRedirect("ContactAdminServlet");
         }
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,9 +58,7 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //set active
-        request.setAttribute("contactActive", "active");
-        request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -69,14 +71,7 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String title = request.getParameter("title");
-        String message = request.getParameter("message");
-        ContactDAO contactDAO = new ContactDAO();
-        contactDAO.insert(name,email,title,message);
-        request.setAttribute("report", "report");
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /** 

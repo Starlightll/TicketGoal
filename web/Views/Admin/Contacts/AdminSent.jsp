@@ -296,7 +296,7 @@
                                                                             type="date" pattern="MM-dd-yyyy"/>
                                                             ${formattedDate}
                                                         </td>
-                                                        <td class="delete"><a href="deleteMessageSent?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
+                                                        <td class="delete"><a href="DeleteMessageSentServlet?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -326,7 +326,7 @@
                                                     <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New
                                                         Message</h4>
                                                 </div>
-                                                <form action="Send-Message" method="post">
+                                                <form action="SendMessageServlet" method="post">
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <input name="to" type="email" class="form-control"

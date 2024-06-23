@@ -6,6 +6,7 @@
 package Controllers;
 
 import DAO.ContactDAO;
+import Models.Contact;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,9 +16,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author mosdd
+ * @author admin
  */
-public class contactServlet extends HttpServlet {
+public class MessageDetailServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +35,10 @@ public class contactServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet contactServlet</title>");  
+            out.println("<title>Servlet MessageDetailServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet contactServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet MessageDetailServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,9 +55,13 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //set active
-        request.setAttribute("contactActive", "active");
-        request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
+        String id = request.getParameter("id");
+        ContactDAO contactDAO = new ContactDAO();
+        Contact contact = contactDAO.getContactByID(Integer.parseInt(id));
+        contactDAO.updateContact(contact.getId());
+        request.setAttribute("contact",contact);
+        request.setAttribute("page", "/Views/Admin/Contacts/AdminContactDetail.jsp");
+        request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     } 
 
     /** 
@@ -69,14 +74,7 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String title = request.getParameter("title");
-        String message = request.getParameter("message");
-        ContactDAO contactDAO = new ContactDAO();
-        contactDAO.insert(name,email,title,message);
-        request.setAttribute("report", "report");
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /** 

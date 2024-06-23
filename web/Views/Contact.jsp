@@ -11,6 +11,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     </head>
     <body>
         <div class="header-container">
@@ -40,6 +43,7 @@
                         <label for="message">Message</label>
                         <textarea rows="6" placeholder="Your Message" id="message" name="message" required></textarea>
                         <button type="submit" id="submit" name="submit">Send</button>
+
                     </form>
                     <div id="error"></div>
                     <div id="success-msg"></div>
@@ -47,5 +51,14 @@
             </div>
         </main>
         <script src="./js/cont.js"></script>
+        <script type="text/javascript">
+            function showToast(type, message) {
+                toastr[type](message);
+            }
+            var message = '${requestScope.report}';
+            if(message !== ''){
+                showToast('success','Send Message Successfully!');
+            }
+        </script>
     </body>
 </html>

@@ -46,6 +46,7 @@
                                 <p>Area: ${ticket.areaName}</p>
                                 <p>Seat number: ${ticket.seatNumber}</p>
                                 <p>Price: ${ticket.price}</p>
+                                 <p>Date: ${ticket.date}</p>
                             </div>
                         </div>
                         <div class="delete-icon">
@@ -53,6 +54,7 @@
                                    data-price="${ticket.price}"
                                    data-area="${ticket.areaName}"
                                    data-seat="${ticket.seatNumber}"
+                                    data-date="${ticket.date}"
                                    value="${ticket.ticketId}"
                                    onClick="handleChoose(this)"
                                    >

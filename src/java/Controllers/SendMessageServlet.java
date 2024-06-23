@@ -5,7 +5,9 @@
 
 package Controllers;
 
-import DAO.ContactDAO;
+import DAO.MessageDAO;
+import Utils.EmailSender;
+import Utils.EmailSender2;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,9 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author mosdd
+ * @author admin
  */
-public class contactServlet extends HttpServlet {
+public class SendMessageServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +36,10 @@ public class contactServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet contactServlet</title>");  
+            out.println("<title>Servlet SendMessageServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet contactServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SendMessageServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,9 +56,7 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //set active
-        request.setAttribute("contactActive", "active");
-        request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -69,14 +69,14 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String title = request.getParameter("title");
+        String email = request.getParameter("to");
+        String subject = request.getParameter("subject");
         String message = request.getParameter("message");
-        ContactDAO contactDAO = new ContactDAO();
-        contactDAO.insert(name,email,title,message);
-        request.setAttribute("report", "report");
-        doGet(request, response);
+        EmailSender2 emailSender = new EmailSender2();
+        emailSender.sendEmailDynamic(request, response,email,subject,message);
+        MessageDAO messageDAO = new MessageDAO();
+        messageDAO.insert(email, subject, message);
+        response.sendRedirect("ContactAdminServlet");
     }
 
     /** 
