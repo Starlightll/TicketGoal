@@ -5,16 +5,11 @@
 
 package Controllers.Ticket;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import DAO.AccountDAO;
 import DAO.MatchDAO;
 import DAO.SeatDAO;
 import DAO.TicketDAO;
+import Models.Account;
 import Models.Match;
 import Models.Seat;
 import Models.Ticket;
@@ -24,7 +19,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import Models.Account;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

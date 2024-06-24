@@ -5,8 +5,8 @@
 package DAO;
 
 import DB.DBContext;
-import Models.Account;
 import Models.Ticket;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

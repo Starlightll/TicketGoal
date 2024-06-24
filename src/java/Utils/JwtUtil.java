@@ -7,9 +7,10 @@ package Utils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
-import javax.crypto.SecretKey;
 
 /**
  *

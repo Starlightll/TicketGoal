@@ -5,8 +5,8 @@
 package DAO;
 
 import DB.DBContext;
-import Models.Contact;
 import Models.Message;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

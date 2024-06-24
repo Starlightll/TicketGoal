@@ -7,17 +7,17 @@ package Controllers.Cart;
 import DAO.TicketDAO;
 import Models.Account;
 import Models.DeleteDataTicket;
-import Models.SearchData;
 import Models.Ticket;
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 

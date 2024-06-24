@@ -4,9 +4,6 @@
  */
 package Models;
 
-import DAO.SeatDAO;
-import DAO.SeatStatusDAO;
-
 /**
  *
  * @author Admin
