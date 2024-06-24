@@ -33,11 +33,20 @@ public class promotionManagementServlet extends HttpServlet {
 
         String searchParam = request.getParameter("q");
         String sortBy = request.getParameter("sort");
+        String index = request.getParameter("index");
+        int pageSize = 10;
+        int pageIndex = 1;
+        if (index != null) {
+            pageIndex = Integer.parseInt(index);
+        }
+        int totalPage = proDAO.getAllPromotions().size() / pageSize + 1;
+        List<Promotion> listPromotion = proDAO.getPromotionsBySearchAndSort(searchParam, sortBy, pageIndex, pageSize);
 
-        List<Promotion> listPromotion = proDAO.getPromotionsBySearchAndSort(searchParam, sortBy);
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("totalPage", totalPage);
         request.setAttribute("promotions", listPromotion);
-
-        //set css
+        request.setAttribute("searchParam", searchParam);
+        //set cssF
         request.setAttribute("dropdownMenu", "block");
         request.setAttribute("promotionManagement", "style=\"background-color: #00C767; pointer-events: none;\"");
 
@@ -49,6 +58,8 @@ public class promotionManagementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String type = request.getParameter("type");
+        String referrer = request.getHeader("referer");
+
         if (type == null) {
             request.getRequestDispatcher("404_Error.jsp").forward(request, response);
             return;
@@ -71,8 +82,8 @@ public class promotionManagementServlet extends HttpServlet {
                         code, description,
                         LocalDateTime.parse(startDate, formatter),
                         LocalDateTime.parse(endDate, formatter)));
-                System.out.println(newPromotion);
-                response.sendRedirect("./promotionManagement");
+                System.out.println(request.getContextPath());
+                response.sendRedirect(referrer);
                 return;
             }
             case "update" -> {
@@ -86,7 +97,7 @@ public class promotionManagementServlet extends HttpServlet {
                         LocalDateTime.parse(startDate, formatter),
                         LocalDateTime.parse(endDate, formatter)));
                 if (isUpdated) {
-                    response.sendRedirect("./promotionManagement");
+                    response.sendRedirect(referrer);
                     return;
                 }
             }
@@ -98,7 +109,7 @@ public class promotionManagementServlet extends HttpServlet {
                 }
                 boolean isUpdated = proDAO.deletePromotion(Integer.parseInt(id));
                 if (isUpdated) {
-                    response.sendRedirect("./promotionManagement");
+                    response.sendRedirect(referrer);
                     return;
                 }
             }
