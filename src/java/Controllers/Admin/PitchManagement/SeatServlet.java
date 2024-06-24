@@ -30,7 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 @MultipartConfig(maxFileSize = 16177215)
 public class SeatServlet extends HttpServlet {
 
-    private static final SeatDAO seatDAO = new SeatDAO();
+    private static final SeatDAO seatDAO = SeatDAO.INSTANCE;
     private static final SeatStatusDAO seatStatusDAO = SeatStatusDAO.INSTANCE;
 
     @Override
