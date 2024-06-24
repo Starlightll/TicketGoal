@@ -6,6 +6,7 @@
 package Controllers;
 
 import DAO.ClubDAO;
+import Models.Account;
 import Models.Address;
 import Models.Club;
 import Models.Match;
@@ -62,6 +63,9 @@ public class matchServlet extends HttpServlet {
     throws ServletException, IOException {
         //Get all matches
         List<Match> matchList = getMatches();
+
+        //set active
+        request.setAttribute("matchActive", "active");
         request.setAttribute("matches", matchList);
         request.getRequestDispatcher("/Views/Matches.jsp").forward(request, response);
     } 

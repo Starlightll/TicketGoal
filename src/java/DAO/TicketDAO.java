@@ -5,6 +5,7 @@
 package DAO;
 
 import DB.DBContext;
+import Models.Account;
 import Models.Ticket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,6 +47,43 @@ public class TicketDAO {
         return ticket;
     }
 
+    public boolean buyTicket(Ticket ticket) {
+        String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
+        boolean rowInserted = false;
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setString(1, ticket.getCode());
+            statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
+            statement.setInt(3, ticket.getSeatId());
+            statement.setInt(4, 1);
+            statement.setInt(5, ticket.getCartId());
+            statement.setInt(6, ticket.getMatchId());
+            rowInserted = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Insert ticket: " + e);
+        }
+        return rowInserted;
+    }
+
+    public int addToCart(Ticket ticket) {
+        String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
+        int rowInserted = 0;
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setString(1, ticket.getCode());
+            statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
+            statement.setInt(3, ticket.getSeatId());
+            statement.setInt(4,2);
+            statement.setInt(5, ticket.getCartId());
+            statement.setInt(6, ticket.getMatchId());
+            rowInserted = statement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Insert ticket: " + e);
+        }
+        return rowInserted;
+    }
+
+
     public List<Ticket> selectTicketsByAccountId(int accountId) {
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT t.ticketId, t.code, t.date, t.seatId, t.ticketStatusId, t.cartId, t.matchId, "
@@ -58,7 +96,7 @@ public class TicketDAO {
                 + "JOIN Club c1 ON m.club1 = c1.clubId "
                 + "JOIN Club c2 ON m.club2 = c2.clubId "
                 + "JOIN Cart cr ON t.cartId = cr.cartId "
-                + "WHERE cr.accountId=?";
+                + "WHERE cr.accountId=? AND t.ticketStatusId= 2";
 
         try {
             PreparedStatement st = connect.prepareStatement(sql);

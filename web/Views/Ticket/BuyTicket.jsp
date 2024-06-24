@@ -130,7 +130,7 @@
                 </div>
                 <div class="action">
                     <button id="btn-buy" type="button" onclick="checkout(${matchId})">Buy</button>
-                    <button id="btn-add-to-cart">Add to cart</button>
+                    <button id="btn-add-to-cart" type="button" onclick="addToCart(${matchId})">Add to cart</button>
                 </div>
             </form>
         </div>
@@ -193,34 +193,54 @@
         let newOrder = document.createElement("div");
         if(tickets.includes(seatId)){
             alert("This seat is already in the list");
-            confirmBox.reset();
-            return;
         }else{
-            tickets.push(seatId);
             newOrder.className = "order";
-            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px'>"+seatNumber+"</div>";
+            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px; color: white'>"+"<div>"+seatNumber+"</div>"+"<div>"+row+"</div>"+"</div>";
             orderList.appendChild(newOrder);
             let totalValueNumber = parseInt(totalValue.innerHTML.split(" ")[0]);
             let priceNumber = parseInt(price.split(" ")[0]);
             totalValue.innerHTML = (totalValueNumber + priceNumber) + " $";
-            confirmBox.reset();
+            tickets.push(seatId);
         }
         //close confirm box
+        confirmBox.reset();
         document.getElementById("confirm-box-background").style.display = "none";
     }
 
-    function checkout(matchId) {
-        //use ajax to send the data to the server
+    function addToCart(matchId){
         $.ajax({
-            url: "buyTicketServlet",
-            type: "POST",
+            url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
             data: {
                 matchId: matchId,
-                seatIds: tickets
+                action: "addToCart",
+                seatIds: JSON.stringify(tickets)
             },
-            success: function (data) {
-                alert(data);
+            success: function (response) {
                 location.reload();
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+    }
+
+
+    function checkout(matchId) {
+        var matchIds = matchId;
+        $.ajax({
+            url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
+            data: {
+                matchId: matchIds,
+                action: "buyTicket",
+                seatIds: JSON.stringify(tickets)
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function () {
+                alert("Error");
             }
         });
     }

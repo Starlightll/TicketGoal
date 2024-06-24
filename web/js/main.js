@@ -75,6 +75,7 @@ loginSubmitBtn.onclick = async (e) => {
     const loginEmailValue = document.getElementById("email").value;
     const loginPasswordValue = document.getElementById("password").value;
     const errorMessage = document.getElementById("error-login-message");
+    const currentURL = window.location.href;
 
     try {
         const response = await fetch('./signIn', {
@@ -82,7 +83,7 @@ loginSubmitBtn.onclick = async (e) => {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: `email=${encodeURIComponent(loginEmailValue)}&password=${encodeURIComponent(loginPasswordValue)}`
+            body: `email=${encodeURIComponent(loginEmailValue)}&password=${encodeURIComponent(loginPasswordValue)}&redirectUrl=${encodeURIComponent(currentURL)}`
         });
         const jsonResponse = await response.json();
 
@@ -91,7 +92,7 @@ loginSubmitBtn.onclick = async (e) => {
             errorMessage.style.display = "block";
             return;
         }
-        window.location.href = "./";
+        window.location.href = jsonResponse.redirectUrl;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }

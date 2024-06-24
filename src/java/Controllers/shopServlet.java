@@ -53,6 +53,8 @@ public class shopServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //set active
+        request.setAttribute("shopActive", "active");
         request.getRequestDispatcher("/Views/Shop.jsp").forward(request, response);
     } 
 
