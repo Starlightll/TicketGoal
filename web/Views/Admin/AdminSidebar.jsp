@@ -38,6 +38,11 @@
                         </a>
                         <a href="<c:url value='/operatorManagementServlet'/>" ${operatorManagementDropdown} class="dropdown__link">
                             Operator management
+
+                        </a>    
+                        <a href="<c:url value='/ticketManagement'/>" ${ticketManagementDropdown} class="dropdown__link">
+                            Ticket management
+                        </a>
                         </a>   
                         <a href="<c:url value='/promotionManagement'/>" ${promotionManagement} class="dropdown__link">
                             Promotion management

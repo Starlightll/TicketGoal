@@ -47,6 +47,30 @@ public class TicketDAO {
         }
         return ticket;
     }
+ public List<Ticket> getTicketByTicketStatus(int status) {
+        List<Ticket> tickets = new ArrayList<>();
+        String sql = "SELECT * FROM ticket WHERE ticketStatusId = ?";
+        try {
+            PreparedStatement st = connect.prepareStatement(sql);
+            st.setInt(1, status);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int ticketId = rs.getInt("ticketId");
+                String code = rs.getString("code");
+                Date date = rs.getDate("date");
+                int seatId = rs.getInt("seatId");
+                int ticketStatusId = rs.getInt("ticketStatusId");
+                int cartId = rs.getInt("cartId");
+                int matchId = rs.getInt("matchId");
+
+                Ticket ticket = new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId);
+                tickets.add(ticket);
+            }
+        } catch (SQLException e) {
+            System.out.println("Select tickets by status: " + e);
+        }
+        return tickets;
+    }
 
     public boolean buyTicket(Ticket ticket) {
         String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
@@ -235,5 +259,8 @@ public class TicketDAO {
             System.out.println("Delete fail: " + e);
         }
         return rowDeleted;
+    }
+    public static void main(String[] args) {
+        System.out.println(new TicketDAO().getTicketByTicketStatus(2));
     }
 }
