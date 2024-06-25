@@ -5,6 +5,7 @@
 package DAO;
 
 import DB.DBContext;
+import Models.Area;
 import Models.Seat;
 import Models.SeatStatus;
 
@@ -35,9 +36,10 @@ public class SeatDAO{
 
     public List<Seat> getAllSeatOfMatch(int matchId) {
         List<Seat> matchSeats = new ArrayList<>();
-        String query = "SELECT * FROM (SELECT * FROM Seat s) AS T1\n" +
-                "         LEFT JOIN (SELECT * FROM Ticket WHERE ticketStatusId = 1 AND matchId = ?) AS T2\n" +
-                "                    ON T1.seatId = T2.seatId;";
+        String query = "SELECT *\n" +
+                "FROM (SELECT * FROM Seat s) AS T1 INNER JOIN (Select * from Area a) AS T2 ON T1.areaId = T2.areaId\n" +
+                "         LEFT JOIN (SELECT * FROM Ticket WHERE ticketStatusId = 1 AND matchId = ?) AS T3\n" +
+                "                    ON T1.seatId = T3.seatId;";
         try {
             PreparedStatement statement = connect.prepareStatement(query);
             statement.setInt(1, matchId);
@@ -47,14 +49,20 @@ public class SeatDAO{
                 int seatNumber = rs.getInt("seatNumber");
                 int row = rs.getInt("row");
                 int price = rs.getInt("price");
-                int areaId = rs.getInt("areaId");
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getNString("areaName"));
                 int seatStatusId = 1;
                 if(rs.getInt("ticketStatusId")==1){
                     seatStatusId = 3;
                 }
-                Seat seat = new Seat(seatId, seatNumber, row, price, areaId, seatStatusId);
+                if(rs.getInt("ticketStatusId")==2){
+                    seatStatusId = 5;
+                }
+                Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId);
                 matchSeats.add(seat);
             }
+            statement.close();
         } catch (SQLException e) {
             System.out.println("Get all seat of match: " + e);
         }

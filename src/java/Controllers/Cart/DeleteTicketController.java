@@ -86,7 +86,7 @@ public class DeleteTicketController extends HttpServlet {
             int ticketId = Integer.parseInt(deleteTicket.getTicketId());
             ticketDao.deleteTick(ticketId);
             ticketDao.deleteCart(cartId);
-            List<Ticket> searchResults = ticketDao.selectTicketsByAccountId(accountLogin.getAccountId());
+            List<Ticket> searchResults = ticketDao.getTicketInCart(accountLogin.getAccountId());
             String jsonSearchResults = gson.toJson(searchResults);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

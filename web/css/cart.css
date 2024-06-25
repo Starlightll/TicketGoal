@@ -6,6 +6,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 
 main {
     background-color: #f1f1f1;
+    display: flex;
+    height: auto;
 }
 
 .container {

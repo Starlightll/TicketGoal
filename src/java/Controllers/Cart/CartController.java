@@ -61,7 +61,7 @@ public class CartController extends HttpServlet {
         if(accountLogin != null) {
             int idUser = accountLogin.getAccountId();
             TicketDAO ticketDao = new TicketDAO();
-            List<Ticket> tickets = ticketDao.selectTicketsByAccountId(idUser);
+            List<Ticket> tickets = ticketDao.getTicketInCart(idUser);
             request.setAttribute("listTickets", tickets);
             request.getRequestDispatcher("./Views/Cart/cart.jsp").forward(request, response);
         } else {

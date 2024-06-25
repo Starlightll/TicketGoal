@@ -137,7 +137,7 @@ public class SeatServlet extends HttpServlet {
                                     seat.setPrice(price);
                                 } else if (index == 3) {
                                     int areaId = (int) cell.getNumericCellValue();
-                                    seat.setAreaId(areaId);
+                                    seat.setArea(new Models.Area(areaId, null));
                                 } else {
                                     int seatStatusId = (int) cell.getNumericCellValue();
                                     seat.setSeatStatusId(seatStatusId);
@@ -151,7 +151,7 @@ public class SeatServlet extends HttpServlet {
                         index++;
                     }
                     if (index == 5) {
-                        Seat isExist = seatDAO.finSeatByIdNumber(seat.getAreaId(), seat.getSeatNumber());
+                        Seat isExist = seatDAO.finSeatByIdNumber(seat.getArea().id, seat.getSeatNumber());
                         if (isExist == null) {
                             int result = seatDAO.insert(seat);
                             if (result > 0) {
@@ -193,7 +193,7 @@ public class SeatServlet extends HttpServlet {
             Seat seat = new Seat();
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
-            seat.setAreaId(areaId);
+            seat.setArea(new Models.Area(areaId, null));
             seat.setSeatStatusId(seatStatusId);
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             //add to database
@@ -228,7 +228,7 @@ public class SeatServlet extends HttpServlet {
             seat.setSeatId(seatId);
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
-            seat.setAreaId(areaId);
+            seat.setArea(new Models.Area(areaId, null));
             seat.setSeatStatusId(seatStatusId);
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             if (isExist == null || (isExist != null && isExist.getSeatNumber() == oldSeat)) {
