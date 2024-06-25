@@ -5,12 +5,14 @@
 
 package Controllers;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import DAO.ContactDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -53,6 +55,8 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //set active
+        request.setAttribute("contactActive", "active");
         request.getRequestDispatcher("Views/Contact.jsp").forward(request, response);
     } 
 
@@ -66,7 +70,14 @@ public class contactServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String title = request.getParameter("title");
+        String message = request.getParameter("message");
+        ContactDAO contactDAO = new ContactDAO();
+        contactDAO.insert(name,email,title,message);
+        request.setAttribute("report", "report");
+        doGet(request, response);
     }
 
     /** 

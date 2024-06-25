@@ -7,12 +7,13 @@ package DAO;
 import DB.DBContext;
 import Models.Contact;
 import Models.ContactCategory;
+
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ public class ContactDAO {
                      SELECT c.[contactId]
                                                   ,c.[message]
                                                   ,c.[name]
-                                                  ,c.[createdDate]
+                                                  ,c.[createDate]
                                                   ,c.[title]
                                                   ,c.[Email]
                                               FROM [TicketGoal].[dbo].[Contact] c""";
@@ -71,7 +72,7 @@ public class ContactDAO {
                      SELECT [contactId]
                            ,[message]
                            ,[name]
-                           ,[createdDate]
+                           ,[createDate]
                            ,[title]
                            ,[Email]
                        FROM [TicketGoal].[dbo].[Contact] where [contactId] = ?""";
@@ -101,7 +102,7 @@ public class ContactDAO {
                      SELECT top 1 [contactId]
                            ,[message]
                            ,[name]
-                           ,[createdDate]
+                           ,[createDate]
                            ,[title]
                            ,[Email]               
                        FROM [TicketGoal].[dbo].[Contact] order by [contactId] desc""";
@@ -130,7 +131,7 @@ public class ContactDAO {
                      INSERT INTO [dbo].[Contact]
                                 ([message]
                                 ,[name]
-                                ,[createdDate]
+                                ,[createDate]
                                 ,[title]
                                 ,[email])
                           VALUES

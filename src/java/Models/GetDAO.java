@@ -4,15 +4,10 @@
  */
 package Models;
 
-import DAO.SeatDAO;
-import DAO.SeatStatusDAO;
-
 /**
  *
  * @author Admin
  */
 public class GetDAO {
-    private static final SeatDAO seatDAO = new SeatDAO();
-    
-    
+
 }

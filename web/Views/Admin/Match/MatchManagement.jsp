@@ -66,7 +66,7 @@
 
                             </div>
                             <div class="option">
-                                <button class="update__button" type="button" onclick="showUpdate(${match.matchId})">Update</button>
+                                <button class="update__button" type="button" onclick="showUpdate(${match.matchId}, '${match.getDateTime()}', ${match.pitchId}, ${match.matchStatusId}, ${match.club1.clubId}, ${match.club2.clubId})">Update</button>
                                 <button class="delete__button" type="button" onclick="deleteMatch(${match.matchId})">Delete</button>
                             </div>
                         </div>
@@ -144,6 +144,79 @@
                 </div>
             </div>
         </form>
+
+        <!-- Update Match Form -->
+        <form name="updateMatchForm" class="update__match" id="update-form" method="post" action="${pageContext.request.contextPath}/matchManagementServlet?option=updateMatch">
+            <label>
+                <input hidden name="matchId" value="0">
+            </label>
+            <div class="update__match__header">
+                <h2>update Match</h2>
+            </div>
+            <div class="match">
+                <div>
+                    <i class="ri-close-large-fill close__btn" id="btn-close-update"></i>
+                </div>
+                <div class="match__content">
+                    <div class="club__section">
+                        <div class="club">
+                            <img src="" alt="" id="club1Logo-update">
+                            <h2 id="club1-name-update">Home team</h2>
+                            <label>
+                                <select name="club1" id="selectClub1-update">
+                                    <option value="0">Select Club</option>
+                                    <c:forEach var="club" items="${clubs}">
+                                        <option value="${club.clubId}">${club.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="vs"><p>VS</p></div>
+                        <div class="club">
+                            <img src="" alt="" id="club2Logo-update">
+                            <h2 id="club2-name-update">Against team</h2>
+                            <label>
+                                <select name="club2" id="selectClub2-update">
+                                    <option value="0">Select Club</option>
+                                    <c:forEach var="club" items="${clubs}">
+                                        <option value="${club.clubId}">${club.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="stadium">
+                        <label>
+                            <select name="pitchId">
+                                <option value="0">Select Stadium</option>
+                                <c:forEach var="stadium" items="${stadiums}">
+                                    <option value="${stadium.pitchId}">${stadium.pitchName}</option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="match__time">
+                        <label>
+                            <input type="datetime-local" name="schedule">
+                        </label>
+                    </div>
+                    <div class="match__status">
+                        <label>
+                            <select name="status">
+                                <option value="0" selected>Select Status</option>
+                                <option value="1">Upcoming</option>
+                                <option value="2">Ongoing</option>
+                                <option value="3">Finished</option>
+                                <option value="4">Cancelled</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="option">
+                    <button class="update__button" onclick="updateMatch()" type="button" id="update-submit">Update</button>
+                </div>
+            </div>
+        </form>
         <div id="toastBox"></div>
     </body>
     <script src="${pageContext.request.contextPath}/js/admin/match/matchmanagement.js"></script>
@@ -198,9 +271,75 @@
             }
         }
 
-        function showUpdate() {
-            document.getElementById("update-form").classList.add("show-update-match");
-            document.getElementById("admin-panel-body").style.overflow = "hidden";
+        function updateMatch(){
+            var matchId = document.forms["updateMatchForm"]["matchId"].value;
+            var club1Id = document.forms["updateMatchForm"]["club1"].value;
+            var club2Id = document.forms["updateMatchForm"]["club2"].value;
+            var pitchId = document.forms["updateMatchForm"]["pitchId"].value;
+            var schedule = document.forms["updateMatchForm"]["schedule"].value;
+            var status = document.forms["updateMatchForm"]["status"].value;
+            if(club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "" || status === "0"){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
+                return false;
+            }else if(club1Id === club2Id){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Club 1 and Club 2 must be different!");
+                return false;
+            }else if(schedule < new Date().toISOString().slice(0, 16) && status == 1){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Schedule can't be upcoming!");
+                return false;
+            }else if(schedule > new Date().toISOString().slice(0, 16) && (status == 2 || status == 3)){
+                showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Schedule must be in upcoming!");
+                return false;
+            }else{
+                $.ajax({
+                    url: `${pageContext.request.contextPath}/matchManagementServlet`,
+                    method: "post",
+                    data: {
+                        matchId: matchId,
+                        club1Id: club1Id,
+                        club2Id: club2Id,
+                        pitchId: pitchId,
+                        schedule: schedule,
+                        status: status,
+                        option: "updateMatch"
+                    },
+                    success: function (response) {
+                        var matchList = document.getElementById("match-list");
+                        document.getElementById("update-form").classList.remove("show-update-match");
+                        document.getElementById("admin-panel-body").style.removeProperty("overflow");
+                        matchList.innerHTML = response;
+                        var updateMatchForm = document.forms["updateMatchForm"];
+                        updateMatchForm.reset();
+                        showToast('<i class="ri-checkbox-circle-fill"></i>Updated match successfully');
+                    },
+                    error: function (res) {
+                        showToast("<i class=\"ri-error-warning-fill\"></i>Error: "+res.responseText);
+                    }
+                });
+            }
+        }
+
+        function showUpdate(matchId, schedule, pitchId, status, club1, club2) {
+            const updateForm = document.getElementById('update-form');
+            const adminPanelBody = document.getElementById('admin-panel-body');
+            const club1Name = clubInfoMap[club1].clubName;
+            const club1Logo = clubInfoMap[club1].clubLogo;
+            const club2Name = clubInfoMap[club2].clubName;
+            const club2Logo = clubInfoMap[club2].clubLogo;
+
+            document.getElementById('club1-name-update').innerText = club1Name;
+            document.getElementById('club1Logo-update').src = `data:image/jpeg;base64,`+club1Logo;
+            document.getElementById('club2-name-update').innerText = club2Name;
+            document.getElementById('club2Logo-update').src = `data:image/jpeg;base64,`+club2Logo;
+            document.getElementById('selectClub1-update').value = club1;
+            document.getElementById('selectClub2-update').value = club2;
+            document.forms['updateMatchForm']['schedule'].value = schedule;
+            document.forms['updateMatchForm']['pitchId'].value = pitchId;
+            document.forms['updateMatchForm']['status'].value = status;
+            document.forms['updateMatchForm']['matchId'].value = matchId;
+            updateForm.classList.add('show-update-match');
+            adminPanelBody.style.overflow = 'hidden';
+
         }
 
         function deleteMatch(matchId) {
@@ -222,6 +361,7 @@
                 }
             });
         }
+
 
         let toastBox = document.getElementById('toastBox');
 

@@ -6,7 +6,6 @@ package Models;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -92,7 +91,7 @@ public class Match {
     }
 
     public String getDateTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(schedule);
     }
 

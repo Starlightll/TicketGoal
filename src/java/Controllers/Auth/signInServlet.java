@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 /**
@@ -27,6 +28,7 @@ public class signInServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String redirectURL = request.getParameter("redirectUrl");
 
         AccountDAO accountDAO = AccountDAO.INSTANCE;
         Account account = accountDAO.signIn(email.toLowerCase(), password);
@@ -39,7 +41,7 @@ public class signInServlet extends HttpServlet {
 
         if (account != null) {
             request.getSession().setAttribute("user", account);
-            jsonResponse = new Common.JsonResponse(true, "Login successful");
+            jsonResponse = new Common.JsonResponse(true, "Login successful", redirectURL);
         } else {
             jsonResponse = new Common.JsonResponse(false, "Invalid email or password");
         }

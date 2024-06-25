@@ -4,18 +4,20 @@ package Models;
 public class Seat {
     private int seatId;
     private int seatNumber;
+    private int row;
     private int price;
-    private int areaId;
+    private Area area;
     private int seatStatusId;
 
     public Seat() {
     }
 
-    public Seat(int seatId, int seatNumber, int price, int areaId, int seatStatusId) {
+    public Seat(int seatId, int seatNumber, int row, int price, Area area, int seatStatusId) {
         this.seatId = seatId;
         this.seatNumber = seatNumber;
+        this.row = row;
         this.price = price;
-        this.areaId = areaId;
+        this.area = area;
         this.seatStatusId = seatStatusId;
     }
 
@@ -35,6 +37,14 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -43,12 +53,12 @@ public class Seat {
         this.price = price;
     }
 
-    public int getAreaId() {
-        return areaId;
+    public Area getArea() {
+        return area;
     }
 
-    public void setAreaId(int areaId) {
-        this.areaId = areaId;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public int getSeatStatusId() {
@@ -58,6 +68,4 @@ public class Seat {
     public void setSeatStatusId(int seatStatusId) {
         this.seatStatusId = seatStatusId;
     }
-    
-    
 }

@@ -32,15 +32,19 @@
                 <ul class="nav__list">
                     <li class="nav__item">
                         <a href="<c:url value='/matchServlet'/>" class="nav__link">MATCHES</a>
+                        <div class="decor__line ${matchActive}"></div>
                     </li>
                     <li class="nav__item">
                         <a href="<c:url value='/playerServlet'/>" class="nav__link">PLAYER</a>
+                        <div class="decor__line ${playerActive}"></div>
                     </li>
                     <li class="nav__item">
                         <a href="<c:url value='/shopServlet'/>" class="nav__link">SHOP</a>
+                        <div class="decor__line ${shopActive}"></div>
                     </li>
                     <li class="nav__item">
                         <a href="<c:url value='/contactServlet'/>" class="nav__link">CONTACT</a>
+                        <div class="decor__line ${contactActive}"></div>
                     </li>
                 </ul>
 
@@ -74,7 +78,7 @@
         </div> -->
     </div>
     <!--Login Field-->
-    <div class="login" id="login">
+    <div class="login ${showLogin}" id="login">
         <div class="login__decor"></div>
 
         <!-- Login  form -->
@@ -101,10 +105,10 @@
 
             <div>
                 <p class="login__signup">
-                    Don't have an account? <a href="#" id="register-button">Sign up</a>
+                    Don't have an account? <a id="register-button">Sign up</a>
                 </p>
 
-                <a href="#" class="login__forgot" id="forgotpassword-button">
+                <a class="login__forgot" id="forgotpassword-button">
                     Forgot password?
                 </a>
 
@@ -153,7 +157,7 @@
 
             <div>
                 <p class="register__signin">
-                    Already have an account? <a href="#" id="signin-button">Sign in</a>
+                    Already have an account? <a id="signin-button">Sign in</a>
                 </p>
                 <button type="submit" class="register__button" id="sign-up-btn-submit">Sign Up</button>
             </div>
@@ -182,7 +186,7 @@
 
             <div>
                 <p class="register__signin">
-                    Already have an account? <a href="#">Sign in</a>
+                    Already have an account? <a>Sign in</a>
                 </p>
                 <button type="button" class="register__button" id="forgotpassword-submit-button">Reset</button>
             </div>

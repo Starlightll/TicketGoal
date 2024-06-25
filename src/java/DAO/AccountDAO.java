@@ -2,15 +2,16 @@ package DAO;
 
 import DB.DBContext;
 import Models.Account;
-import static Utils.Common.addToCommandIfNotDefault;
-import static Utils.Common.addToCommandIfNotNull;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static Utils.Common.addToCommandIfNotDefault;
+import static Utils.Common.addToCommandIfNotNull;
 
 public class AccountDAO {
     public static AccountDAO INSTANCE = new AccountDAO();
@@ -144,6 +145,7 @@ public class AccountDAO {
                     if (generatedKeys.next()) {
                         int generatedId = generatedKeys.getInt(1);
                         acc.setAccountId(generatedId);
+                        createCart(generatedId);
                         return acc;
                     }
                 }
@@ -152,6 +154,31 @@ public class AccountDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void createCart(int accountId) {
+        String sqlCommand = "INSERT INTO cart (accountId) VALUES (?)";
+        try (PreparedStatement ps = connect.prepareStatement(sqlCommand)) {
+            ps.setInt(1, accountId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getCartIdByAccountId(int accountId) {
+        String sqlCommand = "SELECT cartId FROM cart WHERE accountId = ?";
+        try (PreparedStatement ps = connect.prepareStatement(sqlCommand)) {
+            ps.setInt(1, accountId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("cartId");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private Object getFieldValue(Account acc, String fieldName) {

@@ -253,7 +253,7 @@
                                             <li ${requestScope.category == '1' ? 'class="active"' : ''}><a href="ContactAdminServlet"><i class="fa fa-inbox"></i> Inbox</a></li>
                                             <li ${requestScope.category == '4' ? 'class="active"' : ''}><a href="ContactAdminServlet?cate=4"><i class="fa fa-star"></i> Starred</a></li>
                                             <li ${requestScope.category == '3' ? 'class="active"' : ''}><a href="ContactAdminServlet?cate=3"><i class="fa fa-bookmark"></i> Important</a></li>
-                                            <li><a href="#"><i class="fa fa-mail-forward"></i> Sent</a></li>
+                                            <li ${requestScope.category == '2' ? 'class="active"' : ''}><a href="ContactAdminServlet?cate=2"><i class="fa fa-mail-forward"></i> Sent</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -261,11 +261,12 @@
 
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <h2>Email: ${contact.name}</h2>
-                                        <h2>Date:<fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
+                                        <h2>Name : ${contact.name}</h2>
+                                        <h3>Email : ${contact.email}</h3>
+                                        <h4>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
                                                                         type="date" pattern="MM-dd-yyyy"/>
-                                                            ${formattedDate}</h2>
-                                        <p>Message: ${contact.message}</p>
+                                                            ${formattedDate}</h4>
+                                        <p>${contact.message}</p>
                                     </div>
                                 </div>
 
@@ -280,11 +281,11 @@
                                                     <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New
                                                         Message</h4>
                                                 </div>
-                                                <form action="Send-Message" method="post">
+                                                <form action="SendMessageServlet" method="post">
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <input name="to" type="email" class="form-control"
-                                                                   placeholder="To">
+                                                                   placeholder="To" required="">
                                                         </div>
                                                         <div class="form-group">
                                                             <input name="subject" type="text" class="form-control"

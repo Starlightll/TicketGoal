@@ -6,7 +6,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="getStatus" class="DAO.SeatDAO" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -119,7 +118,7 @@
                                         <td>${statusSeat != null ? statusSeat.statusName :  "N/A"}</td>
                                         <td>
                                             <a style="color: #fff" href="seat?action=edit&pitchId=${pitch.pitchId}&seatId=${seat.seatId}" class="update__button">Update</a>  
-                                            <a style="color: #fff" href="seat?action=delete&pitchId=${pitch.pitchId}&seatId=${seat.seatId}&areaId=${seat.areaId}" class="delete__button">Delete</button> 
+                                            <a style="color: #fff" href="seat?action=delete&pitchId=${pitch.pitchId}&seatId=${seat.seatId}&areaId=${seat.areaId}" class="delete__button">Delete</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

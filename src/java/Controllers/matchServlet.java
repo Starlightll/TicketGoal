@@ -9,12 +9,13 @@ import DAO.ClubDAO;
 import Models.Address;
 import Models.Club;
 import Models.Match;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +63,9 @@ public class matchServlet extends HttpServlet {
     throws ServletException, IOException {
         //Get all matches
         List<Match> matchList = getMatches();
+
+        //set active
+        request.setAttribute("matchActive", "active");
         request.setAttribute("matches", matchList);
         request.getRequestDispatcher("/Views/Matches.jsp").forward(request, response);
     } 

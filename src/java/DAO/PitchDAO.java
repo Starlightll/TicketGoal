@@ -6,16 +6,12 @@ package DAO;
 
 import DB.DBContext;
 import Models.Pitch;
+
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.Statement;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 /**
  *
@@ -47,9 +43,9 @@ public class PitchDAO {
                 pitch.setPitchName(rs.getNString("pitchName"));
                 pitch.setAddressName(rs.getNString("addressName"));
                 pitch.setAddressURL(rs.getNString("addressURL"));
-                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
+                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure") == null ? new byte[0] : rs.getBytes("pitchStructure"));
                 pitch.setPitchStructure(pitchStructure);
-                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
+                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image") == null ? new byte[0] : rs.getBytes("image"));
                 pitch.setImage(pitchImage);
                 pitchList.add(pitch);
             }
@@ -72,9 +68,10 @@ public class PitchDAO {
                 pitch.setAddressName(rs.getNString("addressName"));
                 pitch.setAddressURL(rs.getNString("addressURL"));
                 //Encode to string
-                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure"));
+                String pitchStructure = Base64.getEncoder().encodeToString(rs.getBytes("pitchStructure") == null ? new byte[0] : rs.getBytes("pitchStructure"));
                 pitch.setPitchStructure(pitchStructure);
-                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image"));
+                String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image") == null ? new byte[0] : rs.getBytes("image"));
+                pitch.setImage(pitchImage);
                 pitch.setImage(pitchImage);
                
             }

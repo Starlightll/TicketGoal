@@ -7,12 +7,12 @@ package Controllers.Player;
 
 import DAO.PlayerDAO;
 import Models.Player;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,6 +32,8 @@ public class playerServlet extends HttpServlet {
     throws ServletException, IOException {
         PlayerDAO p = new PlayerDAO();
         List<Player> list = p.getAllPlayer();
+        //set active
+        request.setAttribute("playerActive", "active");
         request.setAttribute("listP", list);     
         request.getRequestDispatcher("Views/Player/Player.jsp").forward(request, response);
         
