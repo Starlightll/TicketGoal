@@ -7,18 +7,12 @@ package DAO;
 import DB.DBContext;
 import Models.Player;
 import Models.PlayerRole;
+
 import java.io.InputStream;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 /**
  *
