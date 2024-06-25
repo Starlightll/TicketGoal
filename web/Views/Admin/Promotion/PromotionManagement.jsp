@@ -8,6 +8,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/operator/operatorManagement.css"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .current-index {
+
+                border: 1px solid blue;
+                border-radius: 1px;
+            }
+        </style>
     </head>
     <c:set var="searchQuery" value="${param.q}" />
     <body>
@@ -17,7 +24,7 @@
                 <button id="add-new-promotion-btn" class="add-btn" >Add</button>
                 <a href="./promotionManagement" class="add-btn" style='background-color:green'>Reload</a>
                 <form action="./promotionManagement" method="GET">
-                    <input type="text" id="search-bar-input" class="search-bar" placeholder="Search..." name='q'>
+                    <input type="text" id="search-bar-input" class="search-bar" placeholder="Search..." name='q' value="${searchParam}">
                     <button type="submit" style="display: none"/>
                 </form>
             </div>
@@ -75,7 +82,7 @@
                                 <span class="close-btn" onclick="document.getElementById('editPromotionModal${promotion.promotionId}').style.display = 'none'">&times;</span>
                                 <h2>Edit Promotion ${promotion.promotionId}</h2>
                                 <div class="modal-body">
-                                    <form method="POST" action="./promotionManagement">
+                                    <form method="POST" action="./promotionManagement" onsubmit="">
                                         <input type="hidden" name="type" value="update" />
                                         <input type="hidden" name="id" value="${promotion.promotionId}" />
                                         <div class="modal-body">
@@ -123,9 +130,11 @@
 
             <!--pagination-->
             <div class="pagination">
-                <button class="prev-page" disabled>Previous</button>
-                <span class="page-numbers"></span>
-                <button class="next-page">Next</button>
+                <button  class="prev-page" onclick="window.location.href = './promotionManagement?index=${pageIndex -1}'"  ${pageIndex <= 1 ? "disabled" : ""}>Previous</button> 
+                <c:forEach begin="1" end="${totalPage}" var="i">
+                    <span class="page-numbers ${pageIndex == i ? "current-index" : ""}">${i}</span>
+                </c:forEach>
+                <button class="next-page"  onclick="window.location.href = './promotionManagement?index=${pageIndex + 1}'"  ${pageIndex < totalPage ? "" : "disabled"} >Next</a></button>
             </div>
         </div>
         <div id="modals-container">

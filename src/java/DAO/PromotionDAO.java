@@ -108,7 +108,7 @@ public class PromotionDAO {
             }
         }
 
-        return null; 
+        return null;
     }
 
     public boolean updatePromotion(Promotion promotion) {
@@ -137,7 +137,7 @@ public class PromotionDAO {
         return rowDeleted;
     }
 
-    public List<Promotion> getPromotionsBySearchAndSort(String searchQuery, String sortBy) {
+    public List<Promotion> getPromotionsBySearchAndSort(String searchQuery, String sortBy, int page, int pageSize) {
         List<Promotion> promotions = new ArrayList<>();
         StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Promotion");
         boolean hasSearch = false;
@@ -150,14 +150,24 @@ public class PromotionDAO {
         if (sortBy != null && !sortBy.isEmpty()) {
             queryBuilder.append(" ORDER BY ");
             queryBuilder.append(sortBy);
+        } else {
+            queryBuilder.append(" ORDER BY promotionId"); 
         }
 
+        int offset = (page - 1) * pageSize;
+        queryBuilder.append(" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+
         try (PreparedStatement ps = connect.prepareStatement(queryBuilder.toString())) {
+            int parameterIndex = 1;
             if (hasSearch) {
                 String likeSearchQuery = "%" + searchQuery + "%";
-                ps.setString(1, likeSearchQuery);
-                ps.setString(2, likeSearchQuery);
+                ps.setString(parameterIndex++, likeSearchQuery);
+                ps.setString(parameterIndex++, likeSearchQuery);
             }
+
+            ps.setInt(parameterIndex++, offset);
+            ps.setInt(parameterIndex, pageSize);
+
             System.out.println(queryBuilder.toString());
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -178,6 +188,6 @@ public class PromotionDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new PromotionDAO().getPromotionsBySearchAndSort(null, "promotionStartDate"));
+        System.out.println(new PromotionDAO().getPromotionsBySearchAndSort(null, null, 1, 10));
     }
 }
