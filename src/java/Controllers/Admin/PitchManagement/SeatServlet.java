@@ -4,9 +4,9 @@
  */
 package Controllers.Admin.PitchManagement;
 
-import Models.Seat;
 import DAO.SeatDAO;
 import DAO.SeatStatusDAO;
+import Models.Seat;
 import Models.SeatStatus;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -14,18 +14,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import static org.apache.poi.ss.usermodel.CellType.BOOLEAN;
-import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
-import static org.apache.poi.ss.usermodel.CellType.STRING;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 @MultipartConfig(maxFileSize = 16177215)
 public class SeatServlet extends HttpServlet {
@@ -139,7 +137,7 @@ public class SeatServlet extends HttpServlet {
                                     seat.setPrice(price);
                                 } else if (index == 3) {
                                     int areaId = (int) cell.getNumericCellValue();
-                                    seat.setAreaId(areaId);
+                                    seat.setArea(new Models.Area(areaId, null));
                                 } else {
                                     int seatStatusId = (int) cell.getNumericCellValue();
                                     seat.setSeatStatusId(seatStatusId);
@@ -153,7 +151,7 @@ public class SeatServlet extends HttpServlet {
                         index++;
                     }
                     if (index == 5) {
-                        Seat isExist = seatDAO.finSeatByIdNumber(seat.getAreaId(), seat.getSeatNumber());
+                        Seat isExist = seatDAO.finSeatByIdNumber(seat.getArea().id, seat.getSeatNumber());
                         if (isExist == null) {
                             int result = seatDAO.insert(seat);
                             if (result > 0) {
@@ -195,7 +193,7 @@ public class SeatServlet extends HttpServlet {
             Seat seat = new Seat();
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
-            seat.setAreaId(areaId);
+            seat.setArea(new Models.Area(areaId, null));
             seat.setSeatStatusId(seatStatusId);
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             //add to database
@@ -230,7 +228,7 @@ public class SeatServlet extends HttpServlet {
             seat.setSeatId(seatId);
             seat.setSeatNumber(seatNumber);
             seat.setPrice(price);
-            seat.setAreaId(areaId);
+            seat.setArea(new Models.Area(areaId, null));
             seat.setSeatStatusId(seatStatusId);
             Seat isExist = seatDAO.finSeatByIdNumber(areaId, seatNumber);
             if (isExist == null || (isExist != null && isExist.getSeatNumber() == oldSeat)) {

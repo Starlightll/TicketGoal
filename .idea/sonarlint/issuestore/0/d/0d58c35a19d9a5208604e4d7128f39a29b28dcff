@@ -1,0 +1,31 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠÁü…üÿÿÿÿ
+p
+java:S2293–"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+p
+java:S2293 "YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+p
+java:S2293ª"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+p
+java:S2293´"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+p
+java:S2293¾"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+p
+java:S2293È"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÔ
+c
+java:S1192F"HDefine a constant instead of duplicating this literal "matchId" 3 times.(ºŒ›¨şÿÿÿÿ
+f
+java:S1989@"PHandle the following exception that could be thrown by "getWriter": IOException.(ì¥´‰
+|
+java:S1989B"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(„«™ùúÿÿÿÿ
+E	java:S106H"+Replace this use of System.out by a logger.(¶‰¼‚ıÿÿÿÿ
+|
+java:S1989R"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(¹‰ëşÿÿÿÿ
+~
+java:S1989\"hHandle the following exceptions that could be thrown by "processRequest": ServletException, IOException.(‘ŸÑ
+k
+java:S1989a"PHandle the following exception that could be thrown by "addTicket": IOException.(ÏŒøµúÿÿÿÿ
+k
+java:S1989d"PHandle the following exception that could be thrown by "addTicket": IOException.(Û°õøÿÿÿÿ
+D
+java:S1172q"/Remove this unused method parameter "response".(åÀÌI
