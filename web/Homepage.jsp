@@ -9,15 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>TicketGoal</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
+        <link rel="icon" type="image/png" href="img/TicketGoalfavicon.png">
     </head>
     <body>
         <div class="header-container">
             <%@include file="/Views/include/header.jsp" %>
         </div>
         <main>
-            
+
         </main>
         <div class="footer-container">
         <%@include file="/Views/include/footer.jsp" %>

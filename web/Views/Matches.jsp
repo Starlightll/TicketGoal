@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>TicketGoal Matches</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches.css" />
+        <link rel="icon" type="image/png" href="img/TicketGoalfavicon.png">
     </head>
     <body>
         <div class="header-container">

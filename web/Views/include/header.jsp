@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"/>
-
 </head>
 <body>
 <header class="header">
@@ -62,7 +61,8 @@
                             <div class="triangle-up"></div>
                             <a class="dropdown__item" id="profile-btn">Profile</a>
                             <c:if test="${sessionScope.user.roleId == 1}">
-                                <a class="dropdown__item" href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
+                                <a class="dropdown__item"
+                                   href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
                                 <a class="dropdown__item">QR Scan</a>
                             </c:if>
                             <c:if test="${sessionScope.user.roleId == 3}">
@@ -303,5 +303,47 @@
         selectElement ? selectElement.value = gender : null;
     };
 
+    //Check if the user is logged in
+    const user = ${sessionScope.user != null ? 'true' : 'false'};
+    if (user) {
+        // Set the dropdown menu position based on the position of the profile
+        const profileIcon = document.getElementById('actions-btn');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        profileIcon.addEventListener('click', function () {
+            // Toggle the dropdown menu visibility
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'block';
+                updateDropdownPosition();
+            }
+        });
+
+
+        // Handle header actions menu
+        function updateDropdownPosition() {
+            const rect = profileIcon.getBoundingClientRect();
+            const dropdownRect = dropdownMenu.getBoundingClientRect();
+            const iconCenterX = rect.left + rect.width / 2;
+            const dropdownLeft = iconCenterX - dropdownRect.width / 2;
+
+            dropdownMenu.style.top = rect.bottom + 12 + 'px';
+            dropdownMenu.style.left = dropdownLeft + 'px';
+        }
+
+
+        // Update dropdown position on window resize
+        window.addEventListener('resize', function () {
+            updateDropdownPosition();
+        });
+
+        // Close the dropdown if clicked outside
+        document.addEventListener('click', function (event) {
+            if (!profileIcon.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    }
 </script>
 </html>
