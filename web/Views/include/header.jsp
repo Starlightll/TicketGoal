@@ -56,8 +56,23 @@
             <div class="nav__actions">
                 <!-- Login button -->
                 <c:if test="${sessionScope.user != null}">
-                    <i class="ri-user-line nav__cart" id="profile-btn"></i>
-                    <button onclick="window.location.href = './signOutServlet'" class="join__button">LOG OUT</button>
+                    <div class="actions">
+                        <i class="ri-user-line nav__cart" id="actions-btn"></i>
+                        <div class="dropdown__menu" id="dropdown-menu">
+                            <div class="triangle-up"></div>
+                            <a class="dropdown__item" id="profile-btn">Profile</a>
+                            <c:if test="${sessionScope.user.roleId == 1}">
+                                <a class="dropdown__item" href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
+                                <a class="dropdown__item">QR Scan</a>
+                            </c:if>
+                            <c:if test="${sessionScope.user.roleId == 3}">
+                                <a class="dropdown__item">QR Scan</a>
+                            </c:if>
+                            <a class="dropdown__item">My Ticket</a>
+                            <a class="dropdown__item">My Cart</a>
+                            <a class="logout__button" href="./signOutServlet">Log out</a>
+                        </div>
+                    </div>
                 </c:if>
                 <c:if test="${sessionScope.user == null}">
                     <i class="ri-user-fill nav__login" id="login-btn"></i>
@@ -228,7 +243,8 @@
                                 <div class="profile__column">
                                     <div class="profile__item">
                                         <label for="profileAddress" class="profile__label">Address</label>
-                                        <input type="text" value="${user.getAddress()}" id="profileAddress" placeholder="Enter your address">
+                                        <input type="text" value="${user.getAddress()}" id="profileAddress"
+                                               placeholder="Enter your address">
                                     </div>
                                     <div class="profile__item">
                                         <label for="profileGender" class="profile__label">Gender</label>
@@ -241,7 +257,8 @@
                                 </div>
                             </div>
                             <div class="submit">
-                                <button type="submit" class="profile__button" id="profile-update-submit-btn">Update</button>
+                                <button type="submit" class="profile__button" id="profile-update-submit-btn">Update
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -260,7 +277,8 @@
                             </div>
                             <div>
                                 <label for="changePassword-confirmPass" class="profile__label">Confirm password</label>
-                                <input type="password" placeholder="Confirm your password" id="changePassword-confirmPass"
+                                <input type="password" placeholder="Confirm your password"
+                                       id="changePassword-confirmPass"
                                        class="profile__input" autocomplete="new-password">
                             </div>
                             <div>
@@ -273,6 +291,7 @@
         </div>
     </c:if>
 </header>
+</body>
 <script src="${pageContext.request.contextPath}/js/validate.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
 <script>
@@ -283,6 +302,6 @@
 
         selectElement ? selectElement.value = gender : null;
     };
+
 </script>
-</body>
 </html>
