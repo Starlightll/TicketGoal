@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +18,12 @@
 </head>
 <body>
 <main>
-    <button onclick="location.href='matchServlet'">Back</button>
+    <button class="back__button" onclick="location.href='matchServlet'">Back</button>
     <div class="buyticket__main">
+        <input class="zoom__bar" type="range" min="0.9" max="2" value="0.9" step="0.1"
+               oninput="this.value > currentZoom ? zoomIn() : zoomOut()">
         <div class="stadium" id="stadium">
-            <div>
+            <div class="stadium__UI" id="stadiumUI">
                 <img src="${pageContext.request.contextPath}/img/StadiumV1.png" alt="stadium">
                 <%--top side outler--%>
                 <div class="top__side__outler">
@@ -29,14 +31,19 @@
                         <c:forEach var="seat" items="${seatsARO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -44,14 +51,19 @@
                         <c:forEach var="seat" items="${seatsALO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -62,14 +74,19 @@
                         <c:forEach var="seat" items="${seatsCRO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -77,14 +94,19 @@
                         <c:forEach var="seat" items="${seatsCLO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -95,14 +117,19 @@
                         <c:forEach var="seat" items="${seatsDLO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -113,14 +140,19 @@
                         <c:forEach var="seat" items="${seatsBRO}">
                             <c:if test="${seat.seatStatusId == 1}">
                                 <a onclick="showConfirm('${seat.area.areaName}', ${seat.seatId}, ${seat.seatNumber}, ${seat.row}, ${seat.price})">
-                                    <div class="seat"><i class="ri-layout-top-2-fill" style="" id="seat-${seat.seatId}"></i></div>
+                                    <div class="seat"><i class="ri-layout-top-2-fill" style=""
+                                                         id="seat-${seat.seatId}"></i></div>
                                 </a>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 3}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ff4747; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ff4747; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
-                                <div class="seat"><i class="ri-layout-top-2-fill" style="color: #ffa600; cursor: default" id="seat-${seat.seatId}"></i></div>
+                                <div class="seat"><i class="ri-layout-top-2-fill"
+                                                     style="color: #ffa600; cursor: default"
+                                                     id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -154,7 +186,8 @@
         </div>
         <div class="notification__background" id="notification-background">
             <div class="notification" id="buyticket-notification">
-                <div class="notification__item__icon__close"><i class="ri-close-large-fill" id="btn-close-notification"></i></div>
+                <div class="notification__item__icon__close"><i class="ri-close-large-fill"
+                                                                id="btn-close-notification"></i></div>
                 <div class="notification__item__icon"><i class="ri-error-warning-fill"></i></div>
                 <div class="notification__content">
                     <div class="notification__item__content" id="notification-message"></div>
@@ -212,7 +245,7 @@
         document.forms["confirm-box"]["price"].value = price;
     }
 
-    function addToList(){
+    function addToList() {
         const confirmBox = document.getElementById("confirm-box");
         const seatId = confirmBox["seatId"].value;
         const seatNumber = confirmBox["seatNumber"].value;
@@ -221,11 +254,11 @@
         const orderList = document.getElementById("order-list");
         const totalValue = document.getElementById("total-value");
         const newOrder = document.createElement("div");
-        if(tickets.includes(seatId)){
+        if (tickets.includes(seatId)) {
             showNotification("This seat is already in the list");
-        }else if(seatId !== null || seatId !== ""){
+        } else if (seatId !== null || seatId !== "") {
             newOrder.className = "order";
-            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px; color: white'>"+"<div>"+seatNumber+"</div>"+"<div>"+row+"</div>"+"</div>";
+            newOrder.innerHTML = "<div style='background-color: #ff0044; width: 100%; height: 50px; margin-bottom: 4px; border-radius: 10px; color: white'>" + "<div>" + seatNumber + "</div>" + "<div>" + row + "</div>" + "</div>";
             orderList.appendChild(newOrder);
             let totalValueNumber = parseInt(totalValue.innerHTML.split(" ")[0]);
             let priceNumber = parseInt(price.split(" ")[0]);
@@ -239,8 +272,8 @@
         confirmBox.reset();
     }
 
-    function addToCart(matchId){
-        if(tickets.length === 0){
+    function addToCart(matchId) {
+        if (tickets.length === 0) {
             showNotification("Please select at least one seat");
             return;
         }
@@ -254,16 +287,16 @@
             },
             dataType: 'JSON',
             success: function (response) {
-                if(response.loginRequired === 'true'){
+                if (response.loginRequired === 'true') {
                     const loginBox = document.getElementById('login');
                     loginBox.classList.add('show-login');
-                }else if(response.notAvailable === 'true'){
+                } else if (response.notAvailable === 'true') {
                     showNotification("This match is not longer available for purchases ticket");
-                }else if(response.isPurchased === 'true'){
+                } else if (response.isPurchased === 'true') {
                     showNotification("This seat is already purchased!");
-                }else if(response.isInCart === 'true'){
+                } else if (response.isInCart === 'true') {
                     showNotification("This seat is already in the cart");
-                }else if(response.isSuccess === 'true'){
+                } else if (response.isSuccess === 'true') {
                     showNotification("Add to cart successfully");
                     const stadium = document.getElementById("stadium");
                     let orderList = document.getElementById("order-list");
@@ -280,7 +313,7 @@
 
 
     function checkout(matchId) {
-        if(tickets.length === 0){
+        if (tickets.length === 0) {
             showNotification("Please select at least one seat");
             return;
         }
@@ -295,14 +328,14 @@
             },
             dataType: 'JSON',
             success: function (response) {
-                if(response.loginRequired === 'true'){
+                if (response.loginRequired === 'true') {
                     const loginBox = document.getElementById('login');
                     loginBox.classList.add('show-login');
-                }else if(response.notAvailable === 'true'){
+                } else if (response.notAvailable === 'true') {
                     showNotification("This match is not longer available for purchases ticket");
-                }else if(response.isPurchased === 'true'){
+                } else if (response.isPurchased === 'true') {
                     showNotification("This seat is already purchased!");
-                }else if(response.isSuccess === 'true'){
+                } else if (response.isSuccess === 'true') {
                     showNotification("Buy ticket successfully");
                     const stadium = document.getElementById("stadium");
                     let orderList = document.getElementById("order-list");
@@ -323,13 +356,64 @@
         const notificationMessage = document.getElementById('notification-message');
         notificationMessage.innerHTML = message;
         notificationBackground.style.display = "block";
-        setTimeout(function(){
+        setTimeout(function () {
             notificationBackground.style.opacity = "1";
         }, 300);
-        setTimeout(function(){
+        setTimeout(function () {
             notification.style.transform = "translate(-50%, -50%) scale(1)";
         }, 300);
     }
+
+    let currentZoom = 0.9;
+
+    function zoomOut() {
+        if (currentZoom > 0.9) {
+            currentZoom -= 0.1;
+            const stadium = document.getElementById("stadiumUI");
+            stadium.style.transform = `scale(` + currentZoom + `)`;
+        }
+    }
+
+    function zoomIn() {
+        if (currentZoom < 2) {
+            currentZoom += 0.1;
+            const stadium = document.getElementById("stadiumUI");
+            stadium.style.transform = `scale(` + currentZoom + `)`;
+        }
+    }
+
+    //Drag for stadium
+    let newX = 0, newY = 0, startX = 0, startY = 0;
+    const stadium = document.getElementById("stadiumUI");
+
+    stadium.addEventListener('mousedown', mouseDown);
+
+    function mouseDown(e) {
+        e.preventDefault();
+        startX = e.clientX;
+        startY = e.clientY;
+        document.addEventListener('mousemove', mouseMove);
+        document.addEventListener('mouseup', mouseUp);
+    }
+
+    function mouseMove(e) {
+        e.preventDefault();
+        newX = e.clientX - startX;
+        newY = e.clientY - startY;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        // Move the stadium element
+        stadium.style.top = (stadium.offsetTop + newY) + "px";
+        stadium.style.left = (stadium.offsetLeft + newX) + "px";
+    }
+
+    function mouseUp(e) {
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+    }
+
 
 
 </script>
