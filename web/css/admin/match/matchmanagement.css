@@ -169,7 +169,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
     align-content: center;
     text-decoration: none;
-    color: #fff
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
 .match__management_container .delete__button {
@@ -180,7 +182,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
     align-content: center;
     text-decoration: none;
-    color: #fff
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
 .match__management_container .option {

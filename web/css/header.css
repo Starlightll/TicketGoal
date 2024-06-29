@@ -60,7 +60,7 @@ header *{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 40px;
+    margin: 0 4%;
 }
 
 .header .nav__logo {
@@ -270,7 +270,7 @@ header *{
 }
 
 .header .nav__actions .actions .dropdown__menu a:hover {
-    background-color: #ededed;
+    background-color: #dedede;
     border-radius: 10px;
 }
 
