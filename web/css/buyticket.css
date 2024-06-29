@@ -6,6 +6,8 @@
 
 body {
     overflow: hidden;
+    --color: rgba(30, 30, 30);
+    --bgColor: rgb(215, 215, 215);
 }
 
 
@@ -223,6 +225,7 @@ body {
     padding: 10px;
 }
 
+/* Order list */
 
 .buyticket__main .order__detail {
     background-color: #eff0f3;
@@ -243,7 +246,9 @@ body {
     margin: 10px auto;
     border-radius: 10px;
     overflow-y: auto;
+    scrollbar-width: thin;
 }
+
 
 .buyticket__main .order__detail .checkout {
     padding: 10px;
@@ -394,5 +399,4 @@ body {
     padding: 10px;
     z-index: 1000;
 }
-
 
