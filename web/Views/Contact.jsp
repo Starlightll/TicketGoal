@@ -15,7 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     </head>
-    <body>
+     <body>
         <div class="header-container">
             <%@include file="/Views/include/header.jsp" %>
         </div>
@@ -33,7 +33,7 @@
 
                     <h1>Contact us</h1>
                     <p>Planning to buy ticket soon?, things to do and find best deals for your next match.</p>
-                    <form id="contact-form" method="post" action="contactServlet">
+                    <form id="contact-form" method="post" action="contactServlet" onsubmit="return validateForm()">
                         <label for="name">Full name</label>
                         <input type="text" id="name" name="name" placeholder="Your Full Name" required>
                         <label for="email">Email</label>
@@ -43,10 +43,9 @@
                         <label for="message">Message</label>
                         <textarea rows="6" placeholder="Your Message" id="message" name="message" required></textarea>
                         <button type="submit" id="submit" name="submit">Send</button>
-
+                        <div id="error" style="color: red; font-weight: bold;"></div>
+                        <div id="success-msg" style="color: green; font-weight: bold;"></div>
                     </form>
-                    <div id="error"></div>
-                    <div id="success-msg"></div>
                 </div>
             </div>
         </main>
@@ -55,9 +54,26 @@
             function showToast(type, message) {
                 toastr[type](message);
             }
-            var message = '${requestScope.report}';
-            if(message !== ''){
-                showToast('success','Send Message Successfully!');
+
+            function validateForm() {
+                var form = document.getElementById('contact-form');
+                var name = form['name'].value.trim();
+                var email = form['email'].value.trim();
+                var title = form['title'].value.trim();
+                var message = form['message'].value.trim();
+
+                if (name === '' || email === '' || title === '' || message === '') {
+                    document.getElementById('error').innerText = 'Please fill in all required fields.';
+                    document.getElementById('success-msg').innerText = '';
+                    return false;
+                } else {
+                    document.getElementById('error').innerText = '';
+                    document.getElementById('success-msg').innerText = 'Sending message...';
+                    // Here you can add AJAX code to submit the form asynchronously if needed
+                    // Example: $.ajax({ ... });
+                    showToast('success', 'Send Message Successfully!');
+                    return true;
+                }
             }
         </script>
     </body>
