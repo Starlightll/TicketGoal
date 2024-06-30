@@ -170,23 +170,15 @@ public class BuyTicketServlet extends HttpServlet {
     }
 
     private List<Seat> getSeatListWithAccount(Account account, int matchId){
-        List<Seat> seatList = SeatDAO.INSTANCE.getAllSeatOfMatch(matchId);
+        List<Seat> seatList = MatchDAO.INSTANCE.getSeatOfMatch(matchId);
         List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, matchId);
-        List<Ticket> paidTickets = new TicketDAO().getPaidTicketByMatch(matchId);
-        //Hash map of paid seat id
-        Map<Integer, Integer> paidSeatIds = new HashMap<>();
-        for(Ticket ticket : paidTickets){
-            paidSeatIds.put(ticket.getSeatId(), ticket.getSeatId());
-        }
         //Hash map of in cart seat id
         Map<Integer, Integer> inCartSeatIds = new HashMap<>();
         for(Ticket ticket : ticketInCart){
             inCartSeatIds.put(ticket.getSeatId(), ticket.getSeatId());
         }
         for(Seat seat: seatList){
-            if(paidSeatIds.containsKey(seat.getSeatId())){
-                seat.setSeatStatusId(3);
-            }else if(inCartSeatIds.containsKey(seat.getSeatId())){
+            if(inCartSeatIds.containsKey(seat.getSeatId())){
                 seat.setSeatStatusId(5);
             }
         }
@@ -263,7 +255,6 @@ public class BuyTicketServlet extends HttpServlet {
         List<Seat> seatsDLO = getSeatsDLO(seatList);
         StringBuilder stadium = new StringBuilder();
         stadium.append(
-                "            <div>\n" +
                 "                <img src=\""+request.getContextPath()+"/img/StadiumV1.png\" alt=\"stadium\">\n" +
                 "                <div class=\"top__side__outler\">\n" +
                 "                    <div class=\"area__ARO\">");
@@ -352,7 +343,7 @@ public class BuyTicketServlet extends HttpServlet {
         stadium.append("</div>\n" +
                 "                </div>\n" +
                 "\n" +
-                "                <div class=\"top__side__inner\"></div>\n");
+                "                <div class=\"top__side__inner\">");
         return stadium.toString();
     }
 

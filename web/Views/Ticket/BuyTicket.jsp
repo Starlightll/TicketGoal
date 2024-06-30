@@ -230,6 +230,40 @@
     </div>
 </main>
 <script>
+    attachStadiumDragEvent();
+    //Drag for stadium
+    function attachStadiumDragEvent() {
+        let newX = 0, newY = 0, startX = 0, startY = 0;
+        let stadiumUI = document.getElementById("stadiumUI");
+        stadiumUI.addEventListener('mousedown', mouseDown);
+
+        function mouseDown(e) {
+            e.preventDefault();
+            startX = e.clientX;
+            startY = e.clientY;
+            document.addEventListener('mousemove', mouseMove);
+            document.addEventListener('mouseup', mouseUp);
+        }
+
+        function mouseMove(e) {
+            e.preventDefault();
+            newX = e.clientX - startX;
+            newY = e.clientY - startY;
+
+            startX = e.clientX;
+            startY = e.clientY;
+
+            // Move the stadium element
+            stadiumUI.style.top = (stadiumUI.offsetTop + newY) + "px";
+            stadiumUI.style.left = (stadiumUI.offsetLeft + newX) + "px";
+        }
+
+        function mouseUp(e) {
+            document.removeEventListener('mousemove', mouseMove);
+            document.removeEventListener('mouseup', mouseUp);
+        }
+    }
+
     let tickets = [];
 
     function showConfirm(areaName, seatId, seatNumber, row, price) {
@@ -277,6 +311,9 @@
             showNotification("Please select at least one seat");
             return;
         }
+        let stadiumUI = document.getElementById("stadiumUI");
+        let oldTop = stadiumUI.offsetTop;
+        let oldLeft = stadiumUI.offsetLeft;
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
@@ -298,11 +335,12 @@
                     showNotification("This seat is already in the cart");
                 } else if (response.isSuccess === 'true') {
                     showNotification("Add to cart successfully");
-                    const stadium = document.getElementById("stadium");
+                    const stadiumUI = document.getElementById("stadiumUI");
                     let orderList = document.getElementById("order-list");
                     tickets = [];
                     orderList.innerText = "";
-                    stadium.innerHTML = response.stadium;
+                    stadiumUI.innerHTML = response.stadium;
+                    attachStadiumDragEvent();
                 }
             },
             error: function () {
@@ -337,11 +375,11 @@
                     showNotification("This seat is already purchased!");
                 } else if (response.isSuccess === 'true') {
                     showNotification("Buy ticket successfully");
-                    const stadium = document.getElementById("stadium");
+                    const stadiumUI = document.getElementById("stadiumUI");
                     let orderList = document.getElementById("order-list");
                     tickets = [];
                     orderList.innerText = "";
-                    stadium.innerHTML = response.stadium;
+                    stadiumUI.innerHTML = response.stadium;
                 }
             },
             error: function () {
@@ -380,38 +418,6 @@
             const stadium = document.getElementById("stadiumUI");
             stadium.style.transform = `scale(` + currentZoom + `)`;
         }
-    }
-
-    //Drag for stadium
-    let newX = 0, newY = 0, startX = 0, startY = 0;
-    const stadium = document.getElementById("stadiumUI");
-
-    stadium.addEventListener('mousedown', mouseDown);
-
-    function mouseDown(e) {
-        e.preventDefault();
-        startX = e.clientX;
-        startY = e.clientY;
-        document.addEventListener('mousemove', mouseMove);
-        document.addEventListener('mouseup', mouseUp);
-    }
-
-    function mouseMove(e) {
-        e.preventDefault();
-        newX = e.clientX - startX;
-        newY = e.clientY - startY;
-
-        startX = e.clientX;
-        startY = e.clientY;
-
-        // Move the stadium element
-        stadium.style.top = (stadium.offsetTop + newY) + "px";
-        stadium.style.left = (stadium.offsetLeft + newX) + "px";
-    }
-
-    function mouseUp(e) {
-        document.removeEventListener('mousemove', mouseMove);
-        document.removeEventListener('mouseup', mouseUp);
     }
 
 
