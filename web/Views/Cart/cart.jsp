@@ -37,24 +37,24 @@
                         <div class="ticket-info">
                             <div class="image-placeholder">
                                 <div class="box-clubname">
-                                    <p class="club1">${ticket.club1}</p>
+                                    <p class="club1">${ticket.match.club1.clubName}</p>
                                     <p class="divider"></p>
-                                    <p class="club2">${ticket.club2}</p>
+                                    <p class="club2">${ticket.match.club2.clubName}</p>
                                 </div>
                             </div>
                             <div class="ticket-details">
-                                <p>Area: ${ticket.areaName}</p>
-                                <p>Seat number: ${ticket.seatNumber}</p>
-                                <p>Price: ${ticket.price}</p>
-                                 <p>Date: ${ticket.date}</p>
+                                <p>Area: ${ticket.seat.area.areaName}</p>
+                                <p>Seat number: ${ticket.seat.seatNumber}</p>
+                                <p>Price: ${ticket.seat.price}</p>
+                                 <p>Date: ${ticket.match.schedule}</p>
                             </div>
                         </div>
                         <div class="delete-icon">
                             <input type="checkbox" class="ticket-checkbox"
-                                   data-price="${ticket.price}"
-                                   data-area="${ticket.areaName}"
-                                   data-seat="${ticket.seatNumber}"
-                                    data-date="${ticket.date}"
+                                   data-price="${ticket.seat.price}"
+                                   data-area="${ticket.seat.area.areaName}"
+                                   data-seat="${ticket.seat.seatNumber}"
+                                    data-date="${ticket.match.schedule}"
                                    value="${ticket.ticketId}"
                                    onClick="handleChoose(this)"
                                    >
