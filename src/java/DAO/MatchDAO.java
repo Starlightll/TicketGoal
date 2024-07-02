@@ -5,12 +5,16 @@
 package DAO;
 
 import DB.DBContext;
+import Models.Area;
 import Models.Match;
+import Models.Seat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -110,6 +114,34 @@ public class MatchDAO {
             status = e.getMessage();
             return false;
         }
+    }
+
+    public List<Seat> getSeatOfMatch(int matchId) {
+        List<Seat> seats = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Seat LEFT JOIN Area A on A.areaId = Seat.areaId WHERE matchId = ?";
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setInt(1, matchId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                seat.setRow(rs.getInt("row"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seats.add(seat);
+            }
+        } catch (Exception e) {
+            status = e.getMessage();
+            System.out.println("GetSeatOfMatch: " + status);
+            return null;
+        }
+        return seats;
     }
     
 }
