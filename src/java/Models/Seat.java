@@ -8,17 +8,19 @@ public class Seat {
     private int price;
     private Area area;
     private int seatStatusId;
+    private int matchId;
 
     public Seat() {
     }
 
-    public Seat(int seatId, int seatNumber, int row, int price, Area area, int seatStatusId) {
+    public Seat(int seatId, int seatNumber, int row, int price, Area area, int seatStatusId, int matchId) {
         this.seatId = seatId;
         this.seatNumber = seatNumber;
         this.row = row;
         this.price = price;
         this.area = area;
         this.seatStatusId = seatStatusId;
+        this.matchId = matchId;
     }
 
     public int getSeatId() {
@@ -67,5 +69,13 @@ public class Seat {
 
     public void setSeatStatusId(int seatStatusId) {
         this.seatStatusId = seatStatusId;
+    }
+
+    public int getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
     }
 }

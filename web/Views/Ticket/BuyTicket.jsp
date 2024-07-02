@@ -168,7 +168,12 @@
                     <div>Order Detail</div>
                 </div>
                 <div class="order__list" id="order-list">
-
+                    <c:forEach var="ticket" items="${ticketInCart}">
+                        <div class="item">
+                            <div>${ticket.seat.seatNumber}</div>
+                            <div>${ticket.seat.row}</div>
+                        </div>
+                    </c:forEach>
                 </div>
                 <div class="checkout">
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
@@ -179,7 +184,7 @@
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                 </div>
                 <div class="action">
-                    <button id="btn-buy" type="button" onclick="checkout(${matchId})">Buy</button>
+                    <button id="btn-buy" type="button" onclick="purchase(${matchId})">Buy</button>
                     <button id="btn-add-to-cart" type="button" onclick="addToCart(${matchId})">Add to cart</button>
                 </div>
             </form>
@@ -198,10 +203,10 @@
     <div class="confirm__box__background" id="confirm-box-background">
         <form class="confirm__box" id="confirm-box">
             <div hidden>
-                <input type="text" name="seatId">
-                <input type="text" name="seatNumber">
-                <input type="text" name="row">
-                <input type="text" name="price">
+                <input type="text" name="seatId" value="">
+                <input type="text" name="seatNumber" value="">
+                <input type="text" name="row" value="">
+                <input type="text" name="price" value="">
                 <input type="text" name="matchId" value="${matchId}">
             </div>
             <i class="ri-close-large-fill close__btn" id="btn-close"></i>
@@ -224,7 +229,7 @@
                 </tr>
             </table>
             <div class="action">
-                <button class="add__list_btn" onclick="addToList()" type="button"><i class="ri-add-line"></i></button>
+                <button class="add__list_btn" onclick="addToCart()" type="button"><i class="ri-add-line"></i></button>
             </div>
         </form>
     </div>
@@ -273,10 +278,11 @@
         document.getElementById("row-value").innerHTML = row;
         document.getElementById("price-value").innerHTML = price + " VNĐ";
         document.getElementById("seat-id").innerHTML = seatId;
-        document.forms["confirm-box"]["seatId"].value = seatId;
-        document.forms["confirm-box"]["seatNumber"].value = seatNumber;
-        document.forms["confirm-box"]["row"].value = row;
-        document.forms["confirm-box"]["price"].value = price;
+        const confirmBox = document.getElementById("confirm-box");
+        confirmBox["seatId"].value = seatId;
+        confirmBox["seatNumber"].value = seatNumber;
+        confirmBox["row"].value = row;
+        confirmBox["price"].value = price;
     }
 
     function addToList() {
@@ -306,21 +312,15 @@
         confirmBox.reset();
     }
 
-    function addToCart(matchId) {
-        if (tickets.length === 0) {
-            showNotification("Please select at least one seat");
-            return;
-        }
-        let stadiumUI = document.getElementById("stadiumUI");
-        let oldTop = stadiumUI.offsetTop;
-        let oldLeft = stadiumUI.offsetLeft;
+    function addToCart() {
+        const confirmBox = document.getElementById("confirm-box");
+        const seatIds = confirmBox["seatId"].value;
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
             data: {
-                matchId: matchId,
                 action: "addToCart",
-                seatIds: JSON.stringify(tickets)
+                seatId: seatIds,
             },
             dataType: 'JSON',
             success: function (response) {
@@ -334,19 +334,23 @@
                 } else if (response.isInCart === 'true') {
                     showNotification("This seat is already in the cart");
                 } else if (response.isSuccess === 'true') {
-                    showNotification("Add to cart successfully");
+                    const orderList = document.getElementById("order-list");
+                    const newOrder = document.createElement("div");
+                    newOrder.className = "item";
+                    newOrder.innerHTML = response.addedSeat;
+                    orderList.appendChild(newOrder);
                     const stadiumUI = document.getElementById("stadiumUI");
-                    let orderList = document.getElementById("order-list");
-                    tickets = [];
-                    orderList.innerText = "";
                     stadiumUI.innerHTML = response.stadium;
-                    attachStadiumDragEvent();
+                    showNotification("Add to cart successfully");
                 }
             },
             error: function () {
                 alert("Error");
             }
         });
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
+        attachStadiumDragEvent();
     }
 
 
@@ -380,6 +384,17 @@
                     tickets = [];
                     orderList.innerText = "";
                     stadiumUI.innerHTML = response.stadium;
+                    attachStadiumDragEvent();
+                }
+                if (response.code === '00') {
+                    if (window.vnpay) {
+                        vnpay.open({width: 768, height: 600, url: x.data});
+                    } else {
+                        location.href = response.data;
+                    }
+                    return false;
+                } else {
+                    alert(response.Message);
                 }
             },
             error: function () {

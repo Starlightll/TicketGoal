@@ -5,8 +5,7 @@
 package DAO;
 
 import DB.DBContext;
-import Models.Account;
-import Models.Ticket;
+import Models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,30 +25,18 @@ public class TicketDAO {
         connect = new DBContext().getConnection();
     }
 
-    public Ticket selectTicket(int cartId) {
-        Ticket ticket = null;
-        String sql = "SELECT * FROM ticket WHERE cartId = ?";
-        try {
-            PreparedStatement st = connect.prepareStatement(sql);
-            st.setInt(1, cartId);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                String code = rs.getString("code");
-                Date date = rs.getDate("date");
-                int seatId = rs.getInt("seatId");
-                int ticketStatusId = rs.getInt("ticketStatusId");
-                int ticketId = rs.getInt("ticketId");
-                int matchId = rs.getInt("matchId");
-                ticket = new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId);
-            }
-        } catch (SQLException e) {
-            System.out.println("Select ticket: " + e);
-        }
-        return ticket;
-    }
- public List<Ticket> getTicketByTicketStatus(int status) {
+    public List<Ticket> getTicketByTicketStatus(int status) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT * FROM ticket WHERE ticketStatusId = ?";
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
+                "FROM Ticket t\n" +
+                "JOIN Seat s ON t.seatId = s.seatId\n" +
+                "JOIN Area a ON s.areaId = a.areaId\n" +
+                "JOIN Match m ON t.matchId = m.matchId\n" +
+                "JOIN Club c1 ON m.club1 = c1.clubId\n" +
+                "JOIN Club c2 ON m.club2 = c2.clubId\n" +
+                "JOIN Cart cr ON t.cartId = cr.cartId\n" +
+                "JOIN Pitch p ON m.pitchId = p.pitchId\n" +
+                "WHERE t.ticketStatusId = ?";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setInt(1, status);
@@ -58,13 +45,44 @@ public class TicketDAO {
                 int ticketId = rs.getInt("ticketId");
                 String code = rs.getString("code");
                 Date date = rs.getDate("date");
-                int seatId = rs.getInt("seatId");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
                 int ticketStatusId = rs.getInt("ticketStatusId");
                 int cartId = rs.getInt("cartId");
                 int matchId = rs.getInt("matchId");
-
-                Ticket ticket = new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId);
-                tickets.add(ticket);
+                String seatNumber = rs.getString("seatNumber");
+                double price = rs.getDouble("price");
+                String areaName = rs.getString("areaName");
+                String club1Name = rs.getString("club1Name");
+                String club2Name = rs.getString("club2Name");
+                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by status: " + e);
@@ -72,23 +90,6 @@ public class TicketDAO {
         return tickets;
     }
 
-    public boolean buyTicket(Ticket ticket) {
-        String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
-        boolean rowInserted = false;
-        try {
-            PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, ticket.getCode());
-            statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
-            statement.setInt(3, ticket.getSeatId());
-            statement.setInt(4, 1);
-            statement.setInt(5, ticket.getCartId());
-            statement.setInt(6, ticket.getMatchId());
-            rowInserted = statement.executeUpdate() > 0;
-        } catch (Exception e) {
-            System.out.println("Insert ticket: " + e);
-        }
-        return rowInserted;
-    }
 
     public int addToCart(Ticket ticket) {
         String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
@@ -97,10 +98,10 @@ public class TicketDAO {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, ticket.getCode());
             statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
-            statement.setInt(3, ticket.getSeatId());
+            statement.setInt(3, ticket.getSeat().getSeatId());
             statement.setInt(4,2);
             statement.setInt(5, ticket.getCartId());
-            statement.setInt(6, ticket.getMatchId());
+            statement.setInt(6, ticket.getMatch().getMatchId());
             rowInserted = statement.executeUpdate();
         } catch (Exception e) {
             System.out.println("Insert ticket: " + e);
@@ -111,17 +112,16 @@ public class TicketDAO {
 
     public List<Ticket> getTicketInCart(int accountId) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = " SELECT t.ticketId, t.code, t.date, t.seatId, t.ticketStatusId, t.cartId, t.matchId, "
-                + "s.seatNumber, s.price, a.areaName, "
-                + "m.club1, m.club2, c1.clubName AS club1Name, c2.clubName AS club2Name "
-                + "FROM Ticket t "
-                + "JOIN Seat s ON t.seatId = s.seatId "
-                + "JOIN Area a ON s.areaId = a.areaId "
-                + "JOIN Match m ON t.matchId = m.matchId "
-                + "JOIN Club c1 ON m.club1 = c1.clubId "
-                + "JOIN Club c2 ON m.club2 = c2.clubId "
-                + "JOIN Cart cr ON t.cartId = cr.cartId "
-                + "WHERE cr.accountId = ? AND t.ticketStatusId = 2";
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
+                "FROM Ticket t\n" +
+                "JOIN Seat s ON t.seatId = s.seatId\n" +
+                "JOIN Area a ON s.areaId = a.areaId\n" +
+                "JOIN Match m ON t.matchId = m.matchId\n" +
+                "JOIN Club c1 ON m.club1 = c1.clubId\n" +
+                "JOIN Club c2 ON m.club2 = c2.clubId\n" +
+                "JOIN Cart cr ON t.cartId = cr.cartId\n" +
+                "JOIN Pitch p ON m.pitchId = p.pitchId\n" +
+                "WHERE cr.accountId = ? and t.ticketStatusId = 2";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setInt(1, accountId);
@@ -130,7 +130,35 @@ public class TicketDAO {
                 int ticketId = rs.getInt("ticketId");
                 String code = rs.getString("code");
                 Date date = rs.getDate("date");
-                int seatId = rs.getInt("seatId");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
                 int ticketStatusId = rs.getInt("ticketStatusId");
                 int cartId = rs.getInt("cartId");
                 int matchId = rs.getInt("matchId");
@@ -139,9 +167,7 @@ public class TicketDAO {
                 String areaName = rs.getString("areaName");
                 String club1Name = rs.getString("club1Name");
                 String club2Name = rs.getString("club2Name");
-
-                tickets.add(new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId,
-                        seatNumber, areaName, price, club1Name, club2Name));
+                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by accountId: " + e);
@@ -152,7 +178,7 @@ public class TicketDAO {
     public List<Ticket> getTicketInCartByMatchAndAccount(Account account, int matchId) {
         List<Ticket> ticketList = new ArrayList<>();
         for(Ticket ticket: getTicketInCart(account.getAccountId())) {
-            if(ticket.getMatchId() == matchId) {
+            if(ticket.getMatch().matchId == matchId) {
                 ticketList.add(ticket);
             }
         }
@@ -162,7 +188,16 @@ public class TicketDAO {
 
     public List<Ticket> getPaidTicket(){
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT * FROM Ticket WHERE ticketStatusId = 1";
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
+                "FROM Ticket t\n" +
+                "JOIN Seat s ON t.seatId = s.seatId\n" +
+                "JOIN Area a ON s.areaId = a.areaId\n" +
+                "JOIN Match m ON t.matchId = m.matchId\n" +
+                "JOIN Club c1 ON m.club1 = c1.clubId\n" +
+                "JOIN Club c2 ON m.club2 = c2.clubId\n" +
+                "JOIN Cart cr ON t.cartId = cr.cartId\n" +
+                "JOIN Pitch p ON m.pitchId = p.pitchId\n" +
+                "WHERE t.ticketStatusId = 1";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -170,11 +205,44 @@ public class TicketDAO {
                 int ticketId = rs.getInt("ticketId");
                 String code = rs.getString("code");
                 Date date = rs.getDate("date");
-                int seatId = rs.getInt("seatId");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
                 int ticketStatusId = rs.getInt("ticketStatusId");
                 int cartId = rs.getInt("cartId");
                 int matchId = rs.getInt("matchId");
-                tickets.add(new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId));
+                String seatNumber = rs.getString("seatNumber");
+                double price = rs.getDouble("price");
+                String areaName = rs.getString("areaName");
+                String club1Name = rs.getString("club1Name");
+                String club2Name = rs.getString("club2Name");
+                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by accountId: " + e);
@@ -185,7 +253,7 @@ public class TicketDAO {
     public List<Ticket> getPaidTicketByMatch(int matchId){
         List<Ticket> tickets = new ArrayList<>();
         for(Ticket ticket: getPaidTicket()) {
-            if(ticket.getMatchId() == matchId) {
+            if(ticket.getMatch().getMatchId() == matchId) {
                 tickets.add(ticket);
             }
         }
@@ -194,18 +262,16 @@ public class TicketDAO {
 
     public List<Ticket> searchTicketsByClubAndIds(String club) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT t.ticketId, t.code, t.date, t.seatId, t.ticketStatusId, t.cartId, t.matchId, "
-                + "s.seatNumber, s.price, a.areaName, "
-                + "m.club1, m.club2, c1.clubName AS club1Name, c2.clubName AS club2Name "
-                + "FROM Ticket t "
-                + "JOIN Seat s ON t.seatId = s.seatId "
-                + "JOIN Area a ON s.areaId = a.areaId "
-                + "JOIN Match m ON t.matchId = m.matchId "
-                + "JOIN Club c1 ON m.club1 = c1.clubId "
-                + "JOIN Club c2 ON m.club2 = c2.clubId "
-                + "JOIN Cart cr ON t.cartId = cr.cartId "
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
+                "FROM Ticket t\n" +
+                "JOIN Seat s ON t.seatId = s.seatId\n" +
+                "JOIN Area a ON s.areaId = a.areaId\n" +
+                "JOIN Match m ON t.matchId = m.matchId\n" +
+                "JOIN Club c1 ON m.club1 = c1.clubId\n" +
+                "JOIN Club c2 ON m.club2 = c2.clubId\n" +
+                "JOIN Cart cr ON t.cartId = cr.cartId\n" +
+                "JOIN Pitch p ON m.pitchId = p.pitchId\n"
                 + "WHERE c1.clubName like ? or c2.clubName like ? or a.areaName like ?";
-
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setString(1, "%" + club + "%");
@@ -216,7 +282,35 @@ public class TicketDAO {
                 int ticketId = rs.getInt("ticketId");
                 String code = rs.getString("code");
                 Date date = rs.getDate("date");
-                int seatId = rs.getInt("seatId");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
                 int ticketStatusId = rs.getInt("ticketStatusId");
                 int cartId = rs.getInt("cartId");
                 int matchId = rs.getInt("matchId");
@@ -225,9 +319,7 @@ public class TicketDAO {
                 String areaName = rs.getString("areaName");
                 String club1Name = rs.getString("club1Name");
                 String club2Name = rs.getString("club2Name");
-
-                tickets.add(new Ticket(ticketId, code, date, seatId, ticketStatusId, cartId, matchId,
-                        seatNumber, areaName, price, club1Name, club2Name));
+                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by accountId: " + e);

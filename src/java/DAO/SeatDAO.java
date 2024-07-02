@@ -59,7 +59,7 @@ public class SeatDAO{
                 if(rs.getInt("ticketStatusId")==2){
                     seatStatusId = 5;
                 }
-                Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId);
+                Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId, matchId);
                 matchSeats.add(seat);
             }
             statement.close();
@@ -108,6 +108,46 @@ public class SeatDAO{
         } catch (SQLException e) {
             System.out.println("Update seat price by area: " + e);
         }
+    }
+
+    public long getSeatPrice(int seatId) {
+        String query = "SELECT price FROM Seat WHERE seatId = ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(query);
+            statement.setInt(1, seatId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getLong("price");
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Get seat price: " + e);
+        }
+        return 0;
+    }
+
+    public Seat getSeatById(int seatId){
+        String query = "SELECT * FROM Seat JOIN Area ON SEAT.areaId = Area.areaId WHERE seatId = ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(query);
+            statement.setInt(1, seatId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int seatNumber = rs.getInt("seatNumber");
+                int row = rs.getInt("row");
+                int price = rs.getInt("price");
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getNString("areaName"));
+                int seatStatusId = rs.getInt("seatStatusId");
+                int matchId = rs.getInt("matchId");
+                return new Seat(seatId, seatNumber, row, price, area, seatStatusId, matchId);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Get seat by id: " + e);
+        }
+        return null;
     }
 
 
