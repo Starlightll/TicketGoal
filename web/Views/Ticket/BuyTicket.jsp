@@ -168,7 +168,12 @@
                     <div>Order Detail</div>
                 </div>
                 <div class="order__list" id="order-list">
-
+                    <c:forEach var="ticket" items="${ticketInCart}">
+                        <div class="item">
+                            <div>${ticket.seat.seatNumber}</div>
+                            <div>${ticket.seat.row}</div>
+                        </div>
+                    </c:forEach>
                 </div>
                 <div class="checkout">
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
@@ -179,7 +184,7 @@
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                 </div>
                 <div class="action">
-                    <button id="btn-buy" type="button" onclick="checkout(${matchId})">Buy</button>
+                    <button id="btn-buy" type="button" onclick="purchase(${matchId})">Buy</button>
                     <button id="btn-add-to-cart" type="button" onclick="addToCart(${matchId})">Add to cart</button>
                 </div>
             </form>
@@ -224,7 +229,7 @@
                 </tr>
             </table>
             <div class="action">
-                <button class="add__list_btn" onclick="addToList()" type="button"><i class="ri-add-line"></i></button>
+                <button class="add__list_btn" onclick="addToCart()" type="button"><i class="ri-add-line"></i></button>
             </div>
         </form>
     </div>
@@ -307,20 +312,16 @@
     }
 
     function addToCart(matchId) {
-        if (tickets.length === 0) {
-            showNotification("Please select at least one seat");
-            return;
-        }
-        let stadiumUI = document.getElementById("stadiumUI");
-        let oldTop = stadiumUI.offsetTop;
-        let oldLeft = stadiumUI.offsetLeft;
+        const confirmBox = document.getElementById("confirm-box");
+        const seatId = confirmBox["seatId"].value;
+        const orderList = document.getElementById("order-list");
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
             data: {
                 matchId: matchId,
                 action: "addToCart",
-                seatIds: JSON.stringify(tickets)
+                seatId: seatId,
             },
             dataType: 'JSON',
             success: function (response) {
@@ -380,6 +381,17 @@
                     tickets = [];
                     orderList.innerText = "";
                     stadiumUI.innerHTML = response.stadium;
+                    attachStadiumDragEvent();
+                }
+                if (response.code === '00') {
+                    if (window.vnpay) {
+                        vnpay.open({width: 768, height: 600, url: x.data});
+                    } else {
+                        location.href = response.data;
+                    }
+                    return false;
+                } else {
+                    alert(response.Message);
                 }
             },
             error: function () {

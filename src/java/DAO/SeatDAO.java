@@ -59,7 +59,7 @@ public class SeatDAO{
                 if(rs.getInt("ticketStatusId")==2){
                     seatStatusId = 5;
                 }
-                Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId);
+                Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId, matchId);
                 matchSeats.add(seat);
             }
             statement.close();
@@ -108,6 +108,22 @@ public class SeatDAO{
         } catch (SQLException e) {
             System.out.println("Update seat price by area: " + e);
         }
+    }
+
+    public long getSeatPrice(int seatId) {
+        String query = "SELECT price FROM Seat WHERE seatId = ?";
+        try {
+            PreparedStatement statement = connect.prepareStatement(query);
+            statement.setInt(1, seatId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getLong("price");
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Get seat price: " + e);
+        }
+        return 0;
     }
 
 

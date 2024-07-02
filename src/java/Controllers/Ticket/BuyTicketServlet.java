@@ -68,6 +68,8 @@ public class BuyTicketServlet extends HttpServlet {
             request.setAttribute("seatsCLO", getSeatsCLO(seatList));
             request.setAttribute("seatsDLO", getSeatsDLO(seatList));
             request.setAttribute("matchId", matchId);
+            List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, matchId);
+            request.setAttribute("ticketInCart", ticketInCart);
             request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
         }
     }
@@ -86,10 +88,10 @@ public class BuyTicketServlet extends HttpServlet {
             String action = request.getParameter("action");
             switch (action) {
                 case "buyTicket":
-                    addTicket(account, 1,request, response);
+                    request.getRequestDispatcher("payServlet").forward(request, response);
                     break;
                 case "addToCart":
-                    addTicket(account, 2,request, response);
+                    addToCart(account,request, response);
                     break;
                 default:
                     break;
@@ -102,7 +104,7 @@ public class BuyTicketServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private boolean addTicket(Account account, int ticketStatus,HttpServletRequest request, HttpServletResponse response) throws IOException{
+    private boolean addToCart(Account account,HttpServletRequest request, HttpServletResponse response) throws IOException{
         int matchId = Integer.parseInt(request.getParameter("matchId"));
         Match match = MatchDAO.INSTANCE.getMatch(matchId);
         com.google.gson.JsonObject json = new com.google.gson.JsonObject();
@@ -122,12 +124,12 @@ public class BuyTicketServlet extends HttpServlet {
             //Hash map of paid seat id
             Map<Integer, Integer> paidSeatIds = new HashMap<>();
             for(Ticket ticket : paidTickets){
-                paidSeatIds.put(ticket.getSeatId(), ticket.getSeatId());
+                paidSeatIds.put(ticket.getSeat().getSeatId(), ticket.getSeat().getSeatId());
             }
             //Hash map of in cart seat id
             Map<Integer, Integer> inCartSeatIds = new HashMap<>();
             for(Ticket ticket : ticketInCart){
-                inCartSeatIds.put(ticket.getSeatId(), ticket.getSeatId());
+                inCartSeatIds.put(ticket.getSeat().getSeatId(), ticket.getSeat().getSeatId());
             }
 
             if(seatIds != null){
@@ -142,17 +144,14 @@ public class BuyTicketServlet extends HttpServlet {
                     Ticket ticket = new Ticket();
                     ticket.setCode(null);
                     ticket.setDate(match.schedule);
-                    ticket.setSeatId(Integer.parseInt(seatId));
+                    Seat seat = new Seat();
+                    seat.setSeatId(Integer.parseInt(seatId));
+                    ticket.setSeat(seat);
                     ticket.setCartId(cartId);
-                    ticket.setMatchId(matchId);
-
-                    if(ticketStatus == 1) {
-                        ticketDAO.buyTicket(ticket);
-                    }else if(ticketStatus == 2){
-                        if(!inCartSeatIds.containsKey(ticket.getSeatId())){
+                    ticket.setMatch(match);
+                        if(!inCartSeatIds.containsKey(ticket.getSeat().getSeatId())){
                             ticketDAO.addToCart(ticket);
                         }
-                    }
                 }
                 Gson gson = new Gson();
                 json.addProperty("isSuccess", "true");
@@ -175,7 +174,7 @@ public class BuyTicketServlet extends HttpServlet {
         //Hash map of in cart seat id
         Map<Integer, Integer> inCartSeatIds = new HashMap<>();
         for(Ticket ticket : ticketInCart){
-            inCartSeatIds.put(ticket.getSeatId(), ticket.getSeatId());
+            inCartSeatIds.put(ticket.getSeat().getSeatId(), ticket.getSeat().getSeatId());
         }
         for(Seat seat: seatList){
             if(inCartSeatIds.containsKey(seat.getSeatId())){
@@ -346,5 +345,6 @@ public class BuyTicketServlet extends HttpServlet {
                 "                <div class=\"top__side__inner\">");
         return stadium.toString();
     }
+
 
 }

@@ -6,6 +6,8 @@
 package vnpay.common;
 
 
+import DAO.SeatDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.net.URLEncoder;
@@ -65,8 +67,13 @@ public class payServlet extends HttpServlet {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = Integer.parseInt(req.getParameter("amount"))*100;
-        String bankCode = req.getParameter("bankCode");
+        String[] seatIds = new ObjectMapper().readValue(req.getParameter("seatIds"), String[].class);
+        long amount = 0;
+        for(String seatId : seatIds){
+            amount += SeatDAO.INSTANCE.getSeatPrice(Integer.parseInt(seatId));
+        }
+        amount = amount*100;
+        String bankCode = "";
         
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = Config.getIpAddress(req);

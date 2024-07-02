@@ -12,29 +12,30 @@ public class Ticket {
     private int ticketId;
     private String code;
     private Date date;
-    private int seatId;
+    private Seat seat;
     private int ticketStatusId;
     private int cartId;
-    private int matchId;
-    
-//  add new
-    private String seatNumber;
-    private String areaName;
-    private double price;
-    private String club1;
-    private String club2;
-
+    private Match match;
     public Ticket() {
     }
 
-    public Ticket(int ticketId, String code, Date date, int seatId, int ticketStatusId, int cartId, int matchId) {
+    public Ticket(int ticketId, String code, Date date, Seat seat, int ticketStatusId, int cartId, Match match) {
         this.ticketId = ticketId;
         this.code = code;
         this.date = date;
-        this.seatId = seatId;
+        this.seat = seat;
         this.ticketStatusId = ticketStatusId;
         this.cartId = cartId;
-        this.matchId = matchId;
+        this.match = match;
+    }
+
+    public Ticket(String code, Date date, Seat seat, int ticketStatusId, int cartId, Match match) {
+        this.code = code;
+        this.date = date;
+        this.seat = seat;
+        this.ticketStatusId = ticketStatusId;
+        this.cartId = cartId;
+        this.match = match;
     }
 
     public int getTicketId() {
@@ -61,12 +62,12 @@ public class Ticket {
         this.date = date;
     }
 
-    public int getSeatId() {
-        return seatId;
+    public Seat getSeat() {
+        return seat;
     }
 
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
 
     public int getTicketStatusId() {
@@ -85,66 +86,11 @@ public class Ticket {
         this.cartId = cartId;
     }
 
-    public int getMatchId() {
-        return matchId;
+    public Match getMatch() {
+        return match;
     }
 
-    public void setMatchId(int matchId) {
-        this.matchId = matchId;
-    }
-
-    public Ticket(int ticketId, String code, Date date, int seatId, int ticketStatusId, int cartId, int matchId, String seatNumber, String areaName, double price, String club1, String club2) {
-        this.ticketId = ticketId;
-        this.code = code;
-        this.date = date;
-        this.seatId = seatId;
-        this.ticketStatusId = ticketStatusId;
-        this.cartId = cartId;
-        this.matchId = matchId;
-        this.seatNumber = seatNumber;
-        this.areaName = areaName;
-        this.price = price;
-        this.club1 = club1;
-        this.club2 = club2;
-    }
-
-    public String getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getClub1() {
-        return club1;
-    }
-
-    public void setClub1(String club1) {
-        this.club1 = club1;
-    }
-
-    public String getClub2() {
-        return club2;
-    }
-
-    public void setClub2(String club2) {
-        this.club2 = club2;
+    public void setMatch(Match match) {
+        this.match = match;
     }
 }
