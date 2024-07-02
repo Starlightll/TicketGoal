@@ -350,7 +350,7 @@
     }
 
 
-    function checkout(matchId) {
+    function purchase(matchId) {
         if (tickets.length === 0) {
             showNotification("Please select at least one seat");
             return;
