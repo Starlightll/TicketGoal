@@ -71,13 +71,29 @@ public class MatchDAO {
     public boolean addMatch(Match match) {
         try {
             String query = "INSERT INTO Match(schedule, pitchId, matchStatusId, club1, club2) VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement ps = connect.prepareStatement(query);
+            PreparedStatement ps = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setTimestamp(1, new java.sql.Timestamp(match.getSchedule().getTime()));
             ps.setInt(2, match.getPitchId());
             ps.setInt(3, match.getMatchStatusId());
             ps.setInt(4, match.getClub1().getClubId());
             ps.setInt(5, match.getClub2().getClubId());
+            int rowsInserted = ps.executeUpdate();
+            int matchId = -1;
+            if(rowsInserted > 0){
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()){
+                    matchId = rs.getInt(1);
+                }
+            }
+            ps.close();
+            String query2 = "INSERT INTO Seat (seatNumber, row, price, areaId, seatStatusId, matchId)\n" +
+                    "SELECT seatNumber, row, price, areaId, seatStatusId, ?\n" +
+                    "FROM Seat\n" +
+                    "WHERE matchId IS NULL;";
+            ps = connect.prepareStatement(query2);
+            ps.setInt(1, matchId);
             ps.executeUpdate();
+            ps.close();
             return true;
         } catch (Exception e) {
             status = e.getMessage();
