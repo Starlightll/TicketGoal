@@ -203,10 +203,10 @@
     <div class="confirm__box__background" id="confirm-box-background">
         <form class="confirm__box" id="confirm-box">
             <div hidden>
-                <input type="text" name="seatId">
-                <input type="text" name="seatNumber">
-                <input type="text" name="row">
-                <input type="text" name="price">
+                <input type="text" name="seatId" value="">
+                <input type="text" name="seatNumber" value="">
+                <input type="text" name="row" value="">
+                <input type="text" name="price" value="">
                 <input type="text" name="matchId" value="${matchId}">
             </div>
             <i class="ri-close-large-fill close__btn" id="btn-close"></i>
@@ -278,10 +278,11 @@
         document.getElementById("row-value").innerHTML = row;
         document.getElementById("price-value").innerHTML = price + " VNĐ";
         document.getElementById("seat-id").innerHTML = seatId;
-        document.forms["confirm-box"]["seatId"].value = seatId;
-        document.forms["confirm-box"]["seatNumber"].value = seatNumber;
-        document.forms["confirm-box"]["row"].value = row;
-        document.forms["confirm-box"]["price"].value = price;
+        const confirmBox = document.getElementById("confirm-box");
+        confirmBox["seatId"].value = seatId;
+        confirmBox["seatNumber"].value = seatNumber;
+        confirmBox["row"].value = row;
+        confirmBox["price"].value = price;
     }
 
     function addToList() {
@@ -311,17 +312,15 @@
         confirmBox.reset();
     }
 
-    function addToCart(matchId) {
+    function addToCart() {
         const confirmBox = document.getElementById("confirm-box");
-        const seatId = confirmBox["seatId"].value;
-        const orderList = document.getElementById("order-list");
+        const seatIds = confirmBox["seatId"].value;
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
             data: {
-                matchId: matchId,
                 action: "addToCart",
-                seatId: seatId,
+                seatId: seatIds,
             },
             dataType: 'JSON',
             success: function (response) {
@@ -335,19 +334,23 @@
                 } else if (response.isInCart === 'true') {
                     showNotification("This seat is already in the cart");
                 } else if (response.isSuccess === 'true') {
-                    showNotification("Add to cart successfully");
+                    const orderList = document.getElementById("order-list");
+                    const newOrder = document.createElement("div");
+                    newOrder.className = "item";
+                    newOrder.innerHTML = response.addedSeat;
+                    orderList.appendChild(newOrder);
                     const stadiumUI = document.getElementById("stadiumUI");
-                    let orderList = document.getElementById("order-list");
-                    tickets = [];
-                    orderList.innerText = "";
                     stadiumUI.innerHTML = response.stadium;
-                    attachStadiumDragEvent();
+                    showNotification("Add to cart successfully");
                 }
             },
             error: function () {
                 alert("Error");
             }
         });
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
+        attachStadiumDragEvent();
     }
 
 
