@@ -9,6 +9,7 @@ import Models.Area;
 import Models.Seat;
 import Models.SeatStatus;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -372,5 +373,7 @@ public class SeatDAO{
 //        }
         return null;
     }
+
+    
 
 }

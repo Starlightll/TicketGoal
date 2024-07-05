@@ -86,6 +86,9 @@ public class BuyTicketServlet extends HttpServlet {
         } else {
             String action = request.getParameter("action");
             switch (action) {
+                case "buyOneTicket":
+                    
+                    break;
                 case "buyTicket":
                     request.getRequestDispatcher("payServlet").forward(request, response);
                     break;
@@ -350,6 +353,8 @@ public class BuyTicketServlet extends HttpServlet {
                 "                            <div>"+seat.getRow()+"</div>\n" +
                 "                        </div>";
     }
+
+
 
 
 }

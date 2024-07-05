@@ -20,7 +20,7 @@
 <main>
     <button class="back__button" onclick="location.href='matchServlet'">Back</button>
     <div class="buyticket__main">
-        <input class="zoom__bar" type="range" min="0.9" max="2" value="0.9" step="0.1"
+        <input class="zoom__bar" type="range" min="0" max="2" value="0.9" step="0.1"
                oninput="this.value > currentZoom ? zoomIn() : zoomOut()">
         <div class="stadium" id="stadium">
             <div class="stadium__UI" id="stadiumUI">
@@ -229,6 +229,7 @@
                 </tr>
             </table>
             <div class="action">
+                <button id="btn-buy-one" type="button" onclick="purchaseOne()">Buy</button>
                 <button class="add__list_btn" onclick="addToCart()" type="button"><i class="ri-add-line"></i></button>
             </div>
         </form>
@@ -268,8 +269,6 @@
             document.removeEventListener('mouseup', mouseUp);
         }
     }
-
-    let tickets = [];
 
     function showConfirm(areaName, seatId, seatNumber, row, price) {
         document.getElementById("confirm-box-background").style.display = "block";
@@ -353,6 +352,31 @@
         attachStadiumDragEvent();
     }
 
+    function purchaseOne() {
+        const confirmBox = document.getElementById("confirm-box");
+        const seatId = confirmBox["seatId"].value;
+        const orderList = document.getElementById("order-list");
+        const newOrder = document.createElement("div");
+        $.ajax({
+           url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
+            data: {
+                action: "buyOneTicket",
+                seatId: seatId
+            },
+            dataType: 'JSON',
+            success: function (response) {
+
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+        //close confirm box
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
+    }
+
 
     function purchase(matchId) {
         if (tickets.length === 0) {
@@ -420,7 +444,7 @@
     let currentZoom = 0.9;
 
     function zoomOut() {
-        if (currentZoom > 0.9) {
+        if (currentZoom > 0) {
             currentZoom -= 0.1;
             const stadium = document.getElementById("stadiumUI");
             stadium.style.transform = `scale(` + currentZoom + `)`;
