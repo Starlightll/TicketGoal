@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -13,14 +14,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/buyticket.css">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/TicketGoalfavicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <main>
     <button class="back__button" onclick="location.href='matchServlet'">Back</button>
     <div class="buyticket__main">
-        <input class="zoom__bar" type="range" min="0.9" max="2" value="0.9" step="0.1"
+        <input class="zoom__bar" type="range" min="0" max="2" value="0.9" step="0.1"
                oninput="this.value > currentZoom ? zoomIn() : zoomOut()">
         <div class="stadium" id="stadium">
             <div class="stadium__UI" id="stadiumUI">
@@ -42,7 +45,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -62,7 +65,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -85,7 +88,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -105,7 +108,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -128,7 +131,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -151,7 +154,7 @@
                             </c:if>
                             <c:if test="${seat.seatStatusId == 5}">
                                 <div class="seat"><i class="ri-layout-top-2-fill"
-                                                     style="color: #ffa600; cursor: default"
+                                                     style="color: #aaff00; cursor: default"
                                                      id="seat-${seat.seatId}"></i></div>
                             </c:if>
                         </c:forEach>
@@ -169,9 +172,18 @@
                 </div>
                 <div class="order__list" id="order-list">
                     <c:forEach var="ticket" items="${ticketInCart}">
-                        <div class="item">
-                            <div>${ticket.seat.seatNumber}</div>
-                            <div>${ticket.seat.row}</div>
+                        <div class="item" onmouseover="hover(${ticket.seat.seatId})" onmouseout="removeHover(${ticket.seat.seatId})">
+                            <div>
+                                <div class="area">Area: ${ticket.seat.area.areaName}</div>
+                                <div class="row">Row: ${ticket.seat.row}</div>
+                                <div class="seat">Seat: ${ticket.seat.seatNumber}</div>
+                            </div>
+                            <div class="price">
+                                <div>
+                                    Price: <fmt:formatNumber value="${ticket.seat.price}" type="number" maxFractionDigits="0" groupingUsed="true"/> VNĐ
+                                </div>
+                                <i class="ri-delete-bin-6-line" style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer" onclick="removeTicket(${ticket.ticketId})"></i>
+                            </div>
                         </div>
                     </c:forEach>
                 </div>
@@ -229,6 +241,7 @@
                 </tr>
             </table>
             <div class="action">
+                <button id="btn-buy-one" type="button" onclick="purchaseOne()">Buy</button>
                 <button class="add__list_btn" onclick="addToCart()" type="button"><i class="ri-add-line"></i></button>
             </div>
         </form>
@@ -236,6 +249,7 @@
 </main>
 <script>
     attachStadiumDragEvent();
+
     //Drag for stadium
     function attachStadiumDragEvent() {
         let newX = 0, newY = 0, startX = 0, startY = 0;
@@ -268,8 +282,6 @@
             document.removeEventListener('mouseup', mouseUp);
         }
     }
-
-    let tickets = [];
 
     function showConfirm(areaName, seatId, seatNumber, row, price) {
         document.getElementById("confirm-box-background").style.display = "block";
@@ -353,6 +365,31 @@
         attachStadiumDragEvent();
     }
 
+    function purchaseOne() {
+        const confirmBox = document.getElementById("confirm-box");
+        const seatId = confirmBox["seatId"].value;
+        const orderList = document.getElementById("order-list");
+        const newOrder = document.createElement("div");
+        $.ajax({
+            url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
+            data: {
+                action: "buyOneTicket",
+                seatId: seatId
+            },
+            dataType: 'JSON',
+            success: function (response) {
+
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+        //close confirm box
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
+    }
+
 
     function purchase(matchId) {
         if (tickets.length === 0) {
@@ -403,6 +440,12 @@
         });
     }
 
+    function removeTicket(){
+        $.ajax ({
+
+        })
+    }
+
     function showNotification(message) {
         const notificationBackground = document.getElementById('notification-background');
         const notification = document.getElementById('buyticket-notification');
@@ -417,10 +460,20 @@
         }, 300);
     }
 
+    function hover(seatId){
+        const seat = document.getElementById("seat-" + seatId);
+        seat.style.color = '#56c6ff';
+    }
+
+    function removeHover(seatId){
+        const seat = document.getElementById("seat-" + seatId);
+        seat.style.color = '#aaff00';
+    }
+
     let currentZoom = 0.9;
 
     function zoomOut() {
-        if (currentZoom > 0.9) {
+        if (currentZoom > 0) {
             currentZoom -= 0.1;
             const stadium = document.getElementById("stadiumUI");
             stadium.style.transform = `scale(` + currentZoom + `)`;
@@ -434,7 +487,6 @@
             stadium.style.transform = `scale(` + currentZoom + `)`;
         }
     }
-
 
 
 </script>

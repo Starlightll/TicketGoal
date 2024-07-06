@@ -327,17 +327,30 @@ public class TicketDAO {
         return tickets;
     }
 
-    public boolean deleteTick(int cartId) {
+    public boolean deleteTick(int ticketId) {
         String sql = "Delete from Ticket where ticketId = ?";
         boolean rowDeleted = false;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setInt(1, cartId);
+            statement.setInt(1, ticketId);
             rowDeleted = statement.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Delete fail: " + e);
         }
         return rowDeleted;
+    }
+
+    public boolean removeTicket(int ticketId) {
+        String sql = "Update Ticket set ticketStatusId = 3 where ticketId = ?";
+        boolean rowUpdated = false;
+        try {
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setInt(1, ticketId);
+            rowUpdated = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Delete fail: " + e);
+        }
+        return rowUpdated;
     }
 
     public boolean deleteCart(int cartId) {

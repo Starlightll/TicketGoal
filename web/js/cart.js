@@ -121,35 +121,34 @@ function formatDate(dateString) {
 
 function searchShow(data) {
     dataHandle = data.map((item) => {
-        let dateAll = formatDate(item.date);
         let checked = selectedTickets[item.ticketId] != null ? "checked" : "";
         return `<div class="cart-item">
                         <div class="ticket-info">
                             <div class="image-placeholder">
-                            <div class="box-clubname">
-                                    <p class="club1">${item.club1}</p>
+                                <div class="box-clubname">
+                                    <p class="club1">${item.match.club1.clubName}</p>
                                     <p class="divider"></p>
-                                    <p class="club2">${item.club2}</p>
+                                    <p class="club2">${item.match.club2.clubName}</p>
                                 </div>
-</div>
+                            </div>
                             <div class="ticket-details">
-                                <p>Area: ${item.areaName}</p>
-                                <p>Seat number: ${item.seatNumber}</p>
-                                <p>Price: ${item.price}</p>
-                             <p>Date: ${dateAll}</p>
+                                <p>Area: ${item.seat.area.areaName}</p>
+                                <p>Seat number: ${item.seat.seatNumber}</p>
+                                <p>Price: ${item.seat.price}</p>
+                                 <p>Date: ${item.match.schedule}</p>
                             </div>
                         </div>
                         <div class="delete-icon">
                             <input type="checkbox" class="ticket-checkbox"
-                                   data-price="${item.price}"
-                                   data-area="${item.areaName}"
-                                   data-seat="${item.seatNumber}"
-                                    data-date="${dateAll}"
+                                   data-price="${item.seat.price}"
+                                   data-area="${item.seat.area.areaName}"
+                                   data-seat="${item.seat.seatNumber}"
+                                    data-date="${item.match.schedule}"
                                    value="${item.ticketId}"
                                    onClick="handleChoose(this)"
                                    ${checked}
-                                    >
-                            <span onclick="deleteTicket(${item.ticketId}, ${item.cartId})"><i class="fas fa-trash"></i></span>
+                                   >
+                            <span onClick="deleteTicket(${item.ticketId}, ${item.cartId})"><i class="fas fa-trash"></i></span>
                         </div>
                     </div>`;
     });

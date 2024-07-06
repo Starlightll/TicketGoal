@@ -86,6 +86,9 @@ public class BuyTicketServlet extends HttpServlet {
         } else {
             String action = request.getParameter("action");
             switch (action) {
+                case "buyOneTicket":
+                    
+                    break;
                 case "buyTicket":
                     request.getRequestDispatcher("payServlet").forward(request, response);
                     break;
@@ -263,7 +266,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -276,7 +279,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -291,7 +294,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -304,7 +307,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -319,7 +322,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -334,7 +337,7 @@ public class BuyTicketServlet extends HttpServlet {
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
-                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ffa600; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
+                stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
         stadium.append("</div>\n" +
@@ -350,6 +353,8 @@ public class BuyTicketServlet extends HttpServlet {
                 "                            <div>"+seat.getRow()+"</div>\n" +
                 "                        </div>";
     }
+
+
 
 
 }

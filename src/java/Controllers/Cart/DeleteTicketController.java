@@ -84,8 +84,9 @@ public class DeleteTicketController extends HttpServlet {
             TicketDAO ticketDao = new TicketDAO();
             int cartId = Integer.parseInt(deleteTicket.getCartId());
             int ticketId = Integer.parseInt(deleteTicket.getTicketId());
-            ticketDao.deleteTick(ticketId);
-            ticketDao.deleteCart(cartId);
+            ticketDao.removeTicket(ticketId);
+//           Tại sao phải xóa cart ?
+//            ticketDao.deleteCart(cartId);
             List<Ticket> searchResults = ticketDao.getTicketInCart(accountLogin.getAccountId());
             String jsonSearchResults = gson.toJson(searchResults);
             response.setContentType("application/json");
