@@ -311,7 +311,7 @@
                                                                             type="date" pattern="MM-dd-yyyy"/>
                                                             ${formattedDate}
                                                         </td>
-                                                        <td class="delete"><a href="DeleteMessageServlet?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
+                                                        <td class="delete"><a href="javascript:void(0);" onclick="confirmDelete(${item.id});"><i class="fa fa-trash-o"></i></a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -379,17 +379,23 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                        function UpdateContact(i) {
-                                                            var checkboxes = document.querySelectorAll('input[name="options"]:checked');
-                                                            var checkedValues = [];
-                                                            checkboxes.forEach(function (checkbox) {
-                                                                checkedValues.push(checkbox.value);
-                                                            });
-                                                            var queryParams = checkedValues.map(function (value) {
-                                                                return encodeURIComponent("option") + "=" + encodeURIComponent(value);
-                                                            }).join("&");
-                                                            window.location.href='${pageContext.request.contextPath}/UpdateContact?cate=' + i + '&' + queryParams;
-                                                        }
+                                                            function confirmDelete(id) {
+                                                                if (confirm('Are you sure you want to delete this message?')) {
+                                                                    window.location.href = 'DeleteMessageServlet?id=' + id;
+                                                                }
+                                                            }
+                                                            function UpdateContact(i) {
+                                                                var checkboxes = document.querySelectorAll('input[name="options"]:checked');
+                                                                var checkedValues = [];
+                                                                checkboxes.forEach(function (checkbox) {
+                                                                    checkedValues.push(checkbox.value);
+                                                                });
+                                                                var queryParams = checkedValues.map(function (value) {
+                                                                    return encodeURIComponent("option") + "=" + encodeURIComponent(value);
+                                                                }).join("&");
+                                                                window.location.href = '${pageContext.request.contextPath}/UpdateContact?cate=' + i + '&' + queryParams;
+                                                            }
+
         </script>
     </body>
 </html>
