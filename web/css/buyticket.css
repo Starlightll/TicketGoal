@@ -1,7 +1,8 @@
 
 
 * {
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
 }
 
 body {
@@ -24,6 +25,7 @@ body {
     overflow: auto;
     align-items: start;
     scrollbar-width: none;
+    background: #c7d4d7;
 }
 
 .buyticket__main .stadium .stadium__UI {
@@ -246,7 +248,7 @@ body {
     margin: 10px auto;
     border-radius: 10px;
     overflow-y: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
 }
 
 
@@ -291,6 +293,32 @@ body {
     margin: 10px;
     font-size: 20px;
 }
+
+.buyticket__main .order__detail .order__list .item {
+    background-color: #2d2c2b;
+    border-bottom: 12px solid #9dff17;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buyticket__main .order__detail .order__list .item .area {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.buyticket__main .order__detail .order__list .item .price {
+    display: flex;
+    align-items: end;
+}
+
+.buyticket__main .order__detail .order__list .item .remove {
+    display: flex;
+    align-items: end;
+}
+
 
 
 
