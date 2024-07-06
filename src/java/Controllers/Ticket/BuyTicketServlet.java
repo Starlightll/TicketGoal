@@ -23,10 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.NumberFormat;
+import java.util.*;
 
 
 /**
@@ -79,9 +77,9 @@ public class BuyTicketServlet extends HttpServlet {
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("user");
         com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        Gson gson = new Gson();
         if (account == null) {
             json.addProperty("loginRequired", "true");
-            Gson gson = new Gson();
             response.getWriter().write(gson.toJson(json));
         } else {
             String action = request.getParameter("action");
@@ -94,6 +92,15 @@ public class BuyTicketServlet extends HttpServlet {
                     break;
                 case "addToCart":
                     addToCart(account, request, response);
+                    break;
+                case "removeFromCart":
+                    int ticketId = request.getParameter("ticketId") != null ? Integer.parseInt(request.getParameter("ticketId")) : 0;
+                    int matchId = request.getParameter("matchId") != null ? Integer.parseInt(request.getParameter("matchId")) : 0;
+                    TicketDAO ticketDAO = new TicketDAO();
+                    ticketDAO.removeTicket(ticketId);
+                    json.addProperty("isSuccess", "true");
+                    json.addProperty("stadium", stadium(request, response, account, matchId));
+                    response.getWriter().write(gson.toJson(json));
                     break;
                 default:
                     break;
@@ -153,12 +160,12 @@ public class BuyTicketServlet extends HttpServlet {
             ticket.setCartId(cartId);
             ticket.setMatch(match);
             if (!inCartSeatIds.containsKey(ticket.getSeat().getSeatId())) {
-                ticketDAO.addToCart(ticket);
+                ticket.setTicketId(ticketDAO.addToCart(ticket));
             }
             Gson gson = new Gson();
             json.addProperty("isSuccess", "true");
             json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
-            json.addProperty("addedSeat", seat(seat));
+            json.addProperty("addedTicket", ticket(ticket));
             response.getWriter().write(gson.toJson(json));
             return true;
         } else {
@@ -347,10 +354,22 @@ public class BuyTicketServlet extends HttpServlet {
         return stadium.toString();
     }
 
-    public String seat(Seat seat){
-        return " <div class=\"item\">\n" +
-                "                            <div>"+seat.getSeatNumber()+"</div>\n" +
-                "                            <div>"+seat.getRow()+"</div>\n" +
+    public String ticket(Ticket ticket){
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+        formatter.setMaximumFractionDigits(0);
+
+        return "<div class=\"item\" onmouseover=\"hover("+ticket.getSeat().getSeatId()+")\" onmouseout=\"removeHover("+ticket.getSeat().getSeatId()+")\" id=\"item-"+ticket.getTicketId()+"\">\n" +
+                "                            <div>\n" +
+                "                                <div class=\"area\">Area: "+ticket.getSeat().getArea().areaName+"</div>\n" +
+                "                                <div class=\"row\">Row: "+ticket.getSeat().getRow()+"</div>\n" +
+                "                                <div class=\"seat\">Seat: "+ticket.getSeat().getSeatNumber()+"</div>\n" +
+                "                            </div>\n" +
+                "                            <div class=\"price\">\n" +
+                "                                <div>\n" +
+                "                                    Price: "+formatter.format(ticket.getSeat().getPrice())+" VNĐ\n" +
+                "                                </div>\n" +
+                "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket("+ticket.getTicketId()+","+ticket.getSeat().getSeatId()+","+ticket.getMatch().matchId+")\"></i>\n" +
+                "                            </div>\n" +
                 "                        </div>";
     }
 

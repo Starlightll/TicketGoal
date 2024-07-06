@@ -95,7 +95,7 @@ public class TicketDAO {
         String sql = "INSERT INTO Ticket(code, date, seatId, ticketStatusId, cartId, matchId) VALUES(?,?,?,?,?,?)";
         int rowInserted = 0;
         try {
-            PreparedStatement statement = connect.prepareStatement(sql);
+            PreparedStatement statement = connect.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, ticket.getCode());
             statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
             statement.setInt(3, ticket.getSeat().getSeatId());
@@ -103,6 +103,10 @@ public class TicketDAO {
             statement.setInt(5, ticket.getCartId());
             statement.setInt(6, ticket.getMatch().getMatchId());
             rowInserted = statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                rowInserted = rs.getInt(1);
+            }
         } catch (Exception e) {
             System.out.println("Insert ticket: " + e);
         }
@@ -271,7 +275,7 @@ public class TicketDAO {
                 "JOIN Club c2 ON m.club2 = c2.clubId\n" +
                 "JOIN Cart cr ON t.cartId = cr.cartId\n" +
                 "JOIN Pitch p ON m.pitchId = p.pitchId\n"
-                + "WHERE c1.clubName like ? or c2.clubName like ? or a.areaName like ?";
+                + "WHERE (c1.clubName like ? or c2.clubName like ? or a.areaName like ?) AND t.ticketStatusId = 2";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setString(1, "%" + club + "%");

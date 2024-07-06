@@ -172,7 +172,7 @@
                 </div>
                 <div class="order__list" id="order-list">
                     <c:forEach var="ticket" items="${ticketInCart}">
-                        <div class="item" onmouseover="hover(${ticket.seat.seatId})" onmouseout="removeHover(${ticket.seat.seatId})">
+                        <div class="item" onmouseover="hover(${ticket.seat.seatId})" onmouseout="removeHover(${ticket.seat.seatId})" id="item-${ticket.ticketId}">
                             <div>
                                 <div class="area">Area: ${ticket.seat.area.areaName}</div>
                                 <div class="row">Row: ${ticket.seat.row}</div>
@@ -182,7 +182,7 @@
                                 <div>
                                     Price: <fmt:formatNumber value="${ticket.seat.price}" type="number" maxFractionDigits="0" groupingUsed="true"/> VNĐ
                                 </div>
-                                <i class="ri-delete-bin-6-line" style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer" onclick="removeTicket(${ticket.ticketId})"></i>
+                                <i class="ri-delete-bin-6-line" style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer" onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
                             </div>
                         </div>
                     </c:forEach>
@@ -348,8 +348,7 @@
                 } else if (response.isSuccess === 'true') {
                     const orderList = document.getElementById("order-list");
                     const newOrder = document.createElement("div");
-                    newOrder.className = "item";
-                    newOrder.innerHTML = response.addedSeat;
+                    newOrder.innerHTML = response.addedTicket;
                     orderList.appendChild(newOrder);
                     const stadiumUI = document.getElementById("stadiumUI");
                     stadiumUI.innerHTML = response.stadium;
@@ -440,9 +439,28 @@
         });
     }
 
-    function removeTicket(){
+    function removeTicket(ticketId, seatId, matchId) {
         $.ajax ({
-
+            url: '${pageContext.request.contextPath}/BuyTicket',
+            method: "POST",
+            data: {
+                action: "removeFromCart",
+                ticketId: ticketId,
+                matchId: matchId
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                if(response.isSuccess === 'true'){
+                    const ticket = document.getElementById("item-" + ticketId);
+                    ticket.remove();
+                    const stadiumUI = document.getElementById("stadiumUI");
+                    stadiumUI.innerHTML = response.stadium;
+                    showNotification("Remove ticket successfully");
+                }
+            },
+            error: function () {
+                alert("Error");
+            }
         })
     }
 
