@@ -292,11 +292,10 @@
                                                         <td class="name"><a href="#">${item.email}</a></td>
                                                         <td class="subject"><a href="#">${item.subject}</a></td>
                                                         <td class="time">
-                                                            <fmt:formatDate value="${item.createdDate}" var="formattedDate" 
-                                                                            type="date" pattern="MM-dd-yyyy"/>
+                                                            <fmt:formatDate value="${item.createdDate}" var="formattedDate" type="date" pattern="MM-dd-yyyy"/>
                                                             ${formattedDate}
                                                         </td>
-                                                        <td class="delete"><a href="DeleteMessageSentServlet?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
+                                                        <td class="delete"><a href="DeleteMessageSentServlet?id=${item.id}" onclick="return confirmDelete()"><i class="fa fa-trash-o"></i></a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -364,7 +363,9 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-
+                                                        function confirmDelete() {
+                                                            return confirm('Are you sure you want to delete this message?');
+                                                        }
         </script>
     </body>
 </html>
