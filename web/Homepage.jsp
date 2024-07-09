@@ -13,7 +13,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
         <link rel="icon" type="image/png" href="img/TicketGoalfavicon.png">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css"/>
-
     </head>
     <body>
         <div class="header-container">

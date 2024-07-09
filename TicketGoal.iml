@@ -24,5 +24,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 10.1.24" level="application_server_libraries" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="html5-qrcode" level="application" />
+    <orderEntry type="library" name="libForQRCode" level="project" />
   </component>
 </module>

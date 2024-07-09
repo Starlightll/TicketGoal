@@ -1,15 +1,21 @@
 package Utils;
 
 import DAO.AccountDAO;
+import Models.Account;
+import Models.Ticket;
 import com.google.gson.Gson;
+import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
+import javax.mail.util.ByteArrayDataSource;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 public class EmailSender {
 
@@ -71,4 +77,92 @@ public class EmailSender {
         String json = gson.toJson(jsonResponse);
         resp.getWriter().write(json);
     }
+
+        public void sendEmailQRCode(Account account, List<Ticket> tickets, HttpServletRequest request, HttpServletResponse response) throws IOException {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            int timeout = 8000;
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.timeout", timeout);
+
+            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
+                }
+            });
+
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("nemmesis099@gmail.com"));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
+                message.setSubject("Dear MyFriend, ");
+
+                MimeMultipart multipart = new MimeMultipart("related");
+
+                // Tạo phần chính của email
+                BodyPart messageBodyPart = new MimeBodyPart();
+                String htmlContent = "<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "<head>\n" +
+                        "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
+                        "    <title>TicketGoal</title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
+                        "    <h1>QR Code Backup</h1>\n" +
+                        "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
+                        "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
+                        "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
+                for (int i = 0; i < tickets.size(); i++) {
+                    Ticket ticket = tickets.get(i);
+                    String cid = "qrCode" + i;
+                    htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
+                            "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
+                            "                <img style=\"width: 100%; height: 100%\" src=\"cid:" + cid + "\">\n" +
+                            "            </div>\n" +
+                            "            <div style=\"margin: 0\">\n" +
+                            "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +
+                            "                <p style=\"margin: 0\">Row: " + ticket.getSeat().getRow() + "</p>\n" +
+                            "                <p style=\"margin: 0\">Seat: " + ticket.getSeat().getSeatNumber() + "</p>\n" +
+                            "                <p style=\"margin: 0\">Date: " + ticket.getDate() + "</p>\n" +
+                            "            </div>\n" +
+                            "        </div>\n";
+
+                    // Thêm ảnh QR code dưới dạng tệp đính kèm
+                    MimeBodyPart imagePart = new MimeBodyPart();
+                    ByteArrayDataSource dataSource = QRCodeUtil.generateQRCodeImage(ticket.getCode());
+                    imagePart.setDataHandler(new DataHandler(dataSource));
+                    imagePart.setHeader("Content-ID", "<" + cid + ">");
+                    imagePart.setDisposition(MimeBodyPart.INLINE);
+                    multipart.addBodyPart(imagePart);
+                }
+                htmlContent +=
+                        "    </div>\n" +
+                                "    <p>Thank you for using our service.</p>\n" +
+                                "    <p>Have a nice day!</p>\n" +
+                                "\n" +
+                                "    <footer>\n" +
+                                "        <p>&copy; TicketGoal 2024</p>\n" +
+                                "    </footer>\n" +
+                                "</main>\n" +
+                                "</body>\n" +
+                                "</html>";
+
+                messageBodyPart.setContent(htmlContent, "text/html");
+                multipart.addBodyPart(messageBodyPart);
+
+                message.setContent(multipart);
+                Transport.send(message);
+            } catch (MessagingException | WriterException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 }

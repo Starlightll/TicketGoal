@@ -88,7 +88,7 @@ footer .footer {
 }
 
 .footer .right form input,.footer  .right form textarea {
-    width: 100%;
+    width: 80%;
     background-color: #141414;
     border: 2px solid #5353533f;
     padding: 1rem;

@@ -5,14 +5,8 @@
 
 package Controllers.Ticket;
 
-import DAO.AccountDAO;
-import DAO.MatchDAO;
-import DAO.SeatDAO;
-import DAO.TicketDAO;
-import Models.Account;
-import Models.Match;
-import Models.Seat;
-import Models.Ticket;
+import DAO.*;
+import Models.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -67,6 +61,7 @@ public class BuyTicketServlet extends HttpServlet {
             request.setAttribute("matchId", matchId);
             List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, matchId);
             request.setAttribute("ticketInCart", ticketInCart);
+            request.setAttribute("total", total(ticketInCart));
             request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
         }
     }
@@ -83,23 +78,67 @@ public class BuyTicketServlet extends HttpServlet {
             response.getWriter().write(gson.toJson(json));
         } else {
             String action = request.getParameter("action");
+            int seatId = request.getParameter("seatId") != null ? Integer.parseInt(request.getParameter("seatId")) : 0;
+            Match match = MatchDAO.INSTANCE.getMatch(request.getParameter("matchId") != null ? Integer.parseInt(request.getParameter("matchId")) : SeatDAO.INSTANCE.getSeatById(seatId).getMatchId());
             switch (action) {
                 case "buyOneTicket":
-                    
+                    int ticketId = addToCart(account, seatId);
+                    if(ticketId == 0){
+                        json.addProperty("isError", "true");
+                    }else if(ticketId == -1){
+                        json.addProperty("isPurchased", "true");
+                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+                    }else if (ticketId == -2){
+                        json.addProperty("notAvailable", "true");
+                    }else{
+                        List<Ticket> tickets = new ArrayList<>();
+                        tickets.add(new TicketDAO().getTicketById(ticketId));
+                        int orderId = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
+                        request.getSession().setAttribute("orderId", orderId);
+                        request.getRequestDispatcher("payServlet").forward(request, response);
+                    }
+                    response.getWriter().write(gson.toJson(json));
                     break;
                 case "buyTicket":
+                    if(match.schedule.before(new java.util.Date())){
+                        json.addProperty("notAvailable", "true");
+                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+                        response.getWriter().write(gson.toJson(json));
+                        return;
+                    }else{
+                    List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId);
+                    int order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
+                    request.getSession().setAttribute("orderId", order);
                     request.getRequestDispatcher("payServlet").forward(request, response);
+                    }
                     break;
                 case "addToCart":
-                    addToCart(account, request, response);
+                    int addedTicket = addToCart(account, seatId);
+                    if(addedTicket == 0){
+                        json.addProperty("isError", "true");
+                    }else if(addedTicket == -1){
+                        json.addProperty("isPurchased", "true");
+                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+                    }else if (addedTicket == -2){
+                        json.addProperty("notAvailable", "true");
+                    } else {
+                        json.addProperty("isSuccess", "true");
+                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+                        Ticket ticket = new TicketDAO().getTicketById(addedTicket);
+                        json.addProperty("addedTicket", ticket(ticket));
+                        json.addProperty("total", total(new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId)));
+                    }
+                    response.getWriter().write(gson.toJson(json));
                     break;
                 case "removeFromCart":
-                    int ticketId = request.getParameter("ticketId") != null ? Integer.parseInt(request.getParameter("ticketId")) : 0;
+                    ticketId = request.getParameter("ticketId") != null ? Integer.parseInt(request.getParameter("ticketId")) : 0;
                     int matchId = request.getParameter("matchId") != null ? Integer.parseInt(request.getParameter("matchId")) : 0;
                     TicketDAO ticketDAO = new TicketDAO();
                     ticketDAO.removeTicket(ticketId);
                     json.addProperty("isSuccess", "true");
                     json.addProperty("stadium", stadium(request, response, account, matchId));
+                    List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, matchId);
+                    json.addProperty("total", total(ticketInCart));
                     response.getWriter().write(gson.toJson(json));
                     break;
                 default:
@@ -113,15 +152,14 @@ public class BuyTicketServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private boolean addToCart(Account account, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int seatId = request.getParameter("seatId") != null ? Integer.parseInt(request.getParameter("seatId")) : 0;
+    private int addToCart(Account account, int seatId) throws IOException {
         Seat seat = SeatDAO.INSTANCE.getSeatById(seatId);
         if (seat == null) {
-            return false;
+            return 0;
         }
         Match match = MatchDAO.INSTANCE.getMatch(seat.getMatchId());
         if (match == null) {
-            return false;
+            return 0;
         }
         com.google.gson.JsonObject json = new com.google.gson.JsonObject();
         TicketDAO ticketDAO = new TicketDAO();
@@ -147,11 +185,7 @@ public class BuyTicketServlet extends HttpServlet {
                 inCartSeatIds.put(ticket.getSeat().getSeatId(), ticket.getSeat().getSeatId());
             }
             if (paidSeatIds.containsKey(seatId)) {
-                Gson gson = new Gson();
-                json.addProperty("isPurchased", "true");
-                json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
-                response.getWriter().write(gson.toJson(json));
-                return false;
+                return -1;
             }
             Ticket ticket = new Ticket();
             ticket.setCode(null);
@@ -162,17 +196,9 @@ public class BuyTicketServlet extends HttpServlet {
             if (!inCartSeatIds.containsKey(ticket.getSeat().getSeatId())) {
                 ticket.setTicketId(ticketDAO.addToCart(ticket));
             }
-            Gson gson = new Gson();
-            json.addProperty("isSuccess", "true");
-            json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
-            json.addProperty("addedTicket", ticket(ticket));
-            response.getWriter().write(gson.toJson(json));
-            return true;
+            return ticket.getTicketId();
         } else {
-            Gson gson = new Gson();
-            json.addProperty("notAvailable", "true");
-            response.getWriter().write(gson.toJson(json));
-            return false;
+            return -2;
         }
     }
 
@@ -373,7 +399,12 @@ public class BuyTicketServlet extends HttpServlet {
                 "                        </div>";
     }
 
-
-
+    public double total(List<Ticket> tickets){
+        double total = 0;
+        for (Ticket ticket : tickets) {
+            total += ticket.getSeat().getPrice();
+        }
+        return total;
+    }
 
 }

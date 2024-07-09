@@ -1,14 +1,21 @@
 package vnpay.common;
 
+import DAO.OrderDAO;
+import Models.Account;
+import Models.Order;
+import Models.Ticket;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import Utils.EmailSender;
+import org.apache.http.impl.io.EmptyInputStream;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "IPN", value = "/IPN")
@@ -40,7 +47,25 @@ public class IPNServlet extends HttpServlet {
                     if (checkOrderStatus) {
                         if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Thành công"
-
+                            HttpSession session = request.getSession();
+                            Account account = (Account) session.getAttribute("user");
+                            int orderId = 0;
+                            try{
+                                orderId = (int) session.getAttribute("orderId");
+                            }
+                            catch (Exception e){
+                                response.sendRedirect(request.getContextPath()+ "/VNPAY_RETURN.jsp");
+                                return;
+                            }
+                            //Cập nhật trạng thái đơn hàng
+                            Order order = OrderDAO.INSTANCE.getOrderById(orderId);
+                            OrderDAO.INSTANCE.updateOrderStatus(orderId, 1, order.getTickets());
+                            order = OrderDAO.INSTANCE.getOrderById(orderId);
+                            List<Ticket> tickets = order.getTickets();
+                            //Gửi mail thông báo đơn hàng
+                            EmailSender emailSender = new EmailSender();
+                            emailSender.sendEmailQRCode(account, tickets, request, response);
+                            request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         } else {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Không thành công"
                         }
