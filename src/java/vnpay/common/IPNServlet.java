@@ -66,7 +66,7 @@ public class IPNServlet extends HttpServlet {
                             }
                             request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         } else {
-                            //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Không thành công"
+                            request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         }
                     } else {
                         //Trạng thái giao dịch đã được cập nhật trước đó

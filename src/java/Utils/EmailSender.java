@@ -122,7 +122,10 @@ public class EmailSender {
             for (Ticket ticket : tickets) {
                     htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
                             "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
-                            "                <img style=\"width: 100%; height: 100%\" src=\"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + ticket.getCode() + "\">\n" +
+                            "                <img style=\"width: 80%;\n" +
+                            "    height: 80%;\n" +
+                            "    padding: 10px;\n" +
+                            "    background: white;\" src=\"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + ticket.getCode() + "\">\n" +
                             "            </div>\n" +
                             "            <div style=\"margin: 0\">\n" +
                             "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +

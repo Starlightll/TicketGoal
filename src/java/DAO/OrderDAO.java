@@ -145,7 +145,7 @@ public class OrderDAO {
             int ticketRow = ticket.getSeat().getRow();
             int ticketPrice = ticket.getSeat().getPrice();
             String randomNumber = Config.getRandomNumber(8);
-            String data = "orderId=" + orderId + "&ticketId=" + ticketId + "&ticketMatch=" + ticketMatch + "&ticketSeat=" + ticketSeat + "&ticketArea=" + ticketArea + "&ticketRow=" + ticketRow + "&ticketPrice=" + ticketPrice + "&randomNumber=" + randomNumber;
+            String data = "orderId=" + orderId + "&ticketId=" + ticketId + "&ticketMatch=" + ticketMatch + "&randomNumber=" + randomNumber;
             code = Config.hmacSHA512(secretKey, data);
         } catch (Exception e) {
             return "";
