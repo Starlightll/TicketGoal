@@ -5,11 +5,14 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="TicketGoal" />
+          <element id="library" level="application" name="jquery" />
+          <element id="library" level="application" name="html5-qrcode" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="libForAccount" />
           <element id="library" level="project" name="libForSeat" />
           <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="libForQRCode" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="TicketGoal/web/Web" />
