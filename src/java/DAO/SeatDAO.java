@@ -71,17 +71,17 @@ public class SeatDAO{
     }
 
 
-    public void updateSeatStatus(int seatId, int statusId) {
+    public boolean updateSeatStatus(int seatId, int statusId) {
         String query = "UPDATE Seat SET seatStatusId = ? WHERE seatId = ?";
         try {
             PreparedStatement statement = connect.prepareStatement(query);
             statement.setInt(1, statusId);
             statement.setInt(2, seatId);
-            statement.executeUpdate();
-            statement.close();
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Update seat status: " + e);
         }
+        return false;
     }
 
 
