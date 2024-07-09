@@ -23,7 +23,7 @@ public class OrderDAO {
         }
     }
 
-    public int createOrder(Account account, List<Ticket> tickets, int statusId) {
+    public Order createOrder(Account account, List<Ticket> tickets, int statusId) {
         String sql = "INSERT INTO [Order] (totalAmount, accountId, orderStatusId, orderDate) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -49,9 +49,9 @@ public class OrderDAO {
             for (Ticket ticket : tickets) {
                 createOrderLine(orderId, ticket.getTicketId());
             }
-            return orderId;
+            return getOrderById(orderId);
         } catch (SQLException e) {
-            return 0;
+            return null;
         }
     }
 
@@ -77,7 +77,7 @@ public class OrderDAO {
             statement.setInt(1, orderId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                order.setOrderId(rs.getString("orderId"));
+                order.setOrderId(rs.getInt("orderId"));
                 order.setCustomerId(rs.getInt("accountId"));
                 order.setTotalAmount(rs.getInt("totalAmount"));
                 order.setOrderDate(rs.getDate("orderDate"));

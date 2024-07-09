@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -78,54 +79,50 @@ public class EmailSender {
         resp.getWriter().write(json);
     }
 
-        public void sendEmailQRCode(Account account, List<Ticket> tickets, HttpServletRequest request, HttpServletResponse response) throws IOException {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+    public void sendEmailQRCode(Account account, List<Ticket> tickets, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-            int timeout = 8000;
+        Gson gson = new Gson();
+        Common.JsonResponse jsonResponse;
 
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.port", "587");
-            props.put("mail.smtp.timeout", timeout);
+        int timeout = 8000;
 
-            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
-                }
-            });
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.timeout", timeout);
 
-            try {
-                MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("nemmesis099@gmail.com"));
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
-                message.setSubject("Dear MyFriend, ");
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
+            }
+        });
 
-                MimeMultipart multipart = new MimeMultipart("related");
-
-                // Tạo phần chính của email
-                BodyPart messageBodyPart = new MimeBodyPart();
-                String htmlContent = "<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                        "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
-                        "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
-                        "    <title>TicketGoal</title>\n" +
-                        "</head>\n" +
-                        "<body>\n" +
-                        "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
-                        "    <h1>QR Code Backup</h1>\n" +
-                        "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
-                        "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
-                        "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
-                for (int i = 0; i < tickets.size(); i++) {
-                    Ticket ticket = tickets.get(i);
-                    String cid = "qrCode" + i;
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
+            message.setSubject("Dear MyFriend, ");
+            String htmlContent = "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                    "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
+                    "    <title>TicketGoal</title>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
+                    "    <h1>QR Code Backup</h1>\n" +
+                    "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
+                    "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
+                    "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
+            for (Ticket ticket : tickets) {
                     htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
                             "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
-                            "                <img style=\"width: 100%; height: 100%\" src=\"cid:" + cid + "\">\n" +
+                            "                <img style=\"width: 100%; height: 100%\" src=\"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + ticket.getCode() + "\">\n" +
                             "            </div>\n" +
                             "            <div style=\"margin: 0\">\n" +
                             "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +
@@ -134,35 +131,49 @@ public class EmailSender {
                             "                <p style=\"margin: 0\">Date: " + ticket.getDate() + "</p>\n" +
                             "            </div>\n" +
                             "        </div>\n";
-
-                    // Thêm ảnh QR code dưới dạng tệp đính kèm
-                    MimeBodyPart imagePart = new MimeBodyPart();
-                    ByteArrayDataSource dataSource = QRCodeUtil.generateQRCodeImage(ticket.getCode());
-                    imagePart.setDataHandler(new DataHandler(dataSource));
-                    imagePart.setHeader("Content-ID", "<" + cid + ">");
-                    imagePart.setDisposition(MimeBodyPart.INLINE);
-                    multipart.addBodyPart(imagePart);
-                }
-                htmlContent +=
-                        "    </div>\n" +
-                                "    <p>Thank you for using our service.</p>\n" +
-                                "    <p>Have a nice day!</p>\n" +
-                                "\n" +
-                                "    <footer>\n" +
-                                "        <p>&copy; TicketGoal 2024</p>\n" +
-                                "    </footer>\n" +
-                                "</main>\n" +
-                                "</body>\n" +
-                                "</html>";
-
-                messageBodyPart.setContent(htmlContent, "text/html");
-                multipart.addBodyPart(messageBodyPart);
-
-                message.setContent(multipart);
-                Transport.send(message);
-            } catch (MessagingException | WriterException e) {
-                throw new RuntimeException(e);
             }
+            htmlContent +=
+                    "    </div>\n" +
+                            "    <p>Thank you for using our service.</p>\n" +
+                            "    <p>Have a nice day!</p>\n" +
+                            "\n" +
+                            "    <footer>\n" +
+                            "        <p>&copy; TicketGoal 2024</p>\n" +
+                            "    </footer>\n" +
+                            "</main>\n" +
+                            "</body>\n" +
+                            "</html>";
+
+            // Create body
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(htmlContent, "text/html");
+
+            // Creates multi-part
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+//            // Attach QRCode
+//            QRCodeUtil qrCodeUtil = new QRCodeUtil();
+//            List<File> attachedFiles = qrCodeUtil.QRCodeList(tickets);
+//            if (attachedFiles != null && attachedFiles.size() > 0) {
+//                for (File aFile : attachedFiles) {
+//                    MimeBodyPart attachPart = new MimeBodyPart();
+//
+//                    try {
+//                        attachPart.attachFile(aFile);
+//                    } catch (IOException ex) {
+//                        ex.printStackTrace();
+//                    }
+//
+//                    multipart.addBodyPart(attachPart);
+//                }
+//            }
+            // sets the multi-part as e-mail's content
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
+    }
 
 }

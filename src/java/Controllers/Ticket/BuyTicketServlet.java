@@ -93,8 +93,8 @@ public class BuyTicketServlet extends HttpServlet {
                     }else{
                         List<Ticket> tickets = new ArrayList<>();
                         tickets.add(new TicketDAO().getTicketById(ticketId));
-                        int orderId = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
-                        request.getSession().setAttribute("orderId", orderId);
+                        Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
+                        request.getSession().setAttribute("order", order);
                         request.getRequestDispatcher("payServlet").forward(request, response);
                     }
                     response.getWriter().write(gson.toJson(json));
@@ -107,8 +107,8 @@ public class BuyTicketServlet extends HttpServlet {
                         return;
                     }else{
                     List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId);
-                    int order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
-                    request.getSession().setAttribute("orderId", order);
+                    Order order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
+                    request.getSession().setAttribute("order", order);
                     request.getRequestDispatcher("payServlet").forward(request, response);
                     }
                     break;
