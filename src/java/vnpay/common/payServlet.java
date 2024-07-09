@@ -72,8 +72,7 @@ public class payServlet extends HttpServlet {
         String orderType = "other";
         long amount = 0;
         HttpSession session = req.getSession();
-        int orderId = (int) session.getAttribute("orderId");
-        Order order = OrderDAO.INSTANCE.getOrderById(orderId);
+        Order order = (Order) session.getAttribute("order");
         if (order != null) {
             amount = order.getTotalAmount();
         }

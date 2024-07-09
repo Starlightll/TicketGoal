@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private String orderId;
+    private int orderId;
     private int customerId;
     private long totalAmount;
     private Date orderDate;
@@ -15,7 +15,7 @@ public class Order {
 
     }
 
-    public Order(String orderId, int customerId, long totalAmount, Date orderDate, List<Ticket> tickets, int statusId) {
+    public Order(int orderId, int customerId, long totalAmount, Date orderDate, List<Ticket> tickets, int statusId) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.totalAmount = totalAmount;
@@ -24,11 +24,11 @@ public class Order {
         this.statusId = statusId;
     }
 
-    public String getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 

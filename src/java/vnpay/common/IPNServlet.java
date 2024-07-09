@@ -49,22 +49,21 @@ public class IPNServlet extends HttpServlet {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Thành công"
                             HttpSession session = request.getSession();
                             Account account = (Account) session.getAttribute("user");
-                            int orderId = 0;
                             try{
-                                orderId = (int) session.getAttribute("orderId");
+                                Order order = (Order) session.getAttribute("order");
+                                if(order.getStatusId() != 1){
+                                    //Cập nhật trạng thái đơn hàng
+                                    OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 1, order.getTickets());
+                                    order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
+                                    //Gửi mail thông báo đơn hàng
+                                    EmailSender emailSender = new EmailSender();
+                                    List<Ticket> tickets = order.getTickets();
+                                    emailSender.sendEmailQRCode(account, tickets, request, response);
+                                }
                             }
                             catch (Exception e){
-                                response.sendRedirect(request.getContextPath()+ "/VNPAY_RETURN.jsp");
-                                return;
+                                request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                             }
-                            //Cập nhật trạng thái đơn hàng
-                            Order order = OrderDAO.INSTANCE.getOrderById(orderId);
-                            OrderDAO.INSTANCE.updateOrderStatus(orderId, 1, order.getTickets());
-                            order = OrderDAO.INSTANCE.getOrderById(orderId);
-                            List<Ticket> tickets = order.getTickets();
-                            //Gửi mail thông báo đơn hàng
-                            EmailSender emailSender = new EmailSender();
-                            emailSender.sendEmailQRCode(account, tickets, request, response);
                             request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         } else {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Không thành công"
