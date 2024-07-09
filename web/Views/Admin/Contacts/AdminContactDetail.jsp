@@ -263,9 +263,9 @@
                                     <div class="row">
                                         <h2>Name : ${contact.name}</h2>
                                         <h3>Email : ${contact.email}</h3>
-                                        <h4>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
+                                        <h1>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
                                                                         type="date" pattern="MM-dd-yyyy"/>
-                                                            ${formattedDate}</h4>
+                                                            ${formattedDate}</h1>
                                         <p>${contact.message}</p>
                                     </div>
                                 </div>
