@@ -63,10 +63,10 @@
                             <c:if test="${sessionScope.user.roleId == 1}">
                                 <a class="dropdown__item"
                                    href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
-                                <a class="dropdown__item">QR Scan</a>
+                                <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR Scan</a>
                             </c:if>
                             <c:if test="${sessionScope.user.roleId == 3}">
-                                <a class="dropdown__item">QR Scan</a>
+                                <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR Scan</a>
                             </c:if>
                             <a class="dropdown__item">My Ticket</a>
                             <a class="dropdown__item">My Cart</a>
