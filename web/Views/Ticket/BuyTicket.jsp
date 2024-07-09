@@ -180,7 +180,8 @@
                             </div>
                             <div class="price">
                                 <div>
-                                    Price: <fmt:formatNumber value="${ticket.seat.price}" type="number" maxFractionDigits="0" groupingUsed="true"/> VNĐ
+                                    Price: <fmt:setLocale value = "vi_VN"/>
+                                    <fmt:formatNumber value = "${ticket.seat.price}" type = "currency"/>
                                 </div>
                                 <i class="ri-delete-bin-6-line" style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer" onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
                             </div>
@@ -191,13 +192,13 @@
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                     <div class="total">
                         <div>Total:</div>
-                        <div id="total-value">0 VNĐ</div>
+                        <div id="total-value"><fmt:setLocale value = "vi_VN"/>
+                            <fmt:formatNumber value = "${requestScope.total}" type = "currency"/></div>
                     </div>
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                 </div>
                 <div class="action">
                     <button id="btn-buy" type="button" onclick="purchase(${matchId})">Buy</button>
-                    <button id="btn-add-to-cart" type="button" onclick="addToCart(${matchId})">Add to cart</button>
                 </div>
             </form>
         </div>
@@ -288,7 +289,7 @@
         document.getElementById("area-name").innerHTML = "Area: " + areaName;
         document.getElementById("seat-number-value").innerHTML = seatNumber;
         document.getElementById("row-value").innerHTML = row;
-        document.getElementById("price-value").innerHTML = price + " VNĐ";
+        document.getElementById("price-value").innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(price);
         document.getElementById("seat-id").innerHTML = seatId;
         const confirmBox = document.getElementById("confirm-box");
         confirmBox["seatId"].value = seatId;
@@ -347,11 +348,13 @@
                     showNotification("This seat is already in the cart");
                 } else if (response.isSuccess === 'true') {
                     const orderList = document.getElementById("order-list");
+                    const totalValue = document.getElementById("total-value");
                     const newOrder = document.createElement("div");
                     newOrder.innerHTML = response.addedTicket;
                     orderList.appendChild(newOrder);
                     const stadiumUI = document.getElementById("stadiumUI");
                     stadiumUI.innerHTML = response.stadium;
+                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(response.total);
                     showNotification("Add to cart successfully");
                 }
             },
@@ -367,42 +370,12 @@
     function purchaseOne() {
         const confirmBox = document.getElementById("confirm-box");
         const seatId = confirmBox["seatId"].value;
-        const orderList = document.getElementById("order-list");
-        const newOrder = document.createElement("div");
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
             data: {
                 action: "buyOneTicket",
                 seatId: seatId
-            },
-            dataType: 'JSON',
-            success: function (response) {
-
-            },
-            error: function () {
-                alert("Error");
-            }
-        });
-        //close confirm box
-        document.getElementById("confirm-box-background").style.display = "none";
-        confirmBox.reset();
-    }
-
-
-    function purchase(matchId) {
-        if (tickets.length === 0) {
-            showNotification("Please select at least one seat");
-            return;
-        }
-        var matchIds = matchId;
-        $.ajax({
-            url: `${pageContext.request.contextPath}/BuyTicket`,
-            method: "POST",
-            data: {
-                matchId: matchIds,
-                action: "buyTicket",
-                seatIds: JSON.stringify(tickets)
             },
             dataType: 'JSON',
             success: function (response) {
@@ -413,16 +386,7 @@
                     showNotification("This match is not longer available for purchases ticket");
                 } else if (response.isPurchased === 'true') {
                     showNotification("This seat is already purchased!");
-                } else if (response.isSuccess === 'true') {
-                    showNotification("Buy ticket successfully");
-                    const stadiumUI = document.getElementById("stadiumUI");
-                    let orderList = document.getElementById("order-list");
-                    tickets = [];
-                    orderList.innerText = "";
-                    stadiumUI.innerHTML = response.stadium;
-                    attachStadiumDragEvent();
-                }
-                if (response.code === '00') {
+                } else if (response.code === '00') {
                     if (window.vnpay) {
                         vnpay.open({width: 768, height: 600, url: x.data});
                     } else {
@@ -437,6 +401,47 @@
                 alert("Error");
             }
         });
+        //close confirm box
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
+    }
+
+
+    function purchase(matchId) {
+        $.ajax({
+            url: `${pageContext.request.contextPath}/BuyTicket`,
+            method: "POST",
+            data: {
+                action: "buyTicket",
+                matchId: matchId
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.loginRequired === 'true') {
+                    const loginBox = document.getElementById('login');
+                    loginBox.classList.add('show-login');
+                } else if (response.notAvailable === 'true') {
+                    showNotification("This match is not longer available for purchases ticket");
+                } else if (response.isPurchased === 'true') {
+                    showNotification("This seat is already purchased!");
+                } else if (response.code === '00') {
+                    if (window.vnpay) {
+                        vnpay.open({width: 768, height: 600, url: x.data});
+                    } else {
+                        location.href = response.data;
+                    }
+                    return false;
+                } else {
+                    alert(response.Message);
+                }
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+        //close confirm box
+        document.getElementById("confirm-box-background").style.display = "none";
+        confirmBox.reset();
     }
 
     function removeTicket(ticketId, seatId, matchId) {
@@ -452,9 +457,11 @@
             success: function (response) {
                 if(response.isSuccess === 'true'){
                     const ticket = document.getElementById("item-" + ticketId);
+                    const totalValue = document.getElementById("total-value");
                     ticket.remove();
                     const stadiumUI = document.getElementById("stadiumUI");
                     stadiumUI.innerHTML = response.stadium;
+                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(response.total);
                     showNotification("Remove ticket successfully");
                 }
             },
