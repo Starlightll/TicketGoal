@@ -160,4 +160,26 @@ public class MatchDAO {
         return seats;
     }
     
+     public Match getMatchById(int matchId) {
+        try {
+            String query = "SELECT * FROM Match WHERE matchId = ?";
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setInt(1, matchId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setPitchId(rs.getInt("pitchId"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                match.setAddress(null);
+
+                return match;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }

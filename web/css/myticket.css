@@ -1,0 +1,163 @@
+
+.my-ticket-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.search-sort-container {
+    margin-bottom: 20px;
+}
+
+.search-sort-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.sort-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.search-sort-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-sort-button:hover {
+    background-color: #0056b3;
+}
+
+.ticket-list {
+    width: 100%;
+}
+
+.ticket-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ticket-column {
+    width: 48%; 
+}
+
+.ticket-column + .ticket-column {
+    margin-left: 4%; 
+}
+
+
+.ticket-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ticket-code {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.ticket-status {
+    background-color: #ff5733;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.club-names {
+    margin-bottom: 10px;
+}
+
+.club-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.divider-customer {
+    margin: 0 5px;
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+}
+
+.ticket-info p {
+    margin: 5px 0;
+}
+
+.ticket-details form button {
+    background-color: #f44336; 
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.ticket-details form button:hover {
+    background-color: #cc0000; 
+}
+
+.custom-alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.custom-alert.success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+.custom-alert .closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.custom-alert .closebtn:hover {
+  color: black;
+}
+
