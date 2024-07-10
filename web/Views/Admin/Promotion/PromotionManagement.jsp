@@ -19,7 +19,7 @@
     <c:set var="searchQuery" value="${param.q}" />
     <body>
         <div class="container">
-            <h2>${messsage}</h2>
+            <h2 style="color:red">${message}</h2>
             <div class="top-bar">
                 <button id="add-new-promotion-btn" class="add-btn" >Add</button>
                 <a href="./promotionManagement" class="add-btn" style='background-color:green'>Reload</a>
@@ -37,7 +37,7 @@
                         <tr>
                             <th onclick="sortTable('promotionId')">ID <i class="fas fa-sort" ></i></th>
                             <th onclick="sortTable('promotionCode')">Code <i class="fas fa-sort" ></i></th>
-                            <th onclick="sortTable('promotionDescription')">Description <i class="fas fa-sort" ></i></th>
+                            <th>Match </th>
                             <th onclick="sortTable('promotionStartDate')">Start Date <i class="fas fa-sort" ></i></th>
                             <th onclick="sortTable('promotionEndDate')">End Date <i class="fas fa-sort" ></i></th>
                             <th>Action <i class="fas fa-sort" ></i></th>
@@ -48,7 +48,7 @@
                             <tr>
                                 <td>${promotion.promotionId}</td>
                                 <td>${promotion.promotionCode}</td>
-                                <td>${promotion.promotionDescription}</td>
+                                <td> ${MatchDAO.getMatch(promotion.promotionMatchId).getClub1().getClubName()} vs ${MatchDAO.getMatch(promotion.promotionMatchId).getClub2().getClubName()}</td>
                                 <td>${promotion.promotionStartDate}</td>
                                 <td>${promotion.promotionEndDate}</td>
                                 <td class="action-buttons" style="display: flex">
@@ -73,6 +73,9 @@
                                     <p>Description : <span id="modalOperatorEmail">${promotion.promotionDescription}</span></p>
                                     <p>Start Date: <span id="modalOperatorPhone">${promotion.promotionStartDate}</span></p>
                                     <p>End Date <span id="modalOperatorGender">${promotion.promotionEndDate}</span></p>
+                                    <p>Match ID :  <span id="modalOperatorGender">${promotion.promotionMatchId}</span></p>
+                                    <p>Match :  <span id="modalOperatorGender">
+                                            ${MatchDAO.getMatch(promotion.promotionMatchId).getClub1().getClubName()} vs ${MatchDAO.getMatch(promotion.promotionMatchId).getClub2().getClubName()}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -103,16 +106,15 @@
                                                 <input type="datetime-local" id="endDate" name="endDate" required value="${promotion.promotionEndDate}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="endDate">Match selected:</label>
-                                                <input type="datetime-local" id="endDate" required value="${promotion.promotionEndDate}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="operatorStatus">All Match Available:</label>
-                                                <select type="text" id="new-operator-status" >
-                                                    <c:forEach var="accountStatus" items="${listAccountStatus}">
-                                                        <option value="${accountStatus.getAccountStatusId()}">${accountStatus.getStatusName()}</option>
+                                                <label for="promotionMatch">Promotion Match: </label>
+                                                <select id="promotionMatch" name="promotionMatch" required>
+                                                    <c:forEach items="${listMatch}" var="match">
+                                                        <option value="${match.matchId}"  ${match.matchId == promotion.promotionMatchId ? "selected" : ""}>
+                                                            ${match.club1.getClubName()} vs ${match.club2.getClubName()}
+                                                        </option>
                                                     </c:forEach>
                                                 </select>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit">Save</button>
@@ -163,6 +165,21 @@
                         <div class="form-group">
                             <label for="endDate">End Date:</label>
                             <input type="datetime-local" id="endDate" name="endDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="promotionMatch">Promotion Match: </label>
+                            <select id="promotionMatch" name="promotionMatch" required>
+                                <c:choose>
+                                    <c:when test="${empty listMatch}">
+                                        <option value="">No available match</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach items="${listMatch}" var="match">
+                                            <option value="${match.matchId}">${match.club1.getClubName()} vs ${match.club2.getClubName()}</option>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="submit">Save</button>

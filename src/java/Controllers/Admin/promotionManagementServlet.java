@@ -4,9 +4,10 @@
  */
 package Controllers.Admin;
 
+import DAO.MatchDAO;
 import DAO.PromotionDAO;
-import DAO.PromotionMatchDAO;
 import Models.Promotion;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,7 +28,6 @@ import java.util.List;
 public class promotionManagementServlet extends HttpServlet {
 
     private final PromotionDAO proDAO = new PromotionDAO();
-    private final PromotionMatchDAO proMatchDAO = new PromotionMatchDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,6 +48,8 @@ public class promotionManagementServlet extends HttpServlet {
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("promotions", listPromotion);
         request.setAttribute("searchParam", searchParam);
+        request.setAttribute("listMatch", MatchDAO.INSTANCE.getMatchesByStatusId(1));
+        request.setAttribute("MatchDAO", MatchDAO.INSTANCE);
         //set cssF
         request.setAttribute("dropdownMenu", "block");
         request.setAttribute("promotionManagement", "style=\"background-color: #00C767; pointer-events: none;\"");
@@ -66,10 +69,14 @@ public class promotionManagementServlet extends HttpServlet {
             return;
         }
         String code = request.getParameter("code");
+        if (code != null) {
+            code = code.toUpperCase();
+        }
         String description = request.getParameter("description");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String id = request.getParameter("id");
+        String promotionMatch = request.getParameter("promotionMatch");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         switch (type) {
@@ -79,13 +86,23 @@ public class promotionManagementServlet extends HttpServlet {
                     doGet(request, response);
                     return;
                 }
-                Promotion newPromotion = proDAO.insertPromotion(new Promotion(
-                        code, description,
-                        LocalDateTime.parse(startDate, formatter),
-                        LocalDateTime.parse(endDate, formatter)));
-                System.out.println(request.getContextPath());
-                response.sendRedirect(referrer);
-                return;
+                LocalDateTime startDateTime = LocalDateTime.parse(startDate, formatter);
+                LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
+                if (startDateTime.isAfter(endDateTime)) {
+                    request.setAttribute("message", "Start date must be earlier than end date.");
+                    doGet(request, response);
+                    return;
+                }
+                try {
+                    proDAO.insertPromotion(new Promotion(
+                            code, description,
+                            startDateTime, endDateTime, Integer.parseInt(promotionMatch)));
+                    response.sendRedirect(referrer);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    doGet(request, response);
+                }
+                break;
             }
             case "update" -> {
                 if (code == null || description == null || startDate == null || endDate == null || id == null) {
@@ -93,16 +110,25 @@ public class promotionManagementServlet extends HttpServlet {
                     doGet(request, response);
                     return;
                 }
+                LocalDateTime startDateTime = LocalDateTime.parse(startDate, formatter);
+                LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
+                if (startDateTime.isAfter(endDateTime)) {
+                    request.setAttribute("message", "Start date must be earlier than end date.");
+                    doGet(request, response);
+                    return;
+                }
                 boolean isUpdated = proDAO.updatePromotion(new Promotion(Integer.parseInt(id),
                         code, description,
-                        LocalDateTime.parse(startDate, formatter),
-                        LocalDateTime.parse(endDate, formatter)));
+                        startDateTime,
+                        endDateTime, Integer.parseInt(promotionMatch)));
                 if (isUpdated) {
                     response.sendRedirect(referrer);
                     return;
                 }
+                break;
             }
             case "delete" -> {
+                System.out.println(id);
                 if (id == null) {
                     request.setAttribute("message", "you must input all field");
                     doGet(request, response);
@@ -111,8 +137,8 @@ public class promotionManagementServlet extends HttpServlet {
                 boolean isUpdated = proDAO.deletePromotion(Integer.parseInt(id));
                 if (isUpdated) {
                     response.sendRedirect(referrer);
-                    return;
                 }
+                break;
             }
             default ->
                 throw new AssertionError();
