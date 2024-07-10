@@ -24,10 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author 
- */
+
 @WebServlet(name = "MyTicketController", urlPatterns = {"/my-ticket"})
 public class MyTicketController extends HttpServlet {
 

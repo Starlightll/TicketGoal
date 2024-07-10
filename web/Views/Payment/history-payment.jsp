@@ -1,8 +1,4 @@
-<%-- 
-    Document   : history-payment
-    Created on : Jul 8, 2024, 12:38:15 PM
-    Author     : HP
---%>
+
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

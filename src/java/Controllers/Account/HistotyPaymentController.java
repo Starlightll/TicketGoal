@@ -17,10 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- *
- * @author 
- */
+
 @WebServlet(name = "HistotyPaymentController", urlPatterns = {"/history-payment"})
 public class HistotyPaymentController extends HttpServlet {
 
