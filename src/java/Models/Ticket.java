@@ -16,6 +16,7 @@ public class Ticket {
     private int ticketStatusId;
     private int cartId;
     private Match match;
+    private String status;
     public Ticket() {
     }
 
@@ -92,5 +93,13 @@ public class Ticket {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

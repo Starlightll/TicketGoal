@@ -21,6 +21,7 @@ import java.util.List;
  * @author mosdd
  */
 public class MatchDAO {
+
     public static MatchDAO INSTANCE = new MatchDAO();
     private Connection connect;
     public String status = "OK";
@@ -67,7 +68,6 @@ public class MatchDAO {
         return null;
     }
 
-    
     public boolean addMatch(Match match) {
         try {
             String query = "INSERT INTO Match(schedule, pitchId, matchStatusId, club1, club2) VALUES(?, ?, ?, ?, ?)";
@@ -79,17 +79,17 @@ public class MatchDAO {
             ps.setInt(5, match.getClub2().getClubId());
             int rowsInserted = ps.executeUpdate();
             int matchId = -1;
-            if(rowsInserted > 0){
+            if (rowsInserted > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
-                if(rs.next()){
+                if (rs.next()) {
                     matchId = rs.getInt(1);
                 }
             }
             ps.close();
-            String query2 = "INSERT INTO Seat (seatNumber, row, price, areaId, seatStatusId, matchId)\n" +
-                    "SELECT seatNumber, row, price, areaId, seatStatusId, ?\n" +
-                    "FROM Seat\n" +
-                    "WHERE matchId IS NULL;";
+            String query2 = "INSERT INTO Seat (seatNumber, row, price, areaId, seatStatusId, matchId)\n"
+                    + "SELECT seatNumber, row, price, areaId, seatStatusId, ?\n"
+                    + "FROM Seat\n"
+                    + "WHERE matchId IS NULL;";
             ps = connect.prepareStatement(query2);
             ps.setInt(1, matchId);
             ps.executeUpdate();
@@ -159,5 +159,27 @@ public class MatchDAO {
         }
         return seats;
     }
-    
+
+    public Match getMatchById(int matchId) {
+        try {
+            String query = "SELECT * FROM Match WHERE matchId = ?";
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setInt(1, matchId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setPitchId(rs.getInt("pitchId"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                match.setAddress(null);
+
+                return match;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

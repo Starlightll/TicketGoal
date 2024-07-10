@@ -460,4 +460,270 @@ public class TicketDAO {
         }
         return rowDeleted;
     }
+    
+    public List<Ticket> getPaidTicketByUser(int userId) {
+        List<Ticket> tickets = new ArrayList<>();
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n"
+                + "FROM Ticket t\n"
+                + "JOIN Seat s ON t.seatId = s.seatId\n"
+                + "JOIN Area a ON s.areaId = a.areaId\n"
+                + "JOIN Match m ON t.matchId = m.matchId\n"
+                + "JOIN Club c1 ON m.club1 = c1.clubId\n"
+                + "JOIN Club c2 ON m.club2 = c2.clubId\n"
+                + "JOIN Cart cr ON t.cartId = cr.cartId\n"
+                + "JOIN Pitch p ON m.pitchId = p.pitchId\n"
+                + "WHERE t.ticketStatusId = 1 and cr.accountId=?";
+        try {
+            PreparedStatement st = connect.prepareStatement(sql);
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int ticketId = rs.getInt("ticketId");
+                String code = rs.getString("code");
+                Date date = rs.getDate("date");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
+                int ticketStatusId = rs.getInt("ticketStatusId");
+                int cartId = rs.getInt("cartId");
+                int matchId = rs.getInt("matchId");
+                String seatNumber = rs.getString("seatNumber");
+                double price = rs.getDouble("price");
+                String areaName = rs.getString("areaName");
+                String club1Name = rs.getString("club1Name");
+                String club2Name = rs.getString("club2Name");
+                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
+            }
+        } catch (SQLException e) {
+            System.out.println("Select tickets by accountId: " + e);
+        }
+        return tickets;
+    }
+
+    public List<Ticket> getTicketListByUser(int userId) {
+        List<Ticket> tickets = new ArrayList<>();
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo, TS.statusName\n"
+                + "FROM Ticket t\n"
+                + "JOIN Seat s ON t.seatId = s.seatId\n"
+                + "JOIN Area a ON s.areaId = a.areaId\n"
+                + "JOIN Match m ON t.matchId = m.matchId\n"
+                + "JOIN Club c1 ON m.club1 = c1.clubId\n"
+                + "JOIN Club c2 ON m.club2 = c2.clubId\n"
+                + "JOIN Cart cr ON t.cartId = cr.cartId\n"
+                + "JOIN Pitch p ON m.pitchId = p.pitchId\n"
+                + "JOIN ticketStatus as TS on TS.ticketStatusId = t.ticketStatusId\n"
+                + "WHERE cr.accountId=?";
+        try {
+            PreparedStatement st = connect.prepareStatement(sql);
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int ticketId = rs.getInt("ticketId");
+                String code = rs.getString("code");
+                Date date = rs.getDate("date");
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+                match.setPitchId(rs.getInt("pitchId"));
+                int ticketStatusId = rs.getInt("ticketStatusId");
+                int cartId = rs.getInt("cartId");
+                int matchId = rs.getInt("matchId");
+                String seatNumber = rs.getString("seatNumber");
+                double price = rs.getDouble("price");
+                String areaName = rs.getString("areaName");
+                String club1Name = rs.getString("club1Name");
+                String club2Name = rs.getString("club2Name");
+                Ticket ticket = new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match);
+                ticket.setStatus(rs.getString("statusName"));
+                tickets.add(ticket);
+            }
+        } catch (SQLException e) {
+            System.out.println("Select tickets by accountId: " + e);
+        }
+        return tickets;
+    }
+
+    public Ticket getTicketByIdQR(int ticketId) {
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n"
+                + "FROM Ticket t\n"
+                + "JOIN Seat s ON t.seatId = s.seatId\n"
+                + "JOIN Area a ON s.areaId = a.areaId\n"
+                + "JOIN Match m ON t.matchId = m.matchId\n"
+                + "JOIN Club c1 ON m.club1 = c1.clubId\n"
+                + "JOIN Club c2 ON m.club2 = c2.clubId\n"
+                + "JOIN Cart cr ON t.cartId = cr.cartId\n"
+                + "JOIN Pitch p ON m.pitchId = p.pitchId\n"
+                + "WHERE t.ticketId = ?";
+
+        try (PreparedStatement st = connect.prepareStatement(sql)) {
+            st.setInt(1, ticketId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int ticketIdResult = rs.getInt("ticketId");
+                String code = rs.getString("code");
+                Date date = rs.getDate("date");
+
+                Seat seat = new Seat();
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatNumber(rs.getInt("seatNumber"));
+                seat.setPrice(rs.getInt("price"));
+                seat.setSeatStatusId(rs.getInt("seatStatusId"));
+                seat.setRow(rs.getInt("row"));
+
+                Area area = new Area();
+                area.setId(rs.getInt("areaId"));
+                area.setAreaName(rs.getString("areaName"));
+                seat.setArea(area);
+
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+
+                Club club1 = new Club();
+                club1.setClubId(rs.getInt("club1Id"));
+                club1.setClubName(rs.getString("club1Name"));
+                club1.setClubLogo(rs.getString("club1Logo"));
+
+                Club club2 = new Club();
+                club2.setClubId(rs.getInt("club2Id"));
+                club2.setClubName(rs.getString("club2Name"));
+                club2.setClubLogo(rs.getString("club2Logo"));
+
+                match.setClub1(club1);
+                match.setClub2(club2);
+                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setMatchStatusId(rs.getInt("matchStatusId"));
+
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
+
+                match.setPitchId(rs.getInt("pitchId"));
+                int ticketStatusId = rs.getInt("ticketStatusId");
+                int cartId = rs.getInt("cartId");
+
+                return new Ticket(ticketIdResult, code, date, seat, ticketStatusId, cartId, match);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching ticket by ticketId: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public void updateTicketStatusHistory(int ticketId, int newStatusId) {
+        try {
+            String sql = "UPDATE Ticket SET ticketStatusId = ? WHERE ticketId = ?";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, newStatusId);
+            ps.setInt(2, ticketId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating ticket status: " + e.getMessage());
+        }
+    }
+
+    public void updateSeatStatusAvailable(int seatId) {
+        try {
+            String sql = "UPDATE Seat SET seatStatusId = 1 WHERE seatId = ?";
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, seatId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating seat status: " + e.getMessage());
+        }
+    }
+
+    public int getPendingOrderIds(int id) {
+        String sql = "SELECT DISTINCT O.orderId "
+                + "FROM [Order] AS O "
+                + "JOIN [OrderLine] AS OL ON O.orderId = OL.orderId "
+                + "JOIN Ticket AS T ON T.ticketId = OL.ticketId "
+                + "JOIN [OrderStatus] AS OS ON OS.orderStatusId = O.orderStatusId "
+                + "WHERE OL.ticketId=?";
+
+        try {
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("orderId");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public int getTotalOrderIds(int id) {
+        String sql = "SELECT DISTINCT O.totalAmount "
+                + "FROM [Order] AS O "
+                + "JOIN [OrderLine] AS OL ON O.orderId = OL.orderId "
+                + "JOIN Ticket AS T ON T.ticketId = OL.ticketId "
+                + "JOIN [OrderStatus] AS OS ON OS.orderStatusId = O.orderStatusId "
+                + "WHERE OL.ticketId=?";
+
+        try {
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("totalAmount");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 }
