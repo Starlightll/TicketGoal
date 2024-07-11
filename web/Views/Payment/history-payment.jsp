@@ -39,7 +39,7 @@
                                     <p>Date: ${ticket.match.schedule}</p>
                                 </div>
                                 <div class="qr-code-button" style="margin-top: 10px;">
-                                    <button onclick="generateQRCode(${ticket.ticketId}, '${ticket.seat.area.areaName}', '${ticket.seat.seatNumber}', '${ticket.seat.price}', '${ticket.match.schedule}', '${ticket.match.club1.clubName}', '${ticket.match.club2.clubName}')" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                                    <button onclick="generateQRCode('${ticket.code}')" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
                                         Generate QR Code
                                     </button>
                                 </div>
