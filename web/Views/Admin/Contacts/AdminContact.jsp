@@ -14,6 +14,11 @@
             }
 
             /* EMAIL */
+            
+            .header {
+                padding: 15px 0;
+            }
+            
             .email {
                 padding: 20px 10px 15px 10px;
                 font-size: 1em;
@@ -55,6 +60,18 @@
                 border-top: 0;
                 border-left: 3px solid transparent;
                 border-radius: 0px;
+            }
+           
+            .header .nav__link {
+                font-size: 2rem;
+            }
+            
+            .header .join__button {
+                font-size: 19px;
+            }
+            
+            .header .nav__cart {
+                font-size: 2.5rem;
             }
 
             .email .nav.nav-pills.nav-stacked>li.active>a,

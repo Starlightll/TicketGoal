@@ -12,6 +12,20 @@
             body {
                 background: #eee;
             }
+            .header {
+                padding: 15px 0;
+            }
+            .header .nav__link {
+                font-size: 2rem;
+            }
+
+            .header .join__button {
+                font-size: 19px;
+            }
+
+            .header .nav__cart {
+                font-size: 2.5rem;
+            }
 
             /* EMAIL */
             .email {
@@ -363,9 +377,9 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                        function confirmDelete() {
-                                                            return confirm('Are you sure you want to delete this message?');
-                                                        }
+                                                            function confirmDelete() {
+                                                                return confirm('Are you sure you want to delete this message?');
+                                                            }
         </script>
     </body>
 </html>

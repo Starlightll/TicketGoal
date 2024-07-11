@@ -12,6 +12,20 @@
             body {
                 background: #eee;
             }
+            .header {
+                padding: 15px 0;
+            }
+                       .header .nav__link {
+                font-size: 2rem;
+            }
+            
+            .header .join__button {
+                font-size: 19px;
+            }
+            
+            .header .nav__cart {
+                font-size: 2.5rem;
+            }
 
             /* EMAIL */
             .email {
