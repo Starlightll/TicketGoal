@@ -17,6 +17,7 @@ public class Ticket {
     private int cartId;
     private Match match;
     private String status;
+
     public Ticket() {
     }
 

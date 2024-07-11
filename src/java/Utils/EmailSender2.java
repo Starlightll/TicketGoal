@@ -61,8 +61,8 @@ public class EmailSender2 {
             resp.getWriter().write(json);
         }
     }
-    
-    public void sendEmailDynamic(HttpServletRequest req, HttpServletResponse resp,String email,String subject,String content) throws IOException {
+
+    public void sendEmailDynamic(HttpServletRequest req, HttpServletResponse resp, String email, String subject, String content) throws IOException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 

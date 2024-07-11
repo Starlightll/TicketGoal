@@ -15,7 +15,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
- *
  * @author mosdd
  */
 public class Config {
@@ -80,9 +79,9 @@ public class Config {
                 sb.append("&");
             }
         }
-        return hmacSHA512(secretKey,sb.toString());
+        return hmacSHA512(secretKey, sb.toString());
     }
-    
+
     public static String hmacSHA512(final String key, final String data) {
         try {
 
@@ -105,7 +104,7 @@ public class Config {
             return "";
         }
     }
-    
+
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {
