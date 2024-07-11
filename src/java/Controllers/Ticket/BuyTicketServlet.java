@@ -81,14 +81,14 @@ public class BuyTicketServlet extends HttpServlet {
             switch (action) {
                 case "buyOneTicket":
                     int ticketId = addToCart(account, seatId);
-                    if(ticketId == 0){
+                    if (ticketId == 0) {
                         json.addProperty("isError", "true");
-                    }else if(ticketId == -1){
+                    } else if (ticketId == -1) {
                         json.addProperty("isPurchased", "true");
                         json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
-                    }else if (ticketId == -2){
+                    } else if (ticketId == -2) {
                         json.addProperty("notAvailable", "true");
-                    }else{
+                    } else {
                         List<Ticket> tickets = new ArrayList<>();
                         tickets.add(new TicketDAO().getTicketById(ticketId));
                         Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
@@ -98,26 +98,26 @@ public class BuyTicketServlet extends HttpServlet {
                     response.getWriter().write(gson.toJson(json));
                     break;
                 case "buyTicket":
-                    if(match.schedule.before(new java.util.Date())){
+                    if (match.schedule.before(new java.util.Date())) {
                         json.addProperty("notAvailable", "true");
                         json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
                         response.getWriter().write(gson.toJson(json));
                         return;
-                    }else{
-                    List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId);
-                    Order order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
-                    request.getSession().setAttribute("order", order);
-                    request.getRequestDispatcher("payServlet").forward(request, response);
+                    } else {
+                        List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId);
+                        Order order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
+                        request.getSession().setAttribute("order", order);
+                        request.getRequestDispatcher("payServlet").forward(request, response);
                     }
                     break;
                 case "addToCart":
                     int addedTicket = addToCart(account, seatId);
-                    if(addedTicket == 0){
+                    if (addedTicket == 0) {
                         json.addProperty("isError", "true");
-                    }else if(addedTicket == -1){
+                    } else if (addedTicket == -1) {
                         json.addProperty("isPurchased", "true");
                         json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
-                    }else if (addedTicket == -2){
+                    } else if (addedTicket == -2) {
                         json.addProperty("notAvailable", "true");
                     } else {
                         json.addProperty("isSuccess", "true");
@@ -378,26 +378,26 @@ public class BuyTicketServlet extends HttpServlet {
         return stadium.toString();
     }
 
-    public String ticket(Ticket ticket){
+    public String ticket(Ticket ticket) {
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         formatter.setMaximumFractionDigits(0);
 
-        return "<div class=\"item\" onmouseover=\"hover("+ticket.getSeat().getSeatId()+")\" onmouseout=\"removeHover("+ticket.getSeat().getSeatId()+")\" id=\"item-"+ticket.getTicketId()+"\">\n" +
+        return "<div class=\"item\" onmouseover=\"hover(" + ticket.getSeat().getSeatId() + ")\" onmouseout=\"removeHover(" + ticket.getSeat().getSeatId() + ")\" id=\"item-" + ticket.getTicketId() + "\">\n" +
                 "                            <div>\n" +
-                "                                <div class=\"area\">Area: "+ticket.getSeat().getArea().areaName+"</div>\n" +
-                "                                <div class=\"row\">Row: "+ticket.getSeat().getRow()+"</div>\n" +
-                "                                <div class=\"seat\">Seat: "+ticket.getSeat().getSeatNumber()+"</div>\n" +
+                "                                <div class=\"area\">Area: " + ticket.getSeat().getArea().areaName + "</div>\n" +
+                "                                <div class=\"row\">Row: " + ticket.getSeat().getRow() + "</div>\n" +
+                "                                <div class=\"seat\">Seat: " + ticket.getSeat().getSeatNumber() + "</div>\n" +
                 "                            </div>\n" +
                 "                            <div class=\"price\">\n" +
                 "                                <div>\n" +
-                "                                    Price: "+formatter.format(ticket.getSeat().getPrice())+" VNĐ\n" +
+                "                                    Price: " + formatter.format(ticket.getSeat().getPrice()) + " VNĐ\n" +
                 "                                </div>\n" +
-                "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket("+ticket.getTicketId()+","+ticket.getSeat().getSeatId()+","+ticket.getMatch().matchId+")\"></i>\n" +
+                "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket(" + ticket.getTicketId() + "," + ticket.getSeat().getSeatId() + "," + ticket.getMatch().matchId + ")\"></i>\n" +
                 "                            </div>\n" +
                 "                        </div>";
     }
 
-    public double total(List<Ticket> tickets){
+    public double total(List<Ticket> tickets) {
         double total = 0;
         for (Ticket ticket : tickets) {
             total += ticket.getSeat().getPrice();

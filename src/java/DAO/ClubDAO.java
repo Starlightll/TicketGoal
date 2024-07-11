@@ -10,8 +10,8 @@ import java.sql.Statement;
 
 public class ClubDAO {
     public static ClubDAO INSTANCE = new ClubDAO();
-    private Connection connect;
     public String status = "OK";
+    private Connection connect;
 
     private ClubDAO() {
         if (INSTANCE == null) {
@@ -19,6 +19,12 @@ public class ClubDAO {
         } else {
             INSTANCE = this;
         }
+    }
+
+    public static void main(String args[]) {
+        Club club = INSTANCE.getClub(1);
+        String clubName = club.getClubName();
+        String clubImage = club.getClubLogo();
     }
 
     public ResultSet getClubs() {
@@ -48,12 +54,6 @@ public class ClubDAO {
             status = e.getMessage();
         }
         return club;
-    }
-    
-    public static void main(String args[])  {
-        Club club = INSTANCE.getClub(1);
-        String clubName = club.getClubName();
-        String clubImage = club.getClubLogo();
     }
 
 }

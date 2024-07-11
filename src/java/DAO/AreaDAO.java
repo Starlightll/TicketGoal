@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author mosdd
  */
 public class AreaDAO {
@@ -29,6 +28,10 @@ public class AreaDAO {
         } else {
             INSTANCE = this;
         }
+    }
+
+    public static void main(String args[]) {
+        AreaDAO area = AreaDAO.INSTANCE;
     }
 
     public List<Area> getAllArea(String pitchId) {
@@ -55,8 +58,8 @@ public class AreaDAO {
             statement.setNString(1, areaName);
             statement.setNString(2, pitchId);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                if(rs.getNString("areaName").equalsIgnoreCase(areaName)){
+            while (rs.next()) {
+                if (rs.getNString("areaName").equalsIgnoreCase(areaName)) {
                     return false;
                 }
             }
@@ -81,9 +84,5 @@ public class AreaDAO {
         } catch (SQLException e) {
             return false;
         }
-    }
-
-    public static void main(String args[]) {
-        AreaDAO area = AreaDAO.INSTANCE;
     }
 }
