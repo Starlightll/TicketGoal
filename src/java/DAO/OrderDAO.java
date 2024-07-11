@@ -4,7 +4,6 @@ import DB.DBContext;
 import Models.Account;
 import Models.Order;
 import Models.Ticket;
-import jakarta.servlet.http.HttpSession;
 import vnpay.common.Config;
 
 import java.sql.*;
@@ -139,13 +138,8 @@ public class OrderDAO {
         String code = "";
         try {
             int ticketId = ticket.getTicketId();
-            int ticketMatch = ticket.getMatch().getMatchId();
-            int ticketSeat = ticket.getSeat().getSeatId();
-            int ticketArea = ticket.getSeat().getArea().getId();
-            int ticketRow = ticket.getSeat().getRow();
-            int ticketPrice = ticket.getSeat().getPrice();
             String randomNumber = Config.getRandomNumber(8);
-            String data = "orderId=" + orderId + "&ticketId=" + ticketId + "&ticketMatch=" + ticketMatch + "&randomNumber=" + randomNumber;
+            String data = "orderId=" + orderId + "&ticketId=" + ticketId + "&randomNumber=" + randomNumber;
             code = Config.hmacSHA512(secretKey, data);
         } catch (Exception e) {
             return "";

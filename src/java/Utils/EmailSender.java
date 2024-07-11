@@ -4,23 +4,24 @@ import DAO.AccountDAO;
 import Models.Account;
 import Models.Ticket;
 import com.google.gson.Gson;
-import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
+import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.util.ByteArrayDataSource;
-import javax.mail.internet.*;
-import javax.activation.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EmailSender {
 
     private final AccountDAO accDAO = AccountDAO.INSTANCE;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10); // Tạo một pool với 10 threads
 
     public void sendEmailForgotPassword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
@@ -101,31 +102,29 @@ public class EmailSender {
             }
         });
 
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
-            message.setSubject("Dear MyFriend, ");
-            String htmlContent = "<!DOCTYPE html>\n" +
-                    "<html>\n" +
-                    "<head>\n" +
-                    "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
-                    "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
-                    "    <title>TicketGoal</title>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
-                    "    <h1>QR Code Backup</h1>\n" +
-                    "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
-                    "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
-                    "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
-            for (Ticket ticket : tickets) {
+        executorService.submit(() -> {
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
+                message.setSubject("Dear MyFriend, ");
+                String htmlContent = "<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "<head>\n" +
+                        "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
+                        "    <title>TicketGoal</title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
+                        "    <h1>QR Code Backup</h1>\n" +
+                        "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
+                        "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
+                        "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
+                for (Ticket ticket : tickets) {
                     htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
-                            "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
-                            "                <img style=\"width: 80%;\n" +
-                            "    height: 80%;\n" +
-                            "    padding: 10px;\n" +
-                            "    background: white;\" src=\"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + ticket.getCode() + "\">\n" +
+                            "            <div style=\"width:100%;height:100%; border: 2px solid black\"" +
+                            "    background: white;\" src=\"https://quickchart.io/qr?text=" + ticket.getCode() + "&size=200" + "\">\n" +
                             "            </div>\n" +
                             "            <div style=\"margin: 0\">\n" +
                             "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +
@@ -134,49 +133,35 @@ public class EmailSender {
                             "                <p style=\"margin: 0\">Date: " + ticket.getDate() + "</p>\n" +
                             "            </div>\n" +
                             "        </div>\n";
+                }
+                htmlContent +=
+                        "    </div>\n" +
+                                "    <p>Thank you for using our service.</p>\n" +
+                                "    <p>Have a nice day!</p>\n" +
+                                "\n" +
+                                "    <footer>\n" +
+                                "        <p>&copy; TicketGoal 2024</p>\n" +
+                                "    </footer>\n" +
+                                "</main>\n" +
+                                "</body>\n" +
+                                "</html>";
+
+                // Create body
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setContent(htmlContent, "text/html");
+
+                // Creates multi-part
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+
+                // sets the multi-part as e-mail's content
+                message.setContent(multipart);
+                Transport.send(message);
+                System.out.println("Message sent successfully");
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
-            htmlContent +=
-                    "    </div>\n" +
-                            "    <p>Thank you for using our service.</p>\n" +
-                            "    <p>Have a nice day!</p>\n" +
-                            "\n" +
-                            "    <footer>\n" +
-                            "        <p>&copy; TicketGoal 2024</p>\n" +
-                            "    </footer>\n" +
-                            "</main>\n" +
-                            "</body>\n" +
-                            "</html>";
-
-            // Create body
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(htmlContent, "text/html");
-
-            // Creates multi-part
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
-
-//            // Attach QRCode
-//            QRCodeUtil qrCodeUtil = new QRCodeUtil();
-//            List<File> attachedFiles = qrCodeUtil.QRCodeList(tickets);
-//            if (attachedFiles != null && attachedFiles.size() > 0) {
-//                for (File aFile : attachedFiles) {
-//                    MimeBodyPart attachPart = new MimeBodyPart();
-//
-//                    try {
-//                        attachPart.attachFile(aFile);
-//                    } catch (IOException ex) {
-//                        ex.printStackTrace();
-//                    }
-//
-//                    multipart.addBodyPart(attachPart);
-//                }
-//            }
-            // sets the multi-part as e-mail's content
-            message.setContent(multipart);
-            Transport.send(message);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
 }
