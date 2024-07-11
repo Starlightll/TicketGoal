@@ -26,7 +26,7 @@
 <div class="header-container">
     <%@include file="/Views/include/header.jsp" %>
 </div>
-<main>
+<main style="height: fit-content">
     <div class="matches">
         <form>
             <div class="search__box">
