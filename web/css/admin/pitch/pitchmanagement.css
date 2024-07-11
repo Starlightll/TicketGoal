@@ -26,59 +26,64 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /*Search box*/
-.pitch__management__container .search-box{
-  width: fit-content;
-  height: fit-content;
-  position: relative;
+.pitch__management__container .search-box {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
 }
-.pitch__management__container .input-search{
-  height: 50px;
-  width: 50px;
-  border-style: none;
-  padding: 10px;
-  font-size: 18px;
-  letter-spacing: 2px;
-  outline: none;
-  border-radius: 25px;
-  transition: all .5s ease-in-out;
-  background-color: #00C767;
-  padding-right: 40px;
-  color:#fff;
+
+.pitch__management__container .input-search {
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: #00C767;
+    padding-right: 40px;
+    color: #fff;
 }
-.pitch__management__container .input-search::placeholder{
-  color:rgba(255,255,255,.5);
-  font-size: 18px;
-  letter-spacing: 2px;
-  font-weight: 100;
+
+.pitch__management__container .input-search::placeholder {
+    color: rgba(255, 255, 255, .5);
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 100;
 }
-.pitch__management__container .btn-search{
-  width: 50px;
-  height: 50px;
-  border-style: none;
-  font-size: 20px;
-  font-weight: bold;
-  outline: none;
-  cursor: pointer;
-  border-radius: 50%;
-  position: absolute;
-  right: 0px;
-  color:#ffffff ;
-  background-color:transparent;
-  pointer-events: painted;  
+
+.pitch__management__container .btn-search {
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    color: #ffffff;
+    background-color: transparent;
+    pointer-events: painted;
 }
-.pitch__management__container .btn-search:focus ~ .input-search{
-  width: 300px;
-  border-radius: 0px;
-  background-color: transparent;
-  border-bottom:1px solid rgba(255,255,255,.5);
-  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+
+.pitch__management__container .btn-search:focus ~ .input-search {
+    width: 300px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
 }
-.pitch__management__container .input-search:focus{
-  width: 300px;
-  border-radius: 0px;
-  background-color: transparent;
-  border-bottom:1px solid rgba(255,255,255,.5);
-  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+
+.pitch__management__container .input-search:focus {
+    width: 300px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
 }
 
 .pitch__management__container .pitch__management__header .add__button {
@@ -93,7 +98,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transition: 0.3s
 }
 
-.pitch__management__container .pitch__management__header .add__button:hover{
+.pitch__management__container .pitch__management__header .add__button:hover {
     transform: scale(1.1)
 }
 
@@ -105,7 +110,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     min-width: 294px;
 }
 
-.pitch__management__container .pitch__box{
+.pitch__management__container .pitch__box {
     width: 75%;
     margin: 20px auto;
     padding-top: 20px;
@@ -126,7 +131,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     object-fit: cover;
 }
 
-.pitch__management__container .pitch__box .pitch .pitch__manager__option button{
+.pitch__management__container .pitch__box .pitch .pitch__manager__option button {
     width: 100px;
     height: 100%;
     color: #fff;
@@ -136,7 +141,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 0px 5px;
 }
 
-.pitch__management__container .pitch__box .pitch .pitch__manager__option button:hover{
+.pitch__management__container .pitch__box .pitch .pitch__manager__option button:hover {
     transform: scale(1.1)
 }
 
@@ -157,7 +162,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     top: -110px;
 }
 
-.pitch__management__container .pitch__box .pitch .pitch__name p{
+.pitch__management__container .pitch__box .pitch .pitch__name p {
     margin: 0px 0px;
     font-weight: 700;
 }
