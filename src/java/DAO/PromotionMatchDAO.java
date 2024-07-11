@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author MSI VN
  */
 public class PromotionMatchDAO {
@@ -35,6 +34,10 @@ public class PromotionMatchDAO {
             INSTANCE = new PromotionMatchDAO();
         }
         return INSTANCE;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new PromotionMatchDAO().getMatchesByPromotionId(1));
     }
 
     public void addPromotionMatch(int promotionId, int matchId) {
@@ -73,9 +76,5 @@ public class PromotionMatchDAO {
             e.printStackTrace();
         }
         return matches;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new PromotionMatchDAO().getMatchesByPromotionId(1));
     }
 }

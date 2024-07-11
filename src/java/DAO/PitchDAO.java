@@ -14,7 +14,6 @@ import java.util.Base64;
 import java.util.List;
 
 /**
- *
  * @author mosdd
  */
 public class PitchDAO {
@@ -29,6 +28,10 @@ public class PitchDAO {
         } else {
             INSTANCE = this;
         }
+    }
+
+    public static void main(String args[]) {
+        PitchDAO dao = PitchDAO.INSTANCE;
     }
 
     public List<Pitch> getPitchList() {
@@ -73,7 +76,7 @@ public class PitchDAO {
                 String pitchImage = Base64.getEncoder().encodeToString(rs.getBytes("image") == null ? new byte[0] : rs.getBytes("image"));
                 pitch.setImage(pitchImage);
                 pitch.setImage(pitchImage);
-               
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -191,10 +194,6 @@ public class PitchDAO {
             e.printStackTrace();
         }
         return result;
-    }
-
-    public static void main(String args[]) {
-        PitchDAO dao = PitchDAO.INSTANCE;
     }
 
 }
