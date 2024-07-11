@@ -2,6 +2,7 @@ var modal = document.getElementById("viewOperatorModal");
 var btn = document.getElementById("openModalBtn");
 var span = document.getElementsByClassName("close-btn");
 console.log(span);
+
 function viewOperator(id) {
     document.getElementById("viewOperatorModal" + id).style.display = "block";
 }
@@ -19,6 +20,7 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 };
+
 function sortTable(columnIndex) {
     // Giữ lại các dòng ứng với kết quả tìm kiếm
     const visibleRows = Array.from(document.querySelector("table").rows).slice(1).filter(row => row.style.display !== "none");
@@ -53,8 +55,8 @@ const saveOperatorDetails = (id) => {
     const status = $("#editOperatorStatus" + id).val();
     const address = $("#editOperatorAddress" + id).val();
     if (!validateField(username, "string") || !validateField(id, "number") || !validateField(phone, "phone")
-            || !validateField(address, "address") || !validateField(gender, "number")
-            || !validateField(role, "number") || !validateField(status, "number")) {
+        || !validateField(address, "address") || !validateField(gender, "number")
+        || !validateField(role, "number") || !validateField(status, "number")) {
         return;
     }
     $.ajax({
@@ -91,8 +93,8 @@ const saveNewOperator = () => {
     const status = $("#new-operator-status").val();
     const address = $("#new-operator-address").val();
     if (!validateField(username, "string") || !validateField(email, "email") || !validateField(phone, "phone")
-            || !validateField(address, "address") || !validateField(gender, "number")
-            || !validateField(role, "number") || !validateField(status, "number")) {
+        || !validateField(address, "address") || !validateField(gender, "number")
+        || !validateField(role, "number") || !validateField(status, "number")) {
         return;
     }
     $.ajax({
@@ -130,14 +132,15 @@ $(document).ready(function () {
     let currentPage = 1;
     let tempOperators = null;
     let totalPages = Math.ceil(tempOperators?.length || operators.length / itemsPerPage);
+
     function searchTable() {
         const searchInput = document.querySelector(".search-bar").value.toLowerCase();
         // Lọc lại mảng operators thỏa mãn điều kiện tìm kiếm
         const filteredOperators = operators.filter(operator => {
             return (
-                    operator.username.toLowerCase().includes(searchInput) ||
-                    operator.email.toLowerCase().includes(searchInput)
-                    );
+                operator.username.toLowerCase().includes(searchInput) ||
+                operator.email.toLowerCase().includes(searchInput)
+            );
         });
         console.log(filteredOperators);
         // Cập nhật lại mảng operators và totalPages
@@ -147,10 +150,12 @@ $(document).ready(function () {
         // Render lại dữ liệu
         renderItems(1);
     }
+
     $('#search-bar-input').on("keyup", () => {
         searchTable();
     });
     console.log($('#search-bar-input'));
+
     function renderItems(page) {
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
