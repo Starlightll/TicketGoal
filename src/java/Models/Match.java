@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * @author mosdd
  */
 public class Match {
@@ -115,6 +114,5 @@ public class Match {
         return sdf.format(schedule);
     }
 
-    
-    
+
 }

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author admin
  */
 public class Contact {
@@ -79,20 +78,20 @@ public class Contact {
     public void setList(List<ContactCategory> list) {
         this.list = list;
     }
-    
-    public boolean checkRead(){
+
+    public boolean checkRead() {
         ContactCategory a = new ContactCategory();
         a.setId(1);
         return list.contains(a);
     }
-    
-    public boolean checkImportant(){
+
+    public boolean checkImportant() {
         ContactCategory a = new ContactCategory();
         a.setId(3);
         return list.contains(a);
     }
-    
-    public boolean checkStarred(){
+
+    public boolean checkStarred() {
         ContactCategory a = new ContactCategory();
         a.setId(4);
         return list.contains(a);
@@ -105,6 +104,6 @@ public class Contact {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
+
+
 }

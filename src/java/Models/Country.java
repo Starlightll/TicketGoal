@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author pc
  */
 public class Country {
@@ -32,5 +31,5 @@ public class Country {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
-    
+
 }
