@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author pc
  */
 public class PlayerRole {
@@ -37,5 +36,5 @@ public class PlayerRole {
     public String toString() {
         return "PlayerRole{" + "playerRoleId=" + playerRoleId + ", roleName=" + roleName + '}';
     }
-    
+
 }
