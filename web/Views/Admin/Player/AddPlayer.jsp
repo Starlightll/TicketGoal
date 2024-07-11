@@ -4,7 +4,7 @@
     Author     : mosdd
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +32,7 @@
             var valid = true;
             var errorMessages = [];
 
-            requiredFields.forEach(function(field) {
+            requiredFields.forEach(function (field) {
                 var fieldElement = form[field];
                 var trimmedValue = fieldElement.value.trim();
                 if (trimmedValue === "") {
@@ -54,19 +54,20 @@
 </head>
 <body>
 <div class="add__player">
-    <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();" enctype="multipart/form-data">
+    <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();"
+          enctype="multipart/form-data">
         <div class="player__detail">
             <table border="0">
                 <tr>
-                    <td>Name: </td>
+                    <td>Name:</td>
                     <td><input type="text" name="playerName" required></td>
                 </tr>
                 <tr>
-                    <td>Number: </td>
+                    <td>Number:</td>
                     <td><input type="text" name="playerNumber" required></td>
                 </tr>
                 <tr>
-                    <td>Country: </td>
+                    <td>Country:</td>
                     <td>
                         <select name="playerCountry" required>
                             <option value="1">Viet Nam</option>
@@ -74,7 +75,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Role: </td>
+                    <td>Role:</td>
                     <td>
                         <select name="playerRoleId" required>
                             <option value="1">Goalkeeper</option>
@@ -85,19 +86,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Birth: </td>
+                    <td>Birth:</td>
                     <td><input type="date" id="playerBirth" name="playerBirth" required></td>
                 </tr>
                 <tr>
-                    <td>Height: </td>
+                    <td>Height:</td>
                     <td><input type="number" min="150" name="playerHeight" required></td>
                 </tr>
                 <tr>
-                    <td>Weight: </td>
+                    <td>Weight:</td>
                     <td><input type="number" min="50" name="playerWeight" required></td>
                 </tr>
                 <tr>
-                    <td>Biography: </td>
+                    <td>Biography:</td>
                     <td><textarea name="playerBio" required></textarea></td>
                 </tr>
             </table>
@@ -105,15 +106,15 @@
         <div class="player__performance">
             <table border="0">
                 <tr>
-                    <td>ATK: </td>
+                    <td>ATK:</td>
                     <td class="performance"><input type="range" min="0" max="100" name="ATK" required></td>
                 </tr>
                 <tr>
-                    <td>DEF: </td>
+                    <td>DEF:</td>
                     <td class="performance"><input type="range" min="0" max="100" name="DEF" required></td>
                 </tr>
                 <tr>
-                    <td>SPD: </td>
+                    <td>SPD:</td>
                     <td class="performance"><input type="range" min="0" max="100" name="SPD" required></td>
                 </tr>
             </table>
