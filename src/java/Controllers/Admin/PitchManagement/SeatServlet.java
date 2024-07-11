@@ -62,16 +62,16 @@ public class SeatServlet extends HttpServlet {
             case "deleteAll":
                 int areaIdDelete = Integer.parseInt(request.getParameter("areaId"));
                 int resultAll = seatDAO.deleteSeatByArea(areaIdDelete);
-                 String messageAll = "Delete all  successfully";
-                if(resultAll < 1) messageAll = "Delete all fail.";
+                String messageAll = "Delete all  successfully";
+                if (resultAll < 1) messageAll = "Delete all fail.";
                 String pitchIdToBack = request.getParameter("pitchId");
                 response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchIdToBack + "&areaId=" + areaIdDelete + "&message=" + messageAll);
                 break;
             case "delete":
                 int seatIdDelete = Integer.parseInt(request.getParameter("seatId"));
-                int result  = seatDAO.deleteSeat(seatIdDelete);
+                int result = seatDAO.deleteSeat(seatIdDelete);
                 String message = "Delete successfully";
-                if(result < 1) message = "Delete fail.";
+                if (result < 1) message = "Delete fail.";
                 String pitchId = request.getParameter("pitchId");
                 String areaId = request.getParameter("areaId");
                 response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
@@ -243,7 +243,7 @@ public class SeatServlet extends HttpServlet {
                 String pitchId = request.getParameter("pitchId");
                 response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=" + message);
             } else {
-                 String pitchId = request.getParameter("pitchId");
+                String pitchId = request.getParameter("pitchId");
                 response.sendRedirect("pitchManagementServlet?option=update&pitchId=" + pitchId + "&areaId=" + areaId + "&message=Seat is exist");
             }
         } catch (Exception e) {

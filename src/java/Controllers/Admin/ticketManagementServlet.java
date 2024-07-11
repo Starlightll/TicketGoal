@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "ticketManagementServlet", urlPatterns = {"/ticketManagement"})
@@ -37,12 +36,9 @@ public class ticketManagementServlet extends HttpServlet {
 
         List<Ticket> tickets = new ArrayList<>();
         tickets = switch (type) {
-            case "scanned" ->
-                tickDAO.getTicketByTicketStatus(tickScannedStatus);
-            case "marked" ->
-                tickDAO.getTicketByTicketStatus(ticketMarkedStatus);
-            default ->
-                tickDAO.getTicketByTicketStatus(tickScannedStatus);
+            case "scanned" -> tickDAO.getTicketByTicketStatus(tickScannedStatus);
+            case "marked" -> tickDAO.getTicketByTicketStatus(ticketMarkedStatus);
+            default -> tickDAO.getTicketByTicketStatus(tickScannedStatus);
         };
 
         request.setAttribute("tickets", tickets);

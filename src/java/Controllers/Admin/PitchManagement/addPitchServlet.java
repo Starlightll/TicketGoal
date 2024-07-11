@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 /**
- *
  * @author mosdd
  */
 @MultipartConfig(maxFileSize = 16177215)
@@ -27,10 +26,10 @@ public class addPitchServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,13 +49,14 @@ public class addPitchServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -66,10 +66,10 @@ public class addPitchServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -83,19 +83,19 @@ public class addPitchServlet extends HttpServlet {
         if (pitchName == null || pitchName.trim().isEmpty()) {
             request.setAttribute("nameError", "Name cannot be empty or whitespace");
             wrongFormat = true;
-        }else{
+        } else {
             request.setAttribute("pitchName", pitchName);
         }
         if (pitchAddress == null || pitchAddress.trim().isEmpty()) {
             request.setAttribute("addressError", "Address cannot be empty or whitespace");
             wrongFormat = true;
-        }else{
+        } else {
             request.setAttribute("addressName", pitchAddress);
         }
         if (pitchAddressURL == null || pitchAddressURL.trim().isEmpty()) {
             request.setAttribute("addressURLError", "Address URL cannot be empty or whitespace");
             wrongFormat = true;
-        }else{
+        } else {
             request.setAttribute("addressURL", pitchAddressURL);
         }
 

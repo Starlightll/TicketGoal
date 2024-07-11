@@ -40,11 +40,11 @@ public class operatorManagementServlet extends HttpServlet {
         request.setAttribute("operatorsAsJson", operatorsAsJson);
         request.setAttribute("listRoleJson", new Gson().toJson(listRole));
         request.setAttribute("listAccountStatusson", new Gson().toJson(listAccountStatus));
-        
+
         //set css
         request.setAttribute("dropdownMenu", "block");
         request.setAttribute("operatorManagementDropdown", "style=\"background-color: #00C767; pointer-events: none;\"");
-        
+
         request.setAttribute("page", "/Views/Admin/Operator/OperatorList.jsp");
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }

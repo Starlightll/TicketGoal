@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "promotionManagementServlet", urlPatterns = {"/promotionManagement"})
@@ -114,8 +113,7 @@ public class promotionManagementServlet extends HttpServlet {
                     return;
                 }
             }
-            default ->
-                throw new AssertionError();
+            default -> throw new AssertionError();
         }
     }
 

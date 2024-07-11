@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "changePasswordServlet", urlPatterns = {"/changePassword"})
