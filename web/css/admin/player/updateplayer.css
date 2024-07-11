@@ -14,15 +14,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     justify-content: space-around
 }
 
-.update__player form .player__image{
+.update__player form .player__image {
     width: 400px;
     height: 500px;
 }
 
-.update__player form .player__image img{
+.update__player form .player__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 
 }
 
@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #fff;
 }
 
-.update__player form .player__detail #playerBirth{
+.update__player form .player__detail #playerBirth {
     padding: 0 20px;
     background-color: #1A1919;
     color: #fff;
@@ -66,16 +66,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 100%;
 }
 
-.update__player .player__performance .performance{
+.update__player .player__performance .performance {
     width: 100%;
 }
 
-.update__player .player__performance  input {
+.update__player .player__performance input {
     width: 100%;
 }
 
 .update__player form textarea {
-    min-height: 50px; 
+    min-height: 50px;
     max-height: 200px;
     max-width: 400px;
     min-width: 300px;
