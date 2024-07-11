@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  *
@@ -67,9 +68,14 @@ public class ContactAdminServlet extends HttpServlet {
             pagenum = Integer.parseInt(page);
         }
         String cate = request.getParameter("cate");
+        String search = request.getParameter("search");
+        request.setAttribute("search", search);
         if ("2".equals(cate)) {
             MessageDAO messageDAO = new MessageDAO();
             List<Message> messages = messageDAO.getMessages();
+            if (search != null && !search.trim().isEmpty()) {
+                messages = messages.stream().filter(n -> n.getEmail().equalsIgnoreCase(search.trim())).toList();
+            }
             int totalPage = messages.size() % 5 == 0 ? messages.size() / 5 : (messages.size() / 5 + 1);
             if (!messages.isEmpty()) {
                 request.setAttribute("list", messages.subList((pagenum - 1) * 5, Math.min(messages.size(), pagenum * 5)));
@@ -85,6 +91,9 @@ public class ContactAdminServlet extends HttpServlet {
         }
         ContactDAO contactDAO = new ContactDAO();
         List<Contact> list = contactDAO.getContactList(cate);
+        if (search != null && !search.trim().isEmpty()) {
+            list = list.stream().filter(n -> n.getEmail().equalsIgnoreCase(search.trim())).toList();
+        }
         int totalPage = list.size() % 5 == 0 ? list.size() / 5 : (list.size() / 5 + 1);
         if (!list.isEmpty()) {
             request.setAttribute("list", list.subList((pagenum - 1) * 5, Math.min(list.size(), pagenum * 5)));
