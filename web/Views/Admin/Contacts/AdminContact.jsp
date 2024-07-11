@@ -284,9 +284,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 search-form">
-                                            <form action="#" class="text-right">
+                                            <form action="ContactAdminServlet" class="text-right">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm" placeholder="Search">
+                                                    <input name="search" type="text" class="form-control input-sm" placeholder="Search" value="${requestScope.search}">
                                                     <span class="input-group-btn">
                                                         <button type="submit" name="search"
                                                                 class="btn_ btn-primary btn-sm search"><i
@@ -311,7 +311,7 @@
                                                                             type="date" pattern="MM-dd-yyyy"/>
                                                             ${formattedDate}
                                                         </td>
-                                                        <td class="delete"><a href="javascript:void(0);" onclick="confirmDelete(${item.id});"><i class="fa fa-trash-o"></i></a></td>
+                                                        <td class="delete"><a href="DeleteMessageServlet?id=${item.id}"><i class="fa fa-trash-o"></i></a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -379,23 +379,17 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                                                            function confirmDelete(id) {
-                                                                if (confirm('Are you sure you want to delete this message?')) {
-                                                                    window.location.href = 'DeleteMessageServlet?id=' + id;
-                                                                }
-                                                            }
-                                                            function UpdateContact(i) {
-                                                                var checkboxes = document.querySelectorAll('input[name="options"]:checked');
-                                                                var checkedValues = [];
-                                                                checkboxes.forEach(function (checkbox) {
-                                                                    checkedValues.push(checkbox.value);
-                                                                });
-                                                                var queryParams = checkedValues.map(function (value) {
-                                                                    return encodeURIComponent("option") + "=" + encodeURIComponent(value);
-                                                                }).join("&");
-                                                                window.location.href = '${pageContext.request.contextPath}/UpdateContact?cate=' + i + '&' + queryParams;
-                                                            }
-
+                                                        function UpdateContact(i) {
+                                                            var checkboxes = document.querySelectorAll('input[name="options"]:checked');
+                                                            var checkedValues = [];
+                                                            checkboxes.forEach(function (checkbox) {
+                                                                checkedValues.push(checkbox.value);
+                                                            });
+                                                            var queryParams = checkedValues.map(function (value) {
+                                                                return encodeURIComponent("option") + "=" + encodeURIComponent(value);
+                                                            }).join("&");
+                                                            window.location.href='${pageContext.request.contextPath}/UpdateContact?cate=' + i + '&' + queryParams;
+                                                        }
         </script>
     </body>
 </html>

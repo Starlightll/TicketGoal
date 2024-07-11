@@ -61,7 +61,7 @@ public class ContactDAO {
                 list.add(contact);
             }
         } catch (SQLException e) {
-            return null;
+            return list;
         }
         return list;
     }
