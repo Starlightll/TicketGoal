@@ -99,7 +99,7 @@ public class TicketDAO {
             statement.setString(1, ticket.getCode());
             statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
             statement.setInt(3, ticket.getSeat().getSeatId());
-            statement.setInt(4,2);
+            statement.setInt(4, 2);
             statement.setInt(5, ticket.getCartId());
             statement.setInt(6, ticket.getMatch().getMatchId());
             rowInserted = statement.executeUpdate();
@@ -244,8 +244,8 @@ public class TicketDAO {
 
     public List<Ticket> getTicketInCartByMatchAndAccount(Account account, int matchId) {
         List<Ticket> ticketList = new ArrayList<>();
-        for(Ticket ticket: getTicketInCart(account.getAccountId())) {
-            if(ticket.getMatch().matchId == matchId) {
+        for (Ticket ticket : getTicketInCart(account.getAccountId())) {
+            if (ticket.getMatch().matchId == matchId) {
                 ticketList.add(ticket);
             }
         }
@@ -253,7 +253,7 @@ public class TicketDAO {
     }
 
 
-    public List<Ticket> getPaidTicket(){
+    public List<Ticket> getPaidTicket() {
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
                 "FROM Ticket t\n" +
@@ -317,10 +317,10 @@ public class TicketDAO {
         return tickets;
     }
 
-    public List<Ticket> getPaidTicketByMatch(int matchId){
+    public List<Ticket> getPaidTicketByMatch(int matchId) {
         List<Ticket> tickets = new ArrayList<>();
-        for(Ticket ticket: getPaidTicket()) {
-            if(ticket.getMatch().getMatchId() == matchId) {
+        for (Ticket ticket : getPaidTicket()) {
+            if (ticket.getMatch().getMatchId() == matchId) {
                 tickets.add(ticket);
             }
         }
@@ -460,7 +460,7 @@ public class TicketDAO {
         }
         return rowDeleted;
     }
-    
+
     public List<Ticket> getPaidTicketByUser(int userId) {
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n"
@@ -704,7 +704,7 @@ public class TicketDAO {
         }
         return -1;
     }
-    
+
     public int getTotalOrderIds(int id) {
         String sql = "SELECT DISTINCT O.totalAmount "
                 + "FROM [Order] AS O "
@@ -724,6 +724,21 @@ public class TicketDAO {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public boolean verifyTicket(String code) {
+        String sql = "SELECT * FROM Ticket WHERE code = ?";
+        try {
+            PreparedStatement st = connect.prepareStatement(sql);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Select tickets by accountId: " + e);
+        }
+        return false;
     }
 
 }

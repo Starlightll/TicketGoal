@@ -58,7 +58,7 @@ public class googleLogin extends HttpServlet {
         HttpSession session = (HttpSession) request.getSession();
         session.setAttribute("user", user);
         session.setMaxInactiveInterval(6000);
-        
+
         response.sendRedirect("./homepageServlet");
 
     }

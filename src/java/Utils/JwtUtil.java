@@ -13,7 +13,6 @@ import java.util.Base64;
 import java.util.Date;
 
 /**
- *
  * @author MSI VN
  */
 public class JwtUtil {

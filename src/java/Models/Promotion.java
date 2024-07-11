@@ -7,7 +7,6 @@ package Models;
 import java.time.LocalDateTime;
 
 /**
- *
  * @author MSI VN
  */
 public class Promotion {

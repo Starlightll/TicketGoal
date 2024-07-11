@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author MSI VN
  */
 public class PromotionMatch {
@@ -51,6 +50,5 @@ public class PromotionMatch {
         return "PromotionMatch{" + "promotionMatchId=" + promotionMatchId + ", promotionId=" + promotionId + ", matchId=" + matchId + '}';
     }
 
-  
 
 }

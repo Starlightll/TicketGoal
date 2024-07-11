@@ -17,20 +17,20 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 /**
- *
  * @author mosdd
  */
 @MultipartConfig(maxFileSize = 16177215)
 public class updatePitchServlet extends HttpServlet {
     private static final PitchDAO pitchDAO = PitchDAO.INSTANCE;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,13 +50,14 @@ public class updatePitchServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -67,10 +68,10 @@ public class updatePitchServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -79,7 +80,7 @@ public class updatePitchServlet extends HttpServlet {
         String pitchName = request.getParameter("pitchName");
         String pitchAddress = request.getParameter("pitchAddressName");
         String pitchAddressURL = request.getParameter("pitchAddressURL");
-        
+
         //Store image data
 //        Part pitchImage = request.getPart("pitchImage");
 //        if (pitchImage != null) {
@@ -99,7 +100,7 @@ public class updatePitchServlet extends HttpServlet {
         String existingStructure = request.getParameter("existingStructure");
 
         pitchDAO.updatePitch(pitchId, pitchName, pitchAddress, pitchAddressURL, newPitchStructure, existingStructure, newPitchImage, existingImage);
-        response.sendRedirect(request.getContextPath()+"/pitchManagementServlet");
+        response.sendRedirect(request.getContextPath() + "/pitchManagementServlet");
     }
 
     /**

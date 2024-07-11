@@ -1,5 +1,4 @@
 
-
 * {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -33,13 +32,13 @@ body {
     position: fixed;
 }
 
-.buyticket__main .stadium img{
+.buyticket__main .stadium img {
     position: absolute;
     width: 1400px;
     z-index: -100;
 }
 
-.buyticket__main .stadium i{
+.buyticket__main .stadium i {
     display: flex;
     font-size: 10px;
     color: white;
@@ -51,7 +50,7 @@ body {
     height: 10px;
 }
 
-.buyticket__main .stadium i:hover{
+.buyticket__main .stadium i:hover {
     color: #f3ffaa;
     background-color: #00C767;
     transform: scale(1.2);
@@ -67,12 +66,12 @@ body {
 }
 
 .buyticket__main .stadium .area__ARO {
-        display: grid;
-        grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
-        column-gap: 2px;
-        row-gap: 1px;
-        margin-right: 5px;
-        height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); /* This creates a grid with 18 columns */
+    column-gap: 2px;
+    row-gap: 1px;
+    margin-right: 5px;
+    height: fit-content;
 }
 
 .buyticket__main .stadium .area__ALO {
@@ -157,6 +156,7 @@ body {
     left: 0;
     transition: all 0.5s;
 }
+
 .confirm__box {
     position: fixed;
     width: fit-content;
@@ -320,10 +320,8 @@ body {
 }
 
 
-
-
 /* Notification box */
-.buyticket__main .notification__background{
+.buyticket__main .notification__background {
     display: none;
     position: fixed;
     width: 100%;

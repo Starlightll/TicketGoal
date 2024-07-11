@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "signUpServlet", urlPatterns = {"/signUp"})
@@ -32,7 +31,7 @@ public class signUpServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
+
         String email = request.getParameter("email").trim();
         String password = request.getParameter("password").trim();
         String rePassword = request.getParameter("rePassword").trim();

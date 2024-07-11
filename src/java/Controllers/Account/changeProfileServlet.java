@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "changeProfileServlet", urlPatterns = {"/changeProfile"})
@@ -37,7 +36,7 @@ public class changeProfileServlet extends HttpServlet {
         Account user = (Account) request.getSession().getAttribute("user");
         Gson gson = new Gson();
         Common.JsonResponse jsonResponse;
-        
+
         if (user != null) {
             Account updatedUser = accDAO.updateUserById(
                     new Account(user.getAccountId(),

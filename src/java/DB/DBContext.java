@@ -9,13 +9,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
  * @author mosdd
  */
 public class DBContext {
-    private Connection connect;
+    private final String serverName = "localhost";
+    private final String dbName = "TicketGoal";
+    private final String portNumber = "1433";
+    private final String userID = "sa";
+    private final String password = "MosdDM15092003!";
     String status = "OK";
-
+    private Connection connect;
     public DBContext() {
         try {
             String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
@@ -25,11 +28,11 @@ public class DBContext {
             ex.printStackTrace();
         }
     }
-    
+
     public Connection getConnection() {
         return connect;
     }
-    
+
     public void closeConnection() {
         try {
             if (connect != null && !connect.isClosed()) {
@@ -39,10 +42,4 @@ public class DBContext {
             ex.printStackTrace();
         }
     }
-
-    private final String serverName = "localhost";
-    private final String dbName = "TicketGoal";
-    private final String portNumber = "1433";
-    private final String userID = "sa";
-    private final String password = "MosdDM15092003!";
 }

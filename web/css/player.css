@@ -43,7 +43,7 @@
 .player .card__content img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .player .card:hover .card__content {
@@ -51,8 +51,8 @@
 }
 
 .player .card:hover .player__name {
-background: rgb(205,255,41);
-background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%);
+    background: rgb(205, 255, 41);
+    background: linear-gradient(90deg, rgba(205, 255, 41, 1) 0%, rgba(0, 255, 113, 1) 100%);
 }
 
 
@@ -71,7 +71,7 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
     transition: transform 0.3s ease
 }
 
-.player .player__number img{
+.player .player__number img {
     width: 100%
 }
 
@@ -102,7 +102,6 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
 }
 
 
-
 /* Sidebar */
 
 .player .sidebar__box {
@@ -114,12 +113,12 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
 }
 
 
-.player .player__box{
+.player .player__box {
     margin-left: 15rem;
     margin-bottom: 2rem;
 }
 
-.player .search__box input{
+.player .search__box input {
     width: 300px;
     background-color: #141414;
     border: 2px solid #5353533f;
@@ -139,24 +138,24 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
         z-index: 80;
         transition: top .4s;
     }
-    
+
     .player .player__box {
         margin: 0;
     }
-    
+
     .player .card__box {
         justify-content: space-evenly
     }
-    
+
     .player .search__box {
         display: flex;
         align-content: center
     }
-    
+
     .player .role {
         text-align: center;
     }
-    
+
 }
 
 

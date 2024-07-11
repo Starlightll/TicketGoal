@@ -123,8 +123,8 @@ public class EmailSender {
                         "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
                 for (Ticket ticket : tickets) {
                     htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
-                            "            <div style=\"width:100%;height:100%; border: 2px solid black\"" +
-                            "    background: white;\" src=\"https://quickchart.io/qr?text=" + ticket.getCode() + "&size=200" + "\">\n" +
+                            "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
+                            "                <img style=\"width:100%;height:100%; border: 2px solid black\" src=\"https://quickchart.io/qr?text=" + ticket.getCode() + "&size=200" + "\">\n" +
                             "            </div>\n" +
                             "            <div style=\"margin: 0\">\n" +
                             "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +

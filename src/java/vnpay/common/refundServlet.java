@@ -19,7 +19,6 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 /**
- *
  * @author mosdd
  */
 @WebServlet(name = "refundServlet", urlPatterns = {"/refundServlet"})
@@ -122,7 +121,7 @@ public class refundServlet extends HttpServlet {
         in.close();
         System.out.println(response.toString());
         String returnPage = req.getParameter("returnPage");
-        resp.sendRedirect(returnPage+ "?success=Refund ticket success");
+        resp.sendRedirect(returnPage + "?success=Refund ticket success");
     }
 
     @Override

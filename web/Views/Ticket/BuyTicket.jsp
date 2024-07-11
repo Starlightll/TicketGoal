@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/buyticket.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/TicketGoalfavicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css"
+          integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -172,7 +174,8 @@
                 </div>
                 <div class="order__list" id="order-list">
                     <c:forEach var="ticket" items="${ticketInCart}">
-                        <div class="item" onmouseover="hover(${ticket.seat.seatId})" onmouseout="removeHover(${ticket.seat.seatId})" id="item-${ticket.ticketId}">
+                        <div class="item" onmouseover="hover(${ticket.seat.seatId})"
+                             onmouseout="removeHover(${ticket.seat.seatId})" id="item-${ticket.ticketId}">
                             <div>
                                 <div class="area">Area: ${ticket.seat.area.areaName}</div>
                                 <div class="row">Row: ${ticket.seat.row}</div>
@@ -180,10 +183,12 @@
                             </div>
                             <div class="price">
                                 <div>
-                                    Price: <fmt:setLocale value = "vi_VN"/>
-                                    <fmt:formatNumber value = "${ticket.seat.price}" type = "currency"/>
+                                    Price: <fmt:setLocale value="vi_VN"/>
+                                    <fmt:formatNumber value="${ticket.seat.price}" type="currency"/>
                                 </div>
-                                <i class="ri-delete-bin-6-line" style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer" onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
+                                <i class="ri-delete-bin-6-line"
+                                   style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer"
+                                   onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
                             </div>
                         </div>
                     </c:forEach>
@@ -192,8 +197,8 @@
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                     <div class="total">
                         <div>Total:</div>
-                        <div id="total-value"><fmt:setLocale value = "vi_VN"/>
-                            <fmt:formatNumber value = "${requestScope.total}" type = "currency"/></div>
+                        <div id="total-value"><fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${requestScope.total}" type="currency"/></div>
                     </div>
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                 </div>
@@ -289,7 +294,10 @@
         document.getElementById("area-name").innerHTML = "Area: " + areaName;
         document.getElementById("seat-number-value").innerHTML = seatNumber;
         document.getElementById("row-value").innerHTML = row;
-        document.getElementById("price-value").innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(price);
+        document.getElementById("price-value").innerHTML = Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(price);
         document.getElementById("seat-id").innerHTML = seatId;
         const confirmBox = document.getElementById("confirm-box");
         confirmBox["seatId"].value = seatId;
@@ -354,7 +362,10 @@
                     orderList.appendChild(newOrder);
                     const stadiumUI = document.getElementById("stadiumUI");
                     stadiumUI.innerHTML = response.stadium;
-                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(response.total);
+                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(response.total);
                     showNotification("Add to cart successfully");
                 }
             },
@@ -445,7 +456,7 @@
     }
 
     function removeTicket(ticketId, seatId, matchId) {
-        $.ajax ({
+        $.ajax({
             url: '${pageContext.request.contextPath}/BuyTicket',
             method: "POST",
             data: {
@@ -455,13 +466,16 @@
             },
             dataType: 'JSON',
             success: function (response) {
-                if(response.isSuccess === 'true'){
+                if (response.isSuccess === 'true') {
                     const ticket = document.getElementById("item-" + ticketId);
                     const totalValue = document.getElementById("total-value");
                     ticket.remove();
                     const stadiumUI = document.getElementById("stadiumUI");
                     stadiumUI.innerHTML = response.stadium;
-                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(response.total);
+                    totalValue.innerHTML = Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(response.total);
                     showNotification("Remove ticket successfully");
                 }
             },
@@ -485,12 +499,12 @@
         }, 300);
     }
 
-    function hover(seatId){
+    function hover(seatId) {
         const seat = document.getElementById("seat-" + seatId);
         seat.style.color = '#56c6ff';
     }
 
-    function removeHover(seatId){
+    function removeHover(seatId) {
         const seat = document.getElementById("seat-" + seatId);
         seat.style.color = '#aaff00';
     }

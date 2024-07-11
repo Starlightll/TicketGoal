@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author mosdd
  */
 public class Address {
@@ -35,6 +34,6 @@ public class Address {
     public void setAddressURL(String addressURL) {
         this.addressURL = addressURL;
     }
-    
-    
+
+
 }

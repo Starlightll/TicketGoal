@@ -47,22 +47,25 @@ body {
 }
 
 
-
 table {
     width: 100%;
     border-collapse: collapse;
 }
+
 table, th, td {
     border: 1px solid white;
 }
+
 th, td {
     padding: 10px;
     text-align: left;
 }
+
 th {
     background-color: black;
     cursor: pointer;
 }
+
 .action-buttons button {
     margin-right: 5px;
 }
@@ -90,8 +93,9 @@ th {
     max-width: 500px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
-    color:black;
+    color: black;
 }
+
 @keyframes modalopen {
     from {
         opacity: 0;
@@ -132,6 +136,7 @@ h2 {
 .modal-body span {
     font-weight: bold;
 }
+
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -188,7 +193,7 @@ h2 {
     margin-right: 10px;
 }
 
-.form-group input, select,textarea {
+.form-group input, select, textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;

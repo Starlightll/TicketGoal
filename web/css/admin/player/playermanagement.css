@@ -53,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .player__management__container .card__content img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .player__management__container .card:hover .card__content {
@@ -61,8 +61,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .player__management__container .card:hover .player__name {
-background: rgb(205,255,41);
-background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%);
+    background: rgb(205, 255, 41);
+    background: linear-gradient(90deg, rgba(205, 255, 41, 1) 0%, rgba(0, 255, 113, 1) 100%);
 }
 
 
@@ -81,7 +81,7 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
     transition: transform 0.3s ease
 }
 
-.player__management__container .player__number img{
+.player__management__container .player__number img {
     width: 100%
 }
 
@@ -112,8 +112,7 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
 }
 
 
-
-.player__management__container .search__box input{
+.player__management__container .search__box input {
     width: 300px;
     background-color: #141414;
     border: 2px solid #5353533f;
@@ -179,24 +178,24 @@ background: linear-gradient(90deg, rgba(205,255,41,1) 0%, rgba(0,255,113,1) 100%
 
 /* Response sive */
 
-@media screen and (max-width: 1023px) {   
+@media screen and (max-width: 1023px) {
     .player__management__container .player__box {
         margin: 0;
     }
-    
+
     .player__management__container .card__box {
         justify-content: space-evenly
     }
-    
+
     .player__management__container .search__box {
         display: flex;
         align-content: center
     }
-    
+
     .player__management__container .role {
         text-align: center;
     }
-    
+
 }
 
 

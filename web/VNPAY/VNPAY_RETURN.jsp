@@ -100,7 +100,8 @@
                             formatter.setMaximumFractionDigits(0); // Không hiển thị số thập phân
                             String formattedAmount = formatter.format(amount) + " VNĐ";
                         %>
-                        <label><%= formattedAmount %></label>
+                        <label><%= formattedAmount %>
+                        </label>
                     </label>
                 </div>
                 <div class="form-group">
@@ -123,7 +124,8 @@
                         }
                     %>
                     <label style="font-weight: bold; color: #373737">Payment date:</label>
-                    <label><%= formattedDate %></label>
+                    <label><%= formattedDate %>
+                    </label>
                     </label>
                 </div>
             </div>

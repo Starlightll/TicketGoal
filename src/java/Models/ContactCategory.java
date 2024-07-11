@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author admin
  */
 public class ContactCategory {
@@ -57,6 +56,6 @@ public class ContactCategory {
         final ContactCategory other = (ContactCategory) obj;
         return this.id == other.id;
     }
-    
-    
+
+
 }

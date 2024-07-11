@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const seatAddBox = document.getElementById("seat-add-box"),
-            seatAddBtn = document.getElementById("seat-add-button"),
-            seatAddForm = document.getElementById("seat-add-form"),
-            seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
-            mainForm = document.querySelector(".update__pitch form");
+        seatAddBtn = document.getElementById("seat-add-button"),
+        seatAddForm = document.getElementById("seat-add-form"),
+        seatAddCancelBtn = document.getElementById("seat-add-cancel-button"),
+        mainForm = document.querySelector(".update__pitch form");
 
     // Mở form pop-up để thêm ghế
     seatAddBtn.addEventListener('click', () => {
@@ -40,9 +40,9 @@ uploadStructure.onchange = () => {
 }
 
 const areaAddBtn = document.getElementById("area-add-button"),
-        areaCloseBtn = document.getElementById("area-add-close-button"),
-        areaAddBox = document.getElementById("area-add-box"),
-        areaAddSubmitBtn = document.getElementById("area-add-submit-button");
+    areaCloseBtn = document.getElementById("area-add-close-button"),
+    areaAddBox = document.getElementById("area-add-box"),
+    areaAddSubmitBtn = document.getElementById("area-add-submit-button");
 areaAddBtn.addEventListener('click', () => {
     areaAddBox.classList.add("show-area-add-box");
 });

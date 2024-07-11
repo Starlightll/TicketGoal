@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author mosdd
  */
 public class Pitch {
@@ -77,7 +76,5 @@ public class Pitch {
         this.image = image;
     }
 
-   
-    
-    
+
 }

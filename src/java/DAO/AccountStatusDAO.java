@@ -16,8 +16,13 @@ public class AccountStatusDAO {
     private final Connection connect;
     private final String getAllAccountStatusQuery = "SELECT * FROM accountStatus";
     private final String getAllRoleQuery = "SELECT * FROM Role";
+
     public AccountStatusDAO() {
         connect = new DBContext().getConnection();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new AccountStatusDAO().getAllAccountStatus());
     }
 
     private AccountStatusDAO getInstance() {
@@ -40,8 +45,5 @@ public class AccountStatusDAO {
             e.printStackTrace();
         }
         return accountStatusList;
-    }
-    public static void main(String[] args) {
-        System.out.println(new AccountStatusDAO().getAllAccountStatus());
     }
 }

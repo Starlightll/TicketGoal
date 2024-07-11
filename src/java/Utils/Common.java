@@ -3,6 +3,18 @@ package Utils;
 
 public class Common {
 
+    public static void addToCommandIfNotNull(StringBuilder commandBuilder, String field, Object value) {
+        if (value != null) {
+            commandBuilder.append(field).append(" = '").append(value).append("', ");
+        }
+    }
+
+    public static void addToCommandIfNotDefault(StringBuilder commandBuilder, String field, int value, int defaultValue) {
+        if (value != defaultValue) {
+            commandBuilder.append(field).append(" = ").append(value).append(", ");
+        }
+    }
+
     public static class JsonResponse {
 
         private final boolean isSuccess;
@@ -15,7 +27,7 @@ public class Common {
             this.message = message;
         }
 
-        public JsonResponse(boolean isSuccess, String message,Object data) {
+        public JsonResponse(boolean isSuccess, String message, Object data) {
             this.isSuccess = isSuccess;
             this.message = message;
             this.data = data;
@@ -38,18 +50,6 @@ public class Common {
 
         public String getRedirectUrl() {
             return redirectUrl;
-        }
-    }
-
-    public static void addToCommandIfNotNull(StringBuilder commandBuilder, String field, Object value) {
-        if (value != null) {
-            commandBuilder.append(field).append(" = '").append(value).append("', ");
-        }
-    }
-
-    public static void addToCommandIfNotDefault(StringBuilder commandBuilder, String field, int value, int defaultValue) {
-        if (value != defaultValue) {
-            commandBuilder.append(field).append(" = ").append(value).append(", ");
         }
     }
 

@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author mosdd
  */
 public class Area {
@@ -35,6 +34,6 @@ public class Area {
     public void setAreaName(String areaName) {
         this.areaName = areaName;
     }
-    
-    
+
+
 }

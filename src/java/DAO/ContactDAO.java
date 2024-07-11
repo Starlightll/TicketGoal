@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author admin
  */
 public class ContactDAO {
@@ -36,13 +35,13 @@ public class ContactDAO {
     public List<Contact> getContactList(String cate) {
         List<Contact> list = new ArrayList<>();
         String sql = """
-                     SELECT c.[contactId]
-                                                  ,c.[message]
-                                                  ,c.[name]
-                                                  ,c.[createDate]
-                                                  ,c.[title]
-                                                  ,c.[Email]
-                                              FROM [TicketGoal].[dbo].[Contact] c""";
+                SELECT c.[contactId]
+                                             ,c.[message]
+                                             ,c.[name]
+                                             ,c.[createDate]
+                                             ,c.[title]
+                                             ,c.[Email]
+                                         FROM [TicketGoal].[dbo].[Contact] c""";
         if (cate != null && !cate.isEmpty()) {
             sql += " join Contact_Cate cc on c.contactId = cc.contactID where cc.categoryID = " + cate;
         }
@@ -69,13 +68,13 @@ public class ContactDAO {
     public Contact getContactByID(int id) {
         List<Contact> list = new ArrayList<>();
         String sql = """
-                     SELECT [contactId]
-                           ,[message]
-                           ,[name]
-                           ,[createDate]
-                           ,[title]
-                           ,[Email]
-                       FROM [TicketGoal].[dbo].[Contact] where [contactId] = ?""";
+                SELECT [contactId]
+                      ,[message]
+                      ,[name]
+                      ,[createDate]
+                      ,[title]
+                      ,[Email]
+                  FROM [TicketGoal].[dbo].[Contact] where [contactId] = ?""";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, id);
@@ -99,13 +98,13 @@ public class ContactDAO {
 
     public Contact getNewContact() {
         String sql = """
-                     SELECT top 1 [contactId]
-                           ,[message]
-                           ,[name]
-                           ,[createDate]
-                           ,[title]
-                           ,[Email]               
-                       FROM [TicketGoal].[dbo].[Contact] order by [contactId] desc""";
+                SELECT top 1 [contactId]
+                      ,[message]
+                      ,[name]
+                      ,[createDate]
+                      ,[title]
+                      ,[Email]               
+                  FROM [TicketGoal].[dbo].[Contact] order by [contactId] desc""";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -128,15 +127,15 @@ public class ContactDAO {
 
     public void insert(String name, String email, String title, String message) {
         String sql = """
-                     INSERT INTO [dbo].[Contact]
-                                ([message]
-                                ,[name]
-                                ,[createDate]
-                                ,[title]
-                                ,[email])
-                          VALUES
-                                (?,?,GETDATE(),?,?)
-                     """;
+                INSERT INTO [dbo].[Contact]
+                           ([message]
+                           ,[name]
+                           ,[createDate]
+                           ,[title]
+                           ,[email])
+                     VALUES
+                           (?,?,GETDATE(),?,?)
+                """;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, message);
@@ -146,11 +145,11 @@ public class ContactDAO {
             statement.executeUpdate();
             Contact contact = getNewContact();
             String xSQL = """
-                          INSERT INTO [dbo].[Contact_Cate]
-                                     ([contactID]
-                                     ,[categoryID])
-                               VALUES
-                                     (?,2)""";
+                    INSERT INTO [dbo].[Contact_Cate]
+                               ([contactID]
+                               ,[categoryID])
+                         VALUES
+                               (?,2)""";
             PreparedStatement qtm = connect.prepareStatement(xSQL);
             qtm.setInt(1, contact.getId());
             qtm.executeUpdate();
@@ -162,10 +161,10 @@ public class ContactDAO {
     public List<ContactCategory> getListByContactID(int id) {
         List<ContactCategory> list = new ArrayList<>();
         String sql = """
-                     SELECT cc.[id]
-                           ,cc.[name]
-                       FROM [dbo].[Contact_Category] cc join Contact_Cate c on cc.id = c.categoryID 
-                       where c.contactID = ?""";
+                SELECT cc.[id]
+                      ,cc.[name]
+                  FROM [dbo].[Contact_Category] cc join Contact_Cate c on cc.id = c.categoryID 
+                  where c.contactID = ?""";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, id);
@@ -182,10 +181,10 @@ public class ContactDAO {
     public void updateContact(int contactID) {
         try {
             String xSQL = """
-                          UPDATE [dbo].[Contact_Cate]
-                             SET [categoryID] = ?
-                           WHERE contactID = ? and categoryID = ?
-                          """;
+                    UPDATE [dbo].[Contact_Cate]
+                       SET [categoryID] = ?
+                     WHERE contactID = ? and categoryID = ?
+                    """;
             PreparedStatement qtm = connect.prepareStatement(xSQL);
             qtm.setInt(2, contactID);
             qtm.setInt(1, 1);
@@ -199,8 +198,8 @@ public class ContactDAO {
     public void delete(int id) {
         try {
             String xSQL = """
-                          delete from Contact_Cate where contactID = ?
-                          """;
+                    delete from Contact_Cate where contactID = ?
+                    """;
             PreparedStatement qtm = connect.prepareStatement(xSQL);
             qtm.setInt(1, id);
             qtm.executeUpdate();
@@ -216,10 +215,10 @@ public class ContactDAO {
     public void updateReadContact(String status, String[] checked) {
         try {
             String xSQL = """
-                          UPDATE [dbo].[Contact_Cate]
-                             SET [categoryID] = ?
-                           WHERE categoryID = ?
-                          """;
+                    UPDATE [dbo].[Contact_Cate]
+                       SET [categoryID] = ?
+                     WHERE categoryID = ?
+                    """;
             if (checked != null) {
                 xSQL += " and contactID IN (";
                 for (int i = 0; i < checked.length; i++) {
@@ -242,10 +241,10 @@ public class ContactDAO {
     public void updateUnReadContact(String status, String[] checked) {
         try {
             String xSQL = """
-                          UPDATE [dbo].[Contact_Cate]
-                             SET [categoryID] = ?
-                           WHERE categoryID = ?
-                          """;
+                    UPDATE [dbo].[Contact_Cate]
+                       SET [categoryID] = ?
+                     WHERE categoryID = ?
+                    """;
             if (checked != null) {
                 xSQL += " and contactID IN (";
                 for (int i = 0; i < checked.length; i++) {
@@ -268,8 +267,8 @@ public class ContactDAO {
     public void updateImportantContact(String status, String[] checked) {
         try {
             String xSQL = """
-                          delete from Contact_Cate where categoryID = ?
-                          """;
+                    delete from Contact_Cate where categoryID = ?
+                    """;
             if (checked != null) {
                 xSQL += " and contactID IN (";
                 for (int i = 0; i < checked.length; i++) {
@@ -284,11 +283,11 @@ public class ContactDAO {
             qtm.setInt(1, Integer.parseInt(status));
             qtm.executeUpdate();
             String sql = """
-                         INSERT INTO [dbo].[Contact_Cate]
-                                    ([contactID]
-                                    ,[categoryID])
-                                    (select contactId,3 from Contact)""";
-            sql = sql.substring(0,sql.length() - 1);
+                    INSERT INTO [dbo].[Contact_Cate]
+                               ([contactID]
+                               ,[categoryID])
+                               (select contactId,3 from Contact)""";
+            sql = sql.substring(0, sql.length() - 1);
             if (checked != null) {
                 sql += " where contactID IN (";
                 for (int i = 0; i < checked.length; i++) {
@@ -310,8 +309,8 @@ public class ContactDAO {
     public void updateStarredContact(String status, String[] checked) {
         try {
             String xSQL = """
-                          delete from Contact_Cate where categoryID = ?
-                          """;
+                    delete from Contact_Cate where categoryID = ?
+                    """;
             if (checked != null) {
                 xSQL += " and contactID IN (";
                 for (int i = 0; i < checked.length; i++) {
@@ -326,11 +325,11 @@ public class ContactDAO {
             qtm.setInt(1, Integer.parseInt(status));
             qtm.executeUpdate();
             String sql = """
-                         INSERT INTO [dbo].[Contact_Cate]
-                                    ([contactID]
-                                    ,[categoryID])
-                                    (select contactId,4 from Contact)""";
-            sql = sql.substring(0,sql.length() - 1);
+                    INSERT INTO [dbo].[Contact_Cate]
+                               ([contactID]
+                               ,[categoryID])
+                               (select contactId,4 from Contact)""";
+            sql = sql.substring(0, sql.length() - 1);
             if (checked != null) {
                 sql += " where contactID IN (";
                 for (int i = 0; i < checked.length; i++) {

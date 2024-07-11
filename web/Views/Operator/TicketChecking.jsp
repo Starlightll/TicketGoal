@@ -10,29 +10,60 @@
 <head>
     <title>Title</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ticketchecking.css"/>
 </head>
 <body>
+<div class="container">
+    <h1>Ticket checking</h1>
+    <p>Scan the QR code on the ticket to check</p>
+    <div id="reader" style="width: 80%"></div>
+    <div class="status" id="status">
+        <p id="message"></p>
+    </div>
+</div>
 
-<div id="reader" style="width: 600px"></div>
 
 <script>
     console.log(Html5QrcodeScanner);
-
-    function onScanSuccess(decodedText, decodedResult) {
-        // handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult);
+    let readerElement = document.getElementById('reader');
+    let statusElement = document.getElementById('status');
+    let messageElement = document.getElementById('message');
+    function onScanSuccess(decodedText) {
+        readerElement.style.border = "5px solid #28a745";
+        $.ajax({
+            url: `${pageContext.request.contextPath}/TicketChecking`,
+            type: "POST",
+            data: {
+                code: decodedText
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data.valid === true){
+                    statusElement.style.display = "block";
+                    statusElement.style.backgroundColor = "#28a745";
+                    messageElement.innerHTML = "PASS";
+                } else {
+                    statusElement.style.display = "block";
+                    statusElement.style.backgroundColor = "#dc3545";
+                    messageElement.innerHTML = "FAIL";
+                }
+            },
+            error: function (data) {
+                alert("Error");
+            }
+        });
     }
 
     function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
-        console.warn(`Code scan error = ${error}`);
+        readerElement.style.border = "5px solid #dc3545";
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
-        { fps: 6, qrbox: {width: 250, height: 250} },
-        verbose=  false);
+        {fps: 4,
+        },
+   );
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 </script>
 

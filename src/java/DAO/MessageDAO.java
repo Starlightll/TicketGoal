@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author admin
  */
 public class MessageDAO {
@@ -28,17 +27,17 @@ public class MessageDAO {
         } catch (Exception e) {
         }
     }
-    
+
     public List<Message> getMessages() {
         List<Message> list = new ArrayList<>();
         String sql = """
-                     SELECT [id]
-                           ,[email]
-                           ,[subject]
-                           ,[message]
-                           ,[createDate]
-                       FROM [TicketGoal].[dbo].[Message]
-                     """;
+                SELECT [id]
+                      ,[email]
+                      ,[subject]
+                      ,[message]
+                      ,[createDate]
+                  FROM [TicketGoal].[dbo].[Message]
+                """;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -56,16 +55,16 @@ public class MessageDAO {
         }
         return list;
     }
-    
+
     public Message getMessagesByID(int id) {
         String sql = """
-                     SELECT [id]
-                           ,[email]
-                           ,[subject]
-                           ,[message]
-                           ,[createDate]
-                       FROM [TicketGoal].[dbo].[Message] where id = ?
-                     """;
+                SELECT [id]
+                      ,[email]
+                      ,[subject]
+                      ,[message]
+                      ,[createDate]
+                  FROM [TicketGoal].[dbo].[Message] where id = ?
+                """;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, id);
@@ -84,17 +83,17 @@ public class MessageDAO {
         }
         return null;
     }
-    
-    public void insert(String email,String subject,String message) {
+
+    public void insert(String email, String subject, String message) {
         String sql = """
-                     INSERT INTO [dbo].[Message]
-                                ([email]
-                                ,[subject]
-                                ,[message]
-                                ,[createDate])
-                          VALUES
-                                (?,?,?,getdate())
-                     """;
+                INSERT INTO [dbo].[Message]
+                           ([email]
+                           ,[subject]
+                           ,[message]
+                           ,[createDate])
+                     VALUES
+                           (?,?,?,getdate())
+                """;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, email);
@@ -107,9 +106,9 @@ public class MessageDAO {
 
     public void delete(int id) {
         String sql = """
-                     DELETE FROM [dbo].[Message]
-                                      WHERE id = ?
-                     """;
+                DELETE FROM [dbo].[Message]
+                                 WHERE id = ?
+                """;
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, id);

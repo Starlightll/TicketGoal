@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author Admin
  */
 public class GetDAO {
