@@ -1,8 +1,6 @@
-
-
 const navMenu = document.getElementById('nav-menu'),
-        navToggle = document.getElementById('nav-toggle'),
-        navClose = document.getElementById('nav-close');
+    navToggle = document.getElementById('nav-toggle'),
+    navClose = document.getElementById('nav-close');
 
 //Show menu
 navToggle.addEventListener('click', () => {
@@ -16,17 +14,17 @@ navClose.addEventListener('click', () => {
 
 //Login
 const login = document.getElementById('login'),
-        loginBtn = document.getElementById('login-btn'),
-        loginClose = document.getElementById('login-close'),
-        loginButton = document.getElementById('login-button'),
-        register = document.getElementById('register'),
-        registerButton = document.getElementById('register-button'),
-        registerClose = document.getElementById('register-close'),
-        signinButton = document.getElementById('signin-button'),
-        forgotPasswordButton = document.getElementById("forgotpassword-button"),
-        forgotPassword = document.getElementById("forgotPassword"),
-        forgotPasswordSigninButton = document.getElementById('forgotpassword-signin-button'),
-        forgotPasswordClose = document.getElementById('forgotpassword-register-close');
+    loginBtn = document.getElementById('login-btn'),
+    loginClose = document.getElementById('login-close'),
+    loginButton = document.getElementById('login-button'),
+    register = document.getElementById('register'),
+    registerButton = document.getElementById('register-button'),
+    registerClose = document.getElementById('register-close'),
+    signinButton = document.getElementById('signin-button'),
+    forgotPasswordButton = document.getElementById("forgotpassword-button"),
+    forgotPassword = document.getElementById("forgotPassword"),
+    forgotPasswordSigninButton = document.getElementById('forgotpassword-signin-button'),
+    forgotPasswordClose = document.getElementById('forgotpassword-register-close');
 // Login show
 loginBtn?.addEventListener('click', () => {
     login.classList.add('show-login');
@@ -152,10 +150,10 @@ profileUpdateBtn ? profileUpdateBtn.onclick = async (e) => {
     const address = document.getElementById("profileAddress").value;
     const gender = document.getElementById("profileGender").value;
     if (validateField(username, "string")
-            && validateField(email, "email")
-            && validateField(phone, "phone")
-            && validateField(address, "address")
-            && validateField(gender, "number")) {
+        && validateField(email, "email")
+        && validateField(phone, "phone")
+        && validateField(address, "address")
+        && validateField(gender, "number")) {
         try {
             const response = await fetch('./changeProfile', {
                 method: 'POST',
