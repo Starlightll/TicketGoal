@@ -3,26 +3,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Simple email inbox page - Bootdey.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background: #eee;
-        }
+    <head>
+        <meta charset="utf-8">
+        <title>Simple email inbox page - Bootdey.com</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                background: #eee;
+            }
             .header {
                 padding: 15px 0;
             }
                        .header .nav__link {
                 font-size: 2rem;
             }
-
+            
             .header .join__button {
                 font-size: 19px;
             }
-
+            
             .header .nav__cart {
                 font-size: 2.5rem;
             }
@@ -330,31 +330,24 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-blue">
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×</button>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                     <h4 class="modal-title"><i class="fa fa-envelope"></i> REPLY MESSAGE</h4>
                                                 </div>
-                                                <form action="SendMessageServlet" method="post">
+                                                <form id="replyForm" action="SendMessageServlet" method="post" onsubmit="return validateReplyForm()">
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <input name="to" type="email" class="form-control"
-                                                                   placeholder="To" required="" value="${contact.email}" readonly="">
+                                                            <input name="to" type="email" class="form-control" placeholder="To" required="" value="${contact.email}" readonly="">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input name="subject" type="text" class="form-control"
-                                                                   placeholder="Subject" required="" value="${contact.message}" readonly="">
+                                                            <input name="subject" type="text" class="form-control" placeholder="Subject" required="" value="${contact.message}" readonly="">
                                                         </div>
                                                         <div class="form-group">
-                                                            <textarea name="message" id="email_message" class="form-control"
-                                                                      placeholder="Message" style="height: 120px;" required=""></textarea>
+                                                            <textarea name="message" id="reply_message" class="form-control" placeholder="Message" style="height: 120px;" required=""></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal"><i class="fa fa-times"></i>
-                                                            Discard</button>
-                                                        <button type="submit" class="btn btn-primary pull-right"><i
-                                                                class="fa fa-envelope"></i> Send Message</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+                                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -371,7 +364,14 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-
+function validateReplyForm() {
+                var message = document.getElementById('reply_message').value.trim();
+                if (message === "") {
+                    alert("Message field cannot be empty.");
+                    return false;
+                }
+                return true;
+            }
         </script>
     </body>
 </html>

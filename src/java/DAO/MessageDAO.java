@@ -28,30 +28,31 @@ public class MessageDAO {
         }
     }
 
-    public List<Message> getMessages() {
+        public List<Message> getMessages() {
         List<Message> list = new ArrayList<>();
         String sql = """
-                SELECT [id]
-                      ,[email]
-                      ,[subject]
-                      ,[message]
-                      ,[createDate]
-                  FROM [TicketGoal].[dbo].[Message]
-                """;
-        try {
-            PreparedStatement statement = connect.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
+                     SELECT [id]
+                           ,[email]
+                           ,[subject]
+                           ,[message]
+                           ,[createDate]
+                       FROM [TicketGoal].[dbo].[Message]
+                       ORDER BY [createDate] DESC
+                     """;
+        try (PreparedStatement statement = connect.prepareStatement(sql);
+             ResultSet rs = statement.executeQuery()) {
+
             while (rs.next()) {
                 Message message = new Message();
                 message.setId(rs.getInt(1));
                 message.setEmail(rs.getString(2));
                 message.setSubject(rs.getString(3));
                 message.setMessage(rs.getString(4));
-                message.setCreatedDate(rs.getDate(5));
+                message.setCreatedDate(rs.getTimestamp(5));
                 list.add(message);
             }
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace(); // Log the exception
         }
         return list;
     }
