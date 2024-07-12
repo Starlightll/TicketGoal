@@ -28,7 +28,6 @@ public class changeProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
-        String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         int gender = Integer.parseInt(request.getParameter("gender"));
@@ -42,7 +41,7 @@ public class changeProfileServlet extends HttpServlet {
                     new Account(user.getAccountId(),
                             username.trim(),
                             null,
-                            email.trim(),
+                            null,
                             phone.trim(),
                             gender,
                             address.trim(),

@@ -232,7 +232,7 @@
                                     </div>
                                     <div class="profile__item">
                                         <label for="profileEmail" class="profile__label">Email</label>
-                                        <input type="email" placeholder="Enter your email" id="profileEmail"
+                                        <input disabled type="email" placeholder="Enter your email" id="profileEmail"
                                                class="profile__input" value="${user.getEmail()}">
                                     </div>
                                     <div class="profile__item">
