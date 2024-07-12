@@ -5,18 +5,21 @@
   Time: 9:51 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css"
+          integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <title>TicketGoal</title>
 </head>
 <body>
 <main style="font-family: 'Inter', sans-serif;">
     <h1>QR Code Backup</h1>
-    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>
+    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code
+        directly from our website.</p>
     <p>Remember to keep this code safe and don't share it with anyone else.</p>
     <div class="QRCodeList" style="width: 500px; padding: 10px">
         <div style="display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C">

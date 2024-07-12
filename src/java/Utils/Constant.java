@@ -1,7 +1,6 @@
 package Utils;
 
 /**
- *
  * @author trinh
  */
 public class Constant {

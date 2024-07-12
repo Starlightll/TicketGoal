@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "signOutServlet", urlPatterns = {"/signOutServlet"})

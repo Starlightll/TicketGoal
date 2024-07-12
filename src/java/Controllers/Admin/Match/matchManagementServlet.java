@@ -69,7 +69,7 @@ public class matchManagementServlet extends HttpServlet {
                                 "                                </div>\n" +
                                 "                            </div>\n" +
                                 "                            <div class=\"option\">\n" +
-                                "                                <button class=\"update__button\" type=\"button\" onclick=\"showUpdate("+match.matchId+", '"+match.getDateTime()+"', "+match.pitchId+", "+match.matchStatusId+", "+match.club1.getClubId()+", "+match.club2.getClubId()+")\">Update</button>" +
+                                "                                <button class=\"update__button\" type=\"button\" onclick=\"showUpdate(" + match.matchId + ", '" + match.getDateTime() + "', " + match.pitchId + ", " + match.matchStatusId + ", " + match.club1.getClubId() + ", " + match.club2.getClubId() + ")\">Update</button>" +
                                 "                                <button class=\"delete__button\" type=\"button\" onclick=\"deleteMatch(" + match.matchId + ")\">Delete</button>\n" +
                                 "                            </div>\n" +
                                 "                        </div>\n" +
@@ -139,65 +139,65 @@ public class matchManagementServlet extends HttpServlet {
                 break;
             case "updateMatch":
                 Match matchUpdate = new Match();
-                try{
+                try {
                     matchUpdate.setMatchId(Integer.parseInt(request.getParameter("matchId")));
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     matchUpdate.setSchedule(new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("schedule")));
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     matchUpdate.setPitchId(Integer.parseInt(request.getParameter("pitchId")));
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     matchUpdate.setMatchStatusId(Integer.parseInt(request.getParameter("status")));
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     Club club1Update = new Club();
                     club1Update.setClubId(Integer.parseInt(request.getParameter("club1Id")));
                     matchUpdate.setClub1(club1Update);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     Club club2Update = new Club();
                     club2Update.setClubId(Integer.parseInt(request.getParameter("club2Id")));
                     matchUpdate.setClub2(club2Update);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                try{
+                try {
                     Address addressUpdate = new Address();
                     addressUpdate.setAddressName(request.getParameter("addressName"));
                     addressUpdate.setAddressURL(request.getParameter("addressURL"));
                     matchUpdate.setAddress(addressUpdate);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Update match error: " + e.getMessage());
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Update match error: " + e.getMessage());
                 }
-                if(updateMatch(matchUpdate)){
+                if (updateMatch(matchUpdate)) {
                     response.setStatus(HttpServletResponse.SC_OK);
-                }else{
+                } else {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     response.getWriter().write("Update match error: Internal server error");
                 }

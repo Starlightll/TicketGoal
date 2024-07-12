@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author ADMIN
  */
 public class SeatStatus {
@@ -35,8 +34,6 @@ public class SeatStatus {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
-    
-    
-    
-    
+
+
 }

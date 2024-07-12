@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *
  * @author MSI VN
  */
 @WebServlet(name = "signInServlet", urlPatterns = {"/signIn"})
@@ -50,6 +49,5 @@ public class signInServlet extends HttpServlet {
         response.getWriter().write(json);
     }
 
-  
 
 }

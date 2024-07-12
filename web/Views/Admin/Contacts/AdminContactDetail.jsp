@@ -12,6 +12,20 @@
             body {
                 background: #eee;
             }
+            .header {
+                padding: 15px 0;
+            }
+                       .header .nav__link {
+                font-size: 2rem;
+            }
+            
+            .header .join__button {
+                font-size: 19px;
+            }
+            
+            .header .nav__cart {
+                font-size: 2.5rem;
+            }
 
             /* EMAIL */
             .email {
@@ -256,6 +270,9 @@
                                             <li ${requestScope.category == '2' ? 'class="active"' : ''}><a href="ContactAdminServlet?cate=2"><i class="fa fa-mail-forward"></i> Sent</a></li>
                                         </ul>
                                     </div>
+                                    <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#reply"><i
+                                            class="fa fa-pencil"></i>&nbsp;&nbsp;REPLY</a>
+                                    <hr>
                                 </div>
 
 
@@ -263,9 +280,9 @@
                                     <div class="row">
                                         <h2>Name : ${contact.name}</h2>
                                         <h3>Email : ${contact.email}</h3>
-                                        <h1>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
-                                                                        type="date" pattern="MM-dd-yyyy"/>
-                                                            ${formattedDate}</h1>
+                                        <h4>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
+                                                        type="date" pattern="MM-dd-yyyy"/>
+                                            ${formattedDate}</h4>
                                         <p>${contact.message}</p>
                                     </div>
                                 </div>
@@ -308,7 +325,35 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-wrapper">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-blue">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h4 class="modal-title"><i class="fa fa-envelope"></i> REPLY MESSAGE</h4>
+                                                </div>
+                                                <form id="replyForm" action="SendMessageServlet" method="post" onsubmit="return validateReplyForm()">
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input name="to" type="email" class="form-control" placeholder="To" required="" value="${contact.email}" readonly="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input name="subject" type="text" class="form-control" placeholder="Subject" required="" value="${contact.message}" readonly="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <textarea name="message" id="reply_message" class="form-control" placeholder="Message" style="height: 120px;" required=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+                                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -319,7 +364,14 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-
+function validateReplyForm() {
+                var message = document.getElementById('reply_message').value.trim();
+                if (message === "") {
+                    alert("Message field cannot be empty.");
+                    return false;
+                }
+                return true;
+            }
         </script>
     </body>
 </html>

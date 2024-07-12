@@ -1,4 +1,3 @@
-
 const checkboxes = document.querySelectorAll('.ticket-checkbox');
 const selectedTickets = {};
 let totalPriceSelected = 0;
@@ -9,6 +8,7 @@ checkboxes.forEach(checkbox => {
 
     });
 });
+
 function handleChoose(ele) {
     const ticketId = ele.value;
     const price = parseFloat(ele.getAttribute('data-price'));
@@ -44,6 +44,7 @@ function handleChoose(ele) {
     }
     totalPriceSelectedDisplay.textContent = `Total price: ${totalPriceSelected}`;
 }
+
 function searchTickets(event) {
     event.preventDefault();
     const clubValue = document.getElementById('clubInput').value.trim();
@@ -58,14 +59,14 @@ function searchTickets(event) {
         },
         body: JSON.stringify(searchData),
     })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Search results:', data);
-                searchShow(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        .then(response => response.json())
+        .then(data => {
+            console.log('Search results:', data);
+            searchShow(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function deleteTicket(id, cart) {
@@ -83,30 +84,30 @@ function deleteTicket(id, cart) {
         },
         body: JSON.stringify(deleteData),
     })
-            .then(response => response.json())
-            .then(data => {
-                alert("Delete successfully");
-                if (selectedTickets[id] != null) {
-                    totalPriceSelected -= selectedTickets[id].price;
-                    delete selectedTickets[id];
-                    const ticketDetailsToRemove = document.getElementById(`ticket-details-${id}`);
-                    selectedTicketInfo.removeChild(ticketDetailsToRemove);
+        .then(response => response.json())
+        .then(data => {
+            alert("Delete successfully");
+            if (selectedTickets[id] != null) {
+                totalPriceSelected -= selectedTickets[id].price;
+                delete selectedTickets[id];
+                const ticketDetailsToRemove = document.getElementById(`ticket-details-${id}`);
+                selectedTicketInfo.removeChild(ticketDetailsToRemove);
 
-                    totalPriceSelectedDisplay.textContent = `Total price: ${totalPriceSelected}`;
-                }
-                searchShow(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                totalPriceSelectedDisplay.textContent = `Total price: ${totalPriceSelected}`;
+            }
+            searchShow(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function formatDate(dateString) {
 
     const date = new Date(dateString);
-    
+
     const year = date.getFullYear();
-    let month = (date.getMonth() + 1).toString(); 
+    let month = (date.getMonth() + 1).toString();
     let day = date.getDate().toString();
 
     if (month.length < 2) {

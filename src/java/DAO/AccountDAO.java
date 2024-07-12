@@ -15,10 +15,10 @@ import static Utils.Common.addToCommandIfNotNull;
 
 public class AccountDAO {
     public static AccountDAO INSTANCE = new AccountDAO();
-    private Connection connect;
     private final String getAccountByRoleQuery = "SELECT * FROM Account WHERE roleId = ?";
     private final String getAccountByIdQuery = "SELECT * FROM Account WHERE accountId = ?";
     private final String getAccountByEmail = "SELECT * FROM Account WHERE email = ?";
+    private Connection connect;
 
     private AccountDAO() {
         if (INSTANCE == null) {
@@ -26,6 +26,10 @@ public class AccountDAO {
         } else {
             INSTANCE = this;
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new AccountDAO().updateUserByEmail(new Account("trinhtiendat25102@gmail.com", "123", -1, -1)));
     }
 
     public List<Account> getAccountByRole(int roleId) {
@@ -246,6 +250,7 @@ public class AccountDAO {
             return null;
         }
     }
+
     public Account updateUserByEmail(Account account) {
         StringBuilder sqlCommandBuilder = new StringBuilder("UPDATE Account SET\n");
 
@@ -277,8 +282,5 @@ public class AccountDAO {
             e.printStackTrace();
             return null;
         }
-    }
-    public static void main(String[] args) {
-        System.out.println(new AccountDAO().updateUserByEmail(new Account("trinhtiendat25102@gmail.com", "123",-1,-1)));
     }
 }

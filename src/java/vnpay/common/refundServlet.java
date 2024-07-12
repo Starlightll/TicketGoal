@@ -4,25 +4,21 @@
  */
 package vnpay.common;
 
-import java.io.PrintWriter;
-import jakarta.servlet.annotation.WebServlet;
 import com.google.gson.JsonObject;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
- *
  * @author mosdd
  */
 @WebServlet(name = "refundServlet", urlPatterns = {"/refundServlet"})
@@ -125,7 +121,7 @@ public class refundServlet extends HttpServlet {
         in.close();
         System.out.println(response.toString());
         String returnPage = req.getParameter("returnPage");
-        resp.sendRedirect(returnPage+ "?success=Refund ticket success");
+        resp.sendRedirect(returnPage + "?success=Refund ticket success");
     }
 
     @Override

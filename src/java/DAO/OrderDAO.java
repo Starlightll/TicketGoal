@@ -4,7 +4,6 @@ import DB.DBContext;
 import Models.Account;
 import Models.Order;
 import Models.Ticket;
-import jakarta.servlet.http.HttpSession;
 import vnpay.common.Config;
 
 import java.sql.*;
@@ -37,9 +36,9 @@ public class OrderDAO {
             statement.setDate(4, new java.sql.Date(System.currentTimeMillis()));
             int rowInserted = statement.executeUpdate();
             int orderId = 0;
-            if(rowInserted > 0) {
+            if (rowInserted > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
-                if(rs.next()) {
+                if (rs.next()) {
                     orderId = rs.getInt(1);
                 }
             }
@@ -83,7 +82,7 @@ public class OrderDAO {
                 order.setOrderDate(rs.getDate("orderDate"));
                 List<Ticket> tickets = new ArrayList<>();
                 List<Integer> ticketId = getOrderLines(orderId);
-                for(int id : ticketId) {
+                for (int id : ticketId) {
                     Ticket ticket = new TicketDAO().getTicketById(id);
                     tickets.add(ticket);
                 }
@@ -122,8 +121,8 @@ public class OrderDAO {
             statement.executeUpdate();
             TicketDAO ticketDAO = new TicketDAO();
             SeatDAO seatDAO = SeatDAO.INSTANCE;
-            for(Ticket ticket : tickets) {
-                if(!ticketDAO.updateTicketStatus(ticket.getTicketId(), 1) || !seatDAO.updateSeatStatus(ticket.getSeat().getSeatId(), 3)) {
+            for (Ticket ticket : tickets) {
+                if (!ticketDAO.updateTicketStatus(ticket.getTicketId(), 1) || !seatDAO.updateSeatStatus(ticket.getSeat().getSeatId(), 3)) {
                     return false;
                 }
                 ticketDAO.setBackupQRCode(ticket.getTicketId(), genCode(orderId, ticket, Config.secretKey));
@@ -135,18 +134,13 @@ public class OrderDAO {
         return true;
     }
 
-    private String genCode(int orderId, Ticket ticket, String secretKey)  {
+    private static String genCode(int orderId, Ticket ticket, String secretKey) {
         String code = "";
         try {
             int ticketId = ticket.getTicketId();
-            int ticketMatch = ticket.getMatch().getMatchId();
-            int ticketSeat = ticket.getSeat().getSeatId();
-            int ticketArea = ticket.getSeat().getArea().getId();
-            int ticketRow = ticket.getSeat().getRow();
-            int ticketPrice = ticket.getSeat().getPrice();
-            String randomNumber = Config.getRandomNumber(8);
-            String data = "orderId=" + orderId + "&ticketId=" + ticketId + "&ticketMatch=" + ticketMatch + "&randomNumber=" + randomNumber;
-            code = Config.hmacSHA512(secretKey, data);
+            String randomNumber = Config.getRandomNumber(3);
+            String data = orderId + "_" + ticketId + "_" + randomNumber + "_" + secretKey;
+            code = Config.md5(data);
         } catch (Exception e) {
             return "";
         }

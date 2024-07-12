@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author pc
  */
 public class Performance {
@@ -52,5 +51,5 @@ public class Performance {
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
-    
+
 }

@@ -244,8 +244,8 @@ public class TicketDAO {
 
     public List<Ticket> getTicketInCartByMatchAndAccount(Account account, int matchId) {
         List<Ticket> ticketList = new ArrayList<>();
-        for(Ticket ticket: getTicketInCart(account.getAccountId())) {
-            if(ticket.getMatch().matchId == matchId) {
+        for (Ticket ticket : getTicketInCart(account.getAccountId())) {
+            if (ticket.getMatch().matchId == matchId) {
                 ticketList.add(ticket);
             }
         }
@@ -253,7 +253,7 @@ public class TicketDAO {
     }
 
 
-    public List<Ticket> getPaidTicket(){
+    public List<Ticket> getPaidTicket() {
         List<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n" +
                 "FROM Ticket t\n" +
@@ -317,10 +317,10 @@ public class TicketDAO {
         return tickets;
     }
 
-    public List<Ticket> getPaidTicketByMatch(int matchId){
+    public List<Ticket> getPaidTicketByMatch(int matchId) {
         List<Ticket> tickets = new ArrayList<>();
-        for(Ticket ticket: getPaidTicket()) {
-            if(ticket.getMatch().getMatchId() == matchId) {
+        for (Ticket ticket : getPaidTicket()) {
+            if (ticket.getMatch().getMatchId() == matchId) {
                 tickets.add(ticket);
             }
         }
@@ -460,10 +460,10 @@ public class TicketDAO {
         }
         return rowDeleted;
     }
-    
+
     public List<Ticket> getPaidTicketByUser(int userId) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n"
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo, TS.statusName\n"
                 + "FROM Ticket t\n"
                 + "JOIN Seat s ON t.seatId = s.seatId\n"
                 + "JOIN Area a ON s.areaId = a.areaId\n"
@@ -472,7 +472,8 @@ public class TicketDAO {
                 + "JOIN Club c2 ON m.club2 = c2.clubId\n"
                 + "JOIN Cart cr ON t.cartId = cr.cartId\n"
                 + "JOIN Pitch p ON m.pitchId = p.pitchId\n"
-                + "WHERE t.ticketStatusId = 1 and cr.accountId=?";
+                + "JOIN ticketStatus as TS on TS.ticketStatusId = t.ticketStatusId\n"
+                + "WHERE (t.ticketStatusId = 1 or t.ticketStatusId = 4) and cr.accountId=?";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setInt(1, userId);
@@ -518,7 +519,9 @@ public class TicketDAO {
                 String areaName = rs.getString("areaName");
                 String club1Name = rs.getString("club1Name");
                 String club2Name = rs.getString("club2Name");
-                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
+                Ticket tik = new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match);
+                tik.setStatus(rs.getString("statusName"));
+                tickets.add(tik);
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by accountId: " + e);
@@ -704,7 +707,7 @@ public class TicketDAO {
         }
         return -1;
     }
-    
+
     public int getTotalOrderIds(int id) {
         String sql = "SELECT DISTINCT O.totalAmount "
                 + "FROM [Order] AS O "
@@ -724,6 +727,21 @@ public class TicketDAO {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public boolean verifyTicket(String code) {
+        String sql = "SELECT * FROM Ticket WHERE code = ?";
+        try {
+            PreparedStatement st = connect.prepareStatement(sql);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Select tickets by accountId: " + e);
+        }
+        return false;
     }
 
 }

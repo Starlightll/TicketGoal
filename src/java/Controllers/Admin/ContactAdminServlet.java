@@ -18,7 +18,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
- *
  * @author pc
  */
 public class ContactAdminServlet extends HttpServlet {
@@ -27,10 +26,10 @@ public class ContactAdminServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,13 +49,14 @@ public class ContactAdminServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -67,9 +67,14 @@ public class ContactAdminServlet extends HttpServlet {
             pagenum = Integer.parseInt(page);
         }
         String cate = request.getParameter("cate");
+        String search = request.getParameter("search");
+        request.setAttribute("search", search);
         if ("2".equals(cate)) {
             MessageDAO messageDAO = new MessageDAO();
             List<Message> messages = messageDAO.getMessages();
+            if (search != null && !search.trim().isEmpty()) {
+                messages = messages.stream().filter(n -> n.getEmail().equalsIgnoreCase(search.trim())).toList();
+            }
             int totalPage = messages.size() % 5 == 0 ? messages.size() / 5 : (messages.size() / 5 + 1);
             if (!messages.isEmpty()) {
                 request.setAttribute("list", messages.subList((pagenum - 1) * 5, Math.min(messages.size(), pagenum * 5)));
@@ -85,6 +90,9 @@ public class ContactAdminServlet extends HttpServlet {
         }
         ContactDAO contactDAO = new ContactDAO();
         List<Contact> list = contactDAO.getContactList(cate);
+        if (search != null && !search.trim().isEmpty()) {
+            list = list.stream().filter(n -> n.getEmail().equalsIgnoreCase(search.trim())).toList();
+        }
         int totalPage = list.size() % 5 == 0 ? list.size() / 5 : (list.size() / 5 + 1);
         if (!list.isEmpty()) {
             request.setAttribute("list", list.subList((pagenum - 1) * 5, Math.min(list.size(), pagenum * 5)));
@@ -105,10 +113,10 @@ public class ContactAdminServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -3,14 +3,28 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Simple email inbox page - Bootdey.com</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-            body {
-                background: #eee;
+<head>
+    <meta charset="utf-8">
+    <title>Simple email inbox page - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background: #eee;
+        }
+            .header {
+                padding: 15px 0;
+            }
+            .header .nav__link {
+                font-size: 2rem;
+            }
+
+            .header .join__button {
+                font-size: 19px;
+            }
+
+            .header .nav__cart {
+                font-size: 2.5rem;
             }
 
             /* EMAIL */
@@ -358,14 +372,14 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-                                                        function confirmDelete() {
-                                                            return confirm('Are you sure you want to delete this message?');
-                                                        }
-        </script>
-    </body>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this message?');
+    }
+</script>
+</body>
 </html>

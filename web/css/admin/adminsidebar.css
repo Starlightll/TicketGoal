@@ -78,7 +78,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding-left: 50px
 }
 
-.admin__side__bar .dropdown__link:hover{
+.admin__side__bar .dropdown__link:hover {
     background-color: #ff0044;
     cursor: pointer;
 }
@@ -92,7 +92,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding-right: 10px;
 }
 
-.admin__side__bar .nav__item .ri-arrow-drop-down-line{
+.admin__side__bar .nav__item .ri-arrow-drop-down-line {
     padding: 0;
 }
 

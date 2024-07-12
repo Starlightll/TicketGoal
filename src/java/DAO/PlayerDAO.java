@@ -15,7 +15,6 @@ import java.util.Base64;
 import java.util.List;
 
 /**
- *
  * @author mosdd
  */
 public class PlayerDAO {
@@ -28,6 +27,13 @@ public class PlayerDAO {
             connect = new DBContext().getConnection();
         } catch (Exception e) {
         }
+    }
+
+    public static void main(String[] args) {
+        PlayerDAO dao = new PlayerDAO();
+
+        List<Player> p = dao.getAllPlayer();
+
     }
 
     public Player getPlayer(String PlayerId) {
@@ -185,6 +191,7 @@ public class PlayerDAO {
         }
         return list;
     }
+    // Phương thức kiểm tra playerNumber có trùng lặp không
 
     public void UpdatePlayer(String playerId, String playerName, String playerNumber, String dateOfBirth, String height, String weight, String biography, InputStream newImage, String oldImage, String countryId, String playerRoleId, String atk, String def, String spd) {
         // Kiểm tra xem playerNumber có bị trùng không
@@ -239,7 +246,6 @@ public class PlayerDAO {
             System.out.println("Player number is not unique.");
         }
     }
-    // Phương thức kiểm tra playerNumber có trùng lặp không
 
     private boolean isPlayerNumberUnique(String playerNumber, String playerId) {
         String query = "SELECT COUNT(*) FROM Player WHERE playerNumber = ? AND playerId != ?";
@@ -335,12 +341,5 @@ public class PlayerDAO {
         } catch (SQLException e) {
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        PlayerDAO dao = new PlayerDAO();
-
-        List<Player> p = dao.getAllPlayer();
-
     }
 }

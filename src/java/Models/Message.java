@@ -7,7 +7,6 @@ package Models;
 import java.util.Date;
 
 /**
- *
  * @author admin
  */
 public class Message {
@@ -67,6 +66,6 @@ public class Message {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
-    
-    
+
+
 }

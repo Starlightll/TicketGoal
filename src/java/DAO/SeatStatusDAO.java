@@ -13,11 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *
  * @author Admin
  */
-public class SeatStatusDAO  {
+public class SeatStatusDAO {
     public static SeatStatusDAO INSTANCE = new SeatStatusDAO();
     private Connection connect;
     private String status = "OK";
@@ -29,7 +29,7 @@ public class SeatStatusDAO  {
             INSTANCE = this;
         }
     }
-    
+
     public List<SeatStatus> getSeatStatusList() {
         String sql = "SELECT * FROM seatStatus";
         List<SeatStatus> seatStatus = new ArrayList<>();
@@ -48,6 +48,6 @@ public class SeatStatusDAO  {
         }
         return seatStatus;
     }
-    
-   
+
+
 }

@@ -5,7 +5,6 @@
 package Models;
 
 /**
- *
  * @author MSI VN
  */
 public class Role {

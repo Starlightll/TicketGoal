@@ -29,25 +29,25 @@ uploadStructure.onchange = () => {
 };
 
 const seatManagementBox = document.getElementById("seat-management-box"),
-seatManagementBtn = document.getElementById("seat-management-button"),
-seatManagementSubmitBtn = document.getElementById("seat-management-submit-button"),
-seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
+    seatManagementBtn = document.getElementById("seat-management-button"),
+    seatManagementSubmitBtn = document.getElementById("seat-management-submit-button"),
+    seatManagementCancelBtn = document.getElementById("seat-management-cancel-button");
 
-seatManagementBtn.addEventListener('click',() => {
+seatManagementBtn.addEventListener('click', () => {
     seatManagementBox.classList.add('show-seat-management-box');
 });
 
 seatManagementSubmitBtn.addEventListener('click', () => {
-   seatManagementBox.classList.remove("show-seat-management-box") 
+    seatManagementBox.classList.remove("show-seat-management-box")
 });
 
 seatManagementCancelBtn.addEventListener('click', () => {
-   seatManagementBox.classList.remove("show-seat-management-box") 
+    seatManagementBox.classList.remove("show-seat-management-box")
 });
 
 const areaAddBtn = document.getElementById("area-add-button"),
-areaAddBox = document.getElementById("area-add-box"),
-areaAddSubmitBtn = document.getElementById("area-add-submit-button");
+    areaAddBox = document.getElementById("area-add-box"),
+    areaAddSubmitBtn = document.getElementById("area-add-submit-button");
 
 areaAddBtn.addEventListener('click', () => {
     areaAddBox.classList.add("show-area-add-box");

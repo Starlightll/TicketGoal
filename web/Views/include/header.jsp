@@ -47,46 +47,46 @@
                     </li>
                 </ul>
 
-                        <!-- Close button -->
-                        <div class="nav__close" id="nav-close">
-                            <i class="ri-close-line"></i>
+                <!-- Close button -->
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+            <div class="nav__actions">
+                <!-- Login button -->
+                <c:if test="${sessionScope.user != null}">
+                    <div class="actions">
+                        <i class="ri-user-line nav__cart" id="actions-btn"></i>
+                        <div class="dropdown__menu" id="dropdown-menu" style="left: 1639.2px">
+                            <div class="triangle-up"></div>
+                            <a class="dropdown__item" id="profile-btn">Profile</a>
+                            <c:if test="${sessionScope.user.roleId == 1}">
+                                <a class="dropdown__item"
+                                   href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
+                                <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR
+                                    Scan</a>
+                            </c:if>
+                            <c:if test="${sessionScope.user.roleId == 3}">
+                                <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR
+                                    Scan</a>
+                            </c:if>
+                            <a href="my-ticket" class="dropdown__item">My Ticket</a>
+                            <a  class="logout__button" href="./signOutServlet">Log out</a>
                         </div>
                     </div>
-                    <div class="nav__actions">
-                        <!-- Login button -->
-                        <c:if test="${sessionScope.user != null}">
-                            <div class="actions">
-                                <i class="ri-user-line nav__cart" id="actions-btn"></i>
-                                <div class="dropdown__menu" id="dropdown-menu" style="left: 1639.2px">
-                                    <div class="triangle-up"></div>
-                                    <a class="dropdown__item" id="profile-btn">Profile</a>
-                                    <c:if test="${sessionScope.user.roleId == 1}">
-                                        <a class="dropdown__item"
-                                           href="${pageContext.request.contextPath}/matchManagementServlet">Admin</a>
-                                        <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR Scan</a>
-                                    </c:if>
-                                    <c:if test="${sessionScope.user.roleId == 3}">
-                                        <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR Scan</a>
-                                    </c:if>
-                                    <a href="history-payment" class="dropdown__item">History-payment</a>
-                                    <a href="my-ticket" class="dropdown__item">My Ticket</a>
-                                    <a class="dropdown__item">My Cart</a>
-                                    <a class="logout__button" href="./signOutServlet">Log out</a>
-                                </div>
-                            </div>
-                        </c:if>
-                        <c:if test="${sessionScope.user == null}">
-                            <i class="ri-user-fill nav__login" id="login-btn"></i>
-                            <button class="join__button" id="login-button">JOIN NOW</button>
-                        </c:if>
-                        <!-- Search button -->
-                        <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
-                        <!-- Toggle button -->
-                        <div class="nav__toggle" id="nav-toggle">
-                            <i class="ri-menu-line"></i>
-                        </div>
-                    </div>
-                </nav>
+                </c:if>
+                <c:if test="${sessionScope.user == null}">
+                    <i class="ri-user-fill nav__login" id="login-btn"></i>
+                    <button class="join__button" id="login-button">JOIN NOW</button>
+                </c:if>
+                <!-- Search button -->
+                <a href="cart"><i class="ri-shopping-cart-2-fill nav__cart" id="search-btn"></i></a>
+                <!-- Toggle button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+        </nav>
 
         <!-- <div class="header__cta">
             <a href="#" class="btn btn--primary">SIGN IN</a>

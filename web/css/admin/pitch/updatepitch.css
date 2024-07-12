@@ -8,7 +8,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 
-
 .update__pitch * {
     margin: 0;
     padding: 0;
@@ -26,15 +25,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 20px;
 }
 
-.update__pitch .pitch__container .pitch__info table td{
+.update__pitch .pitch__container .pitch__info table td {
     border: none;
 }
 
 .update__pitch .pitch__container .pitch__info .pitch__name {
-   margin: 20px 0;
+    margin: 20px 0;
 }
 
-.update__pitch .pitch__container .pitch__info input{
+.update__pitch .pitch__container .pitch__info input {
     width: 300px;
     height: 50px;
     border-radius: 20px;
@@ -46,7 +45,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #fff;
 }
 
-.update__pitch .pitch__container .pitch__info input[type="file"]{
+.update__pitch .pitch__container .pitch__info input[type="file"] {
     display: none;
 }
 
@@ -60,7 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 10px 0;
     border-radius: 5px;
     cursor: pointer;
-    
+
 }
 
 .update__pitch .pitch__container .pitch__image {
@@ -153,7 +152,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 10px 0;
 }
 
-.update__pitch .area__container .area__box .area__management a{
+.update__pitch .area__container .area__box .area__management a {
     text-align: center;
     line-height: 30px;
     text-decoration: none;
@@ -161,7 +160,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .update__pitch .area__container .area__box .area__management button,
-.update__pitch .area__container .area__box .area__management a{
+.update__pitch .area__container .area__box .area__management a {
     width: 80px;
     height: 30px;
     border-radius: 5px;
@@ -173,13 +172,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-.update__pitch .area__container button:hover{
+.update__pitch .area__container button:hover {
     transform: scale(1.1);
 }
 
 
 .update__pitch .area__container .area__box .area__management .seat__management {
-    
+
     background-color: rgb(123, 0, 255);
 }
 
@@ -220,7 +219,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transition: opacity .4s;
 }
 
-.update__pitch form .show-seat-management-box{
+.update__pitch form .show-seat-management-box {
     opacity: 1;
     pointer-events: auto;
 }
@@ -230,13 +229,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     flex-flow: wrap;
     justify-content: space-between;
     width: 80%;
-    margin: 10px auto; 
+    margin: 10px auto;
 }
 
 .update__pitch .seat__table {
     width: 80%;
     max-height: 400px;
-    overflow-y: scroll; 
+    overflow-y: scroll;
     margin: 10px auto;
 }
 
@@ -254,14 +253,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #fff;
 }
 
-.update__pitch .seat__table table th, td{
+.update__pitch .seat__table table th, td {
     color: #fff;
     border: 1px #ffffff solid;
 }
 
 
 /* Area add box */
-.update__pitch  form .area__add__box{
+.update__pitch form .area__add__box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -312,7 +311,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     transition: 0.1s;
 }
 
-.update__pitch .area__add__box .box i:hover{
+.update__pitch .area__add__box .box i:hover {
     color: #ff5353;
 }
 
@@ -361,10 +360,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Styles for the seat add box */
 #seat-add-form {
-    
+
     display: flex;
     flex-direction: column;
 }
+
 .seat__add__box {
     width: 70%;
     position: fixed;
@@ -415,7 +415,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-
 /*toastbox*/
 #toastBox {
     position: absolute;
@@ -428,7 +427,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 20px;
 }
 
-.toast{
+.toast {
     width: 300px;
     height: 80px;
     background: #ffffff;
@@ -452,7 +451,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: orange;
 }
 
-.toast::after{
+.toast::after {
     content: '';
     position: absolute;
     left: 0;
@@ -465,7 +464,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 @keyframes anim {
-    100%{
+    100% {
         width: 0;
     }
 }

@@ -9,7 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* RESET */
 
-.player__detail *{
+.player__detail * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,7 +18,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-.player__detail .player__box{
+.player__detail .player__box {
     display: flex;
     align-items: start;
     justify-content: center;
@@ -37,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Detail box */
-.player__detail .detail__box{
+.player__detail .detail__box {
     width: 100%;
 }
 
@@ -53,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 18px;
 }
 
-.player__detail .info__detail td{
+.player__detail .info__detail td {
     padding-bottom: 5px;
 }
 
@@ -61,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding-left: 15px;
 }
 
-.player__detail .info__detail table{
+.player__detail .info__detail table {
     margin-left: 20px;
 }
 
@@ -75,7 +75,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     overflow: hidden;
 }
 
-.player__detail .player__img img{
+.player__detail .player__img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -94,7 +94,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 19px;
 }
 
-.player__detail .biograph__detail .line__decor{
+.player__detail .biograph__detail .line__decor {
     min-width: 400px;
 }
 
@@ -147,10 +147,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 @keyframes fillBars {
-    from{
+    from {
         width: 0%;
     }
-    to{
+    to {
         width: 100%;
     }
 }

@@ -1,6 +1,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,8 +27,8 @@
                         <div id="selected-ticket-info"></div>
                         <p id="total-price-selected">No have product: 0</p>
                     </div>
-                    
                     <button type="submit" class="purchase-button">Purchase</button>
+                    <a href="history-payment" class="btn btn-primary" style="text-decoration: none; color: #000; font-size: 14px">History-payment</a>
                 </form>
             </div>
             <div class="cart-items">

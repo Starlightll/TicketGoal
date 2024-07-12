@@ -4,7 +4,7 @@
     Author     : mosdd
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,8 @@
 <body>
 <div class="player__management__container">
     <div class="add__button">
-        <button onclick="location.href='${pageContext.request.contextPath}/playerManagementServlet?option=add'">Add</button>
+        <button onclick="location.href='${pageContext.request.contextPath}/playerManagementServlet?option=add'">Add
+        </button>
     </div>
     <div class="player__box">
         <form action="playerSearchByRoleNameServlet" method="post">
@@ -40,12 +41,13 @@
         <div class="card__box">
             <c:forEach var="player" items="${listP}">
                 <div>
-                    <a href="<c:url value="/playerManagementServlet?option=playerdetail&playerId=${player.playerId}"/>" class="card-link">
-                        <div class="card">  
+                    <a href="<c:url value="/playerManagementServlet?option=playerdetail&playerId=${player.playerId}"/>"
+                       class="card-link">
+                        <div class="card">
                             <div class="player__number">
                                 <p>${player.playerNumber}</p>
                                 <img src="./img/player/numberBanner.png"/>
-                            </div>  
+                            </div>
                             <div class="card__content">
                                 <img name="playerImage" src="data:image/jpeg;base64,${player.image}"/>
                                 <div class="player__name">
@@ -53,13 +55,19 @@
                                 </div>
                             </div>
                         </div>
-                    </a>    
+                    </a>
                     <div class="card__management">
-                        <button class="update__button" onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update&playerId=${player.playerId}'">Update</button>
-                        <button class="delete__button" onclick="confirmDelete('${player.playerName}', '${pageContext.request.contextPath}/playerManagementServlet?option=delete&playerId=${player.playerId}')">Delete</button>
+                        <button class="update__button"
+                                onclick="location.href = '${pageContext.request.contextPath}/playerManagementServlet?option=update&playerId=${player.playerId}'">
+                            Update
+                        </button>
+                        <button class="delete__button"
+                                onclick="confirmDelete('${player.playerName}', '${pageContext.request.contextPath}/playerManagementServlet?option=delete&playerId=${player.playerId}')">
+                            Delete
+                        </button>
                     </div>
                 </div>
-            </c:forEach>  
+            </c:forEach>
         </div>
     </div>
 </div>

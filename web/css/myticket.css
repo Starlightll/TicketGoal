@@ -56,11 +56,11 @@
 }
 
 .ticket-column {
-    width: 48%; 
+    width: 48%;
 }
 
 .ticket-column + .ticket-column {
-    margin-left: 4%; 
+    margin-left: 4%;
 }
 
 
@@ -113,8 +113,8 @@
 }
 
 .ticket-details form button {
-    background-color: #f44336; 
-    color: white; 
+    background-color: #f44336;
+    color: white;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -128,36 +128,36 @@
 }
 
 .ticket-details form button:hover {
-    background-color: #cc0000; 
+    background-color: #cc0000;
 }
 
 .custom-alert {
-  padding: 20px;
-  background-color: #f44336;
-  color: white;
-  margin-bottom: 15px;
-  width: 100%;
-  text-align: center;
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
 }
 
 .custom-alert.success {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #4CAF50;
+    color: white;
 }
 
 
 .custom-alert .closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .custom-alert .closebtn:hover {
-  color: black;
+    color: black;
 }
 

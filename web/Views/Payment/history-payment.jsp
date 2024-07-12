@@ -1,7 +1,5 @@
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +20,7 @@
                         <div class="cart-item" style="position: relative; padding: 10px; border: 1px solid #ddd; margin-bottom: 10px;">
                             <!-- Label at the top right corner -->
                             <div class="label" style="position: absolute; top: 10px; right: 10px; background: #ff5733; color: white; padding: 5px; border-radius: 3px;">
-                                Paid
+                                ${ticket.status}
                             </div>
                             <div class="ticket-info">
                                 <div class="image-placeholder">
@@ -38,11 +36,6 @@
                                     <p>Price: ${ticket.seat.price}</p>
                                     <p>Date: ${ticket.match.schedule}</p>
                                 </div>
-                                <div class="qr-code-button" style="margin-top: 10px;">
-                                    <button onclick="generateQRCode(${ticket.ticketId}, '${ticket.seat.area.areaName}', '${ticket.seat.seatNumber}', '${ticket.seat.price}', '${ticket.match.schedule}', '${ticket.match.club1.clubName}', '${ticket.match.club2.clubName}')" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
-                                        Generate QR Code
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </c:forEach>
@@ -53,13 +46,6 @@
                     </c:if>
                 </div>
             </div>
-        </main>     
-        <div id="qrPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: white; border: 1px solid #ddd; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-            <div id="qrContent"></div>
-            <p id="descTicket" style="text-align: center"></p>
-            <button onclick="closePopup()" style="margin-top: 10px; padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">Close</button>
-        </div>
-
-         <script src="./js/qrcode.js"></script>
+        </main>
     </body>
 </html>

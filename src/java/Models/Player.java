@@ -7,7 +7,6 @@ package Models;
 import java.util.Date;
 
 /**
- *
  * @author mosdd
  */
 public class Player {
@@ -24,6 +23,7 @@ public class Player {
     private int ATK;
     private int DEF;
     private int SPD;
+
     public Player() {
     }
 
@@ -147,5 +147,5 @@ public class Player {
         this.SPD = SPD;
     }
 
-    
+
 }

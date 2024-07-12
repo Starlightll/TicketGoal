@@ -9,7 +9,6 @@ import Models.Area;
 import Models.Seat;
 import Models.SeatStatus;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author ADMIN
  */
-public class SeatDAO{
+public class SeatDAO {
     public static SeatDAO INSTANCE = new SeatDAO();
     private Connection connect;
     private String status = "OK";
@@ -54,10 +52,10 @@ public class SeatDAO{
                 area.setId(rs.getInt("areaId"));
                 area.setAreaName(rs.getNString("areaName"));
                 int seatStatusId = 1;
-                if(rs.getInt("ticketStatusId")==1){
+                if (rs.getInt("ticketStatusId") == 1) {
                     seatStatusId = 3;
                 }
-                if(rs.getInt("ticketStatusId")==2){
+                if (rs.getInt("ticketStatusId") == 2) {
                     seatStatusId = 5;
                 }
                 Seat seat = new Seat(seatId, seatNumber, row, price, area, seatStatusId, matchId);
@@ -127,7 +125,7 @@ public class SeatDAO{
         return 0;
     }
 
-    public Seat getSeatById(int seatId){
+    public Seat getSeatById(int seatId) {
         String query = "SELECT * FROM Seat JOIN Area ON SEAT.areaId = Area.areaId WHERE seatId = ?";
         try {
             PreparedStatement statement = connect.prepareStatement(query);
@@ -150,8 +148,6 @@ public class SeatDAO{
         }
         return null;
     }
-
-
 
 
     public List<Seat> findAll() {
@@ -239,7 +235,7 @@ public class SeatDAO{
 //        }
         return 0;
     }
-    
+
     public List<Seat> findAllByAreaId(int pitchId) {
 //        String sql = "SELECT * FROM Seat where areaId =?";
 //        connection = new DBContext().getConnection();
@@ -267,7 +263,7 @@ public class SeatDAO{
 //        return listFound;
         return null;
     }
-    
+
     public Seat findAllById(int id) {
 //        String sql = "SELECT * FROM Seat where seatId =?";
 //        connection = new DBContext().getConnection();
@@ -294,7 +290,7 @@ public class SeatDAO{
 //        }
         return null;
     }
-    
+
     public Seat finSeatByIdNumber(int areaId, int number) {
 //        String sql = "SELECT * FROM Seat where areaId =? and seatNumber=?";
 //        connection = new DBContext().getConnection();
@@ -321,7 +317,7 @@ public class SeatDAO{
 //        }
         return null;
     }
-    
+
     public int deleteSeat(int id) {
 //        String sql = "delete from Seat where seatId=?";
 //        connection = new DBContext().getConnection();
@@ -337,7 +333,7 @@ public class SeatDAO{
 //        }
         return 0;
     }
-    
+
     public int deleteSeatByArea(int areaId) {
 //        String sql = "delete from Seat where areaId=?";
 //        connection = new DBContext().getConnection();
@@ -353,8 +349,8 @@ public class SeatDAO{
 //        }
         return 0;
     }
-    
-     public SeatStatus getSeatStatusById(int statusId) {
+
+    public SeatStatus getSeatStatusById(int statusId) {
 //        String sql = "SELECT * FROM seatStatus where seatStatusId = ?";
 //         connection = new DBContext().getConnection();
 //        try {
@@ -374,6 +370,5 @@ public class SeatDAO{
         return null;
     }
 
-    
 
 }

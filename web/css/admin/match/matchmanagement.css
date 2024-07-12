@@ -71,7 +71,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .match__management_container .match {
-    display:flex;
+    display: flex;
     background-color: #494949;
     justify-content: space-around;
     color: aliceblue;
@@ -107,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match content */
 
-.match__management_container .club__section{
+.match__management_container .club__section {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,7 +131,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 20px;
 }
 
-.match__management_container .vs p{
+.match__management_container .vs p {
     font-size: 36px;
     margin: 0 50px;
 }
@@ -151,7 +151,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .match__management_container .match__location {
     position: relative;
     top: -8px;
-    display:flex;
+    display: flex;
     align-items: center;
 }
 
@@ -486,7 +486,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 20px;
 }
 
-.toast{
+.toast {
     width: 300px;
     height: 80px;
     background: #ffffff;
@@ -510,7 +510,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: orange;
 }
 
-.toast::after{
+.toast::after {
     content: '';
     position: absolute;
     left: 0;
@@ -523,7 +523,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 @keyframes anim {
-    100%{
+    100% {
         width: 0;
     }
 }

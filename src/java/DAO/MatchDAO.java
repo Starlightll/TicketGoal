@@ -17,14 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author mosdd
  */
 public class MatchDAO {
 
     public static MatchDAO INSTANCE = new MatchDAO();
-    private Connection connect;
     public String status = "OK";
+    private Connection connect;
 
     private MatchDAO() {
         if (INSTANCE == null) {

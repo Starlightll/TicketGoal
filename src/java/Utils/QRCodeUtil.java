@@ -8,14 +8,11 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import javax.imageio.ImageIO;
+import javax.mail.util.ByteArrayDataSource;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.mail.util.ByteArrayDataSource;
 
 public class QRCodeUtil {
 
@@ -37,23 +34,23 @@ public class QRCodeUtil {
         List<File> listFiles = new ArrayList<File>();
         byte[] buffer = new byte[4096];
         int bytesRead = -1;
-            for (Ticket ticket : tickets) {
-                File saveFile = new File( ticket.getSeat().getArea().areaName + "_" + ticket.getSeat().getRow() + ticket.getSeat().getSeatNumber()+ ".png");
-                System.out.println("saveFile: " + saveFile.getAbsolutePath());
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(saveFile);
-                    // saves uploaded file
-                    InputStream inputStream = generateQRCode(ticket.getCode()).getInputStream();
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    outputStream.close();
-                    inputStream.close();
-                    listFiles.add(saveFile);
-                }catch (Exception e) {
-                    e.printStackTrace();
+        for (Ticket ticket : tickets) {
+            File saveFile = new File(ticket.getSeat().getArea().areaName + "_" + ticket.getSeat().getRow() + ticket.getSeat().getSeatNumber() + ".png");
+            System.out.println("saveFile: " + saveFile.getAbsolutePath());
+            try {
+                FileOutputStream outputStream = new FileOutputStream(saveFile);
+                // saves uploaded file
+                InputStream inputStream = generateQRCode(ticket.getCode()).getInputStream();
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
                 }
+                outputStream.close();
+                inputStream.close();
+                listFiles.add(saveFile);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
         return listFiles;
     }
 

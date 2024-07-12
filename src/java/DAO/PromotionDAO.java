@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author MSI VN
  */
 public class PromotionDAO {
@@ -34,6 +33,10 @@ public class PromotionDAO {
             INSTANCE = new PromotionDAO();
         }
         return INSTANCE;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new PromotionDAO().getPromotionsBySearchAndSort(null, null, 1, 10));
     }
 
     public Promotion getPromotionById(int promotionId) {
@@ -203,9 +206,5 @@ public class PromotionDAO {
         }
 
         return promotions;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new PromotionDAO().getPromotionsBySearchAndSort(null, null, 1, 10));
     }
 }

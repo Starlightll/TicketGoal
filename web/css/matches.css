@@ -13,11 +13,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:'Inter', sans-serif;;
+    font-family: 'Inter', sans-serif;;
 }
 
 /* Search box */
-.matches .search__box input{
+.matches .search__box input {
     width: 300px;
     background-color: #141414;
     border: 2px solid #5353533f;
@@ -45,7 +45,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .matches .match {
-    display:flex;
+    display: flex;
     background-color: #333333;
     justify-content: space-around;
     color: aliceblue;
@@ -81,7 +81,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Match content */
 
-.matches .club__section{
+.matches .club__section {
     display: flex;
     position: relative;
     align-items: center;
@@ -108,7 +108,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 22px;
 }
 
-.matches .vs p{
+.matches .vs p {
     font-size: 36px;
     margin: 0 50px;
 }
@@ -127,7 +127,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .matches .match__location {
     position: relative;
     top: -128px;
-    display:flex;
+    display: flex;
     align-items: center;
 }
 
@@ -138,7 +138,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-
 /* Buy Ticket button */
 
 .matches .buy__ticket {
@@ -146,6 +145,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     align-items: center;
     height: 100%;
 }
+
 .matches .buyTicket__btn {
     width: 120px;
     height: 52px;

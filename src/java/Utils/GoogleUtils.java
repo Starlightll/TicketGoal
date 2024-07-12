@@ -10,7 +10,6 @@ import org.apache.http.client.fluent.Request;
 import java.io.IOException;
 
 
-
 public class GoogleUtils {
 
     public static String getToken(final String code) throws ClientProtocolException, IOException {
