@@ -99,7 +99,7 @@ public class TicketDAO {
             statement.setString(1, ticket.getCode());
             statement.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
             statement.setInt(3, ticket.getSeat().getSeatId());
-            statement.setInt(4, 2);
+            statement.setInt(4,2);
             statement.setInt(5, ticket.getCartId());
             statement.setInt(6, ticket.getMatch().getMatchId());
             rowInserted = statement.executeUpdate();
@@ -463,7 +463,7 @@ public class TicketDAO {
 
     public List<Ticket> getPaidTicketByUser(int userId) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo\n"
+        String sql = "SELECT *, c1.clubName as club1Name, c2.clubName as club2Name, c1.clubId as club1Id, c2.clubId as club2Id, c1.logo as club1Logo, c2.logo as club2Logo, TS.statusName\n"
                 + "FROM Ticket t\n"
                 + "JOIN Seat s ON t.seatId = s.seatId\n"
                 + "JOIN Area a ON s.areaId = a.areaId\n"
@@ -472,7 +472,8 @@ public class TicketDAO {
                 + "JOIN Club c2 ON m.club2 = c2.clubId\n"
                 + "JOIN Cart cr ON t.cartId = cr.cartId\n"
                 + "JOIN Pitch p ON m.pitchId = p.pitchId\n"
-                + "WHERE t.ticketStatusId = 1 and cr.accountId=?";
+                + "JOIN ticketStatus as TS on TS.ticketStatusId = t.ticketStatusId\n"
+                + "WHERE (t.ticketStatusId = 1 or t.ticketStatusId = 4) and cr.accountId=?";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setInt(1, userId);
@@ -518,7 +519,9 @@ public class TicketDAO {
                 String areaName = rs.getString("areaName");
                 String club1Name = rs.getString("club1Name");
                 String club2Name = rs.getString("club2Name");
-                tickets.add(new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match));
+                Ticket tik = new Ticket(ticketId, code, date, seat, ticketStatusId, cartId, match);
+                tik.setStatus(rs.getString("statusName"));
+                tickets.add(tik);
             }
         } catch (SQLException e) {
             System.out.println("Select tickets by accountId: " + e);

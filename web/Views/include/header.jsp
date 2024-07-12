@@ -70,10 +70,8 @@
                                 <a class="dropdown__item" href="${pageContext.request.contextPath}/TicketChecking">QR
                                     Scan</a>
                             </c:if>
-                            <a href="history-payment" class="dropdown__item">History-payment</a>
                             <a href="my-ticket" class="dropdown__item">My Ticket</a>
-                            <a class="dropdown__item">My Cart</a>
-                            <a class="logout__button" href="./signOutServlet">Log out</a>
+                            <a  class="logout__button" href="./signOutServlet">Log out</a>
                         </div>
                     </div>
                 </c:if>
