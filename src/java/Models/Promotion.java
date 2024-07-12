@@ -16,23 +16,52 @@ public class Promotion {
     private String promotionDescription;
     private LocalDateTime promotionStartDate;
     private LocalDateTime promotionEndDate;
+    private int promotionMatchId;
+    private int matchStatusId;
 
     public Promotion() {
     }
 
-    public Promotion(int promotionId, String promotionCode, String promotionDescription, LocalDateTime promotionStartDate, LocalDateTime promotionEndDate) {
+    public int getPromotionMatchId() {
+        return promotionMatchId;
+    }
+
+    public void setPromotionMatchId(int promotionMatchId) {
+        this.promotionMatchId = promotionMatchId;
+    }
+
+
+    public int getMatchStatusId() {
+        return matchStatusId;
+    }
+
+    public void setMatchStatusId(int matchStatusId) {
+        this.matchStatusId = matchStatusId;
+    }
+
+    public Promotion(int promotionId, String promotionCode, String promotionDescription, LocalDateTime promotionStartDate, LocalDateTime promotionEndDate, int promationMatchId) {
         this.promotionId = promotionId;
         this.promotionCode = promotionCode;
         this.promotionDescription = promotionDescription;
         this.promotionStartDate = promotionStartDate;
         this.promotionEndDate = promotionEndDate;
+        this.promotionMatchId = promationMatchId;
     }
-
-    public Promotion(String promotionCode, String promotionDescription, LocalDateTime promotionStartDate, LocalDateTime promotionEndDate) {
+    public Promotion( String promotionCode, String promotionDescription, LocalDateTime promotionStartDate, LocalDateTime promotionEndDate, int promationMatchId) {
         this.promotionCode = promotionCode;
         this.promotionDescription = promotionDescription;
         this.promotionStartDate = promotionStartDate;
         this.promotionEndDate = promotionEndDate;
+        this.promotionMatchId = promationMatchId;
+    }
+    public Promotion(int promotionId, String promotionCode, String promotionDescription, LocalDateTime promotionStartDate, LocalDateTime promotionEndDate, int promationMatchId, int matchStatusId) {
+        this.promotionId = promotionId;
+        this.promotionCode = promotionCode;
+        this.promotionDescription = promotionDescription;
+        this.promotionStartDate = promotionStartDate;
+        this.promotionEndDate = promotionEndDate;
+        this.promotionMatchId = promationMatchId;
+        this.matchStatusId = matchStatusId;
     }
 
     public int getPromotionId() {
@@ -77,7 +106,7 @@ public class Promotion {
 
     @Override
     public String toString() {
-        return "Promotion{" + "promotionId=" + promotionId + ", promotionCode=" + promotionCode + ", promotionDescription=" + promotionDescription + ", promotionStartDate=" + promotionStartDate + ", promotionEndDate=" + promotionEndDate + '}';
+        return "Promotion{" + "promotionId=" + promotionId + ", promotionCode=" + promotionCode + ", promotionDescription=" + promotionDescription + ", promotionStartDate=" + promotionStartDate + ", promotionEndDate=" + promotionEndDate + ", promotionMatchId=" + promotionMatchId + ", matchStatusId=" + matchStatusId + '}';
     }
 
 }

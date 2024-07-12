@@ -44,6 +44,32 @@ public class MatchDAO {
         }
     }
 
+    public List<Match> getMatchesByStatusId(int statusId) {
+        List<Match> matches = new ArrayList<>();
+        String query = "SELECT * FROM Match INNER JOIN dbo.Pitch P on P.pitchId = Match.pitchId WHERE matchStatusId = ?";
+
+        try (PreparedStatement ps = connect.prepareStatement(query)) {
+            ps.setInt(1, statusId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Match match = new Match();
+                    match.setMatchId(rs.getInt("matchId"));
+                    match.setSchedule(rs.getTimestamp("schedule"));
+                    match.setPitchId(rs.getInt("pitchId"));
+                    match.setMatchStatusId(rs.getInt("matchStatusId"));
+                    match.setClub1(ClubDAO.INSTANCE.getClub(rs.getInt("club1")));
+                    match.setClub2(ClubDAO.INSTANCE.getClub(rs.getInt("club2")));
+                    matches.add(match);
+                }
+            }
+        } catch (Exception e) {
+            status = e.getMessage();
+            return null;
+        }
+
+        return matches;
+    }
+
     public Match getMatch(int matchId) {
         try {
             String query = "SELECT * FROM Match WHERE matchId = ?";

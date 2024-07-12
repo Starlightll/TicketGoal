@@ -20,8 +20,8 @@ public class PromotionDAO {
     private final Connection connect;
     private final String getPromotionByIdQuery = "SELECT * FROM Promotion WHERE promotionId = ?";
     private final String getAllPromotionsQuery = "SELECT * FROM Promotion";
-    private final String insertPromotionQuery = "INSERT INTO Promotion (promotionCode, promotionDescription, promotionStartDate, promotionEndDate) VALUES (?, ?, ?, ?)";
-    private final String updatePromotionQuery = "UPDATE Promotion SET promotionCode = ?, promotionDescription = ?, promotionStartDate = ?, promotionEndDate = ? WHERE promotionId = ?";
+    private final String insertPromotionQuery = "INSERT INTO Promotion (promotionCode, promotionDescription, promotionStartDate, promotionEndDate , promotionMatchId) VALUES (?, ?, ?, ?, ?)";
+    private final String updatePromotionQuery = "UPDATE Promotion SET promotionCode = ?, promotionDescription = ?, promotionStartDate = ?, promotionEndDate = ? , promotionMatchId = ? WHERE promotionId = ?";
     private final String deletePromotionQuery = "DELETE FROM Promotion WHERE promotionId = ?";
 
     public PromotionDAO() {
@@ -77,18 +77,34 @@ public class PromotionDAO {
         return promotions;
     }
 
-    public Promotion insertPromotion(Promotion promotion) {
+    public boolean isPromotionCodeExists(String promotionCode) {
+        String query = "SELECT 1 FROM Promotion WHERE promotionCode = ?";
+        try (PreparedStatement ps = connect.prepareStatement(query)) {
+            ps.setString(1, promotionCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Promotion insertPromotion(Promotion promotion) throws Exception {
         ResultSet generatedKeys = null;
         try (PreparedStatement ps = connect.prepareStatement(insertPromotionQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            if (isPromotionCodeExists(promotion.getPromotionCode())) {
+                throw new Exception("Promotion code already exists.");
+            }
             ps.setString(1, promotion.getPromotionCode());
             ps.setString(2, promotion.getPromotionDescription());
             ps.setTimestamp(3, Timestamp.valueOf(promotion.getPromotionStartDate()));
             ps.setTimestamp(4, Timestamp.valueOf(promotion.getPromotionEndDate()));
-
+            ps.setInt(5, promotion.getPromotionMatchId());
             int affectedRows = ps.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("Creating promotion failed, no rows affected.");
+                throw new Exception("Creating promotion failed, no rows affected.");
             }
 
             generatedKeys = ps.getGeneratedKeys();
@@ -97,10 +113,11 @@ public class PromotionDAO {
                 promotion.setPromotionId(promotionId);
                 return promotion;
             } else {
-                throw new SQLException("Creating promotion failed, no ID obtained.");
+                throw new Exception("Creating promotion failed, no ID obtained.");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         } finally {
             if (generatedKeys != null) {
                 try {
@@ -110,18 +127,18 @@ public class PromotionDAO {
                 }
             }
         }
-
-        return null;
     }
 
     public boolean updatePromotion(Promotion promotion) {
+        System.out.println(promotion);
         boolean rowUpdated = false;
         try (PreparedStatement ps = connect.prepareStatement(updatePromotionQuery)) {
             ps.setString(1, promotion.getPromotionCode());
             ps.setString(2, promotion.getPromotionDescription());
             ps.setTimestamp(3, Timestamp.valueOf(promotion.getPromotionStartDate()));
             ps.setTimestamp(4, Timestamp.valueOf(promotion.getPromotionEndDate()));
-            ps.setInt(5, promotion.getPromotionId());
+            ps.setInt(5, promotion.getPromotionMatchId());
+            ps.setInt(6, promotion.getPromotionId());
             rowUpdated = ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,6 +197,7 @@ public class PromotionDAO {
                     promotion.setPromotionDescription(rs.getString("promotionDescription"));
                     promotion.setPromotionStartDate(rs.getTimestamp("promotionStartDate").toLocalDateTime());
                     promotion.setPromotionEndDate(rs.getTimestamp("promotionEndDate").toLocalDateTime());
+                    promotion.setPromotionMatchId(rs.getInt("promotionMatchId"));
                     promotions.add(promotion);
                 }
             }
