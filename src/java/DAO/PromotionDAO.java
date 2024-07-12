@@ -163,7 +163,7 @@ public class PromotionDAO {
         boolean hasSearch = false;
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
-            queryBuilder.append(" WHERE promotionCode LIKE ? OR promotionDescription LIKE ?");
+            queryBuilder.append(" WHERE promotionCode LIKE ? ");
             hasSearch = true;
         }
 
@@ -181,7 +181,6 @@ public class PromotionDAO {
             int parameterIndex = 1;
             if (hasSearch) {
                 String likeSearchQuery = "%" + searchQuery + "%";
-                ps.setString(parameterIndex++, likeSearchQuery);
                 ps.setString(parameterIndex++, likeSearchQuery);
             }
 
