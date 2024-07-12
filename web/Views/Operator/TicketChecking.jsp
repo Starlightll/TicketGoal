@@ -17,7 +17,7 @@
 <div class="container">
     <h1>Ticket checking</h1>
     <p>Scan the QR code on the ticket to check</p>
-    <div id="reader" style="width: 80%"></div>
+    <div id="reader" style="width: 600px"></div>
     <div class="status" id="status">
         <p id="message"></p>
     </div>
@@ -30,7 +30,6 @@
     let statusElement = document.getElementById('status');
     let messageElement = document.getElementById('message');
     function onScanSuccess(decodedText) {
-        readerElement.style.border = "5px solid #28a745";
         $.ajax({
             url: `${pageContext.request.contextPath}/TicketChecking`,
             type: "POST",
@@ -41,10 +40,12 @@
             success: function (data) {
                 if(data.valid === true){
                     statusElement.style.display = "block";
+                    readerElement.style.border = "5px solid #28a745";
                     statusElement.style.backgroundColor = "#28a745";
                     messageElement.innerHTML = "PASS";
                 } else {
                     statusElement.style.display = "block";
+                    readerElement.style.border = "5px solid #dc3545";
                     statusElement.style.backgroundColor = "#dc3545";
                     messageElement.innerHTML = "FAIL";
                 }
@@ -56,12 +57,19 @@
     }
 
     function onScanFailure(error) {
-        readerElement.style.border = "5px solid #dc3545";
+        statusElement.style.display = "none";
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
-        {fps: 4,
+        {fps: 20,
+            qrbox: 250,
+            aspectRatio: 1.0,
+            disableFlip: false,
+            disableAutoFocus: false,
+            videoConstraints: {
+                facingMode: "environment"
+            }
         },
    );
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);

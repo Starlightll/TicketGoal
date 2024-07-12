@@ -253,7 +253,7 @@ header * {
     padding: 1rem;
     display: none;
     z-index: 1000;
-    width: 268px;
+    width: 180px;
 }
 
 .header .nav__actions .actions .dropdown__menu a {
