@@ -3,15 +3,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Simple email inbox page - Bootdey.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background: #eee;
-        }
+    <head>
+        <meta charset="utf-8">
+        <title>Simple email inbox page - Bootdey.com</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                background: #eee;
+            }
             .header {
                 padding: 15px 0;
             }
@@ -317,13 +317,13 @@
                                     </div>
                                     <ul class="pagination">
                                         <c:if test="${requestScope.pagenum > 1}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum - 1}">«</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${requestScope.pagenum - 1}">«</a></li>
                                             </c:if>
                                             <c:forEach begin="1" end="${requestScope.totalPage > requestScope.pagenum + 2 ? (requestScope.pagenum + 2) : requestScope.totalPage}" var="item">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${item}">${item}</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${item}">${item}</a></li>
                                             </c:forEach>
                                             <c:if test="${requestScope.pagenum < requestScope.totalPage}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum + 1}">»</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${requestScope.pagenum + 1}">»</a></li>
                                             </c:if>
                                     </ul>
                                 </div>
@@ -372,14 +372,14 @@
                     </div>
                 </div>
 
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    function confirmDelete() {
-        return confirm('Are you sure you want to delete this message?');
-    }
-</script>
-</body>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+                                                            function confirmDelete() {
+                                                                return confirm('Are you sure you want to delete this message?');
+                                                            }
+        </script>
+    </body>
 </html>

@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 /**
+ *
  * @author pc
  */
 public class ContactAdminServlet extends HttpServlet {
@@ -26,10 +27,10 @@ public class ContactAdminServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,14 +50,13 @@ public class ContactAdminServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -85,6 +85,19 @@ public class ContactAdminServlet extends HttpServlet {
             request.setAttribute("pagenum", pagenum);
             request.setAttribute("page", "/Views/Admin/Contacts/AdminSent.jsp");
             request.setAttribute("category", "2");
+            if (cate != null) {
+                request.setAttribute("category", cate);
+            } else {
+                request.setAttribute("category", "1");
+            }
+            String url = "ContactAdminServlet?temp=abc";
+            if (cate != null && !cate.trim().isEmpty()) {
+                url += "&cate=" + cate;
+            }
+            if (search != null && !search.trim().isEmpty()) {
+                url += "&search=" + search;
+            }
+            request.setAttribute("url", url);
             request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
             return;
         }
@@ -106,6 +119,14 @@ public class ContactAdminServlet extends HttpServlet {
         } else {
             request.setAttribute("category", "1");
         }
+        String url = "ContactAdminServlet?temp=abc";
+        if (cate != null && !cate.trim().isEmpty()) {
+            url += "&cate=" + cate;
+        }
+        if (search != null && !search.trim().isEmpty()) {
+            url += "&search=" + search;
+        }
+        request.setAttribute("url", url);
         request.setAttribute("page", "/Views/Admin/Contacts/AdminContact.jsp");
         request.getRequestDispatcher("/Views/Admin/AdminPanel.jsp").forward(request, response);
     }
@@ -113,10 +134,10 @@ public class ContactAdminServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
