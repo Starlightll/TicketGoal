@@ -14,11 +14,11 @@
             }
 
             /* EMAIL */
-
+            
             .header {
                 padding: 15px 0;
             }
-
+            
             .email {
                 padding: 20px 10px 15px 10px;
                 font-size: 1em;
@@ -61,15 +61,15 @@
                 border-left: 3px solid transparent;
                 border-radius: 0px;
             }
-
+           
             .header .nav__link {
                 font-size: 2rem;
             }
-
+            
             .header .join__button {
                 font-size: 19px;
             }
-
+            
             .header .nav__cart {
                 font-size: 2.5rem;
             }
@@ -336,13 +336,13 @@
                                     </div>
                                     <ul class="pagination">
                                         <c:if test="${requestScope.pagenum > 1}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum - 1}">«</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${requestScope.pagenum - 1}">«</a></li>
                                             </c:if>
                                             <c:forEach begin="1" end="${requestScope.totalPage > requestScope.pagenum + 2 ? (requestScope.pagenum + 2) : requestScope.totalPage}" var="item">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${item}">${item}</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${item}">${item}</a></li>
                                             </c:forEach>
                                             <c:if test="${requestScope.pagenum < requestScope.totalPage}">
-                                            <li><a href="${pageContext.request.contextPath}/ContactAdminServlet?pagenum=${requestScope.pagenum + 1}">»</a></li>
+                                            <li><a href="${requestScope.url}&pagenum=${requestScope.pagenum + 1}">»</a></li>
                                             </c:if>
                                     </ul>
                                 </div>
