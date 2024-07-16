@@ -1,6 +1,6 @@
 
 let countdownInterval;
-let expiryTime = 60 * 1000 * 60;
+let expiryTime = 10 * 1000 * 60;
 
 function generateQRCode(data) {
     const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(data)}&size=400`;
