@@ -4,7 +4,12 @@
  */
 package Controllers;
 
+import DAO.ClubDAO;
+import DAO.MatchDAO;
 import Models.Account;
+import Models.Address;
+import Models.Club;
+import Models.Match;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author mosdd
@@ -62,7 +70,11 @@ public class homepageServlet extends HttpServlet {
             response.sendRedirect("./matchManagementServlet");
             return;
         }
-        request.getRequestDispatcher("Homepage.jsp").forward(request, response);
+        //Get all matches
+        List<Match> matchList = getMostPopularMatch();
+
+        request.setAttribute("matches", matchList);
+        request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
     }
 
     /**
@@ -89,4 +101,17 @@ public class homepageServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public List<Match> getMostPopularMatch() {
+        ResultSet popularMatchList = DAO.MatchDAO.INSTANCE.getPopularMatches(5);
+        List<Match> matchList = new java.util.ArrayList<>();
+        try {
+            while (popularMatchList.next()) {
+                Match match = MatchDAO.INSTANCE.getMatch(popularMatchList.getInt("MatchId"));
+                matchList.add(match);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchList;
+    }
 }

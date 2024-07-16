@@ -17,8 +17,8 @@
     <p>Hi Admin</p>
     <div class="nav__list">
         <div class="nav__item">
-            <a href="<c:url value='/homepageServlet'/>" class="nav__link">
-                <i class="ri-home-office-fill"></i>Home
+            <a href="<c:url value='/dashboard'/>" ${dashboard} class="nav__link">
+                <i class="ri-home-office-fill"></i>Dashboard
             </a>
         </div>
         <div class="nav__item">
