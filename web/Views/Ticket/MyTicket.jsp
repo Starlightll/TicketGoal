@@ -100,6 +100,7 @@
         <div id="qrPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: white; border: 1px solid #ddd; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
             <div id="qrContent"></div>
             <p id="descTicket" style="text-align: center"></p>
+            <div id="countdown"></div>
             <button onclick="closePopup()" style="margin-top: 10px; padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">Close</button>
         </div>
 
