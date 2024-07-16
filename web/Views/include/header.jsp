@@ -24,7 +24,7 @@
 <header class="header">
     <div class="header__content">
         <nav class="nav">
-            <a href="<c:url value='/homepageServlet'/>" class="nav__logo">
+            <a href="<c:url value='/Homepage'/>" class="nav__logo">
                 <img src="${pageContext.request.contextPath}/img/TICKETGOAL.png" alt="logo">
             </a>
             <div class="nav__menu" id="nav-menu">

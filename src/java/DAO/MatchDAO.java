@@ -5,15 +5,14 @@
 package DAO;
 
 import DB.DBContext;
-import Models.Area;
-import Models.Match;
-import Models.Seat;
+import Models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +37,22 @@ public class MatchDAO {
             String query = "SELECT * FROM Match INNER JOIN dbo.Pitch P on P.pitchId = Match.pitchId WHERE matchStatusId != 0";
             Statement stmt = connect.createStatement();
             return stmt.executeQuery(query);
+        } catch (Exception e) {
+            status = e.getMessage();
+            return null;
+        }
+    }
+
+    public ResultSet getPopularMatches(int limit) {
+        try {
+            String query = "SELECT TOP (?) MatchID, COUNT(*) AS TicketsSold \n" +
+                    "FROM Ticket\n" +
+                    "WHERE ticketStatusId = 1\n" +
+                    "GROUP BY MatchID\n" +
+                    "ORDER BY TicketsSold DESC";
+            PreparedStatement ps = connect.prepareStatement(query);
+            ps.setInt(1, limit);
+            return ps.executeQuery();
         } catch (Exception e) {
             status = e.getMessage();
             return null;
@@ -72,18 +87,26 @@ public class MatchDAO {
 
     public Match getMatch(int matchId) {
         try {
-            String query = "SELECT * FROM Match WHERE matchId = ?";
+            String query = "SELECT * FROM Match INNER JOIN dbo.Pitch P on P.pitchId = Match.pitchId WHERE matchId = ?";
             PreparedStatement ps = connect.prepareStatement(query);
             ps.setInt(1, matchId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Match match = new Match();
                 match.setMatchId(rs.getInt("matchId"));
-                match.setSchedule(rs.getTimestamp("schedule"));
+                match.setSchedule(new Date(rs.getTimestamp("schedule").getTime()));
                 match.setPitchId(rs.getInt("pitchId"));
                 match.setMatchStatusId(rs.getInt("matchStatusId"));
-                match.setClub1(ClubDAO.INSTANCE.getClub(rs.getInt("club1")));
-                match.setClub2(ClubDAO.INSTANCE.getClub(rs.getInt("club2")));
+                //Get club1 and club2
+                Club club1 = ClubDAO.INSTANCE.getClub(rs.getInt("club1"));
+                match.setClub1(club1);
+                Club club2 = ClubDAO.INSTANCE.getClub(rs.getInt("club2"));
+                match.setClub2(club2);
+                //Get address
+                Address address = new Address();
+                address.setAddressName(rs.getString("addressName"));
+                address.setAddressURL(rs.getString("addressURL"));
+                match.setAddress(address);
                 return match;
             }
         } catch (Exception e) {

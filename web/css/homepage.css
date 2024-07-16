@@ -34,9 +34,67 @@
     background-color: #00C767;
 }
 
-.hero__section .slider button {
+.hero__section .hero__title {
+    position: absolute;
+    top: 260px;
+    z-index: 4;
+    color: white;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+}
+
+.hero__section .hero__title .title {
+    text-align: center;
+    padding-bottom: 40px;
+    text-shadow: 0 0 40px black;
+}
+
+.hero__section .hero__title .title h1 {
+    font-size: 40px;
+}
+
+.hero__section .hero__title .title h2 {
+    font-size: 24px;
+}
+
+.hero__section button {
+    height: 48px;
+    width: 120px;
+    border: none;
+    border-radius: 3px;
+    font-size: 20px;
+    background-color: #000000;
+    font-weight: 500;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
 
 }
+
+.hero__section button:hover {
+    transform: scale(1.1);
+    background-color: #00c75d;
+}
+
+.second__section {
+    margin-top: 80px;
+    color: white;
+}
+
+.second__section .s2title{
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 38px;
+}
+
 
 .hero__section .navigation {
     z-index: 2;
@@ -60,4 +118,151 @@
     background-color: #00C767;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
+
+/* popular match css */
+.popular__match__box .matches * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;;
+}
+
+.popular__match__box .matches {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+
+.popular__match__box .matches .match__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+
+}
+
+.popular__match__box .matches .match {
+    display: flex;
+    background-color: #333333;
+    justify-content: space-around;
+    color: aliceblue;
+    width: 980px;
+    height: 170px;
+    margin: 10px 40px;
+    border-radius: 20px;
+}
+
+/* Match date */
+.popular__match__box .matches .match__date {
+    width: 76px;
+    height: 112px;
+    position: relative;
+    top: -14px;
+}
+
+.popular__match__box .matches .match__date img {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+
+.popular__match__box .matches .match__date__day, .matches .match__date__month {
+    position: relative;
+    top: 20px;
+    z-index: 1;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* Match content */
+
+.popular__match__box .matches .club__section {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem;
+    width: 100%;
+    top: 20px;
+}
+
+.popular__match__box .matches .club__section .club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popular__match__box .matches .club img {
+    position: relative;
+    top: -8px;
+    width: 70px;
+    height: 100%;
+}
+
+.popular__match__box .matches .club p {
+    font-size: 22px;
+}
+
+.popular__match__box .matches .vs p {
+    font-size: 36px;
+    margin: 0 50px;
+}
+
+
+.popular__match__box .matches .match__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+}
+
+/* Match location */
+
+.popular__match__box .matches .match__location {
+    position: relative;
+    top: -128px;
+    display: flex;
+    align-items: center;
+}
+
+.popular__match__box .matches .ri-map-pin-2-fill {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #00FF9D;
+}
+
+
+/* Buy Ticket button */
+
+.popular__match__box .matches .buy__ticket {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.popular__match__box .matches .buyTicket__btn {
+    width: 120px;
+    height: 52px;
+    background-color: #ff0044;
+    border: none;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: box-shadow .4s;
+}
+
+.popular__match__box .matches .buyTicket__btn:hover {
+    box-shadow: 0 1px 21px #ff4d6e5d;
+}
+
 
