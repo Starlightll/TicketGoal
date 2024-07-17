@@ -283,7 +283,7 @@
                                         <h3>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
                                                         type="date" pattern="MM-dd-yyyy"/>
                                             ${formattedDate}</h3>
-                                        <p>${contact.message}</p>
+                                        <h1>${contact.message}</h1>
                                     </div>
                                 </div>
 

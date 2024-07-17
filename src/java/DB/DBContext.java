@@ -17,7 +17,7 @@ public class DBContext {
     private final String dbName = "TicketGoal";
     private final String portNumber = "1433";
     private final String userID = "sa";
-    private final String password = "MosdDM15092003!";
+    private final String password = "12345";
     String status = "OK";
     private Connection connect;
     public DBContext() {
