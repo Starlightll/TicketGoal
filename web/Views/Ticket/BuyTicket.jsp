@@ -12,6 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/buyticket.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/TicketGoalfavicon.png">

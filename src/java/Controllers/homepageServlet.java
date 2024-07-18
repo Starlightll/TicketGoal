@@ -67,12 +67,13 @@ public class homepageServlet extends HttpServlet {
             throws ServletException, IOException {
         Account user = (Account) request.getSession().getAttribute("user");
         if (user != null && user.getRoleId() == 1) {
-            response.sendRedirect("./matchManagementServlet");
+            List<Match> matchList = getMostPopularMatch();
+            request.setAttribute("matches", matchList);
+            request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
             return;
         }
         //Get all matches
         List<Match> matchList = getMostPopularMatch();
-
         request.setAttribute("matches", matchList);
         request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
     }
