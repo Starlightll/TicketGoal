@@ -6,6 +6,7 @@
         <entry key="file://$PROJECT_DIR$/web/Views/Admin/Pitch/UpdatePitch.jsp" value="file://$PROJECT_DIR$/web/Views/Admin/Pitch" />
         <entry key="file://$PROJECT_DIR$/web/Views/Ticket/BuyTicket.jsp" value="file://$PROJECT_DIR$/web/Views/Ticket" />
         <entry key="file://$PROJECT_DIR$/web/Views/include/header.jsp" value="file://$PROJECT_DIR$/web/Views/include" />
+        <entry key="file://$PROJECT_DIR$/web/css" value="file://$PROJECT_DIR$/web" />
       </map>
     </option>
   </component>

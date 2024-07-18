@@ -130,8 +130,8 @@
                 </div>
             </div>
             <div class="action">
-                <button onclick="location.href='homepageServlet'">Home</button>
-                <button>My Ticket</button>
+                <button onclick="location.href='Homepage'">Home</button>
+                <button onclick="location.href='cart'">My Ticket</button>
             </div>
         </div>
     </div>

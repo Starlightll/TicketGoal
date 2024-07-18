@@ -28,9 +28,11 @@
 </div>
 <main>
     <div class="matches">
-        <form>
+        <form class="match__header">
+
+            <img src="${pageContext.request.contextPath}/img/MatchDay.png" alt="">
             <div class="search__box">
-                <input type="search">
+                <input type="search" placeholder="Search here...">
             </div>
         </form>
         <div class="match__box">
