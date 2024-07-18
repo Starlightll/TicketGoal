@@ -8,12 +8,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <title>Contact</title>
 </head>
 <body>
 <div class="header-container">
@@ -22,6 +24,7 @@
 <main>
     <div class="contact-container">
         <div class="left-col">
+            <img src="${pageContext.request.contextPath}/img/ContactBackgroundImage.png" alt="">
         </div>
         <div class="right-col">
             <div class="theme-switch-wrapper">
@@ -49,7 +52,7 @@
         </div>
     </div>
 </main>
-<script src="./js/cont.js"></script>
+<script src="${pageContext.request.contextPath}/js/contact.js"></script>
 <script type="text/javascript">
     function showToast(type, message) {
         toastr[type](message);
