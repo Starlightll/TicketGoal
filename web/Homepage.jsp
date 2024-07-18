@@ -13,6 +13,7 @@
     <title>TicketGoal</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link rel="icon" type="image/png" href="img/TicketGoalfavicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css"/>
 </head>
 <body>
@@ -26,7 +27,7 @@
                 <h1>Be part of the live action!</h1>
                 <h2>Score tickets fast & safe on the most trusted platform</h2>
             </div>
-            <button>Buy Ticket</button>
+            <button onclick="location.href='<c:url value='/matchServlet'/>'">Buy Ticket</button>
         </div>
         <div class="slider active">
             <img src="img/HomeHeroImage.png" alt="">
@@ -152,6 +153,29 @@
         repeater();
     }
     repeat();
+
+        function BuyTicket(matchId) {
+        var matchIds = matchId;
+        $.ajax({
+        url: `${pageContext.request.contextPath}/BuyTicket`,
+        method: "GET",
+        data: {
+        matchId: matchIds,
+    },
+        success: function (response) {
+        if (response === "loginRequired") {
+        const loginBox = document.getElementById('login');
+        loginBox.classList.add('show-login');
+    } else {
+        location.href = "BuyTicket?matchId=" + matchId;
+    }
+    },
+        error: function () {
+        alert("Error");
+    }
+    });
+    }
+
 
 </script>
 </body>
