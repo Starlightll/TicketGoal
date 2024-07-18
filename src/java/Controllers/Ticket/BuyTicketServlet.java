@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controllers.Ticket;
 
 import DAO.*;
 import Models.*;
+import Utils.EmailSender;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,17 +18,16 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.*;
 
-
 /**
  * @author mosdd
  */
 @WebServlet(name = "BuyTicketServlet", urlPatterns = {"/BuyTicket"})
 public class BuyTicketServlet extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,8 +62,7 @@ public class BuyTicketServlet extends HttpServlet {
             request.getRequestDispatcher("/Views/Ticket/BuyTicket.jsp").forward(request, response);
         }
     }
-
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -92,6 +90,8 @@ public class BuyTicketServlet extends HttpServlet {
                         List<Ticket> tickets = new ArrayList<>();
                         tickets.add(new TicketDAO().getTicketById(ticketId));
                         Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
+                        //send email order
+                        new EmailSender().sendEmailOrder(account, order, request, response);
                         request.getSession().setAttribute("order", order);
                         request.getRequestDispatcher("payServlet").forward(request, response);
                     }
@@ -144,7 +144,7 @@ public class BuyTicketServlet extends HttpServlet {
             }
         }
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -199,7 +199,7 @@ public class BuyTicketServlet extends HttpServlet {
             return -2;
         }
     }
-
+    
     private List<Seat> getSeatListWithAccount(Account account, int matchId) {
         List<Seat> seatList = MatchDAO.INSTANCE.getSeatOfMatch(matchId);
         List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, matchId);
@@ -215,7 +215,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seatList;
     }
-
+    
     private List<Seat> getSeatsDLO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -225,7 +225,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private List<Seat> getSeatsCLO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -235,7 +235,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private List<Seat> getSeatsCRO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -245,7 +245,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private List<Seat> getSeatsBRO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -255,7 +255,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private List<Seat> getSeatsALO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -265,7 +265,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private List<Seat> getSeatsARO(List<Seat> seatList) {
         List<Seat> seats = new ArrayList<Seat>();
         for (Seat seat : seatList) {
@@ -275,7 +275,7 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return seats;
     }
-
+    
     private String stadium(HttpServletRequest request, HttpServletResponse response, Account account, int matchId) {
         List<Seat> seatList = getSeatListWithAccount(account, matchId);
         List<Seat> seatsARO = getSeatsARO(seatList);
@@ -286,117 +286,117 @@ public class BuyTicketServlet extends HttpServlet {
         List<Seat> seatsDLO = getSeatsDLO(seatList);
         StringBuilder stadium = new StringBuilder();
         stadium.append(
-                "                <img src=\"" + request.getContextPath() + "/img/StadiumV1.png\" alt=\"stadium\">\n" +
-                        "                <div class=\"top__side__outler\">\n" +
-                        "                    <div class=\"area__ARO\">");
+                "                <img src=\"" + request.getContextPath() + "/img/StadiumV1.png\" alt=\"stadium\">\n"
+                + "                <div class=\"top__side__outler\">\n"
+                + "                    <div class=\"area__ARO\">");
         for (Seat seat : seatsARO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                    <div class=\"area__ALO\">");
+        stadium.append("</div>\n"
+                + "                    <div class=\"area__ALO\">");
         for (Seat seat : seatsALO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                </div>\n" +
-                "                <div class=\"down__side__outler\">\n" +
-                "                    <div class=\"area__CRO\">");
+        stadium.append("</div>\n"
+                + "                </div>\n"
+                + "                <div class=\"down__side__outler\">\n"
+                + "                    <div class=\"area__CRO\">");
         for (Seat seat : seatsCRO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                    <div class=\"area__CLO\">");
+        stadium.append("</div>\n"
+                + "                    <div class=\"area__CLO\">");
         for (Seat seat : seatsCLO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                </div>\n" +
-                "                <div class=\"left__side__outler\">\n" +
-                "                    <div class=\"area__DLO\">");
+        stadium.append("</div>\n"
+                + "                </div>\n"
+                + "                <div class=\"left__side__outler\">\n"
+                + "                    <div class=\"area__DLO\">");
         for (Seat seat : seatsDLO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                </div>\n" +
-                "                <div class=\"right__side__outler\">\n" +
-                "                    <div class=\"area__BRO\">");
+        stadium.append("</div>\n"
+                + "                </div>\n"
+                + "                <div class=\"right__side__outler\">\n"
+                + "                    <div class=\"area__BRO\">");
         for (Seat seat : seatsBRO) {
             if (seat.getSeatStatusId() == 1) {
-                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n" +
-                        "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n" +
-                        "                                </a>\n");
+                stadium.append("<a onclick=\"showConfirm('" + seat.getArea().areaName + "', " + seat.getSeatId() + ", " + seat.getSeatNumber() + ", " + seat.getRow() + ", " + seat.getPrice() + ")\">\n"
+                        + "                                    <div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"\" id=\"seat-" + seat.getSeatId() + "\"></i></div>\n"
+                        + "                                </a>\n");
             } else if (seat.getSeatStatusId() == 3) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #ff4747; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             } else if (seat.getSeatStatusId() == 5) {
                 stadium.append("<div class=\"seat\"><i class=\"ri-layout-top-2-fill\" style=\"color: #aaff00; cursor: default\" id=\"seat-" + seat.getSeatId() + "\"></i></div>");
             }
         }
-        stadium.append("</div>\n" +
-                "                </div>\n" +
-                "\n" +
-                "                <div class=\"top__side__inner\">");
+        stadium.append("</div>\n"
+                + "                </div>\n"
+                + "\n"
+                + "                <div class=\"top__side__inner\">");
         return stadium.toString();
     }
-
+    
     public String ticket(Ticket ticket) {
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         formatter.setMaximumFractionDigits(0);
-
-        return "<div class=\"item\" onmouseover=\"hover(" + ticket.getSeat().getSeatId() + ")\" onmouseout=\"removeHover(" + ticket.getSeat().getSeatId() + ")\" id=\"item-" + ticket.getTicketId() + "\">\n" +
-                "                            <div>\n" +
-                "                                <div class=\"area\">Area: " + ticket.getSeat().getArea().areaName + "</div>\n" +
-                "                                <div class=\"row\">Row: " + ticket.getSeat().getRow() + "</div>\n" +
-                "                                <div class=\"seat\">Seat: " + ticket.getSeat().getSeatNumber() + "</div>\n" +
-                "                            </div>\n" +
-                "                            <div class=\"price\">\n" +
-                "                                <div>\n" +
-                "                                    Price: " + formatter.format(ticket.getSeat().getPrice()) + " VNĐ\n" +
-                "                                </div>\n" +
-                "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket(" + ticket.getTicketId() + "," + ticket.getSeat().getSeatId() + "," + ticket.getMatch().matchId + ")\"></i>\n" +
-                "                            </div>\n" +
-                "                        </div>";
+        
+        return "<div class=\"item\" onmouseover=\"hover(" + ticket.getSeat().getSeatId() + ")\" onmouseout=\"removeHover(" + ticket.getSeat().getSeatId() + ")\" id=\"item-" + ticket.getTicketId() + "\">\n"
+                + "                            <div>\n"
+                + "                                <div class=\"area\">Area: " + ticket.getSeat().getArea().areaName + "</div>\n"
+                + "                                <div class=\"row\">Row: " + ticket.getSeat().getRow() + "</div>\n"
+                + "                                <div class=\"seat\">Seat: " + ticket.getSeat().getSeatNumber() + "</div>\n"
+                + "                            </div>\n"
+                + "                            <div class=\"price\">\n"
+                + "                                <div>\n"
+                + "                                    Price: " + formatter.format(ticket.getSeat().getPrice()) + " VNĐ\n"
+                + "                                </div>\n"
+                + "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket(" + ticket.getTicketId() + "," + ticket.getSeat().getSeatId() + "," + ticket.getMatch().matchId + ")\"></i>\n"
+                + "                            </div>\n"
+                + "                        </div>";
     }
-
+    
     public double total(List<Ticket> tickets) {
         double total = 0;
         for (Ticket ticket : tickets) {
@@ -404,5 +404,5 @@ public class BuyTicketServlet extends HttpServlet {
         }
         return total;
     }
-
+    
 }

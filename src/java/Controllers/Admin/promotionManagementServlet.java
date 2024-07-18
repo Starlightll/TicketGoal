@@ -4,10 +4,11 @@
  */
 package Controllers.Admin;
 
+import DAO.AccountDAO;
 import DAO.MatchDAO;
 import DAO.PromotionDAO;
 import Models.Promotion;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
+import Utils.EmailSender;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 public class promotionManagementServlet extends HttpServlet {
 
     private final PromotionDAO proDAO = new PromotionDAO();
-
+    private final AccountDAO  accDAO =  AccountDAO.INSTANCE;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -93,9 +93,11 @@ public class promotionManagementServlet extends HttpServlet {
                     return;
                 }
                 try {
-                    proDAO.insertPromotion(new Promotion(
+                    Promotion pro = new Promotion(
                             code, description,
-                            startDateTime, endDateTime, Integer.parseInt(promotionMatch)));
+                            startDateTime, endDateTime, Integer.parseInt(promotionMatch));
+                    new EmailSender().sendPromotion(accDAO.getAccountByRole(2), pro, request, response);
+                    proDAO.insertPromotion(pro);
                     response.sendRedirect(referrer);
                 } catch (Exception e) {
                     request.setAttribute("message", e.getMessage());
