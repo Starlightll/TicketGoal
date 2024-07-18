@@ -1,6 +1,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,10 +17,17 @@
         <main>
             <div class="cart-summary">
                 <form action="cart">
-                    <div class="search-bar">
-                        <div>
+                    <div class="search-bar" style="display: flex; gap: 5px; align-items: center ">
+                        <div style="display: flex; flex: 1; gap: 5px;">
                             <input type="text" name="clubInput" id="clubInput" placeholder="Search...">
                             <button class="btn btn-primary" onclick="searchTickets(event)">Search</button>
+                        </div>
+                        <div> 
+                            <select style="padding: 9px; width: 100px" onchange="sortByPrice(event, this.value)">
+                                <option value="false">Sort by price</option>
+                                <option value="true">Sort asc by price</option>
+                                <option value="false">Sort desc by price</option>
+                            </select>
                         </div>
                     </div>
                     <div class="selected-ticket-info">
@@ -47,7 +54,7 @@
                                 <p>Area: ${ticket.seat.area.areaName}</p>
                                 <p>Seat number: ${ticket.seat.seatNumber}</p>
                                 <p>Price: ${ticket.seat.price}</p>
-                                 <p>Date: ${ticket.match.schedule}</p>
+                                <p>Date: ${ticket.match.schedule}</p>
                             </div>
                         </div>
                         <div class="delete-icon">
@@ -55,7 +62,7 @@
                                    data-price="${ticket.seat.price}"
                                    data-area="${ticket.seat.area.areaName}"
                                    data-seat="${ticket.seat.seatNumber}"
-                                    data-date="${ticket.match.schedule}"
+                                   data-date="${ticket.match.schedule}"
                                    value="${ticket.ticketId}"
                                    onClick="handleChoose(this)"
                                    >
