@@ -36,10 +36,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background: var(--bg-color);
 }
 
-.contact-container .left-col {
+.contact-container .left-col img {
     width: 45vw;
     height: 100%;
-    background-image: url("https://images.pexels.com/photos/931018/pexels-photo-931018.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
     background-size: cover;
     background-repeat: no-repeat;
 }

@@ -18,19 +18,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* Search box */
 .matches .search__box input {
-    width: 300px;
-    background-color: #141414;
-    border: 2px solid #5353533f;
+    width: 440px;
+    background-color: #f8f8f8;
+    border: 4px solid #00ff4cbf;    
     padding: 1rem;
-    border-radius: .5rem;
-    color: #ffffff;
+    border-radius: 50px;
+    color: #505050;
     margin: 20px auto;
+    font-size: 20px;
 }
 
 .matches .search__box {
+    top: 180px;
+    width: 100%;
+    position: absolute;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
-
 }
 
 .matches .match__box {
@@ -78,6 +82,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: center;
 }
 
+/* Match header */
+.matches .match__header {
+    height: 400px;
+}
+
+.matches .match__header img {
+    position: absolute;
+    height: 340px;
+    width: 100%;
+    object-fit: cover;
+}
 
 /* Match content */
 
