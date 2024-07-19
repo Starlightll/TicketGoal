@@ -54,6 +54,7 @@ public class IPNServlet extends HttpServlet {
                             try {
                                 Order order = (Order) session.getAttribute("order");
                                 if (order.getStatusId() != 1) {
+                                    //Kiểm tra trạng thái seat trước khi hoàn tất thanh toán
                                     //Cập nhật trạng thái đơn hàng
                                     OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 1, order.getTickets());
                                     order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
