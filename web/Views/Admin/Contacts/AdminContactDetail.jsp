@@ -15,14 +15,14 @@
             .header {
                 padding: 15px 0;
             }
-                       .header .nav__link {
+            .header .nav__link {
                 font-size: 2rem;
             }
-            
+
             .header .join__button {
                 font-size: 19px;
             }
-            
+
             .header .nav__cart {
                 font-size: 2.5rem;
             }
@@ -244,6 +244,51 @@
                 border-bottom-width: 4px !important;
                 border-bottom-style: solid !important;
             }
+            .detail-section {
+                background: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+                margin-top: 20px;
+            }
+
+            .detail-header {
+                color: #333;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+
+            .detail-item {
+                margin-bottom: 15px;
+            }
+
+            .detail-item h3 {
+                color: #666;
+                margin-bottom: 5px;
+            }
+
+            .detail-item p {
+                color: #444;
+                font-size: 1.1em;
+                margin: 0;
+            }
+
+            .detail-message {
+                margin-top: 20px;
+            }
+
+            .detail-message h3 {
+                color: #666;
+                margin-bottom: 10px;
+            }
+
+            .detail-message p {
+                color: #444;
+                font-size: 1.1em;
+                line-height: 1.6em;
+                white-space: pre-wrap; /* Preserve line breaks */
+            }
         </style>
     </head>
     <body>
@@ -276,14 +321,25 @@
                                 </div>
 
 
-                                <div class="col-md-9">
+                                <div class="col-md-9 detail-section">
                                     <div class="row">
-                                        <h2>Name : ${contact.name}</h2>
-                                        <h3>Email : ${contact.email}</h3>
-                                        <h3>Created Date : <fmt:formatDate value="${contact.createdDate}" var="formattedDate" 
-                                                        type="date" pattern="MM-dd-yyyy"/>
-                                            ${formattedDate}</h3>
-                                        <h1>${contact.message}</h1>
+                                        <h2 class="detail-header">Contact Information</h2>
+                                        <div class="detail-item">
+                                            <h3>Name:</h3>
+                                            <p>${contact.name}</p>
+                                        </div>
+                                        <div class="detail-item">
+                                            <h3>Email:</h3>
+                                            <p>${contact.email}</p>
+                                        </div>
+                                        <div class="detail-item">
+                                            <h3>Created Date:</h3>
+                                            <p><fmt:formatDate value="${contact.createdDate}" type="date" pattern="MM-dd-yyyy"/></p>
+                                        </div>
+                                        <div class="detail-message">
+                                            <h3>Message:</h3>
+                                            <p>${contact.message}</p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -364,14 +420,14 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-function validateReplyForm() {
-                var message = document.getElementById('reply_message').value.trim();
-                if (message === "") {
-                    alert("Message field cannot be empty.");
-                    return false;
-                }
-                return true;
-            }
+                                                    function validateReplyForm() {
+                                                        var message = document.getElementById('reply_message').value.trim();
+                                                        if (message === "") {
+                                                            alert("Message field cannot be empty.");
+                                                            return false;
+                                                        }
+                                                        return true;
+                                                    }
         </script>
     </body>
 </html>
