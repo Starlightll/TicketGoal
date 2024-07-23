@@ -91,7 +91,6 @@ public class BuyTicketServlet extends HttpServlet {
                         tickets.add(new TicketDAO().getTicketById(ticketId));
                         Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
                         //send email order
-                        new EmailSender().sendEmailOrder(account, order, request, response);
                         request.getSession().setAttribute("order", order);
                         request.getRequestDispatcher("payServlet").forward(request, response);
                     }

@@ -18,9 +18,9 @@
 </div>
 <main>
     <div style="text-align: center">
-        <h1 style="font-size: 180px; align-content: center; text-align: center">404 Error</h1>
-        <p>Sorry, the page you are looking for does not exist.</p>
-        <a href="/homepageServlet">Go to Home Page</a>
+        <h1 style="font-size: 180px; align-content: center; text-align: center; color: white">404 Error</h1>
+        <p style="color: white">Sorry, the page you are looking for does not exist.</p>
+        <a href="/homepageServlet" style="color: #0aff89">Go to Home Page</a>
     </div>
 </main>
 <div class="footer-container">
