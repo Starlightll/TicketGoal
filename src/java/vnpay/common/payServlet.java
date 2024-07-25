@@ -68,6 +68,7 @@ public class payServlet extends HttpServlet {
         }
         amount = amount * 100;
         String bankCode = "";
+        
 
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = Config.getIpAddress(req);
