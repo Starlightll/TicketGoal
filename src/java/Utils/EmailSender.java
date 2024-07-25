@@ -277,6 +277,7 @@ public class EmailSender {
                             + "<p><strong>Description:</strong> " + promotion.getPromotionDescription() + "</p>"
                             + "<p><strong>Start Date:</strong> " + promotion.getPromotionStartDate() + "</p>"
                             + "<p><strong>End Date:</strong> " + promotion.getPromotionEndDate() + "</p>"
+                            + "<p><strong>Discount:</strong> " + promotion.getPromotionDiscount()+ "</p>"
                             + "</body>"
                             + "</html>";
                     System.out.println(htmlContent);

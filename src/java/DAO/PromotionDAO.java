@@ -20,8 +20,8 @@ public class PromotionDAO {
     private final Connection connect;
     private final String getPromotionByIdQuery = "SELECT * FROM Promotion WHERE promotionId = ?";
     private final String getAllPromotionsQuery = "SELECT * FROM Promotion";
-    private final String insertPromotionQuery = "INSERT INTO Promotion (promotionCode, promotionDescription, promotionStartDate, promotionEndDate , promotionMatchId) VALUES (?, ?, ?, ?, ?)";
-    private final String updatePromotionQuery = "UPDATE Promotion SET promotionCode = ?, promotionDescription = ?, promotionStartDate = ?, promotionEndDate = ? , promotionMatchId = ? WHERE promotionId = ?";
+    private final String insertPromotionQuery = "INSERT INTO Promotion (promotionCode, promotionDescription, promotionStartDate, promotionEndDate , promotionMatchId, promotionDiscount) VALUES (?, ?, ?, ?, ?, ?)";
+    private final String updatePromotionQuery = "UPDATE Promotion SET promotionCode = ?, promotionDescription = ?, promotionStartDate = ?, promotionEndDate = ? , promotionMatchId = ? , promotionDiscount = ? WHERE promotionId = ?";
     private final String deletePromotionQuery = "DELETE FROM Promotion WHERE promotionId = ?";
 
     public PromotionDAO() {
@@ -101,6 +101,7 @@ public class PromotionDAO {
             ps.setTimestamp(3, Timestamp.valueOf(promotion.getPromotionStartDate()));
             ps.setTimestamp(4, Timestamp.valueOf(promotion.getPromotionEndDate()));
             ps.setInt(5, promotion.getPromotionMatchId());
+            ps.setInt(6, promotion.getPromotionDiscount());
             int affectedRows = ps.executeUpdate();
 
             if (affectedRows == 0) {
@@ -138,7 +139,8 @@ public class PromotionDAO {
             ps.setTimestamp(3, Timestamp.valueOf(promotion.getPromotionStartDate()));
             ps.setTimestamp(4, Timestamp.valueOf(promotion.getPromotionEndDate()));
             ps.setInt(5, promotion.getPromotionMatchId());
-            ps.setInt(6, promotion.getPromotionId());
+            ps.setInt(6, promotion.getPromotionDiscount());
+            ps.setInt(7, promotion.getPromotionId());
             rowUpdated = ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -197,6 +199,7 @@ public class PromotionDAO {
                     promotion.setPromotionStartDate(rs.getTimestamp("promotionStartDate").toLocalDateTime());
                     promotion.setPromotionEndDate(rs.getTimestamp("promotionEndDate").toLocalDateTime());
                     promotion.setPromotionMatchId(rs.getInt("promotionMatchId"));
+                    promotion.setPromotionDiscount(rs.getInt("promotionDiscount"));
                     promotions.add(promotion);
                 }
             }
