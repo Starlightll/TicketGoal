@@ -224,6 +224,7 @@
     margin-left: 40px;
 }
 
+
 /* Match location */
 
 .popular__match__box .matches .match__location {
@@ -263,6 +264,75 @@
 
 .popular__match__box .matches .buyTicket__btn:hover {
     box-shadow: 0 1px 21px #ff4d6e5d;
+}
+
+
+/* Media Queries */
+@media only screen and (max-width: 844px) {
+    /* Styles for tablets and larger devices */
+    .hero__section {
+        height: 800px;
+    }
+
+    .hero__section .slider img {
+        height: 800px;
+    }
+
+    .hero__section .hero__title {
+        top: 260px;
+    }
+
+    .hero__section .hero__title .title h1 {
+        font-size: 40px;
+    }
+
+    .hero__section .hero__title .title h2 {
+        font-size: 24px;
+    }
+
+    .hero__section button {
+        height: 48px;
+        width: 120px;
+        font-size: 20px;
+    }
+
+    .second__section .s2title {
+        font-size: 38px;
+    }
+
+    .popular__match__box .matches .match {
+        flex-direction: column;
+        width: 980px;
+        height: 170px;
+    }
+
+    .popular__match__box .matches .match__location {
+        position: relative;
+        top: -128px;
+    }
+
+    .popular__match__box .matches .buy__ticket {
+        margin-top: 0;
+    }
+
+    .popular__match__box .matches .buyTicket__btn {
+        width: 120px;
+        height: 52px;
+        font-size: 20px;
+    }
+
+    .popular__match__box .matches {
+        flex-direction: column;
+    }
+
+    .popular__match__box .matches .club__section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .popular__match__box .matches .match {
+        width: 0;
+    }
 }
 
 
