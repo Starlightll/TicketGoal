@@ -2,6 +2,8 @@ package Utils;
 
 import DAO.AccountDAO;
 import Models.Account;
+import Models.Order;
+import Models.Promotion;
 import Models.Ticket;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class EmailSender {
 
@@ -108,43 +111,43 @@ public class EmailSender {
                 message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
                 message.setSubject("Dear MyFriend, ");
-                String htmlContent = "<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                        "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
-                        "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n" +
-                        "    <title>TicketGoal</title>\n" +
-                        "</head>\n" +
-                        "<body>\n" +
-                        "<main style=\"font-family: 'Inter', sans-serif;\">\n" +
-                        "    <h1>QR Code Backup</h1>\n" +
-                        "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n" +
-                        "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n" +
-                        "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
+                String htmlContent = "<!DOCTYPE html>\n"
+                        + "<html>\n"
+                        + "<head>\n"
+                        + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
+                        + "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css\" integrity=\"sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />\n"
+                        + "    <title>TicketGoal</title>\n"
+                        + "</head>\n"
+                        + "<body>\n"
+                        + "<main style=\"font-family: 'Inter', sans-serif;\">\n"
+                        + "    <h1>QR Code Backup</h1>\n"
+                        + "    <p>Here is your backup QRCode, this code used due to networking problem in event, when you can't generate code directly from our website.</p>\n"
+                        + "    <p>Remember to keep this code safe and don't share it with anyone else.</p>\n"
+                        + "    <div class=\"QRCodeList\" style=\"width: 500px; padding: 10px\">\n";
                 for (Ticket ticket : tickets) {
-                    htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n" +
-                            "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n" +
-                            "                <img style=\"width:100%;height:100%; border: 2px solid black\" src=\"https://quickchart.io/qr?text=" + ticket.getCode() + "&size=200" + "\">\n" +
-                            "            </div>\n" +
-                            "            <div style=\"margin: 0\">\n" +
-                            "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n" +
-                            "                <p style=\"margin: 0\">Row: " + ticket.getSeat().getRow() + "</p>\n" +
-                            "                <p style=\"margin: 0\">Seat: " + ticket.getSeat().getSeatNumber() + "</p>\n" +
-                            "                <p style=\"margin: 0\">Date: " + ticket.getDate() + "</p>\n" +
-                            "            </div>\n" +
-                            "        </div>\n";
+                    htmlContent += "<div style=\"display: flex;justify-content: start;text-align: center;align-items: center;border: 2px solid #1B1B1C\">\n"
+                            + "            <div style=\"width: 120px; height: 120px; background-color: #1A1A1A; margin-right: 10px\">\n"
+                            + "                <img style=\"width:100%;height:100%; border: 2px solid black\" src=\"https://quickchart.io/qr?text=" + ticket.getCode() + "&size=200" + "\">\n"
+                            + "            </div>\n"
+                            + "            <div style=\"margin: 0\">\n"
+                            + "                <p style=\"font-size: 20px; font-weight: bold; margin: 0\">Area: " + ticket.getSeat().getArea().getAreaName() + "</p>\n"
+                            + "                <p style=\"margin: 0\">Row: " + ticket.getSeat().getRow() + "</p>\n"
+                            + "                <p style=\"margin: 0\">Seat: " + ticket.getSeat().getSeatNumber() + "</p>\n"
+                            + "                <p style=\"margin: 0\">Date: " + ticket.getDate() + "</p>\n"
+                            + "            </div>\n"
+                            + "        </div>\n";
                 }
-                htmlContent +=
-                        "    </div>\n" +
-                                "    <p>Thank you for using our service.</p>\n" +
-                                "    <p>Have a nice day!</p>\n" +
-                                "\n" +
-                                "    <footer>\n" +
-                                "        <p>&copy; TicketGoal 2024</p>\n" +
-                                "    </footer>\n" +
-                                "</main>\n" +
-                                "</body>\n" +
-                                "</html>";
+                htmlContent
+                        += "    </div>\n"
+                        + "    <p>Thank you for using our service.</p>\n"
+                        + "    <p>Have a nice day!</p>\n"
+                        + "\n"
+                        + "    <footer>\n"
+                        + "        <p>&copy; TicketGoal 2024</p>\n"
+                        + "    </footer>\n"
+                        + "</main>\n"
+                        + "</body>\n"
+                        + "</html>";
 
                 // Create body
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -162,6 +165,138 @@ public class EmailSender {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void sendEmailOrder(Account account, Order order, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int timeout = 8000;
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.timeout", timeout);
+
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
+            }
+        });
+
+        executorService.submit(() -> {
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
+                message.setSubject("Dear MyFriend, ");
+
+                // Create HTML content
+                String htmlContent = "<html>"
+                        + "<body>"
+                        + "<h1>Order Confirmation</h1>"
+                        + "<h2>Account Details</h2>"
+                        + "<p><strong>Username:</strong> " + account.getUsername() + "</p>"
+                        + "<p><strong>Email:</strong> " + account.getEmail() + "</p>"
+                        + "<p><strong>Phone Number:</strong> " + account.getPhoneNumber() + "</p>"
+                        + "<p><strong>Address:</strong> " + account.getAddress() + "</p>"
+                        + "<h2>Order Details</h2>"
+                        + "<p><strong>Order ID:</strong> " + order.getOrderId() + "</p>"
+                        + "<p><strong>Order Date:</strong> " + order.getOrderDate() + "</p>"
+                        + "<p><strong>Total Amount:</strong> " + order.getTotalAmount() + "</p>"
+                        + "<h3>Tickets</h3>"
+                        + "<ul>";
+
+                for (Ticket ticket : order.getTickets()) {
+                    htmlContent += "<li>"
+                            + "<p><strong>Ticket ID:</strong> " + ticket.getTicketId() + "</p>"
+                            + "<p><strong>Code:</strong> " + ticket.getCode() + "</p>"
+                            + "<p><strong>Date:</strong> " + ticket.getDate() + "</p>"
+                            + "<p><strong>Seat:</strong> " + ticket.getSeat() + "</p>"
+                            + "<p><strong>Match:</strong> " + ticket.getMatch() + "</p>"
+                            + "<p><strong>Status:</strong> " + ticket.getStatus() + "</p>"
+                            + "</li>";
+                }
+
+                htmlContent += "</ul>"
+                        + "</body>"
+                        + "</html>";
+
+                // Create body
+                System.out.println(htmlContent);
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setContent(htmlContent, "text/html");
+
+                // Creates multi-part
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+
+                // sets the multi-part as e-mail's content
+                message.setContent(multipart);
+                Transport.send(message);
+                System.out.println("Message sent successfully");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void sendPromotion(List<Account> listAccount, Promotion promotion, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int timeout = 8000;
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.timeout", timeout);
+
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
+            }
+        });
+
+        List<Account> filteredAccounts = listAccount.stream()
+                .filter(account -> account.getRoleId() == 2)
+                .collect(Collectors.toList());
+
+        for (Account account : filteredAccounts) {
+            executorService.submit(() -> {
+                try {
+                    MimeMessage message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(account.getEmail()));
+                    message.setSubject("New Promotion!");
+
+                    // Create HTML content
+                    String htmlContent = "<html>"
+                            + "<body>"
+                            + "<h1>Exciting New Promotion!</h1>"
+                            + "<h2>Promotion Details</h2>"
+                            + "<p><strong>Promotion Code:</strong> " + promotion.getPromotionCode() + "</p>"
+                            + "<p><strong>Description:</strong> " + promotion.getPromotionDescription() + "</p>"
+                            + "<p><strong>Start Date:</strong> " + promotion.getPromotionStartDate() + "</p>"
+                            + "<p><strong>End Date:</strong> " + promotion.getPromotionEndDate() + "</p>"
+                            + "</body>"
+                            + "</html>";
+                    System.out.println(htmlContent);
+                    // Create body
+                    MimeBodyPart messageBodyPart = new MimeBodyPart();
+                    messageBodyPart.setContent(htmlContent, "text/html");
+
+                    // Create multi-part
+                    Multipart multipart = new MimeMultipart();
+                    multipart.addBodyPart(messageBodyPart);
+
+                    // Set the multi-part as email's content
+                    message.setContent(multipart);
+                    Transport.send(message);
+                    System.out.println("Message sent successfully to " + account.getEmail());
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
 }

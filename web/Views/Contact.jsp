@@ -52,7 +52,6 @@
         </div>
     </div>
 </main>
-<script src="${pageContext.request.contextPath}/js/contact.js"></script>
 <script type="text/javascript">
     function showToast(type, message) {
         toastr[type](message);
