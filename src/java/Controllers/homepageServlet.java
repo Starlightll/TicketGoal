@@ -103,16 +103,18 @@ public class homepageServlet extends HttpServlet {
     }// </editor-fold>
 
     public List<Match> getMostPopularMatch() {
-        ResultSet popularMatchList = DAO.MatchDAO.INSTANCE.getPopularMatches(5);
-        List<Match> matchList = new java.util.ArrayList<>();
-        try {
-            while (popularMatchList.next()) {
-                Match match = MatchDAO.INSTANCE.getMatch(popularMatchList.getInt("MatchId"));
-                matchList.add(match);
+            List<Match> matchList = new java.util.ArrayList<>();
+            try {
+                ResultSet popularMatchList = DAO.MatchDAO.INSTANCE.getPopularMatches(5);
+                if(popularMatchList != null) {
+                    while (popularMatchList.next()) {
+                        Match match = MatchDAO.INSTANCE.getMatch(popularMatchList.getInt("MatchId"));
+                        matchList.add(match);
+                    }
+                }
+            } catch (Exception e) {
+                return matchList;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return matchList;
+            return matchList;
     }
 }
