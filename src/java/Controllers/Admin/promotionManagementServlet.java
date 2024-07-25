@@ -27,7 +27,8 @@ import java.util.List;
 public class promotionManagementServlet extends HttpServlet {
 
     private final PromotionDAO proDAO = new PromotionDAO();
-    private final AccountDAO  accDAO =  AccountDAO.INSTANCE;
+    private final AccountDAO accDAO = AccountDAO.INSTANCE;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -68,6 +69,7 @@ public class promotionManagementServlet extends HttpServlet {
             return;
         }
         String code = request.getParameter("code");
+        int discount = 0;
         if (code != null) {
             code = code.toUpperCase();
         }
@@ -77,7 +79,11 @@ public class promotionManagementServlet extends HttpServlet {
         String id = request.getParameter("id");
         String promotionMatch = request.getParameter("promotionMatch");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-
+        String promotionDiscount = request.getParameter("promotionDiscount");
+        if (promotionDiscount != null && !promotionDiscount.isEmpty()) {
+            System.out.println(Integer.parseInt(promotionDiscount));
+            discount = Integer.parseInt(promotionDiscount);
+        }
         switch (type) {
             case "create" -> {
                 if (code == null || description == null || startDate == null || endDate == null) {
@@ -92,11 +98,23 @@ public class promotionManagementServlet extends HttpServlet {
                     doGet(request, response);
                     return;
                 }
+                if (discount > 100 || discount < 1) {
+                    System.out.println(discount);
+                    request.setAttribute("message", "Invalid Discount");
+                    doGet(request, response);
+                    return;
+                }
                 try {
                     Promotion pro = new Promotion(
                             code, description,
-                            startDateTime, endDateTime, Integer.parseInt(promotionMatch));
-                    new EmailSender().sendPromotion(accDAO.getAccountByRole(2), pro, request, response);
+                            startDateTime, endDateTime, Integer.parseInt(promotionMatch), discount);
+                    new Thread(() -> {
+                        try {
+                            new EmailSender().sendPromotion(accDAO.getAccountByRole(2), pro, request, response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
                     proDAO.insertPromotion(pro);
                     response.sendRedirect(referrer);
                 } catch (Exception e) {
@@ -118,10 +136,15 @@ public class promotionManagementServlet extends HttpServlet {
                     doGet(request, response);
                     return;
                 }
+                if (discount > 100 || discount < 1) {
+                    request.setAttribute("message", "Invalid Discount");
+                    doGet(request, response);
+                    return;
+                }
                 boolean isUpdated = proDAO.updatePromotion(new Promotion(Integer.parseInt(id),
                         code, description,
                         startDateTime,
-                        endDateTime, Integer.parseInt(promotionMatch)));
+                        endDateTime, Integer.parseInt(promotionMatch), discount));
                 if (isUpdated) {
                     response.sendRedirect(referrer);
                     return;
@@ -141,7 +164,8 @@ public class promotionManagementServlet extends HttpServlet {
                 }
                 break;
             }
-            default -> throw new AssertionError();
+            default ->
+                throw new AssertionError();
         }
     }
 
