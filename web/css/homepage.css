@@ -314,6 +314,7 @@
 
     .popular__match__box .matches .buy__ticket {
         margin-top: 0;
+        height: 0;
     }
 
     .popular__match__box .matches .buyTicket__btn {
@@ -346,6 +347,7 @@
 
     .popular__match__box .matches .match__content {
         margin: 0;
+        scale: 0.2;
     }
 }
 
