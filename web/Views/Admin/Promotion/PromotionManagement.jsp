@@ -40,6 +40,7 @@
                             <th>Match </th>
                             <th onclick="sortTable('promotionStartDate')">Start Date <i class="fas fa-sort" ></i></th>
                             <th onclick="sortTable('promotionEndDate')">End Date <i class="fas fa-sort" ></i></th>
+                            <th >Discount</th>
                             <th>Action <i class="fas fa-sort" ></i></th>
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@
                                 <td> ${MatchDAO.getMatch(promotion.promotionMatchId).getClub1().getClubName()} vs ${MatchDAO.getMatch(promotion.promotionMatchId).getClub2().getClubName()}</td>
                                 <td>${promotion.promotionStartDate}</td>
                                 <td>${promotion.promotionEndDate}</td>
+                                <td>${promotion.promotionDiscount}</td>
                                 <td class="action-buttons" style="display: flex">
                                     <button onclick="viewPromotion(${promotion.promotionId})">👁️</button>
                                     <button onclick="editPromotion(${promotion.promotionId})">✏️</button>
@@ -73,7 +75,7 @@
                                     <p>Description : <span id="modalOperatorEmail">${promotion.promotionDescription}</span></p>
                                     <p>Start Date: <span id="modalOperatorPhone">${promotion.promotionStartDate}</span></p>
                                     <p>End Date <span id="modalOperatorGender">${promotion.promotionEndDate}</span></p>
-                                    <p>Match ID :  <span id="modalOperatorGender">${promotion.promotionMatchId}</span></p>
+                                    <p>Discount <span id="modalOperatorGender">${promotion.promotionDiscount}</span></p>
                                     <p>Match :  <span id="modalOperatorGender">
                                             ${MatchDAO.getMatch(promotion.promotionMatchId).getClub1().getClubName()} vs ${MatchDAO.getMatch(promotion.promotionMatchId).getClub2().getClubName()}</span></p>
                                 </div>
@@ -104,6 +106,10 @@
                                             <div class="form-group">
                                                 <label for="endDate">End Date:</label>
                                                 <input type="datetime-local" id="endDate" name="endDate" required value="${promotion.promotionEndDate}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="code">Discount : </label>
+                                                  <input type="number"  required value="${promotion.promotionDiscount}" class="create-discount" name='promotionDiscount' required min="1" max="100">
                                             </div>
                                             <div class="form-group">
                                                 <label for="promotionMatch">Promotion Match: </label>
@@ -167,6 +173,10 @@
                             <input type="datetime-local" id="endDate" name="endDate" required>
                         </div>
                         <div class="form-group">
+                            <label for="code">Discount : </label>
+                            <input type="number"  class="create-discount" name='promotionDiscount' required min="1" max="100">
+                        </div>
+                        <div class="form-group">
                             <label for="promotionMatch">Promotion Match: </label>
                             <select id="promotionMatch" name="promotionMatch" required>
                                 <c:choose>
@@ -196,6 +206,15 @@
             url.searchParams.set('sort', sortParam);
             window.location.href = url.toString();
         }
+     document.querySelectorAll('.create-discount').forEach(function(element) {
+        element.oninput = function() {
+            if (this.value < 0) {
+                this.value = 0;
+            } else if (this.value > 100) {
+                this.value = 100;
+            }
+        };
+    });
     </script>
     <script src="${pageContext.request.contextPath}/js/validate.js"></script>
     <script src="${pageContext.request.contextPath}/js/admin/promotion/promotionManagement.js"></script>
