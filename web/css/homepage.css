@@ -298,6 +298,7 @@
 
     .second__section .s2title {
         font-size: 38px;
+        margin-bottom: 60px;
     }
 
     .popular__match__box .matches .match {
@@ -328,10 +329,23 @@
     .popular__match__box .matches .club__section {
         flex-direction: column;
         align-items: center;
+        margin: 0;
     }
 
     .popular__match__box .matches .match {
-        width: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    .popular__match__box .matches form {
+        width: 88%;
+        margin-bottom: 28px;
+        height: 340px;
+    }
+
+    .popular__match__box .matches .match__content {
+        margin: 0;
     }
 }
 
