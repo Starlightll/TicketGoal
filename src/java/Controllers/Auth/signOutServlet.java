@@ -25,9 +25,9 @@ public class signOutServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             session.removeAttribute("user");
-            response.sendRedirect("./homepageServlet");
+            response.sendRedirect("./Homepage");
         } catch (IOException e) {
-            response.sendRedirect("./homepageServlet");
+            response.sendRedirect("./Homepage");
         }
 
     }
