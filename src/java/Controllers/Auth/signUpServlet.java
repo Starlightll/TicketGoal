@@ -45,10 +45,15 @@ public class signUpServlet extends HttpServlet {
             response.getWriter().write(json);
             return;
         }
-
+        Account existAcc = accDAO.getAccountByEmail(email);
+        if (existAcc != null) {
+            jsonResponse = new Common.JsonResponse(false, "Existed user");
+            String json = gson.toJson(jsonResponse);
+            response.getWriter().write(json);
+            return;
+        }
         Account newAcc = accDAO.createNewAccount(
                 new Account(0, "user", password, email, null, null, null, customerRole, enableStatus));
-        System.out.println(newAcc);
         if (newAcc != null) {
             jsonResponse = new Common.JsonResponse(true, "Create new account success", newAcc);
         } else {
