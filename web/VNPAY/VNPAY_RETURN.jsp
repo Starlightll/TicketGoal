@@ -131,7 +131,7 @@
             </div>
             <div class="action">
                 <button onclick="location.href='Homepage'">Home</button>
-                <button onclick="location.href='cart'">My Ticket</button>
+                <button onclick="location.href='my-ticket'">My Ticket</button>
             </div>
         </div>
     </div>
