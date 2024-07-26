@@ -504,7 +504,7 @@ header * {
 }
 
 /* Large device */
-@media screen and (min-width: 1023px) {
+@media screen and (min-width: 1024px) {
     .header .nav {
         height: calc(3.5rem + 1rem);
     }

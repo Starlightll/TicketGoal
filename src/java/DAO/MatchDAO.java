@@ -54,7 +54,6 @@ public class MatchDAO {
             ps.setInt(1, limit);
             return ps.executeQuery();
         } catch (Exception e) {
-            status = e.getMessage();
             return null;
         }
     }
