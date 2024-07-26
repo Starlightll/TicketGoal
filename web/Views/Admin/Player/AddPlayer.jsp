@@ -1,10 +1,5 @@
-<%-- 
-    Document   : AddPlayer
-    Created on : May 25, 2024, 12:01:26 AM
-    Author     : mosdd
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +27,18 @@
             var valid = true;
             var errorMessages = [];
 
+            var nameField = form["playerName"];
+            var nameValue = nameField.value.trim();
+            var nameRegex = /^[a-zA-Z\s]*$/; // Only letters and spaces
+
+            if (!nameRegex.test(nameValue)) {
+                valid = false;
+                errorMessages.push("Player name must not contain special characters.");
+                nameField.style.border = "2px solid red";
+            } else {
+                nameField.style.border = "";
+            }
+
             requiredFields.forEach(function (field) {
                 var fieldElement = form[field];
                 var trimmedValue = fieldElement.value.trim();
@@ -54,8 +61,7 @@
 </head>
 <body>
 <div class="add__player">
-    <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();"
-          enctype="multipart/form-data">
+    <form name="addPlayerForm" method="POST" action="playerAddServlet" onsubmit="return validateForm();" enctype="multipart/form-data">
         <div class="player__detail">
             <table border="0">
                 <tr>

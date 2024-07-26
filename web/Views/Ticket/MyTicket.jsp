@@ -70,10 +70,6 @@
                                 </div>
                                 <c:if test="${ticket.status == 'Paid'}">
                                     <div class="ticket-info">
-                                        <form action="./my-ticket" method="post">
-                                            <input type="hidden" name="ticketId" value="${ticket.ticketId}">
-                                            <button onclick="return  confirm('Are you sure to refund this ticket?')" type="submit">Refund</button>
-                                        </form>
                                         <div class="qr-code-button" style="margin-top: 10px;">
                                             <button onclick="generateQRCode('${ticket.code}')" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
                                                 Generate QR Code

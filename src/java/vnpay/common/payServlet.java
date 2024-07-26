@@ -6,7 +6,10 @@
 package vnpay.common;
 
 
+import DAO.SeatDAO;
 import Models.Order;
+import Models.Seat;
+import Models.Ticket;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
@@ -68,6 +71,7 @@ public class payServlet extends HttpServlet {
         }
         amount = amount * 100;
         String bankCode = "";
+        
 
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = Config.getIpAddress(req);
