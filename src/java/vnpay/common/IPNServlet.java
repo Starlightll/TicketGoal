@@ -1,8 +1,11 @@
 package vnpay.common;
 
 import DAO.OrderDAO;
+import DAO.SeatDAO;
+import DAO.TicketDAO;
 import Models.Account;
 import Models.Order;
+import Models.Seat;
 import Models.Ticket;
 import Utils.EmailSender;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -44,17 +48,27 @@ public class IPNServlet extends HttpServlet {
             boolean checkOrderId = true; // Giá trị của vnp_TxnRef tồn tại trong CSDL của merchant
             boolean checkAmount = true; //Kiểm tra số tiền thanh toán do VNPAY phản hồi(vnp_Amount/100) với số tiền của đơn hàng merchant tạo thanh toán: giả sử số tiền kiểm tra là đúng.
             boolean checkOrderStatus = true; // Giả sử PaymnentStatus = 0 (pending) là trạng thái thanh toán của giao dịch khởi tạo chưa có IPN.
+
+            //Check seat status before update order status
+            SeatDAO seatDao = SeatDAO.INSTANCE;
+            TicketDAO ticketDao = new TicketDAO();
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("user");
+            Order order = (Order) session.getAttribute("order");
+            for(Ticket ticket : order.getTickets()){
+                Seat seat = seatDao.getSeatById(ticket.getSeat().getSeatId());
+                if(seat.getSeatStatusId() == 3){
+                    checkOrderStatus = false;
+                    ticketDao.updateTicketStatus(ticket.getTicketId(), 3);
+                }
+            }
             if (checkOrderId) {
                 if (checkAmount) {
                     if (checkOrderStatus) {
                         if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Thành công"
-                            HttpSession session = request.getSession();
-                            Account account = (Account) session.getAttribute("user");
                             try {
-                                Order order = (Order) session.getAttribute("order");
                                 if (order.getStatusId() != 1) {
-                                    //Kiểm tra trạng thái seat trước khi hoàn tất thanh toán
                                     //Cập nhật trạng thái đơn hàng
                                     OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 1, order.getTickets());
                                     order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
@@ -71,8 +85,9 @@ public class IPNServlet extends HttpServlet {
                             request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         }
                     } else {
-                        //Trạng thái giao dịch đã được cập nhật trước đó
-
+                        //Seat sold out or not available
+                        request.setAttribute("isSold", "true");
+                        request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                     }
                 } else {
                     //Số tiền không trùng khớp
