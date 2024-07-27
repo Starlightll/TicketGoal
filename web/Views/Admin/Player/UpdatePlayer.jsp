@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td>Number:</td>
-                    <td><input type="text" name="playerNumber" value="${Player.playerNumber}" required></td>
+                    <td><input type="number" name="playerNumber" value="${Player.playerNumber}" required></td>
                 </tr>
                 <tr>
                     <td>Country:</td>
@@ -97,6 +97,8 @@
 <script>
     function validateForm() {
         var requiredFields = ['playerName', 'playerNumber', 'playerCountry', 'playerRoleId', 'playerBirth', 'playerHeight', 'playerWeight', 'playerBio', 'ATK', 'DEF', 'SPD'];
+        var specialCharPattern = /[^a-zA-Z0-9 ]/;
+
         for (var i = 0; i < requiredFields.length; i++) {
             var fieldName = requiredFields[i];
             var field = document.getElementsByName(fieldName)[0];
@@ -104,9 +106,13 @@
                 alert('Field ' + fieldName + ' is missing.');
                 return false;
             }
-            if (fieldName === 'playerName' || fieldName === 'playerNumber') {
+            if (fieldName === 'playerName') {
                 if (!field.value.trim()) {
                     alert('Please fill out the ' + fieldName + ' field.');
+                    return false;
+                }
+                if (specialCharPattern.test(field.value)) {
+                    alert('The ' + fieldName + ' field contains special characters. Please remove them.');
                     return false;
                 }
             } else {
