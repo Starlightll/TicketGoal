@@ -90,6 +90,30 @@ public class PromotionDAO {
         return false;
     }
 
+
+    public Promotion getPromotionByCode(String promotionCode) {
+        Promotion promotion = null;
+        String query = "SELECT * FROM Promotion WHERE promotionCode = ?";
+        try (PreparedStatement ps = connect.prepareStatement(query)) {
+            ps.setString(1, promotionCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    promotion = new Promotion();
+                    promotion.setPromotionId(rs.getInt("promotionId"));
+                    promotion.setPromotionCode(rs.getString("promotionCode"));
+                    promotion.setPromotionDescription(rs.getString("promotionDescription"));
+                    promotion.setPromotionStartDate(rs.getTimestamp("promotionStartDate").toLocalDateTime());
+                    promotion.setPromotionEndDate(rs.getTimestamp("promotionEndDate").toLocalDateTime());
+                    promotion.setPromotionMatchId(rs.getInt("promotionMatchId"));
+                    promotion.setPromotionDiscount(rs.getInt("promotionDiscount"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return promotion;
+    }
+
     public Promotion insertPromotion(Promotion promotion) throws Exception {
         ResultSet generatedKeys = null;
         try (PreparedStatement ps = connect.prepareStatement(insertPromotionQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {

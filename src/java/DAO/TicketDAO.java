@@ -730,12 +730,15 @@ public class TicketDAO {
     }
 
     public boolean verifyTicket(String code) {
-        String sql = "SELECT * FROM Ticket WHERE code = ?";
+        String sql = "SELECT * FROM Ticket WHERE code = ? AND ticketStatusId = 1";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setString(1, code);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
+                // update ticket status to 5
+                int ticketId = rs.getInt("ticketId");
+                updateTicketStatus(ticketId, 5);
                 return true;
             }
         } catch (SQLException e) {

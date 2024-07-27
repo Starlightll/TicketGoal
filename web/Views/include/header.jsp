@@ -38,10 +38,6 @@
                         <div class="decor__line ${playerActive}"></div>
                     </li>
                     <li class="nav__item">
-                        <a href="<c:url value='/shopServlet'/>" class="nav__link">SHOP</a>
-                        <div class="decor__line ${shopActive}"></div>
-                    </li>
-                    <li class="nav__item">
                         <a href="<c:url value='/contactServlet'/>" class="nav__link">CONTACT</a>
                         <div class="decor__line ${contactActive}"></div>
                     </li>

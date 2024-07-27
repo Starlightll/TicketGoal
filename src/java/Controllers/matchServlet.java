@@ -104,6 +104,7 @@ public class matchServlet extends HttpServlet {
             while (matches.next()) {
                 Match match = new Match();
                 match.setMatchId(matches.getInt("matchId"));
+                match.setMatchTitle(matches.getString("matchTitle"));
                 match.setSchedule(new Date(matches.getTimestamp("schedule").getTime()));
                 match.setPitchId(matches.getInt("pitchId"));
                 match.setMatchStatusId(matches.getInt("matchStatusId"));

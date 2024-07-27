@@ -112,21 +112,13 @@ public class OrderDAO {
         return tickets;
     }
 
-    public boolean updateOrderStatus(int orderId, int statusId, List<Ticket> tickets) {
+    public boolean updateOrderStatus(int orderId, int statusId) {
         String sql = "UPDATE [Order] SET orderStatusId = ? WHERE orderId = ?";
         try {
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setInt(1, statusId);
             statement.setInt(2, orderId);
             statement.executeUpdate();
-            TicketDAO ticketDAO = new TicketDAO();
-            SeatDAO seatDAO = SeatDAO.INSTANCE;
-            for (Ticket ticket : tickets) {
-                if (!ticketDAO.updateTicketStatus(ticket.getTicketId(), 1) || !seatDAO.updateSeatStatus(ticket.getSeat().getSeatId(), 3)) {
-                    return false;
-                }
-                ticketDAO.setBackupQRCode(ticket.getTicketId(), genCode(orderId, ticket, Config.secretKey));
-            }
             statement.close();
         } catch (SQLException e) {
             return false;
@@ -134,7 +126,7 @@ public class OrderDAO {
         return true;
     }
 
-    private static String genCode(int orderId, Ticket ticket, String secretKey) {
+    public static String genCode(int orderId, Ticket ticket, String secretKey) {
         String code = "";
         try {
             int ticketId = ticket.getTicketId();

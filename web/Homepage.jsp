@@ -62,7 +62,7 @@
                         <form>
                             <div class="match">
                                 <div class="match__title">
-                                    <h3>Euro, fanstasy event</h3>
+                                    <h3>${match.getMatchTitle()}</h3>
                                 </div>
                                 <div class="match__date">
                                     <img src="./img/matches/DateBanner.png" alt="">

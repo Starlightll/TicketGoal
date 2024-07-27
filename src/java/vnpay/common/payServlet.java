@@ -6,8 +6,10 @@
 package vnpay.common;
 
 
+import DAO.PromotionDAO;
 import DAO.SeatDAO;
 import Models.Order;
+import Models.Promotion;
 import Models.Seat;
 import Models.Ticket;
 import com.google.gson.Gson;
@@ -63,11 +65,21 @@ public class payServlet extends HttpServlet {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = 0;
         HttpSession session = req.getSession();
+        long amount = 0;
+        double discount = 0;
+        long serviceFee = 24000;
+        if(session.getAttribute("promotionCode") != null){
+            PromotionDAO promotionDAO = new PromotionDAO();
+            Promotion promotion = promotionDAO.getPromotionByCode((String) session.getAttribute("promotionCode"));
+            discount = promotion.getPromotionDiscount();
+        }
+        if(discount > 0) {
+            discount = discount / 100;
+        }
         Order order = (Order) session.getAttribute("order");
         if (order != null) {
-            amount = order.getTotalAmount();
+            amount = (long) (order.getTotalAmount() - order.getTotalAmount() * discount + serviceFee);
         }
         amount = amount * 100;
         String bankCode = "";

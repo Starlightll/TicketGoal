@@ -54,33 +54,57 @@ public class IPNServlet extends HttpServlet {
             TicketDAO ticketDao = new TicketDAO();
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("user");
-            Order order = (Order) session.getAttribute("order");
-            for(Ticket ticket : order.getTickets()){
-                Seat seat = seatDao.getSeatById(ticket.getSeat().getSeatId());
-                if(seat.getSeatStatusId() == 3){
-                    checkOrderStatus = false;
-                    ticketDao.updateTicketStatus(ticket.getTicketId(), 3);
-                }
-            }
             if (checkOrderId) {
                 if (checkAmount) {
                     if (checkOrderStatus) {
                         if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
                             //Xử lý/Cập nhật tình trạng giao dịch thanh toán "Thành công"
                             try {
-                                if (order.getStatusId() != 1) {
-                                    //Cập nhật trạng thái đơn hàng
-                                    OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 1, order.getTickets());
-                                    order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
-                                    //Gửi mail thông báo đơn hàng
-                                    EmailSender emailSender = new EmailSender();
-                                    List<Ticket> tickets = order.getTickets();
-                                    emailSender.sendEmailQRCode(account, tickets, request, response);
+                                OrderDAO orderDao = OrderDAO.INSTANCE;
+                                Order order = (Order) session.getAttribute("order");
+                                if (order.getStatusId() == 2){
+                                    boolean isSold = false;
+                                    int count = 0;
+                                    for(Ticket ticket : order.getTickets()){
+                                        Seat seat = seatDao.getSeatById(ticket.getSeat().getSeatId());
+                                        if(seat.getSeatStatusId() == 3 ){
+                                            if(count==0){
+                                                OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 3);
+                                            }
+                                            ticketDao.updateTicketStatus(ticket.getTicketId(), 3);
+                                            //Seat sold out or not available
+                                            isSold = true;
+                                            count = 1;
+                                        }
+                                    }
+                                    if(!isSold){
+                                        //Cập nhật trạng thái đơn hàng
+                                        for(Ticket ticket : order.getTickets()){
+                                            ticketDao.updateTicketStatus(ticket.getTicketId(), 1);
+                                            ticketDao.setBackupQRCode(ticket.getTicketId(), orderDao.genCode(order.getOrderId(), ticket, Config.secretKey));
+                                        }
+                                        for(Ticket ticket : order.getTickets()){
+                                            seatDao.updateSeatStatus(ticket.getSeat().getSeatId(), 3);
+                                        }
+                                        OrderDAO.INSTANCE.updateOrderStatus(order.getOrderId(), 1);
+                                        order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
+                                        session.setAttribute("order", order);
+                                        //Gửi mail thông báo đơn hàng
+                                        EmailSender emailSender = new EmailSender();
+                                        List<Ticket> tickets = order.getTickets();
+                                        emailSender.sendEmailQRCode(account, tickets, request, response);
+                                        request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
+                                    }else if(isSold == true || order.getStatusId() == 3){
+                                        order = OrderDAO.INSTANCE.getOrderById(order.getOrderId());
+                                        session.setAttribute("order", order);
+                                        request.setAttribute("isSold", "true");
+                                        request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
+                                    }
                                 }
                             } catch (Exception e) {
                                 request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                             }
-                            request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
+
                         } else {
                             request.getRequestDispatcher("/VNPAY/VNPAY_RETURN.jsp").forward(request, response);
                         }

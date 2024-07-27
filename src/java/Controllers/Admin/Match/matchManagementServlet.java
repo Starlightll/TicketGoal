@@ -108,6 +108,7 @@ public class matchManagementServlet extends HttpServlet {
         String option = request.getParameter("option");
         switch (option) {
             case "addMatch":
+                String matchTitle = request.getParameter("matchTitle");
                 int club1Id = Integer.parseInt(request.getParameter("club1Id"));
                 int club2Id = Integer.parseInt(request.getParameter("club2Id"));
                 int pitchId = Integer.parseInt(request.getParameter("pitchId"));
@@ -120,6 +121,7 @@ public class matchManagementServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 Models.Match match = new Models.Match();
+                match.setMatchTitle(matchTitle);
                 match.setSchedule(schedule);
                 match.setPitchId(pitchId);
                 //Set club1 and club2
@@ -139,6 +141,13 @@ public class matchManagementServlet extends HttpServlet {
                 break;
             case "updateMatch":
                 Match matchUpdate = new Match();
+                try {
+                    matchUpdate.setMatchTitle(request.getParameter("matchTitle"));
+                } catch (Exception e) {
+                    System.out.println("Update match error: " + e.getMessage());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().write("Update match error: " + e.getMessage());
+                }
                 try {
                     matchUpdate.setMatchId(Integer.parseInt(request.getParameter("matchId")));
                 } catch (Exception e) {
@@ -225,6 +234,7 @@ public class matchManagementServlet extends HttpServlet {
             while (matches.next()) {
                 Match match = new Match();
                 match.setMatchId(matches.getInt("matchId"));
+                match.setMatchTitle(matches.getString("matchTitle"));
                 match.setSchedule(new Date(matches.getTimestamp("schedule").getTime()));
                 match.setPitchId(matches.getInt("pitchId"));
                 match.setMatchStatusId(matches.getInt("matchStatusId"));
