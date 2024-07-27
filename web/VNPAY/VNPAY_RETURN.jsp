@@ -17,6 +17,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,80 +59,187 @@
     %>
     <!--Begin display -->
     <div class="payment__detail_box">
-        <label>
+            <c:if test="${isSold eq 'true'}">
+                <div class="cancel"><i class="ri-error-warning-line"></i></div>
+                <div class="table-responsive">
+                    <div class="Header">
+                        <h3 class="text-muted">Sold</h3>
+                    </div>
+                    <div class="payment__information">
+                        <div class="message">
+                            <p>The seat has been purchased by someone else. We have automatically canceled your ticket.</p>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Payment code:</label>
+                            <label><%=request.getParameter("vnp_TxnRef")%>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Amount:</label>
+                            <label>
+                                <%
+                                    long amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100; // Nếu số tiền từ VNPAY có hai chữ số thập phân
+                                    NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                                    formatter.setMaximumFractionDigits(0); // Không hiển thị số thập phân
+                                    String formattedAmount = formatter.format(amount) + " VNĐ";
+                                %>
+                                <label><%= formattedAmount %>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Transaction code at VNPAY-QR:</label>
+                            <label><%=request.getParameter("vnp_TransactionNo")%>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <%
+                                String paymentDate = request.getParameter("vnp_PayDate");
+                                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                                SimpleDateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String formattedDate = "";
+                                try {
+                                    Date date = originalFormat.parse(paymentDate);
+                                    formattedDate = targetFormat.format(date);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                    formattedDate = "Invalid date format";
+                                }
+                            %>
+                            <label style="font-weight: bold; color: #373737">Payment date:</label>
+                            <label><%= formattedDate %>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="action">
+                        <button onclick="location.href='Homepage'">Home</button>
+                        <button onclick="location.href='my-ticket'">My Ticket</button>
+                    </div>
+                </div>
+            </c:if>
             <%
                 if (signValue.equals(vnp_SecureHash)) {
-                    if ("00".equals(request.getParameter("vnp_TransactionStatus")) && !"true".equals(request.getParameter("isSold"))) {
             %>
-            <div class="success"><i class="ri-check-line"></i></div>
-            <div class="table-responsive">
-                <div class="Header">
-                    <h3 class="text-muted">AWSOME!</h3>
-                </div>
-                <div class="payment__information">
+            <c:if test="${param.vnp_TransactionStatus eq '00' and isSold ne 'true'}">
+                <div class="success"><i class="ri-check-line"></i></div>
+                <div class="table-responsive">
+                    <div class="Header">
+                        <h3 class="text-muted">AWSOME!</h3>
+                    </div>
+                    <div class="payment__information">
 
-                    <div class="message">
-                        <p>Your purchase are successful. Check your email for details.</p>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-weight: bold; color: #373737">Payment code:</label>
-                        <label><%=request.getParameter("vnp_TxnRef")%>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-weight: bold; color: #373737">Amount:</label>
-                        <label>
-                            <%
-                                long amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100; // Nếu số tiền từ VNPAY có hai chữ số thập phân
-                                NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-                                formatter.setMaximumFractionDigits(0); // Không hiển thị số thập phân
-                                String formattedAmount = formatter.format(amount) + " VNĐ";
-                            %>
-                            <label><%= formattedAmount %>
+                        <div class="message">
+                            <p>Your purchase are successful. Check your email for details.</p>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Payment code:</label>
+                            <label><%=request.getParameter("vnp_TxnRef")%>
                             </label>
-                        </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Amount:</label>
+                            <label>
+                                <%
+                                    long amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100; // Nếu số tiền từ VNPAY có hai chữ số thập phân
+                                    NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                                    formatter.setMaximumFractionDigits(0); // Không hiển thị số thập phân
+                                    String formattedAmount = formatter.format(amount) + " VNĐ";
+                                %>
+                                <label><%= formattedAmount %>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Transaction code at VNPAY-QR:</label>
+                            <label><%=request.getParameter("vnp_TransactionNo")%>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <%
+                                String paymentDate = request.getParameter("vnp_PayDate");
+                                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                                SimpleDateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String formattedDate = "";
+                                try {
+                                    Date date = originalFormat.parse(paymentDate);
+                                    formattedDate = targetFormat.format(date);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                    formattedDate = "Invalid date format";
+                                }
+                            %>
+                            <label style="font-weight: bold; color: #373737">Payment date:</label>
+                            <label><%= formattedDate %>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label style="font-weight: bold; color: #373737">Transaction code at VNPAY-QR:</label>
-                        <label><%=request.getParameter("vnp_TransactionNo")%>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <%
-                            String paymentDate = request.getParameter("vnp_PayDate");
-                            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-                            SimpleDateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                            String formattedDate = "";
-                            try {
-                                Date date = originalFormat.parse(paymentDate);
-                                formattedDate = targetFormat.format(date);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                                formattedDate = "Invalid date format";
-                            }
-                        %>
-                        <label style="font-weight: bold; color: #373737">Payment date:</label>
-                        <label><%= formattedDate %>
-                        </label>
+                    <div class="action">
+                        <button onclick="location.href='Homepage'">Home</button>
+                        <button onclick="location.href='my-ticket'">My Ticket</button>
                     </div>
                 </div>
-                <div class="action">
-                    <button onclick="location.href='Homepage'">Home</button>
-                    <button onclick="location.href='my-ticket'">My Ticket</button>
+            </c:if>
+            <c:if test="${param.vnp_TransactionStatus eq '02' and isSold ne 'true'}">
+                <div class="cancel"><i class="ri-link-unlink-m"></i></div>
+                <div class="table-responsive">
+                    <div class="Header">
+                        <h3 class="text-muted">Canceled</h3>
+                    </div>
+                    <div class="payment__information">
+                        <div class="message">
+                            <p>Your purchase are canceled!.</p>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Payment code:</label>
+                            <label><%=request.getParameter("vnp_TxnRef")%>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Amount:</label>
+                            <label>
+                                <%
+                                    long amount = Long.parseLong(request.getParameter("vnp_Amount")) / 100; // Nếu số tiền từ VNPAY có hai chữ số thập phân
+                                    NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                                    formatter.setMaximumFractionDigits(0); // Không hiển thị số thập phân
+                                    String formattedAmount = formatter.format(amount) + " VNĐ";
+                                %>
+                                <label><%= formattedAmount %>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #373737">Transaction code at VNPAY-QR:</label>
+                            <label><%=request.getParameter("vnp_TransactionNo")%>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <%
+                                String paymentDate = request.getParameter("vnp_PayDate");
+                                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                                SimpleDateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String formattedDate = "";
+                                try {
+                                    Date date = originalFormat.parse(paymentDate);
+                                    formattedDate = targetFormat.format(date);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                    formattedDate = "Invalid date format";
+                                }
+                            %>
+                            <label style="font-weight: bold; color: #373737">Payment date:</label>
+                            <label><%= formattedDate %>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="action">
+                        <button onclick="location.href='Homepage'">Home</button>
+                        <button onclick="location.href='my-ticket'">My Ticket</button>
+                    </div>
                 </div>
-            </div>
+            </c:if>
             <%
-            } else if("true".equals(request.getParameter("isSold"))) {
-            %>
-            <div class="fail"><i class="ri-close-line"></i></div>
-            <%
-                    }
-
-                } else {
-                    out.print("invalid signature");
                 }
             %>
-        </label>
 
     </div>
 </main>

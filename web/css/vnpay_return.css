@@ -80,3 +80,26 @@
     font-weight: 500;
     margin: 0 auto;
 }
+
+.payment__detail_box .cancel {
+    position: relative;
+    background-color: white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    top: 60px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: 4px solid #ffa722;
+}
+
+.payment__detail_box .cancel i {
+    top: -20px;
+    color: #ffa722;
+    font-size: 80px;
+    font-weight: 500;
+    margin: 0 auto;
+}

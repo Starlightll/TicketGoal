@@ -68,6 +68,7 @@ public class MatchDAO {
                 while (rs.next()) {
                     Match match = new Match();
                     match.setMatchId(rs.getInt("matchId"));
+                    match.setMatchTitle(rs.getString("matchTitle"));
                     match.setSchedule(rs.getTimestamp("schedule"));
                     match.setPitchId(rs.getInt("pitchId"));
                     match.setMatchStatusId(rs.getInt("matchStatusId"));
@@ -93,6 +94,7 @@ public class MatchDAO {
             if (rs.next()) {
                 Match match = new Match();
                 match.setMatchId(rs.getInt("matchId"));
+                match.setMatchTitle(rs.getString("matchTitle"));
                 match.setSchedule(new Date(rs.getTimestamp("schedule").getTime()));
                 match.setPitchId(rs.getInt("pitchId"));
                 match.setMatchStatusId(rs.getInt("matchStatusId"));
@@ -117,13 +119,14 @@ public class MatchDAO {
 
     public boolean addMatch(Match match) {
         try {
-            String query = "INSERT INTO Match(schedule, pitchId, matchStatusId, club1, club2) VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Match(matchTitle, schedule, pitchId, matchStatusId, club1, club2) VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setTimestamp(1, new java.sql.Timestamp(match.getSchedule().getTime()));
-            ps.setInt(2, match.getPitchId());
-            ps.setInt(3, match.getMatchStatusId());
-            ps.setInt(4, match.getClub1().getClubId());
-            ps.setInt(5, match.getClub2().getClubId());
+            ps.setString(1, match.getMatchTitle());
+            ps.setTimestamp(2, new java.sql.Timestamp(match.getSchedule().getTime()));
+            ps.setInt(3, match.getPitchId());
+            ps.setInt(4, match.getMatchStatusId());
+            ps.setInt(5, match.getClub1().getClubId());
+            ps.setInt(6, match.getClub2().getClubId());
             int rowsInserted = ps.executeUpdate();
             int matchId = -1;
             if (rowsInserted > 0) {
@@ -150,14 +153,15 @@ public class MatchDAO {
 
     public boolean updateMatch(Match match) {
         try {
-            String query = "UPDATE Match SET schedule = ?, pitchId = ?, matchStatusId = ?, club1 = ?, club2 = ? WHERE matchId = ?";
+            String query = "UPDATE Match SET matchTitle = ?, schedule = ?, pitchId = ?, matchStatusId = ?, club1 = ?, club2 = ? WHERE matchId = ?";
             PreparedStatement ps = connect.prepareStatement(query);
-            ps.setTimestamp(1, new java.sql.Timestamp(match.getSchedule().getTime()));
-            ps.setInt(2, match.getPitchId());
-            ps.setInt(3, match.getMatchStatusId());
-            ps.setInt(4, match.getClub1().getClubId());
-            ps.setInt(5, match.getClub2().getClubId());
-            ps.setInt(6, match.getMatchId());
+            ps.setString(1, match.getMatchTitle());
+            ps.setTimestamp(2, new java.sql.Timestamp(match.getSchedule().getTime()));
+            ps.setInt(3, match.getPitchId());
+            ps.setInt(4, match.getMatchStatusId());
+            ps.setInt(5, match.getClub1().getClubId());
+            ps.setInt(6, match.getClub2().getClubId());
+            ps.setInt(7, match.getMatchId());
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -216,6 +220,7 @@ public class MatchDAO {
             if (rs.next()) {
                 Match match = new Match();
                 match.setMatchId(rs.getInt("matchId"));
+                match.setMatchTitle(rs.getString("matchTitle"));
                 match.setSchedule(rs.getTimestamp("schedule"));
                 match.setPitchId(rs.getInt("pitchId"));
                 match.setMatchStatusId(rs.getInt("matchStatusId"));

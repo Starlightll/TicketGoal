@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -38,6 +39,7 @@ public class BuyTicketServlet extends HttpServlet {
             request.setAttribute("showLogin", "show-login");
             request.getRequestDispatcher("matchServlet").forward(request, response);
         } else {
+            HttpSession session = request.getSession();
             int matchId = 0;
             try {
                 matchId = Integer.parseInt(request.getParameter("matchId"));
@@ -45,9 +47,7 @@ public class BuyTicketServlet extends HttpServlet {
                 System.out.println("Error: " + e);
             }
             Match match = MatchDAO.INSTANCE.getMatch(matchId);
-            if (match.matchStatusId != 2) {
-                request.setAttribute("notification", "Match is not available for ticket purchase");
-            }
+            session.setAttribute("matchId", match.matchId);
             List<Seat> seatList = getSeatListWithAccount(account, matchId);
             request.setAttribute("seatsARO", getSeatsARO(seatList));
             request.setAttribute("seatsALO", getSeatsALO(seatList));
@@ -75,7 +75,7 @@ public class BuyTicketServlet extends HttpServlet {
         } else {
             String action = request.getParameter("action");
             int seatId = request.getParameter("seatId") != null ? Integer.parseInt(request.getParameter("seatId")) : 0;
-            Match match = MatchDAO.INSTANCE.getMatch(request.getParameter("matchId") != null ? Integer.parseInt(request.getParameter("matchId")) : SeatDAO.INSTANCE.getSeatById(seatId).getMatchId());
+
             switch (action) {
                 case "buyOneTicket":
                     int ticketId = addToCart(account, seatId);
@@ -83,12 +83,17 @@ public class BuyTicketServlet extends HttpServlet {
                         json.addProperty("isError", "true");
                     } else if (ticketId == -1) {
                         json.addProperty("isPurchased", "true");
-                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+//                        json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
                     } else if (ticketId == -2) {
                         json.addProperty("notAvailable", "true");
                     } else {
+                        String selectedTicketsJson = request.getParameter("tickets");
+                        String[] selectedTicketsArray = gson.fromJson(selectedTicketsJson, String[].class);
+                        List<Integer> selectedTickets = Arrays.stream(selectedTicketsArray).map(Integer::parseInt).toList();
                         List<Ticket> tickets = new ArrayList<>();
-                        tickets.add(new TicketDAO().getTicketById(ticketId));
+                        for (Integer ticket : selectedTickets) {
+                            tickets.add(new TicketDAO().getTicketById(ticket));
+                        }
                         Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
                         //send email order
                         request.getSession().setAttribute("order", order);
@@ -97,19 +102,53 @@ public class BuyTicketServlet extends HttpServlet {
                     response.getWriter().write(gson.toJson(json));
                     break;
                 case "buyTicket":
-                    if (match.schedule.before(new java.util.Date())) {
+                    String selectedTicketsJson = request.getParameter("tickets");
+                    String[] selectedTicketsArray = gson.fromJson(selectedTicketsJson, String[].class);
+                    List<Integer> selectedTickets = Arrays.stream(selectedTicketsArray).map(Integer::parseInt).toList();
+                    List<Ticket> tickets = new ArrayList<>();
+                    int matchIds = 0;
+                    for (Integer ticket : selectedTickets) {
+                        tickets.add(new TicketDAO().getTicketById(ticket));;
+                    }
+                    //Check if match is available
+                    boolean isAvailable = true;
+                    for(Ticket ticket : tickets){
+                        matchIds = ticket.getMatch().matchId;
+                        if(ticket.getMatch().schedule.before(new java.util.Date())){
+                            isAvailable = false;
+                            break;
+                        }
+                    }
+                    Match match = MatchDAO.INSTANCE.getMatch(matchIds);
+                    if (!isAvailable) {
                         json.addProperty("notAvailable", "true");
                         json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
                         response.getWriter().write(gson.toJson(json));
                         return;
                     } else {
-                        List<Ticket> ticketInCart = new TicketDAO().getTicketInCartByMatchAndAccount(account, match.matchId);
-                        Order order = OrderDAO.INSTANCE.createOrder(account, ticketInCart, 2);
+                        //Check if seat are sold
+                        SeatDAO seatDAO = SeatDAO.INSTANCE;
+                        TicketDAO ticketDAO = new TicketDAO();
+                        boolean thereIsSoldSeat = false;
+                        for(Ticket ticket : tickets){
+                            if(seatDAO.getSeatById(ticket.getSeat().getSeatId()).getSeatStatusId() == 3){
+                                thereIsSoldSeat = true;
+                                ticketDAO.updateTicketStatus(ticket.getTicketId(), 3);
+                            }
+                        }
+                        if(thereIsSoldSeat){
+                            json.addProperty("isPurchased", "true");
+                            json.addProperty("stadium", stadium(request, response, account, match.getMatchId()));
+                            response.getWriter().write(gson.toJson(json));
+                            return;
+                        }
+                        Order order = OrderDAO.INSTANCE.createOrder(account, tickets, 2);
                         request.getSession().setAttribute("order", order);
                         request.getRequestDispatcher("payServlet").forward(request, response);
                     }
                     break;
                 case "addToCart":
+                    match = MatchDAO.INSTANCE.getMatch(request.getParameter("matchId") != null ? Integer.parseInt(request.getParameter("matchId")) : SeatDAO.INSTANCE.getSeatById(seatId).getMatchId());
                     int addedTicket = addToCart(account, seatId);
                     if (addedTicket == 0) {
                         json.addProperty("isError", "true");
@@ -378,8 +417,8 @@ public class BuyTicketServlet extends HttpServlet {
     }
     
     public String ticket(Ticket ticket) {
-        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-        formatter.setMaximumFractionDigits(0);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        currencyFormatter.setMaximumFractionDigits(0);
         
         return "<div class=\"item\" onmouseover=\"hover(" + ticket.getSeat().getSeatId() + ")\" onmouseout=\"removeHover(" + ticket.getSeat().getSeatId() + ")\" id=\"item-" + ticket.getTicketId() + "\">\n"
                 + "                            <div>\n"
@@ -387,11 +426,16 @@ public class BuyTicketServlet extends HttpServlet {
                 + "                                <div class=\"row\">Row: " + ticket.getSeat().getRow() + "</div>\n"
                 + "                                <div class=\"seat\">Seat: " + ticket.getSeat().getSeatNumber() + "</div>\n"
                 + "                            </div>\n"
+                + "                            <div style=\"display: flex; flex-direction: column; justify-content: space-between; align-items: end;\">\n" +
+                "                                <label>\n" +
+                "                                    <input type=\"checkbox\" name=\"selectedTickets\" value=\""+ticket.getTicketId()+"\">\n" +
+                "                                </label>"
                 + "                            <div class=\"price\">\n"
                 + "                                <div>\n"
-                + "                                    Price: " + formatter.format(ticket.getSeat().getPrice()) + " VNĐ\n"
+                + "                                    Price: " + currencyFormatter.format(ticket.getSeat().getPrice()) + "\n"
                 + "                                </div>\n"
                 + "                                <i class=\"ri-delete-bin-6-line\" style=\"color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer\" onclick=\"removeTicket(" + ticket.getTicketId() + "," + ticket.getSeat().getSeatId() + "," + ticket.getMatch().matchId + ")\"></i>\n"
+                + "                            </div>\n"
                 + "                            </div>\n"
                 + "                        </div>";
     }

@@ -90,6 +90,9 @@
             <i class="ri-close-large-fill close__btn" id="btn-close"></i>
         </div>
         <div class="match__content">
+            <div class="match__title">
+                    <input type="text" maxlength="100" minlength="1" name="matchTitle" placeholder="Match title">
+            </div>
             <div class="club__section">
                 <div class="club">
                     <img src="" alt="" id="club1Logo">
@@ -164,6 +167,9 @@
             <i class="ri-close-large-fill close__btn" id="btn-close-update"></i>
         </div>
         <div class="match__content">
+            <div class="match__title">
+                <input type="text" maxlength="100" minlength="1" name="matchTitle" placeholder="Match title">
+            </div>
             <div class="club__section">
                 <div class="club">
                     <img src="" alt="" id="club1Logo-update">
@@ -242,7 +248,8 @@
         var club2Id = document.forms["addMatchForm"]["club2"].value;
         var pitchId = document.forms["addMatchForm"]["pitchId"].value;
         var schedule = document.forms["addMatchForm"]["schedule"].value;
-        if (club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "") {
+        var matchTitle = document.forms["addMatchForm"]["matchTitle"].value;
+        if (club1Id.trim() === "0" || club2Id.trim() === "0" || pitchId.trim() === "0" || schedule.trim() === "" || matchTitle.trim() === "") {
             showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
             return false;
         } else if (club1Id === club2Id) {
@@ -283,7 +290,8 @@
         var pitchId = document.forms["updateMatchForm"]["pitchId"].value;
         var schedule = document.forms["updateMatchForm"]["schedule"].value;
         var status = document.forms["updateMatchForm"]["status"].value;
-        if (club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "" || status === "0") {
+        var matchTitle = document.forms["updateMatchForm"]["matchTitle"].value;
+        if (club1Id === "0" || club2Id === "0" || pitchId === "0" || schedule === "" || status === "0" || matchTitle.trim() === "") {
             showToast("<i class=\"ri-error-warning-fill\"></i>Invalid: Please fill all fields!");
             return false;
         } else if (club1Id === club2Id) {

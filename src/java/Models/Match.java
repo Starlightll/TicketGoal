@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class Match {
     public int matchId;
+    public String matchTitle;
     public Date schedule;
     public int pitchId;
     public int matchStatusId;
@@ -23,8 +24,9 @@ public class Match {
     public Match() {
     }
 
-    public Match(int matchId, Date schedule, int pitchId, int matchStatusId, Club club1, Club club2, Address address) {
+    public Match(int matchId, String matchTitle, Date schedule, int pitchId, int matchStatusId, Club club1, Club club2, Address address) {
         this.matchId = matchId;
+        this.matchTitle = matchTitle;
         this.schedule = schedule;
         this.pitchId = pitchId;
         this.matchStatusId = matchStatusId;
@@ -39,6 +41,14 @@ public class Match {
 
     public void setMatchId(int matchId) {
         this.matchId = matchId;
+    }
+
+    public String getMatchTitle() {
+        return matchTitle;
+    }
+
+    public void setMatchTitle(String matchTitle) {
+        this.matchTitle = matchTitle;
     }
 
     public Date getSchedule() {

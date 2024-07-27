@@ -3,6 +3,7 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/web/VNPAY/VNPAY_RETURN.jsp" value="file://$PROJECT_DIR$/web/VNPAY" />
         <entry key="file://$PROJECT_DIR$/web/Views/Admin/Pitch/UpdatePitch.jsp" value="file://$PROJECT_DIR$/web/Views/Admin/Pitch" />
         <entry key="file://$PROJECT_DIR$/web/Views/Ticket/BuyTicket.jsp" value="file://$PROJECT_DIR$/web/Views/Ticket" />
         <entry key="file://$PROJECT_DIR$/web/Views/include/header.jsp" value="file://$PROJECT_DIR$/web/Views/include" />

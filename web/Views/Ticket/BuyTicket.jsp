@@ -169,27 +169,32 @@
             </div>
         </div>
         <div class="order__detail">
-            <form>
+            <form id="order-detail">
                 <div class="order__detail__header">
                     <div>Order Detail</div>
                 </div>
                 <div class="order__list" id="order-list">
                     <c:forEach var="ticket" items="${ticketInCart}">
                         <div class="item" onmouseover="hover(${ticket.seat.seatId})"
-                             onmouseout="removeHover(${ticket.seat.seatId})" id="item-${ticket.ticketId}">
+                        onmouseout="removeHover(${ticket.seat.seatId})" id="item-${ticket.ticketId}">
                             <div>
                                 <div class="area">Area: ${ticket.seat.area.areaName}</div>
                                 <div class="row">Row: ${ticket.seat.row}</div>
                                 <div class="seat">Seat: ${ticket.seat.seatNumber}</div>
                             </div>
-                            <div class="price">
-                                <div>
-                                    Price: <fmt:setLocale value="vi_VN"/>
-                                    <fmt:formatNumber value="${ticket.seat.price}" type="currency"/>
+                            <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: end;">
+                                <label>
+                                    <input type="checkbox" name="selectedTickets" value="${ticket.ticketId}">
+                                </label>
+                                <div class="price">
+                                    <div>
+                                        Price: <fmt:setLocale value="vi_VN"/>
+                                        <fmt:formatNumber value="${ticket.seat.price}" type="currency"/>
+                                    </div>
+                                    <i class="ri-delete-bin-6-line"
+                                       style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer"
+                                       onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
                                 </div>
-                                <i class="ri-delete-bin-6-line"
-                                   style="color: #ff4f51; font-size: large; padding-left: 5px; cursor: pointer"
-                                   onclick="removeTicket(${ticket.ticketId}, ${ticket.seat.seatId}, ${ticket.match.matchId})"></i>
                             </div>
                         </div>
                     </c:forEach>
@@ -204,7 +209,7 @@
                     <div style="width: 100%; height: 4px; background-color: #999aa5; margin: 0 auto"></div>
                 </div>
                 <div class="action">
-                    <button id="btn-buy" type="button" onclick="purchase(${matchId})">Buy</button>
+                    <button id="btn-buy" type="button" onclick="checkout('')">Buy</button>
                 </div>
             </form>
         </div>
@@ -248,8 +253,50 @@
                 </tr>
             </table>
             <div class="action">
-                <button id="btn-buy-one" type="button" onclick="purchaseOne()">Buy</button>
+<%--                <button id="btn-buy-one" type="button" onclick="purchaseOne()">Buy</button>--%>
                 <button class="add__list_btn" onclick="addToCart()" type="button"><i class="ri-add-line"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="checkout__box__background" id="checkout-box-background">
+        <form class="checkout__box" id="checkout-box">
+            <i class="ri-close-large-fill close__btn" id="btn-close-checkout"></i>
+            <div class="checkout__detail">
+                <p>Tickets</p>
+                <div class="item__list" id="item-list">
+
+                </div>
+                <p>Order summary</p>
+                <div class="checkout__amount">
+                    <div class="amount__detail">
+                        <div class="total__item">
+                            <div id="total-item"></div>
+                            <div id="item-total-price">0</div>
+                        </div>
+                        <div class="service__fee">
+                            <div>service fee</div>
+                            <div id="service-fee">0</div>
+                        </div>
+                        <div class="discount">
+                            <div>discount</div>
+                            <div id="discount-amount">0</div>
+                        </div>
+                    </div>
+                    <div class="total__amount">
+                        <div>Total</div>
+                        <div id="total-amount"></div>
+                    </div>
+                </div>
+                <p id="check-promo-msg" style="font-size: 14px; margin: 0; font-weight: normal; width: 300px"></p>
+                <div class="promotion__box">
+                    <label>
+                        <input type="text" placeholder="Promotion code" name="promotionCode" id="promotion-code">
+                    </label>
+                    <button type="button" onclick="checkPromotion()">Apply</button>
+                </div>
+            </div>
+            <div class="checkout__action">
+                <button type="button" onclick="purchase('${matchId}')">CHECKOUT</button>
             </div>
         </form>
     </div>
@@ -261,7 +308,11 @@
     function attachStadiumDragEvent() {
         let newX = 0, newY = 0, startX = 0, startY = 0;
         let stadiumUI = document.getElementById("stadiumUI");
+
+        // Mouse events
         stadiumUI.addEventListener('mousedown', mouseDown);
+        // Touch events
+        stadiumUI.addEventListener('touchstart', touchStart);
 
         function mouseDown(e) {
             e.preventDefault();
@@ -279,14 +330,41 @@
             startX = e.clientX;
             startY = e.clientY;
 
-            // Move the stadium element
-            stadiumUI.style.top = (stadiumUI.offsetTop + newY) + "px";
-            stadiumUI.style.left = (stadiumUI.offsetLeft + newX) + "px";
+            moveStadium(newX, newY);
         }
 
         function mouseUp(e) {
             document.removeEventListener('mousemove', mouseMove);
             document.removeEventListener('mouseup', mouseUp);
+        }
+
+        function touchStart(e) {
+            e.preventDefault();
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            document.addEventListener('touchmove', touchMove);
+            document.addEventListener('touchend', touchEnd);
+        }
+
+        function touchMove(e) {
+            e.preventDefault();
+            newX = e.touches[0].clientX - startX;
+            newY = e.touches[0].clientY - startY;
+
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+
+            moveStadium(newX, newY);
+        }
+
+        function touchEnd(e) {
+            document.removeEventListener('touchmove', touchMove);
+            document.removeEventListener('touchend', touchEnd);
+        }
+
+        function moveStadium(deltaX, deltaY) {
+            stadiumUI.style.top = (stadiumUI.offsetTop + deltaY) + "px";
+            stadiumUI.style.left = (stadiumUI.offsetLeft + deltaX) + "px";
         }
     }
 
@@ -306,6 +384,8 @@
         confirmBox["row"].value = row;
         confirmBox["price"].value = price;
     }
+
+    let tickets = [];
 
     function addToList() {
         const confirmBox = document.getElementById("confirm-box");
@@ -327,7 +407,6 @@
             totalValue.innerHTML = (totalValueNumber + priceNumber) + " VNĐ";
             const seat = document.getElementById("seat-" + seatId);
             seat.style.color = '#1fffa2';
-            tickets.push(seatId);
         }
         //close confirm box
         document.getElementById("confirm-box-background").style.display = "none";
@@ -418,14 +497,113 @@
         confirmBox.reset();
     }
 
+    function checkPromotion(){
+        const promotionCode = document.getElementById("promotion-code").value;
+        const checkPromoMsg = document.getElementById("check-promo-msg");
+        $.ajax({
+            url: `${pageContext.request.contextPath}/checkout`,
+            method: "POST",
+            data: {
+                promotionCode: promotionCode
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                if(response.valid === true){
+                    checkPromoMsg.innerHTML = response.message;
+                    checkPromoMsg.style.color = "#40ff67";
+                    checkout(promotionCode);
+                } else {
+                    checkPromoMsg.innerHTML = response.message;
+                    checkPromoMsg.style.color = "#ff4f51";
+                }
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+    }
+
+    function checkout(promotionCode) {
+        const orderDetail = document.getElementById("order-detail");
+        const selectedTickets = [];
+        const checkboxes = orderDetail.querySelectorAll("input[name='selectedTickets']:checked");
+
+        checkboxes.forEach((checkbox) => {
+            selectedTickets.push(checkbox.value);
+        });
+
+        if (selectedTickets.length === 0) {
+            showNotification("Please select at least one ticket to checkout")
+            return;
+        }
+
+        $.ajax({
+            url: `${pageContext.request.contextPath}/checkout`,
+            method: "GET",
+            data: {
+                selectedTickets: JSON.stringify(selectedTickets),
+                promotionCode: promotionCode
+            },
+            dataType: 'JSON',
+            success: function (response) {
+                // Clear current list
+                const itemList = document.getElementById("item-list");
+                const totalItem = document.getElementById("total-item");
+                const itemTotalPrice = document.getElementById("item-total-price");
+                const serviceFee = document.getElementById("service-fee");
+                const discountAmount = document.getElementById("discount-amount");
+                const totalAmount = document.getElementById("total-amount");
+                itemList.innerHTML = "";
+                const ticket = document.createElement("div");
+                ticket.innerHTML = response.tickets;
+                itemList.appendChild(ticket);
+                totalItem.innerHTML = "Tickets("+ response.totalItem + ")";
+                itemTotalPrice.innerHTML = Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(response.totalPrice);
+                serviceFee.innerHTML = Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(response.serviceFee);
+                discountAmount.innerHTML = Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(response.discount) + " (" + response.discountPercent +")";
+                totalAmount.innerHTML = Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(response.finalPrice);
+                let checkoutBox = document.getElementById("checkout-box-background");
+                checkoutBox.style.display = "block";
+            },
+            error: function () {
+                let checkoutBox = document.getElementById("checkout-box-background");
+                checkoutBox.style.display = "block";
+            }
+        });
+    }
+
+
 
     function purchase(matchId) {
+        const orderDetail = document.getElementById("order-detail");
+        const selectedTickets = [];
+        const checkboxes = orderDetail.querySelectorAll("input[name='selectedTickets']:checked");
+        checkboxes.forEach((checkbox) => {
+            selectedTickets.push(checkbox.value);
+        });
+        if (selectedTickets.length === 0) {
+            showNotification("Please select at least one ticket to checkout")
+            return;
+        }
         $.ajax({
             url: `${pageContext.request.contextPath}/BuyTicket`,
             method: "POST",
             data: {
                 action: "buyTicket",
-                matchId: matchId
+                matchId: matchId,
+                tickets: JSON.stringify(selectedTickets)
             },
             dataType: 'JSON',
             success: function (response) {
@@ -448,12 +626,9 @@
                 }
             },
             error: function () {
-                alert("Error");
+                alert("123");
             }
         });
-        //close confirm box
-        document.getElementById("confirm-box-background").style.display = "none";
-        confirmBox.reset();
     }
 
     function removeTicket(ticketId, seatId, matchId) {

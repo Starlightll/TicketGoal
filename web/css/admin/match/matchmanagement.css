@@ -293,6 +293,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-top: 10px;
 }
 
+.add__match .match__title input {
+    padding: 10px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
 
 .add__match .option {
     display: flex;
@@ -428,6 +436,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .update__match .match__time input {
     padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.update__match .match__title input {
+    padding: 10px;
+    height: 40px;
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-top: 10px;

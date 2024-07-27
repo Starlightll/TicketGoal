@@ -181,3 +181,223 @@ nav a {
     border-radius: 5px;
     cursor: pointer;
 }
+
+
+/* checkout box */
+
+
+.checkout__box__background {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    transition: all 0.5s;
+}
+
+.checkout__box {
+    position: fixed;
+    width: fit-content;
+    height: fit-content;
+    background-color: #f1f1f1;
+    justify-content: end;
+    align-items: start;
+    z-index: 1001;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.checkout__box i {
+    display: flex;
+    font-size: 14px;
+    color: #3a3a3a;
+    cursor: pointer;
+}
+
+.checkout__box p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.checkout__box .checkout__detail .item__list
+{
+    height: 183px;
+    overflow: auto;
+    scrollbar-width: none;
+    border-left: 2px solid #00C767;
+    padding-left: 4px;
+    margin-bottom: 10px;
+}
+
+.checkout__box .checkout__detail .item__list .ticket {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d2d8d8;
+}
+
+.checkout__box .checkout__detail .checkout__amount .total__item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout__box .checkout__detail .checkout__amount .service__fee {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.checkout__box .checkout__detail .checkout__amount .discount {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout__box .checkout__detail .checkout__amount .amount__detail {
+    border-bottom: 2px solid #e65155;
+    padding-bottom: 12px;
+    margin-top: 4px;
+}
+
+.checkout__box .checkout__detail .checkout__amount .total__amount {
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.checkout__box .checkout__detail .promotion__box {
+    margin-bottom: 20px;
+}
+
+.checkout__box .checkout__detail .promotion__box input {
+    height: 20px;
+    border: 1px solid #8c8c8c;
+}
+
+.checkout__box .checkout__detail .promotion__box button {
+    width: 80px;
+    height: 24px;
+    background-color: #00C767;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.checkout__box .checkout__detail .promotion__box button:hover {
+    background-color: #00d57d;
+}
+
+.checkout__box .checkout__action {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.checkout__box .checkout__action button{
+    width: 100px;
+    height: 40px;
+    background-color: #8a8a8a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.checkout__box .checkout__action button:hover {
+    background-color: #00d563;
+}
+
+/* Notification box */
+.notification__background {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 1999;
+    top: 0;
+    left: 0;
+    transition: all 0.5s;
+    opacity: 0;
+}
+
+.notification {
+    position: fixed;
+    width: fit-content;
+    height: fit-content;
+    background-color: #f1f1f1;
+    z-index: 2000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.5s;
+}
+
+.notification__background.show-notification {
+    display: block;
+    opacity: 1;
+}
+
+
+.notification .notification__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 20px;
+    color: #1c1c1c;
+}
+
+.notification .notification__item__icon {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.notification .notification__item__icon i {
+    font-size: 50px;
+    color: #ffcf5d;
+}
+
+.notification .notification__item__icon__close .ri-close-large-fill {
+    color: #1B1B1C;
+    text-align: center;
+    display: flex;
+    justify-content: end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 6px;
+}
+
+.notification .notification__item__icon__close .ri-close-large-fill {
+    color: #1B1B1C;
+    text-align: center;
+    display: flex;
+    justify-content: end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 6px;
+    cursor: pointer;
+}
+
+.notification .notification__item__icon__close .ri-close-large-fill:hover {
+    font-weight: bold;
+}
+
+
