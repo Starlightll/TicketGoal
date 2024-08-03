@@ -498,13 +498,24 @@
     }
 
     function checkPromotion(){
+        const orderDetail = document.getElementById("order-detail");
+        const selectedTickets = [];
+        const checkboxes = orderDetail.querySelectorAll("input[name='selectedTickets']:checked");
+        checkboxes.forEach((checkbox) => {
+            selectedTickets.push(checkbox.value);
+        });
+        if (selectedTickets.length === 0) {
+            showNotification("Please select at least one ticket to checkout")
+            return;
+        }
         const promotionCode = document.getElementById("promotion-code").value;
         const checkPromoMsg = document.getElementById("check-promo-msg");
         $.ajax({
             url: `${pageContext.request.contextPath}/checkout`,
             method: "POST",
             data: {
-                promotionCode: promotionCode
+                promotionCode: promotionCode,
+                selectedTickets: JSON.stringify(selectedTickets)
             },
             dataType: 'JSON',
             success: function (response) {
