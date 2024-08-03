@@ -730,7 +730,7 @@ public class TicketDAO {
     }
 
     public boolean verifyTicket(String code) {
-        String sql = "SELECT * FROM Ticket WHERE code = ? AND ticketStatusId = 1";
+        String sql = "SELECT * FROM Ticket WHERE code = ? AND (ticketStatusId = 1 OR ticketStatusId = 5)";
         try {
             PreparedStatement st = connect.prepareStatement(sql);
             st.setString(1, code);
